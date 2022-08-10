@@ -1,41 +1,43 @@
 import PropTypes from "prop-types";
 
-import ArrowDown from "../../assets/arrow-down.svg";
-import ArrowLeft from "../../assets/arrow-left.svg";
-import ArrowRight from "../../assets/arrow-right.svg";
-import ArrowUp from "../../assets/arrow-up.svg";
-import CheckCircle from "../../assets/check-circle.svg";
-import Check from "../../assets/check.svg";
-import ExclamationCircle from "../../assets/exclamation-circle.svg";
-import FilterFill from "../../assets/filter-fill.svg";
-import FilterStroke from "../../assets/filter-stroke.svg";
-import Google from "../../assets/google.svg";
-import HeartFill from "../../assets/heart-fill.svg";
-import HeartStroke from "../../assets/heart-stroke.svg";
-import HomeFill from "../../assets/home-fill.svg";
-import HomeStroke from "../../assets/home-stroke.svg";
-import Kakao from "../../assets/kakao.svg";
-import Location from "../../assets/location.svg";
-import Minus from "../../assets/minus.svg";
-import Mypage from "../../assets/mypage.svg";
-import Naver from "../../assets/naver.svg";
-import PencilFill from "../../assets/pencil-fill.svg";
-import Plus from "../../assets/plus.svg";
-import QuestionCircle from "../../assets/question-circle.svg";
-import Search from "../../assets/search.svg";
-import SendFill from "../../assets/send-fill.svg";
-import SendStroke from "../../assets/send-stroke.svg";
-import StarDefault from "../../assets/star-default.svg";
-import StarFilled from "../../assets/star-filled.svg";
-import StarHalf from "../../assets/star-half.svg";
-import ThreeDot from "../../assets/three-dot.svg";
-import ThumbFill from "../../assets/thumb-fill.svg";
-import ThumbStroke from "../../assets/thumb-stroke.svg";
-import ThumbsUpFill from "../../assets/thumbs-up-fill.svg";
-import ThumbsUpStroke from "../../assets/thumbs-up-stroke.svg";
-import XIcon from "../../assets/x-icon.svg";
+import ArrowDown from "../../assets/icon/arrow-down.svg";
+import ArrowLeft from "../../assets/icon/arrow-left.svg";
+import ArrowRight from "../../assets/icon/arrow-right.svg";
+import ArrowUp from "../../assets/icon/arrow-up.svg";
+import CheckCircle from "../../assets/icon/check-circle.svg";
+import Check from "../../assets/icon/check.svg";
+import ExclamationCircle from "../../assets/icon/exclamation-circle.svg";
+import FilterFill from "../../assets/icon/filter-fill.svg";
+import FilterStroke from "../../assets/icon/filter-stroke.svg";
+import Google from "../../assets/icon/google.svg";
+import HeartFill from "../../assets/icon/heart-fill.svg";
+import HeartStroke from "../../assets/icon/heart-stroke.svg";
+import HomeFill from "../../assets/icon/home-fill.svg";
+import HomeStroke from "../../assets/icon/home-stroke.svg";
+import Kakao from "../../assets/icon/kakao.svg";
+import Location from "../../assets/icon/location.svg";
+import Minus from "../../assets/icon/minus.svg";
+import Mypage from "../../assets/icon/mypage.svg";
+import Naver from "../../assets/icon/naver.svg";
+import PencilFill from "../../assets/icon/pencil-fill.svg";
+import Plus from "../../assets/icon/plus.svg";
+import QuestionCircle from "../../assets/icon/question-circle.svg";
+import Search from "../../assets/icon/search.svg";
+import SendFill from "../../assets/icon/send-fill.svg";
+import SendStroke from "../../assets/icon/send-stroke.svg";
+import StarDefault from "../../assets/icon/star-default.svg";
+import StarFilled from "../../assets/icon/star-filled.svg";
+import StarHalf from "../../assets/icon/star-half.svg";
+import ThreeDot from "../../assets/icon/three-dot.svg";
+import ThumbFill from "../../assets/icon/thumb-fill.svg";
+import ThumbStroke from "../../assets/icon/thumb-stroke.svg";
+import ThumbsUpFill from "../../assets/icon/thumbs-up-fill.svg";
+import ThumbsUpStroke from "../../assets/icon/thumbs-up-stroke.svg";
+import XIcon from "../../assets/icon/x-icon.svg";
 
-// TODO: svg 파일 컴포넌트로 변환해서 사용할 수 있게 webpack 설정하기
+import LogoDefault from "../../assets/logo/logo-default.svg";
+import LogoWhite from "../../assets/logo/logo-white.svg";
+
 export default function Icon({ icon, width, height, fill }) {
   const args = {
     width,
@@ -44,73 +46,77 @@ export default function Icon({ icon, width, height, fill }) {
   };
   switch (icon) {
     case "ArrowDown":
-      return <img src={ArrowDown} {...args} />;
+      return <ArrowDown {...args} />;
     case "ArrowLeft":
-      return <img src={ArrowLeft} {...args} />;
+      return <ArrowLeft {...args} />;
     case "ArrowRight":
-      return <img src={ArrowRight} {...args} />;
+      return <ArrowRight {...args} />;
     case "ArrowUp":
-      return <img src={ArrowUp} {...args} />;
+      return <ArrowUp {...args} />;
     case "CheckCircle":
-      return <img src={CheckCircle} {...args} />;
+      return <CheckCircle {...args} />;
     case "Check":
-      return <img src={Check} {...args} />;
+      return <Check {...args} />;
     case "ExclamationCircle":
-      return <img src={ExclamationCircle} {...args} />;
+      return <ExclamationCircle {...args} />;
     case "FilterFill":
-      return <img src={FilterFill} {...args} />;
+      return <FilterFill {...args} />;
     case "FilterStroke":
-      return <img src={FilterStroke} {...args} />;
+      return <FilterStroke {...args} />;
     case "Google":
-      return <img src={Google} {...args} />;
+      return <Google {...args} />;
     case "HeartFill":
-      return <img src={HeartFill} {...args} />;
+      return <HeartFill {...args} />;
     case "HeartStroke":
-      return <img src={HeartStroke} {...args} />;
+      return <HeartStroke {...args} />;
     case "HomeFill":
-      return <img src={HomeFill} {...args} />;
+      return <HomeFill {...args} />;
     case "HomeStroke":
-      return <img src={HomeStroke} {...args} />;
+      return <HomeStroke {...args} />;
     case "Kakao":
-      return <img src={Kakao} {...args} />;
+      return <Kakao {...args} />;
     case "Location":
-      return <img src={Location} {...args} />;
+      return <Location {...args} />;
     case "Minus":
-      return <img src={Minus} {...args} />;
+      return <Minus {...args} />;
     case "Mypage":
-      return <img src={Mypage} {...args} />;
+      return <Mypage {...args} />;
     case "Naver":
-      return <img src={Naver} {...args} />;
+      return <Naver {...args} />;
     case "PencilFill":
-      return <img src={PencilFill} {...args} />;
+      return <PencilFill {...args} />;
     case "Plus":
-      return <img src={Plus} {...args} />;
+      return <Plus {...args} />;
     case "QuestionCircle":
-      return <img src={QuestionCircle} {...args} />;
+      return <QuestionCircle {...args} />;
     case "Search":
-      return <img src={Search} {...args} />;
+      return <Search {...args} />;
     case "SendFill":
-      return <img src={SendFill} {...args} />;
+      return <SendFill {...args} />;
     case "SendStroke":
-      return <img src={SendStroke} {...args} />;
+      return <SendStroke {...args} />;
     case "StarDefault":
-      return <img src={StarDefault} {...args} />;
+      return <StarDefault {...args} />;
     case "StarFilled":
-      return <img src={StarFilled} {...args} />;
+      return <StarFilled {...args} />;
     case "StarHalf":
-      return <img src={StarHalf} {...args} />;
+      return <StarHalf {...args} />;
     case "ThreeDot":
-      return <img src={ThreeDot} {...args} />;
+      return <ThreeDot {...args} />;
     case "ThumbFill":
-      return <img src={ThumbFill} {...args} />;
+      return <ThumbFill {...args} />;
     case "ThumbStroke":
-      return <img src={ThumbStroke} {...args} />;
+      return <ThumbStroke {...args} />;
     case "ThumbsUpFill":
-      return <img src={ThumbsUpFill} {...args} />;
+      return <ThumbsUpFill {...args} />;
     case "ThumbsUpStroke":
-      return <img src={ThumbsUpStroke} {...args} />;
+      return <ThumbsUpStroke {...args} />;
     case "XIcon":
-      return <img src={XIcon} {...args} />;
+      return <XIcon {...args} />;
+    case "LogoDefault":
+      return <LogoDefault {...args} />;
+    case "LogoWhite":
+      return <LogoWhite {...args} />;
     default:
       return;
   }
