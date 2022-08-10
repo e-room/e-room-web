@@ -145,3 +145,13 @@ export const XIcon = Template.bind({});
 XIcon.args = {
   icon: "XIcon",
 };
+
+export const LogoDefault = Template.bind({});
+LogoDefault.args = {
+  icon: "LogoDefault",
+};
+
+export const LogoWhite = Template.bind({});
+LogoWhite.args = {
+  icon: "LogoWhite",
+};
