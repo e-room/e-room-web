@@ -6,7 +6,7 @@ const App = ({ Component }) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>eroom</title>
+        <title>e-room</title>
       </Head>
       <Component />
     </>
