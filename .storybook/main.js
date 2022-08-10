@@ -9,12 +9,17 @@ module.exports = {
   core: {
     builder: "@storybook/builder-webpack5",
   },
-  // webpackFinal: async (config) => {
-  //   config.module.rules.unshift({
-  //     test: /\.svg$/,
-  //     use: ["@svgr/webpack"],
-  //   });
+  webpackFinal: async (config) => {
+    const fileLoaderRule = config.module.rules.find(
+      (rule) => rule.test && rule.test.test(".svg")
+    );
+    fileLoaderRule.exclude = /\.svg$/;
 
-  //   return config;
-  // },
+    config.module.rules.unshift({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
+
+    return config;
+  },
 };
