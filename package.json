@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/e-room/e-room-web#readme",
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@storybook/react": "^6.5.10",
     "next": "^12.2.4",
     "prop-types": "^15.8.1",
