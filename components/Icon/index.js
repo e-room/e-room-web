@@ -38,10 +38,16 @@ import XIcon from "../../assets/icon/x-icon.svg";
 import LogoDefault from "../../assets/logo/logo-default.svg";
 import LogoWhite from "../../assets/logo/logo-white.svg";
 
-export default function Icon({ icon, width, height, fill }) {
+export default function Icon({ icon, size = "md", fill }) {
+  const SIZES = {
+    sm: 16,
+    md: 24,
+    lg: 32,
+  };
+
   const args = {
-    width,
-    height,
+    width: SIZES[size],
+    height: SIZES[size],
     fill,
   };
   switch (icon) {
@@ -124,7 +130,6 @@ export default function Icon({ icon, width, height, fill }) {
 
 Icon.propTypes = {
   icon: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fill: PropTypes.string,
+  size: PropTypes.oneOf(["sm", "md", "lg"]),
 };
