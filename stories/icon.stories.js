@@ -11,147 +11,145 @@ const Template = (args) => {
 
 export const ArrowDown = Template.bind({});
 ArrowDown.args = {
-  icon: "ArrowDown",
+  icon: "arrow-down",
 };
 export const ArrowLeft = Template.bind({});
 ArrowLeft.args = {
-  icon: "ArrowLeft",
+  icon: "arrow-left",
 };
 export const ArrowRight = Template.bind({});
 ArrowRight.args = {
-  icon: "ArrowRight",
+  icon: "arrow-right",
 };
 export const ArrowUp = Template.bind({});
 ArrowUp.args = {
-  icon: "ArrowUp",
+  icon: "arrow-up",
 };
 export const CheckCircle = Template.bind({});
 CheckCircle.args = {
-  icon: "CheckCircle",
+  icon: "check-circle",
 };
 export const Check = Template.bind({});
 Check.args = {
-  icon: "Check",
+  icon: "check",
 };
 export const ExclamationCircle = Template.bind({});
 ExclamationCircle.args = {
-  icon: "ExclamationCircle",
+  icon: "exclamation-circle",
 };
 export const FilterFill = Template.bind({});
 FilterFill.args = {
-  icon: "FilterFill",
+  icon: "filter-fill",
 };
 export const FilterStroke = Template.bind({});
 FilterStroke.args = {
-  icon: "FilterStroke",
+  icon: "filter-stroke",
 };
 export const Google = Template.bind({});
 Google.args = {
-  icon: "Google",
+  icon: "google",
 };
 export const HeartFill = Template.bind({});
 HeartFill.args = {
-  icon: "HeartFill",
+  icon: "heart-fill",
 };
 export const HeartStroke = Template.bind({});
 HeartStroke.args = {
-  icon: "HeartStroke",
+  icon: "heart-stroke",
 };
 export const HomeFill = Template.bind({});
 HomeFill.args = {
-  icon: "HomeFill",
+  icon: "home-fill",
 };
 export const HomeStroke = Template.bind({});
 HomeStroke.args = {
-  icon: "HomeStroke",
+  icon: "home-stroke",
 };
 export const Kakao = Template.bind({});
 Kakao.args = {
-  icon: "Kakao",
+  icon: "kakao",
 };
 export const Location = Template.bind({});
 Location.args = {
-  icon: "Location",
+  icon: "location",
 };
 export const Minus = Template.bind({});
 Minus.args = {
-  icon: "Minus",
+  icon: "minus",
 };
 export const Mypage = Template.bind({});
 Mypage.args = {
-  icon: "Mypage",
+  icon: "mypage",
 };
 export const Naver = Template.bind({});
 Naver.args = {
-  icon: "Naver",
+  icon: "naver",
 };
 export const PencilFill = Template.bind({});
 PencilFill.args = {
-  icon: "PencilFill",
+  icon: "pencil-fill",
 };
 export const Plus = Template.bind({});
 Plus.args = {
-  icon: "Plus",
+  icon: "plus",
 };
 export const QuestionCircle = Template.bind({});
 QuestionCircle.args = {
-  icon: "QuestionCircle",
+  icon: "question-circle",
 };
 export const Search = Template.bind({});
 Search.args = {
-  icon: "Search",
+  icon: "search",
 };
 export const SendFill = Template.bind({});
 SendFill.args = {
-  icon: "SendFill",
+  icon: "send-fill",
 };
 export const SendStroke = Template.bind({});
 SendStroke.args = {
-  icon: "SendStroke",
+  icon: "send-stroke",
 };
 export const StarDefault = Template.bind({});
 StarDefault.args = {
-  icon: "StarDefault",
+  icon: "star-default",
 };
 export const StarFilled = Template.bind({});
 StarFilled.args = {
-  icon: "StarFilled",
+  icon: "star-filled",
 };
 export const StarHalf = Template.bind({});
 StarHalf.args = {
-  icon: "StarHalf",
+  icon: "star-half",
 };
 export const ThreeDot = Template.bind({});
 ThreeDot.args = {
-  icon: "ThreeDot",
+  icon: "three-dot",
 };
 export const ThumbFill = Template.bind({});
 ThumbFill.args = {
-  icon: "ThumbFill",
+  icon: "thumb-fill",
 };
 export const ThumbStroke = Template.bind({});
 ThumbStroke.args = {
-  icon: "ThumbStroke",
+  icon: "thumb-stroke",
 };
 export const ThumbsUpFill = Template.bind({});
 ThumbsUpFill.args = {
-  icon: "ThumbsUpFill",
+  icon: "thumbs-up-fill",
 };
 export const ThumbsUpStroke = Template.bind({});
 ThumbsUpStroke.args = {
-  icon: "ThumbsUpStroke",
+  icon: "thumbs-up-stroke",
 };
 export const XIcon = Template.bind({});
 XIcon.args = {
-  icon: "XIcon",
+  icon: "x-icon",
 };
-
 export const LogoDefault = Template.bind({});
 LogoDefault.args = {
-  icon: "LogoDefault",
+  icon: "logo-default",
 };
-
 export const LogoWhite = Template.bind({});
 LogoWhite.args = {
-  icon: "LogoWhite",
+  icon: "logo-white",
 };

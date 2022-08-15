@@ -50,78 +50,79 @@ export default function Icon({ icon, size = "md", fill }) {
     height: SIZES[size],
     fill,
   };
+
   switch (icon) {
-    case "ArrowDown":
+    case "arrow-down":
       return <ArrowDown {...args} />;
-    case "ArrowLeft":
+    case "arrow-left":
       return <ArrowLeft {...args} />;
-    case "ArrowRight":
+    case "arrow-right":
       return <ArrowRight {...args} />;
-    case "ArrowUp":
+    case "arrow-up":
       return <ArrowUp {...args} />;
-    case "CheckCircle":
+    case "check-circle":
       return <CheckCircle {...args} />;
-    case "Check":
+    case "check":
       return <Check {...args} />;
-    case "ExclamationCircle":
+    case "exclamation-circle":
       return <ExclamationCircle {...args} />;
-    case "FilterFill":
+    case "filter-fill":
       return <FilterFill {...args} />;
-    case "FilterStroke":
+    case "filter-stroke":
       return <FilterStroke {...args} />;
-    case "Google":
+    case "google":
       return <Google {...args} />;
-    case "HeartFill":
+    case "heart-fill":
       return <HeartFill {...args} />;
-    case "HeartStroke":
+    case "heart-stroke":
       return <HeartStroke {...args} />;
-    case "HomeFill":
+    case "home-fill":
       return <HomeFill {...args} />;
-    case "HomeStroke":
+    case "home-stroke":
       return <HomeStroke {...args} />;
-    case "Kakao":
+    case "kakao":
       return <Kakao {...args} />;
-    case "Location":
+    case "location":
       return <Location {...args} />;
-    case "Minus":
+    case "minus":
       return <Minus {...args} />;
-    case "Mypage":
+    case "mypage":
       return <Mypage {...args} />;
-    case "Naver":
+    case "naver":
       return <Naver {...args} />;
-    case "PencilFill":
+    case "pencil-fill":
       return <PencilFill {...args} />;
-    case "Plus":
+    case "plus":
       return <Plus {...args} />;
-    case "QuestionCircle":
+    case "question-circle":
       return <QuestionCircle {...args} />;
-    case "Search":
+    case "search":
       return <Search {...args} />;
-    case "SendFill":
+    case "send-fill":
       return <SendFill {...args} />;
-    case "SendStroke":
+    case "send-stroke":
       return <SendStroke {...args} />;
-    case "StarDefault":
+    case "star-default":
       return <StarDefault {...args} />;
-    case "StarFilled":
+    case "star-filled":
       return <StarFilled {...args} />;
-    case "StarHalf":
+    case "star-half":
       return <StarHalf {...args} />;
-    case "ThreeDot":
+    case "three-dot":
       return <ThreeDot {...args} />;
-    case "ThumbFill":
+    case "thumb-fill":
       return <ThumbFill {...args} />;
-    case "ThumbStroke":
+    case "thumb-stroke":
       return <ThumbStroke {...args} />;
-    case "ThumbsUpFill":
+    case "thumbs-up-fill":
       return <ThumbsUpFill {...args} />;
-    case "ThumbsUpStroke":
+    case "thumbs-up-stroke":
       return <ThumbsUpStroke {...args} />;
-    case "XIcon":
+    case "x-icon":
       return <XIcon {...args} />;
-    case "LogoDefault":
+    case "logo-default":
       return <LogoDefault {...args} />;
-    case "LogoWhite":
+    case "logo-white":
       return <LogoWhite {...args} />;
     default:
       return;
