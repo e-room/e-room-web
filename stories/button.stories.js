@@ -1,23 +1,26 @@
-import SocialButton from "../components/Button/SocialButton";
+import Button from "../components/Button/Button";
 
 export default {
-  title: "components/Button",
-  component: SocialButton,
+  title: "components/Button/Button",
+  component: Button,
 };
 
 const Template = (args) => {
-  return <SocialButton {...args} />;
+  return <Button {...args} />;
 };
 
-export const KakaoButton = Template.bind({});
-KakaoButton.args = {
-  type: "kakao",
+export const PrimaryButton = Template.bind({});
+PrimaryButton.args = {
+  type: "primary",
+  size: "sm",
+  label: "Label",
+  disabled: false,
 };
-export const GoogleButton = Template.bind({});
-GoogleButton.args = {
-  type: "google",
-};
-export const NaverButton = Template.bind({});
-NaverButton.args = {
-  type: "naver",
+
+export const SecondaryButton = Template.bind({});
+SecondaryButton.args = {
+  type: "secondary",
+  size: "sm",
+  label: "Label",
+  disabled: false,
 };
