@@ -1,29 +1,5 @@
 import { Global, css } from "@emotion/react";
 const globalStyle = css`
-  /* custom */
-  .container {
-    width: 720px;
-    /*max-width: 720px;*/
-
-    height: auto;
-
-    padding-left: 20px;
-    padding-right: 20px;
-    margin: 0 auto;
-  }
-
-  @media screen and (max-width: 720px) {
-    .container {
-      width: 100%;
-    }
-  }
-
-  .text-center {
-    text-align: center;
-  }
-
-  /* Color */
-
   .bg-gray {
     background-color: #fafafa !important;
   }

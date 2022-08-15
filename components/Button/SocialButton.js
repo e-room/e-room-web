@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import Icon from "../Icon";
 
 const Button = styled.button`
-  min-width: 335px;
   height: 52px;
   border-radius: 12px;
   padding: 0px 20px;
@@ -29,7 +28,7 @@ const Button = styled.button`
   }
 `;
 
-export default function SocialButton({ type, onClick, children }) {
+export default function SocialButton({ type, onClick, className, children, ...props }) {
   const TEXTS = {
     kakao: "카카오 계정으로 로그인",
     google: "구글 아이디로 로그인",
@@ -37,7 +36,7 @@ export default function SocialButton({ type, onClick, children }) {
   };
 
   return (
-    <Button onClick={onClick} type={type}>
+    <Button onClick={onClick} type={type} className={className} {...props}>
       <Icon icon={type} size="md" />
       <div>{children ?? TEXTS[type]}</div>
     </Button>
@@ -47,4 +46,5 @@ export default function SocialButton({ type, onClick, children }) {
 SocialButton.propTypes = {
   type: PropTypes.oneOf(["kakao", "google", "naver"]),
   onClick: PropTypes.func,
+  className: PropTypes.string,
 };
