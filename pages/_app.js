@@ -1,5 +1,6 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
+import "../styles/palette.css";
 
 const App = ({ Component }) => {
   return (
