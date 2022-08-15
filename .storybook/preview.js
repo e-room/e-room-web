@@ -1,3 +1,4 @@
+import "../styles/reset.css";
 import "../styles/palette.css";
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
