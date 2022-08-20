@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
 import styled from "@emotion/styled";
@@ -108,7 +109,14 @@ const MainMap = () => {
           <LocationButton onClick={setLocation} />
         </LocationItem>
         <ButtonItem>
-          <Button label={"이 지역 자취방 리뷰 보기"} type={"primary"} size={"sm"} />
+          {/* Link > a tag 필수 */}
+          {/* Link href = pages/[page].js */}
+          {/* TODO: href === page name 필수인지 확인하기 */}
+          <Link href={"/BuildingListPage"}>
+            <a>
+              <Button label={"이 지역 자취방 리뷰 보기"} type={"primary"} size={"sm"} />
+            </a>
+          </Link>
         </ButtonItem>
       </MapContainer>
     </React.Fragment>
