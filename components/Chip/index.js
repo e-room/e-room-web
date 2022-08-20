@@ -3,12 +3,12 @@ import styled from "@emotion/styled";
 
 const StyledChip = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 2px 8px;
 
   height: 20px;
-  width: 47px;
 
   background: var(--primary-1);
   border-radius: 16px;
@@ -21,7 +21,6 @@ const StyledChip = styled.div`
   }
 `;
 
-// TODO: width? 조절이 안됨 -> 고정값에서 변동값으로 바꿔야 함
 export default function Chip({ label, children }) {
   return (
     <StyledChip>
