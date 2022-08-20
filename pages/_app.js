@@ -6,12 +6,13 @@ import { useState, createContext } from "react";
 
 export const GlobalContext = createContext("");
 
-const App = ({ Component }) => {
+const App = ({ Component, pageProps }) => {
   const [isLogin, setIsLogin] = useState(false);
   const value = {
     isLogin,
     setIsLogin,
   };
+
   return (
     <>
       <Head>
@@ -20,7 +21,7 @@ const App = ({ Component }) => {
         <title>e-room</title>
       </Head>
       <GlobalContext.Provider value={value}>
-        <Component />
+        <Component {...pageProps} />
       </GlobalContext.Provider>
     </>
   );

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { GlobalStyle } from "../../styles/globalStyle";
-import Link from "next/link";
 import AppBar from "../AppBar";
 import NavBar from "../NavBar";
 

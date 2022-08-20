@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
+import Link from "next/link";
 import Icon from "../Icon";
 
 const NavBarWrapper = styled.div`
@@ -10,6 +11,9 @@ const NavBarWrapper = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
+
+  background: var(--white);
+  z-index: 99;
 `;
 
 const NavBarContainer = styled.div`
@@ -36,26 +40,26 @@ const NavBarContent = styled.div`
 `;
 
 export default function NavBar() {
-  // TODO: home-stroke fill color 임시조치
+  // TODO: home-stroke fill color 임시조치. 파일에서 직접 수정함
   const [active, setActive] = useState(0);
   return (
     <NavBarWrapper>
       <NavBarContainer>
         <NavBarContent active={active === 0} onClick={() => setActive(0)}>
           <Icon icon={active === 0 ? "home-fill" : "home-stroke"} size="md" />
-          <div class="caption-bold-2">둘러보기</div>
+          <div className="caption-bold-2">둘러보기</div>
         </NavBarContent>
         <NavBarContent active={active === 1} onClick={() => setActive(1)}>
           <Icon icon={"pencil-fill"} size="md" />
-          <div class="caption-2 text-gray-3">리뷰쓰기</div>
+          <div className="caption-2 text-gray-3">리뷰쓰기</div>
         </NavBarContent>
         <NavBarContent active={active === 2} onClick={() => setActive(2)}>
           <Icon icon={active === 2 ? "heart-fill" : "heart-stroke"} size="md" />
-          <div class="caption-2 text-gray-3">찜목록</div>
+          <div className="caption-2 text-gray-3">찜목록</div>
         </NavBarContent>
         <NavBarContent active={active === 3} onClick={() => setActive(3)}>
           <Icon icon={"mypage"} size="md" />
-          <div class="caption-2 text-gray-3">내정보</div>
+          <div className="caption-2 text-gray-3">내정보</div>
         </NavBarContent>
       </NavBarContainer>
     </NavBarWrapper>
