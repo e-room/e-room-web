@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import Link from "next/link";
 import Icon from "../Icon";
+import { useRouter } from "next/router";
 
 const NavBarWrapper = styled.div`
   box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
@@ -41,26 +42,49 @@ const NavBarContent = styled.div`
 
 export default function NavBar() {
   // TODO: home-stroke fill color 임시조치. 파일에서 직접 수정함
-  const [active, setActive] = useState(0);
+  // TODO: router 처리 다시 하기
+  const router = useRouter();
+  const { pathname } = router;
+
+  const homeActive = pathname === "/";
+  const reviewActive = pathname === "/ReviewFormPage";
+  const heartActive = pathname === "/HeartListPage";
+  const myPageActive = pathname === "/MyPage";
   return (
     <NavBarWrapper>
       <NavBarContainer>
-        <NavBarContent active={active === 0} onClick={() => setActive(0)}>
-          <Icon icon={active === 0 ? "home-fill" : "home-stroke"} size="md" />
-          <div className="caption-bold-2">둘러보기</div>
-        </NavBarContent>
-        <NavBarContent active={active === 1} onClick={() => setActive(1)}>
-          <Icon icon={"pencil-fill"} size="md" />
-          <div className="caption-2 text-gray-3">리뷰쓰기</div>
-        </NavBarContent>
-        <NavBarContent active={active === 2} onClick={() => setActive(2)}>
-          <Icon icon={active === 2 ? "heart-fill" : "heart-stroke"} size="md" />
-          <div className="caption-2 text-gray-3">찜목록</div>
-        </NavBarContent>
-        <NavBarContent active={active === 3} onClick={() => setActive(3)}>
-          <Icon icon={"mypage"} size="md" />
-          <div className="caption-2 text-gray-3">내정보</div>
-        </NavBarContent>
+        <Link href="/">
+          <a>
+            <NavBarContent active={homeActive}>
+              <Icon icon={homeActive ? "home-fill" : "home-stroke"} size="md" />
+              <div className="caption-bold-2">둘러보기</div>
+            </NavBarContent>
+          </a>
+        </Link>
+        <Link href="/ReviewFormPage">
+          <a>
+            <NavBarContent active={reviewActive}>
+              <Icon icon={"pencil-fill"} size="md" />
+              <div className="caption-2 text-gray-3">리뷰쓰기</div>
+            </NavBarContent>
+          </a>
+        </Link>
+        <Link href="/HeartListPage">
+          <a>
+            <NavBarContent active={heartActive}>
+              <Icon icon={heartActive ? "heart-fill" : "heart-stroke"} size="md" />
+              <div className="caption-2 text-gray-3">찜목록</div>
+            </NavBarContent>
+          </a>
+        </Link>
+        <Link href="/MyPage">
+          <a>
+            <NavBarContent active={myPageActive}>
+              <Icon icon={"mypage"} size="md" />
+              <div className="caption-2 text-gray-3">내정보</div>
+            </NavBarContent>
+          </a>
+        </Link>
       </NavBarContainer>
     </NavBarWrapper>
   );

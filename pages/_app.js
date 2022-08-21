@@ -8,9 +8,14 @@ export const GlobalContext = createContext("");
 
 const App = ({ Component, pageProps }) => {
   const [isLogin, setIsLogin] = useState(false);
+
+  const [reviewStep, setReviewStep] = useState(0);
+
   const value = {
     isLogin,
     setIsLogin,
+    reviewStep,
+    setReviewStep,
   };
 
   return (
