@@ -37,11 +37,15 @@ const GroupWrapper = styled.div`
 `;
 
 export default function GroupButton({ items }) {
+  // items = [
+  //   { icon: "plus", onClick: zoomIn },
+  //   { icon: "minus", onClick: zoomOut },
+  // ]
   return (
     <GroupWrapper>
       {items.map((value) => {
         return (
-          <StyledGroupButton onClick={value.onClick}>
+          <StyledGroupButton onClick={value.onClick} key={value.icon}>
             <Icon icon={value.icon} size="md" />
           </StyledGroupButton>
         );

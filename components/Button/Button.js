@@ -64,7 +64,9 @@ export default function Button({
   size = "sm",
   label,
   disabled,
+  width,
   children,
+  ...props
 }) {
   const sizeStyle = SIZES[size];
   const colorStyle = COLORS[type];
@@ -74,6 +76,8 @@ export default function Button({
       sizeStyle={sizeStyle}
       colorStyle={colorStyle}
       disabled={disabled}
+      style={{ width }}
+      {...props}
     >
       {label ?? children}
     </StyledButton>
@@ -85,4 +89,5 @@ Button.propTypes = {
   size: PropTypes.oneOf(["sm", "md"]),
   label: PropTypes.string,
   disabled: PropTypes.bool,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

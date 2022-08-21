@@ -43,6 +43,7 @@ export default function Icon({ icon, size = "md", fill }) {
     sm: 16,
     md: 24,
     lg: 32,
+    xl: 40,
   };
 
   const args = {
