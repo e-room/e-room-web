@@ -1,6 +1,7 @@
 import AppLayout from "../components/layout/AppLayout";
 import styled from "@emotion/styled";
 import Chip from "../components/Chip";
+import Score from "../components/Input/Score";
 
 const Banner = styled.div`
   width: 100%;
@@ -37,6 +38,83 @@ const data = [
     },
     isDirectDeal: false,
   },
+  {
+    buildingId: 3,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 4,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 5,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 6,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 7,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 8,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 9,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
 ];
 
 // TODO: routing 하기
@@ -58,13 +136,14 @@ export default function BuildingListPage() {
                 <Chip label={"교통 편리"} />
               </Chips>
               <ReviewArea>
-                <div className="caption-2" style={{ opacity: 0.5 }}>
+                <div className="caption-2" style={{ opacity: 0.5, marginRight: 8 }}>
                   리뷰 {value.reviewCnt}개
                 </div>
                 <StarArea className="caption-bold-2">
                   {/* util 화 시키기 */}
-                  {Number.parseFloat(value.scoreAvg).toFixed(1)} 별별별별별
+                  {Number.parseFloat(value.scoreAvg).toFixed(1)}
                 </StarArea>
+                <Score size="sm" />
               </ReviewArea>
             </BuildingContent>
           </BuildingContainer>
@@ -94,7 +173,6 @@ const Chips = styled.div`
 `;
 const ReviewArea = styled.div`
   display: flex;
-  gap: 8px;
 `;
 const StarArea = styled.div`
   color: var(--primary-1);
