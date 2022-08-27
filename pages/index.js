@@ -7,5 +7,9 @@ import { GlobalContext } from "./_app";
 export default function Home() {
   const { isLogin } = useContext(GlobalContext);
 
-  return <AppLayout>{isLogin ? <ReviewMapPage /> : <LoginPage />}</AppLayout>;
+  return (
+    <AppLayout appBarObject={{ rightIcon: isLogin && "search" }}>
+      {isLogin ? <ReviewMapPage /> : <LoginPage />}
+    </AppLayout>
+  );
 }

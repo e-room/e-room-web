@@ -11,7 +11,7 @@ import { useContext } from "react";
 export default function ReviewFormPage() {
   const { reviewStep, setReviewStep } = useContext(GlobalContext);
   return (
-    <AppLayout>
+    <AppLayout appBarObject={{ headerText: "리뷰 쓰기" }}>
       {reviewStep === 0 && <ReviewForm1 />}
       {reviewStep === 1 && <ReviewForm2 />}
       {reviewStep === 2 && <ReviewForm3 />}

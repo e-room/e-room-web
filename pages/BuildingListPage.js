@@ -120,7 +120,9 @@ const data = [
 // TODO: routing 하기
 export default function BuildingListPage() {
   return (
-    <AppLayout>
+    <AppLayout
+      appBarObject={{ rightIcon: "filter-stroke", headerText: "이 지역 자취방" }}
+    >
       <Banner>배너영역</Banner>
       {data.map((value) => {
         return (
