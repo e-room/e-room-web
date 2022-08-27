@@ -22,6 +22,7 @@ export default function Text({
   onChange,
   placeholder = "필드를 입력해주세요.",
   width,
+  height,
   ...props
 }) {
   return (
@@ -30,7 +31,7 @@ export default function Text({
       placeholder={placeholder}
       onChange={onChange}
       value={value}
-      style={{ width }}
+      style={{ width, height }}
       {...props}
     />
   );
@@ -41,4 +42,5 @@ Text.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
