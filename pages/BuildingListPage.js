@@ -130,9 +130,7 @@ export default function BuildingListPage() {
             <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
             <BuildingContent>
               <div className="body-bold-2">{value.name}</div>
-              <div className="caption-2" style={{ opacity: 0.5 }}>
-                {value.address}
-              </div>
+              <AddressArea className="caption-2">{value.address}</AddressArea>
               <Chips>
                 {value.isDirectDeal && <Chip label={"직거래가능"} />}
                 <Chip label={"교통 편리"} />
@@ -178,4 +176,14 @@ const ReviewArea = styled.div`
 `;
 const StarArea = styled.div`
   color: var(--primary-1);
+`;
+
+const AddressArea = styled.div`
+  opacity: 0.5;
+
+  width: calc(100vw - 162px);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
