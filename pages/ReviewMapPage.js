@@ -8,80 +8,82 @@ import GroupButton from "../components/Button/GroupButton";
 import MapButton from "../components/Button/MapButton";
 import Button from "../components/Button/Button";
 
+// TODO: .env 파일 분리하기
 const NEXT_PUBLIC_KAKAO_KEY = "7825714128d19a402fd2f559cd77866c";
 
-const initialLocation = {
+const initial = {
   lat: 37.5173319258532,
   lng: 127.047377408384,
 };
 
+const getLocation = [
+  {
+    coordinate: {
+      longitude: 124.450701,
+      latitude: 32.570667,
+    },
+    buildingId: 1,
+  },
+  {
+    coordinate: {
+      longitude: 132.483,
+      latitude: 40.57,
+    },
+    buildingId: 2,
+  },
+  {
+    coordinate: {
+      longitude: 130.4501,
+      latitude: 38.57,
+    },
+    buildingId: 3,
+  },
+];
+
 const MainMap = () => {
-  const [level, setLevel] = useState(8); //지도레벨
-  const [pos, setPos] = useState(); //경도 위도
-  const containerRef = useRef(null); // 지도 ref
+  const kakaoMapRef = useRef(null); // 지도 container ref
+  const map = useRef(null);
+  // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
 
   //map불러오기
   const initMap = useCallback(() => {
-    if (containerRef.current) {
-      const map = new kakao.maps.Map(containerRef.current, {
-        center: new kakao.maps.LatLng(initialLocation.lat, initialLocation.lng),
-        level: level,
+    if (kakaoMapRef.current && !map.current) {
+      const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
+        center: new kakao.maps.LatLng(initial.lat, initial.lng),
+        level: 6,
       });
+      map.current = initialMap;
     }
-  }, []);
+  }, [kakaoMapRef.current]);
+
   useEffect(() => {
-    if (window?.kakao) {
+    if (window.kakao) {
       initMap();
     }
   }, [initMap]);
 
   //나의 위치로 가게 해주는 함수
-  const setLocation = () => {
-    let container = document.getElementById("map");
-
-    let options = {
-      center: new kakao.maps.LatLng(37.5173319258532, 127.047377408384),
-      level: level,
-    };
-    let map = new kakao.maps.Map(container, options);
+  const setMyPosition = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let lat = position.coords.latitude, // 위도
-          lon = position.coords.longitude; // 경도
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude; // 위도
+        const lng = position.coords.longitude; // 경도
+        // setMapCenter({ lat, lng });
 
-        let locPosition = new kakao.maps.LatLng(lat, lon);
-        map.setCenter(locPosition);
+        let myPosition = new kakao.maps.LatLng(lat, lng);
+        map.current.setCenter(myPosition);
       });
     }
   };
   //줌인
   const zoomIn = () => {
-    if (level > 5) {
-      setLevel(level - 1);
-    }
-
-    let container = document.getElementById("map");
-
-    let options = {
-      center: new kakao.maps.LatLng(37.5173319258532, 127.047377408384),
-      level: level,
-    };
-    let map = new kakao.maps.Map(container, options);
+    map.current.setLevel(map.current.getLevel() - 1);
   };
   //줌아웃
   const zoomOut = () => {
-    if (level < 10) {
-      setLevel(level + 1);
-    }
-
-    let container = document.getElementById("map");
-
-    let options = {
-      center: new kakao.maps.LatLng(37.5173319258532, 127.047377408384),
-      level: level,
-    };
-    let map = new kakao.maps.Map(container, options);
+    map.current.setLevel(map.current.getLevel() + 1);
   };
+
   return (
     <React.Fragment>
       <Script
@@ -92,7 +94,7 @@ const MainMap = () => {
         <link rel="preconnect" href="https://dapi.kakao.com" />
         <link rel="dns-prefetch" href="https://dapi.kakao.com" />
       </Head>
-      <MapWrapper id="map" ref={containerRef}></MapWrapper>
+      <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
       <MapContainer>
         <FilterItem>
           <MapButton />
@@ -106,7 +108,7 @@ const MainMap = () => {
           />
         </GroupItem>
         <LocationItem>
-          <LocationButton onClick={setLocation} />
+          <LocationButton onClick={setMyPosition} />
         </LocationItem>
         <ButtonItem>
           {/* Link > a tag 필수 */}
@@ -122,32 +124,30 @@ const MainMap = () => {
     </React.Fragment>
   );
 };
+
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
 `;
-const MapContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  z-index: 2;
-`;
+const MapContainer = styled.div``;
 
 const FilterItem = styled.div`
   position: absolute;
   right: 20px;
   top: 68px;
+  z-index: 2;
 `;
 const GroupItem = styled.div`
   position: absolute;
   right: 20px;
   top: 232px;
+  z-index: 2;
 `;
 const LocationItem = styled.div`
   position: absolute;
   right: 20px;
   top: 328px;
+  z-index: 2;
 `;
 const ButtonItem = styled.div`
   position: absolute;
@@ -155,6 +155,7 @@ const ButtonItem = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  z-index: 2;
 `;
 
 export default MainMap;
