@@ -10,10 +10,10 @@ const LoginWrapper = styled.div`
 `;
 
 const LoginIntro = styled.div`
-  div:nth-child(1) {
+  div:nth-of-type(1) {
     margin-bottom: 12px;
   }
-  div:nth-child(2) {
+  div:nth-of-type(2) {
     margin-bottom: 32px;
   }
 `;
@@ -23,10 +23,10 @@ const LoginButtonGroup = styled.div`
   flex-direction: column;
 
   // TODO: tailwind -> mb-8 이런걸로 바꾸기
-  button:nth-child(1) {
+  button:nth-of-type(1) {
     margin-bottom: 8px;
   }
-  button:nth-child(2) {
+  button:nth-of-type(2) {
     margin-bottom: 8px;
   }
 `;

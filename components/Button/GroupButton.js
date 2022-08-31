@@ -26,11 +26,11 @@ const StyledGroupButton = styled.button`
 `;
 
 const GroupWrapper = styled.div`
-  button:first-child {
+  button:first-of-type {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
-  button:last-child {
+  button:last-of-type {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
   }
