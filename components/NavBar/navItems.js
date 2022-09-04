@@ -1,6 +1,6 @@
 export const navItems = [
   {
-    path: "/",
+    path: "/ReviewMapPage",
     defaultIcon: "home-stroke",
     activeIcon: "home-fill",
     title: "둘러보기",

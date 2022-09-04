@@ -1,15 +1,13 @@
-import { useContext } from "react";
-import AppLayout from "../components/layout/AppLayout";
-import LoginPage from "./LoginPage";
-import ReviewMapPage from "./ReviewMapPage";
-import { GlobalContext } from "./_app";
+import Link from "next/link";
 
 export default function Home() {
-  const { isLogin } = useContext(GlobalContext);
-
   return (
-    <AppLayout appBarObject={{ rightIcon: isLogin && "search" }}>
-      {isLogin ? <ReviewMapPage /> : <LoginPage />}
-    </AppLayout>
+    <Link href={"/ReviewMapPage"}>
+      <a>
+        <div style={{ background: "var(--primary-1)", width: "100vw", height: "100vh" }}>
+          스플래시 화면~!! 클릭하면 넘어감
+        </div>
+      </a>
+    </Link>
   );
 }
