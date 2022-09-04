@@ -7,6 +7,8 @@ import LocationButton from "../components/Button/LocationButton";
 import GroupButton from "../components/Button/GroupButton";
 import MapButton from "../components/Button/MapButton";
 import Button from "../components/Button/Button";
+import Icon from "../components/Icon";
+import AppLayout from "../components/layout/AppLayout";
 
 // TODO: .env 파일 분리하기
 const NEXT_PUBLIC_KAKAO_KEY = "7825714128d19a402fd2f559cd77866c";
@@ -94,33 +96,46 @@ const MainMap = () => {
         <link rel="preconnect" href="https://dapi.kakao.com" />
         <link rel="dns-prefetch" href="https://dapi.kakao.com" />
       </Head>
-      <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
-      <MapContainer>
-        <FilterItem>
-          <MapButton />
-        </FilterItem>
-        <GroupItem>
-          <GroupButton
-            items={[
-              { icon: "plus", onClick: zoomIn },
-              { icon: "minus", onClick: zoomOut },
-            ]}
-          />
-        </GroupItem>
-        <LocationItem>
-          <LocationButton onClick={setMyPosition} />
-        </LocationItem>
-        <ButtonItem>
-          {/* Link > a tag 필수 */}
-          {/* Link href = pages/[page].js */}
-          {/* TODO: href === page name 필수인지 확인하기 */}
-          <Link href={"/BuildingListPage"}>
-            <a>
-              <Button label={"이 지역 자취방 리뷰 보기"} type={"primary"} size={"sm"} />
-            </a>
-          </Link>
-        </ButtonItem>
-      </MapContainer>
+      <AppLayout appBarObject={{ rightIcon: "search" }}>
+        <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
+        <MapContainer>
+          <FilterItem>
+            <MapButton />
+          </FilterItem>
+          <GroupItem>
+            <GroupButton
+              items={[
+                { icon: "plus", onClick: zoomIn },
+                { icon: "minus", onClick: zoomOut },
+              ]}
+            />
+          </GroupItem>
+          <LocationItem>
+            <LocationButton onClick={setMyPosition} />
+          </LocationItem>
+          <ButtonItem>
+            {/* TODO: href === page name 필수인지 확인하기 */}
+            <Link href={"/BuildingListPage"}>
+              <a>
+                <Button
+                  label={"이 지역 자취방 리뷰 보기"}
+                  type={"secondary"}
+                  size={"sm"}
+                />
+              </a>
+            </Link>
+            <Link href={"/ReviewFormPage"}>
+              <a>
+                {/* //TODO: icon button기능 추가.. 필요.. */}
+                <Button type={"primary"} size={"sm"}>
+                  <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+                  리뷰 쓰기
+                </Button>
+              </a>
+            </Link>
+          </ButtonItem>
+        </MapContainer>
+      </AppLayout>
     </React.Fragment>
   );
 };
@@ -128,6 +143,7 @@ const MainMap = () => {
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
+  overflow: hidden !important;
 `;
 const MapContainer = styled.div``;
 
@@ -156,6 +172,7 @@ const ButtonItem = styled.div`
   display: flex;
   justify-content: center;
   z-index: 2;
+  gap: 8px;
 `;
 
 export default MainMap;
