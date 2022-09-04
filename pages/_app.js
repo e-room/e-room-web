@@ -2,6 +2,7 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 import "../styles/reset.css";
 import "../styles/palette.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import { useState, createContext } from "react";
 
 export const GlobalContext = createContext("");
