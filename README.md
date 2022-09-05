@@ -5,7 +5,7 @@
 - 코어: react, next.js
 - 스타일: storybook, emotion
 - 타입관리: prop-types
-- 상태관리: context api (임시)
+- 상태관리: recoil
 
 ## 실행
 
