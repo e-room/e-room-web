@@ -7,13 +7,13 @@ import Score from "../components/Input/Score";
 import Link from "next/link";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-const Banner = styled.div`
-  width: 100%;
-  height: 84px;
-  background-color: var(--primary-5);
-`;
+// import { useRecoilState } from "recoil";
+// import { textState } from "../states";
 
 export default function BuildingListPage() {
+  // const [text, setText] = useRecoilState(textState);
+
+  // console.log("pageName", text);
   return (
     <AppLayout
       appBarObject={{ rightIcon: "filter-stroke", headerText: "이 지역 자취방" }}
@@ -21,7 +21,13 @@ export default function BuildingListPage() {
       <Container>
         <PerfectScrollbar>
           <div style={{ paddingBottom: 150 }}>
-            <Banner>배너영역</Banner>
+            <Banner
+            // onClick={() => {
+            //   setText("BuildingListPage");
+            // }}
+            >
+              배너영역
+            </Banner>
             {data.map((value) => {
               return (
                 <Link href={`/ReviewDetail/${value.buildingId}`} key={value.buildingId}>
@@ -110,6 +116,11 @@ const ButtonGroup = styled.div`
   justify-content: center;
   position: fixed;
   bottom: 64px;
+`;
+const Banner = styled.div`
+  width: 100%;
+  height: 84px;
+  background-color: var(--primary-5);
 `;
 
 // zipcode, addressDetail, preview

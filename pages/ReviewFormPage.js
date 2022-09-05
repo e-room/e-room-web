@@ -5,12 +5,13 @@ import ReviewForm1 from "../components/ReviewForm1";
 import ReviewForm2 from "../components/ReviewForm2";
 import ReviewForm3 from "../components/ReviewForm3";
 import ReviewForm4 from "../components/ReviewForm4";
-import { GlobalContext } from "./_app";
-import { useContext } from "react";
 import LoginPage from "./LoginPage";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, reviewStepState } from "../states";
 
 export default function ReviewFormPage() {
-  const { reviewStep, setReviewStep, isLogin } = useContext(GlobalContext);
+  const isLogin = useRecoilValue(isLoginState);
+  const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
 
   if (!isLogin) {
     return <LoginPage />;

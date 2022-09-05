@@ -3,22 +3,10 @@ import PropTypes from "prop-types";
 import "../styles/reset.css";
 import "../styles/palette.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { useState, createContext } from "react";
 
-export const GlobalContext = createContext("");
+import { RecoilRoot } from "recoil";
 
 const App = ({ Component, pageProps }) => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  const [reviewStep, setReviewStep] = useState(0);
-
-  const value = {
-    isLogin,
-    setIsLogin,
-    reviewStep,
-    setReviewStep,
-  };
-
   return (
     <>
       <Head>
@@ -26,9 +14,9 @@ const App = ({ Component, pageProps }) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <title>e-room</title>
       </Head>
-      <GlobalContext.Provider value={value}>
+      <RecoilRoot>
         <Component {...pageProps} />
-      </GlobalContext.Provider>
+      </RecoilRoot>
     </>
   );
 };
