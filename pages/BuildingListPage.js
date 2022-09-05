@@ -1,7 +1,11 @@
 import AppLayout from "../components/layout/AppLayout";
 import styled from "@emotion/styled";
 import Chip from "../components/Chip";
+import Button from "../components/Button/Button";
 import Score from "../components/Input/Score";
+
+import Link from "next/link";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 const Banner = styled.div`
   width: 100%;
@@ -9,12 +13,108 @@ const Banner = styled.div`
   background-color: var(--primary-5);
 `;
 
+export default function BuildingListPage() {
+  return (
+    <AppLayout
+      appBarObject={{ rightIcon: "filter-stroke", headerText: "이 지역 자취방" }}
+    >
+      <Container>
+        <PerfectScrollbar>
+          <div style={{ paddingBottom: 150 }}>
+            <Banner>배너영역</Banner>
+            {data.map((value) => {
+              return (
+                <Link href={`/ReviewDetail/${value.buildingId}`} key={value.buildingId}>
+                  <BuildingContainer>
+                    <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
+                    <BuildingContent>
+                      <div className="body-bold-2">{value.name}</div>
+                      <AddressArea className="caption-2">{value.address}</AddressArea>
+                      <Chips>
+                        {value.isDirectDeal && <Chip label={"직거래가능"} />}
+                        <Chip label={"교통 편리"} />
+                      </Chips>
+                      <ReviewArea>
+                        <div
+                          className="caption-2"
+                          style={{ opacity: 0.5, marginRight: 8 }}
+                        >
+                          리뷰 {value.reviewCnt}개
+                        </div>
+                        <StarArea className="caption-bold-2">
+                          {/* util 화 시키기 */}
+                          {Number.parseFloat(value.scoreAvg).toFixed(1)}
+                        </StarArea>
+                        <Score size="sm" />
+                      </ReviewArea>
+                    </BuildingContent>
+                  </BuildingContainer>
+                </Link>
+              );
+            })}
+          </div>
+          <ButtonGroup>
+            <Button type={"primary"} label={"리뷰쓰기"} />
+          </ButtonGroup>
+        </PerfectScrollbar>
+      </Container>
+    </AppLayout>
+  );
+}
+
+const Container = styled.div`
+  height: calc(100vh - 112px);
+  background-color: #fafafa !important;
+`;
+
+const BuildingContainer = styled.div`
+  height: 140px;
+  display: flex;
+  border-top: 1px solid var(--gray-4);
+
+  background: var(--white);
+  img {
+    background: var(--gray-1);
+    width: 122px;
+  }
+`;
+const BuildingContent = styled.div`
+  padding: 12px 20px;
+`;
+
+const Chips = styled.div`
+  display: flex;
+  gap: 4px;
+  margin: 9px 0;
+`;
+const ReviewArea = styled.div`
+  display: flex;
+`;
+const StarArea = styled.div`
+  color: var(--primary-1);
+`;
+
+const AddressArea = styled.div`
+  opacity: 0.5;
+
+  width: calc(100vw - 162px);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const ButtonGroup = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 64px;
+`;
+
 // zipcode, addressDetail, preview
-// score 4.3 이면 어떻게 ui 표현?
 // img 늘릴건지, 뒷배경 빈색으로 넣을건지
 // 교통편리만 검정색인 이유?
-// 주소 두줄로 들어가니까 안예쁨..
-// 교통은 code화 시켜야 함
 const data = [
   {
     buildingId: 1,
@@ -116,74 +216,3 @@ const data = [
     isDirectDeal: false,
   },
 ];
-
-// TODO: routing 하기
-export default function BuildingListPage() {
-  return (
-    <AppLayout
-      appBarObject={{ rightIcon: "filter-stroke", headerText: "이 지역 자취방" }}
-    >
-      <Banner>배너영역</Banner>
-      {data.map((value) => {
-        return (
-          <BuildingContainer key={value.buildingId}>
-            <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
-            <BuildingContent>
-              <div className="body-bold-2">{value.name}</div>
-              <AddressArea className="caption-2">{value.address}</AddressArea>
-              <Chips>
-                {value.isDirectDeal && <Chip label={"직거래가능"} />}
-                <Chip label={"교통 편리"} />
-              </Chips>
-              <ReviewArea>
-                <div className="caption-2" style={{ opacity: 0.5, marginRight: 8 }}>
-                  리뷰 {value.reviewCnt}개
-                </div>
-                <StarArea className="caption-bold-2">
-                  {/* util 화 시키기 */}
-                  {Number.parseFloat(value.scoreAvg).toFixed(1)}
-                </StarArea>
-                <Score size="sm" />
-              </ReviewArea>
-            </BuildingContent>
-          </BuildingContainer>
-        );
-      })}
-    </AppLayout>
-  );
-}
-
-const BuildingContainer = styled.div`
-  height: 140px;
-  display: flex;
-  border-bottom: 1px solid var(--gray-4);
-  img {
-    background: var(--gray-1);
-    width: 122px;
-  }
-`;
-const BuildingContent = styled.div`
-  padding: 12px 20px;
-`;
-
-const Chips = styled.div`
-  display: flex;
-  gap: 4px;
-  margin: 9px 0;
-`;
-const ReviewArea = styled.div`
-  display: flex;
-`;
-const StarArea = styled.div`
-  color: var(--primary-1);
-`;
-
-const AddressArea = styled.div`
-  opacity: 0.5;
-
-  width: calc(100vw - 162px);
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;

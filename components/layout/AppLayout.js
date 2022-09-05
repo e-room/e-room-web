@@ -9,12 +9,7 @@ export default function AppLayout({ appBarObject, children }) {
     <>
       <GlobalStyle />
       <AppBar {...appBarObject} />
-      {/* //TODO : map 페이지에 scroll 들어가는거 숨기기 임시조치!!!! */}
-      {appBarObject?.rightIcon === "search" ? (
-        children
-      ) : (
-        <ScrollContent>{children}</ScrollContent>
-      )}
+      <MainContent>{children}</MainContent>
       <NavBar />
     </>
   );
@@ -24,7 +19,6 @@ AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ScrollContent = styled.div`
-  overflow: scroll;
-  height: calc(100vh - 112px);
+const MainContent = styled.div`
+  margin: 56px 0;
 `;

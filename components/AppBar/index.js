@@ -6,40 +6,53 @@ export default function AppBar({ rightIcon, headerText }) {
 
   return (
     <AppBarWrapper>
-      <Box>
-        <Icon icon={"arrow-left"} size="md" />
-      </Box>
-      <Box>
-        {headerText ? (
-          <Header>{headerText}</Header>
-        ) : (
-          <>
-            <Icon icon={"logo-default"} size="lg" />
-            <LogoTitle>
-              <span>e</span>room
-            </LogoTitle>
-          </>
-        )}
-      </Box>
-      <Box>
-        {rightIcon && <Icon icon={rightIcon} size="md" />}
+      <AppBarContainer>
+        <Box>
+          <Icon icon={"arrow-left"} size="md" />
+        </Box>
+        <Box>
+          {headerText ? (
+            <Header>{headerText}</Header>
+          ) : (
+            <>
+              <Icon icon={"logo-default"} size="lg" />
+              <LogoTitle>
+                <span>e</span>room
+              </LogoTitle>
+            </>
+          )}
+        </Box>
+        <Box>
+          {rightIcon && <Icon icon={rightIcon} size="md" />}
 
-        {/* <Icon icon={"search"} size="md" /> */}
-        {/* <Icon icon={"filter-stroke"} size="md" /> */}
-        {/* <Icon icon={"heart-stroke"} size="md" /> */}
-      </Box>
+          {/* <Icon icon={"search"} size="md" /> */}
+          {/* <Icon icon={"filter-stroke"} size="md" /> */}
+          {/* <Icon icon={"heart-stroke"} size="md" /> */}
+        </Box>
+      </AppBarContainer>
     </AppBarWrapper>
   );
 }
 
 const AppBarWrapper = styled.div`
+  width: 100%;
   height: 56px;
-  padding: 0px 16px;
 
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: var(--white);
+  z-index: 99;
+`;
+
+const AppBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 16px;
   box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
+  height: 56px;
 `;
 
 const Box = styled.div`

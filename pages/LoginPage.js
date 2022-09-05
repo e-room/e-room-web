@@ -7,7 +7,7 @@ import AppLayout from "../components/layout/AppLayout";
 
 const LoginWrapper = styled.div`
   margin: 0px 20px;
-  margin-top: 13vh;
+  margin-top: 25vh;
 `;
 
 const LoginIntro = styled.div`

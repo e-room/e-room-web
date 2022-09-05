@@ -7,15 +7,23 @@ import ReviewForm3 from "../components/ReviewForm3";
 import ReviewForm4 from "../components/ReviewForm4";
 import { GlobalContext } from "./_app";
 import { useContext } from "react";
+import LoginPage from "./LoginPage";
 
 export default function ReviewFormPage() {
-  const { reviewStep, setReviewStep } = useContext(GlobalContext);
+  const { reviewStep, setReviewStep, isLogin } = useContext(GlobalContext);
+
+  if (!isLogin) {
+    return <LoginPage />;
+  }
+
   return (
     <AppLayout appBarObject={{ headerText: "리뷰 쓰기" }}>
-      {reviewStep === 0 && <ReviewForm1 />}
-      {reviewStep === 1 && <ReviewForm2 />}
-      {reviewStep === 2 && <ReviewForm3 />}
-      {reviewStep === 3 && <ReviewForm4 />}
+      <Container>
+        {reviewStep === 0 && <ReviewForm1 />}
+        {reviewStep === 1 && <ReviewForm2 />}
+        {reviewStep === 2 && <ReviewForm3 />}
+        {reviewStep === 3 && <ReviewForm4 />}
+      </Container>
       <BottomArea>
         <Button
           label={"다음으로"}
@@ -28,6 +36,15 @@ export default function ReviewFormPage() {
   );
 }
 
+const Container = styled.div``;
 const BottomArea = styled.div`
-  margin: 0px 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 64px;
+
+  button {
+    margin: 0px 20px;
+  }
 `;
