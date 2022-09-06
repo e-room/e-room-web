@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import SocialButton from "../components/button/SocialButton";
 
 import styled from "@emotion/styled";
