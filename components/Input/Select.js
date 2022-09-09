@@ -14,11 +14,8 @@ const options = [
 // TODO: 검색기능 및 여러가지 기능 추가 필요(조사 후 진행)
 // TODO: hover할때 위 아래 네모모양으로 표시됨
 export default function Select({
-  value,
-  onChange,
   placeholder = "필드를 선택해주세요.",
-  width,
-  height,
+  items = [],
   ...props
 }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,13 +48,14 @@ export default function Select({
         </div>
       </SelectField>
       <OptionList visible={isVisible}>
-        {options.map((option) => {
-          return (
-            <Option key={option.value} onClick={() => onOptionChange(option.label)}>
-              {option.label}
-            </Option>
-          );
-        })}
+        {items &&
+          items.map((option) => {
+            return (
+              <Option key={option.value} onClick={() => onOptionChange(option.label)}>
+                {option.label}
+              </Option>
+            );
+          })}
       </OptionList>
     </StyledSelect>
   );

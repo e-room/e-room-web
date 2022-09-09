@@ -1,12 +1,25 @@
 import Text from "../components/Input/Text";
+import Select from "../components/Input/Select";
 import styled from "@emotion/styled";
+import DaumPostCode from "./DaumPostCode";
+import { useState } from "react";
 
 export default function ReviewForm1() {
+  const [postCodeOpen, setPostCodeOpen] = useState(false);
+  const onHandleComplete = (data) => {
+    console.log("data", data);
+  };
+
+  console.log("postCodeOpen", postCodeOpen);
   return (
     <FormWrapper>
       <FormItem>
         <TextLabel>주소</TextLabel>
-        <Text placeholder="도로명 주소로 입력해주세요" />
+        <Text
+          placeholder="도로명 주소로 입력해주세요"
+          onClick={() => setPostCodeOpen(true)}
+        />
+        {postCodeOpen ? <DaumPostCode onComplete={onHandleComplete} /> : ""}
       </FormItem>
       <FormItem>
         <TextLabel>상세주소(호실)</TextLabel>
@@ -27,11 +40,25 @@ export default function ReviewForm1() {
       </FormItem>
       <FormItem>
         <TextLabel>거주기간</TextLabel>
-        <Text />
+        <Select
+          items={[
+            { value: 2022, label: "2022년" },
+            { value: 2021, label: "2021년" },
+            { value: 2020, label: "2020년" },
+            { value: 2019, label: "2019년" },
+            { value: 2018, label: "2018년" },
+          ]}
+        />
       </FormItem>
       <FormItem>
         <TextLabel>거주층</TextLabel>
-        <Text />
+        <Select
+          items={[
+            { value: "low", label: "저층" },
+            { value: "middle", label: "중층" },
+            { value: "high", label: "고층" },
+          ]}
+        />
       </FormItem>
       <FormItem>
         <div style={{ display: "flex", justifyContent: "space-between" }}>

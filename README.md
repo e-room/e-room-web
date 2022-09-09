@@ -6,6 +6,8 @@
 - 스타일: storybook, emotion
 - 타입관리: prop-types
 - 상태관리: recoil
+- 주소검색: react-daum-postcode
+- 환경설정: env-cmd .env
 
 ## 실행
 
