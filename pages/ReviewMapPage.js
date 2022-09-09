@@ -10,9 +10,6 @@ import Button from "../components/Button/Button";
 import Icon from "../components/Icon";
 import AppLayout from "../components/layout/AppLayout";
 
-// TODO: .env 파일 분리하기
-const NEXT_PUBLIC_KAKAO_KEY = "7825714128d19a402fd2f559cd77866c";
-
 const initial = {
   lat: 37.5173319258532,
   lng: 127.047377408384,
@@ -89,7 +86,7 @@ const MainMap = () => {
   return (
     <React.Fragment>
       <Script
-        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${NEXT_PUBLIC_KAKAO_KEY}&autoload=false`}
+        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false`}
         onLoad={() => kakao.maps.load(initMap)}
       />
       <Head>
