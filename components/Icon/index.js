@@ -133,5 +133,5 @@ export default function Icon({ icon, size = "md", fill }) {
 Icon.propTypes = {
   icon: PropTypes.string,
   fill: PropTypes.string,
-  size: PropTypes.oneOf(["sm", "md", "lg"]),
+  size: PropTypes.oneOf(["sm", "md", "lg", "xl"]),
 };
