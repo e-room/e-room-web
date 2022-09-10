@@ -17,8 +17,6 @@ export default function Score({ size = "md" }) {
     setStarValue(stars);
   };
 
-  console.log("starValue", starValue);
-
   return (
     <StyledScore>
       {starValue.map((value, index) => {

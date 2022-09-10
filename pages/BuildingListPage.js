@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Chip from "../components/Chip";
 import Button from "../components/Button/Button";
 import Score from "../components/Input/Score";
+import Icon from "../components/Icon";
 
 import Link from "next/link";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -60,7 +61,15 @@ export default function BuildingListPage() {
             })}
           </div>
           <ButtonGroup>
-            <Button type={"primary"} label={"리뷰쓰기"} />
+            <Link href={"/ReviewFormPage"}>
+              <a>
+                {/* //TODO: icon button기능 추가.. 필요.. */}
+                <Button type={"primary"} size={"sm"}>
+                  <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+                  리뷰 쓰기
+                </Button>
+              </a>
+            </Link>
           </ButtonGroup>
         </PerfectScrollbar>
       </Container>
