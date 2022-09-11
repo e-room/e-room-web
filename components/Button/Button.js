@@ -5,6 +5,8 @@ import { css } from "@emotion/react";
 const StyledButton = styled.button`
   ${(p) => p.sizeStyle}
   ${(p) => p.colorStyle}
+  ${(p) => p.customStyles}
+  
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -66,6 +68,7 @@ export default function Button({
   disabled,
   width,
   children,
+  style,
   ...props
 }) {
   const sizeStyle = SIZES[size];
@@ -77,6 +80,7 @@ export default function Button({
       colorStyle={colorStyle}
       disabled={disabled}
       style={{ width }}
+      customStyles={style}
       {...props}
     >
       {label ?? children}
