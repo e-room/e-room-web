@@ -43,7 +43,7 @@ const NavBarWrapper = styled.div`
   left: 0;
 
   background: var(--white);
-  z-index: 99;
+  z-index: 9;
 `;
 
 const NavBarContainer = styled.div`
