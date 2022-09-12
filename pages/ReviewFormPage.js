@@ -9,7 +9,7 @@ import LoginPage from "./LoginPage";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, reviewStepState } from "../states";
 import { useState } from "react";
-import Popup from "../components/Popup";
+import BottomPopup from "../components/Popup/BottomPopup";
 
 export default function ReviewFormPage() {
   const isLogin = useRecoilValue(isLoginState);
@@ -43,7 +43,7 @@ export default function ReviewFormPage() {
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       {popupVisible ? (
-        <Popup
+        <BottomPopup
           title={"회원님이 생각하는 이 자취방의 총 만족도는?"}
           subTitle={"3.5점"}
           onHideClick={onHideClick}

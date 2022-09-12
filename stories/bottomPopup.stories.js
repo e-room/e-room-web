@@ -1,12 +1,12 @@
-import Popup from "../components/Popup";
+import BottomPopup from "../components/Popup/BottomPopup";
 
 export default {
-  title: "components/Popup/Popup",
-  component: Popup,
+  title: "components/Popup/BottomPopup",
+  component: BottomPopup,
 };
 
 const Template = (args) => {
-  return <Popup {...args} />;
+  return <BottomPopup {...args} />;
 };
 
 export const Default = Template.bind({});

@@ -6,7 +6,7 @@ import Button from "../Button/Button";
 import Icon from "../Icon";
 import { Caption1Bold, SubTitle1 } from "../../styles/typography";
 
-export default function Popup({ title, subTitle, visible = false, onHideClick }) {
+export default function BottomPopup({ title, subTitle, visible = false, onHideClick }) {
   return (
     <Overlay>
       <Container>
@@ -54,11 +54,10 @@ to {
 `;
 
 const Container = styled.div`
-  // bottom: 0;
-  // position: fixed;
+  bottom: 0;
+  position: fixed;
 
-  // TODO: 컨텐츠 길이에 따라 넢이 조절.. 안됨..
-  margin-top: 30vh;
+  animation: ${fadeInUp} 1s;
 `;
 
 const XField = styled.div`
@@ -78,9 +77,7 @@ const StyledPopup = styled.div`
   isolation: isolate;
 
   background: var(--white);
-  border-radius: 32px;
-
-  margin: 0px 20px;
+  border-radius: 32px 32px 0px 0px;
 `;
 
 const Title = styled.div`
