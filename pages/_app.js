@@ -15,7 +15,7 @@ const App = ({ Component, pageProps }) => {
         <link
           rel="stylesheet"
           as="style"
-          crossorigin
+          // crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
         />
         <title>e-room</title>

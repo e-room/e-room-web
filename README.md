@@ -13,7 +13,7 @@
 ## 실행
 
 - storybook: npm run storybook
-- next: npm run dev
+- next: npm run dev ([localhost:3000](http://localhost:3000))
 
 ## 프로젝트 구조
 
@@ -25,5 +25,6 @@
   - index: 메인 페이지(Home)
   - 그 외는 페이지 단위의 구현
 
+- states: 상태관리
 - stories: 작성한 스토리 관련
 - styles: css, global style 관련
