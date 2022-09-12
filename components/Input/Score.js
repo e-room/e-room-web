@@ -22,7 +22,11 @@ export default function Score({ size = "md" }) {
       {starValue.map((value, index) => {
         return (
           <StyledIcon key={index} onClick={() => onStarChange(index)}>
-            <Icon icon={value ? `star-filled` : `star-default`} size={size} />
+            <Icon
+              icon={value ? `star-filled` : `star-default`}
+              size={size}
+              fill={"var(--primary-1)"}
+            />
           </StyledIcon>
         );
       })}

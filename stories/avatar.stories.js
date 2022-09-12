@@ -13,5 +13,5 @@ const Template = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   size: "lg",
-  img: <img src={Img} />,
+  img: Img,
 };

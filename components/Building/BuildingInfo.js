@@ -36,7 +36,14 @@ export default function BuildingInfo() {
     <Container>
       <InfoField>
         <Title>뉴아트빌</Title>
-        <ScoreField>4.0 별별별별별</ScoreField>
+        <ScoreField>
+          <div className="score">4.5</div>
+          <Icon icon={"star-filled"} size={"sm"} />
+          <Icon icon={"star-filled"} size={"sm"} />
+          <Icon icon={"star-filled"} size={"sm"} />
+          <Icon icon={"star-filled"} size={"sm"} />
+          <Icon icon={"star-filled"} size={"sm"} />
+        </ScoreField>
         {/* &gt; = ">" */}
         <AddressField>경기 수원시 영통구 덕영대로 112-3 &gt;</AddressField>
       </InfoField>
@@ -99,6 +106,16 @@ const Title = styled.div`
 const ScoreField = styled.div`
   ${Caption2Bold}
   color: var(--black);
+
+  display: flex;
+  align-items: center;
+
+  .score {
+    margin-right: 6px;
+  }
+  svg {
+    fill: var(--black);
+  }
 `;
 
 const AddressField = styled.div`

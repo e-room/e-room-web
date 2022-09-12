@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 import Score from "../Input/Score";
 import Button from "../Button/Button";
 import Icon from "../Icon";
@@ -42,9 +43,22 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.4);
 `;
 
+const fadeInUp = keyframes`
+0% {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+}
+to {
+  opacity: 1;
+  transform: translateZ(0);
+}
+`;
+
 const Container = styled.div`
   bottom: 0;
   position: fixed;
+
+  animation: ${fadeInUp} 1s;
 `;
 
 const XField = styled.div`

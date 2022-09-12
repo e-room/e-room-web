@@ -19,7 +19,11 @@ const SIZES = {
   lg: 64,
 };
 export default function Avatar({ size = "md", img, children }) {
-  return <StyledAvatar size={SIZES[size]}>{img ?? children}</StyledAvatar>;
+  return (
+    <StyledAvatar size={SIZES[size]}>
+      {img ? <img src={img} width={SIZES[size]} height={SIZES[size]} /> : children}
+    </StyledAvatar>
+  );
 }
 
 Avatar.propTypes = {
