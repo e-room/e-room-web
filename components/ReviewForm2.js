@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Body2Bold } from "../styles/typography";
 import Score from "./Input/Score";
 
 export default function ReviewForm2() {
@@ -52,11 +53,7 @@ const FormWrapper = styled.div`
   text-align: center;
 `;
 const TextLabel = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+  ${Body2Bold}
 
   margin-bottom: 4px;
 `;

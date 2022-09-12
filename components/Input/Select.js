@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ArrowIcon from "../../assets/arrow.svg";
 import { useMemo, useState } from "react";
+import { Body2 } from "../../styles/typography";
 
 const options = [
   { value: "orange", label: "orange" },
@@ -76,12 +77,7 @@ const SelectField = styled.button`
   border-radius: 12px;
   background: transparent;
 
-  /* body/body2 */
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  ${Body2}
 
   .toggle-icon {
     display: flex;
@@ -113,12 +109,7 @@ const Option = styled.button`
   text-align: left;
   padding: 16px;
 
-  /* body/body2 */
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  ${Body2}
 
   &:hover {
     background: var(--gray-4);

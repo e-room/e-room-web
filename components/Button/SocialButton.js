@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../Icon";
+import { Body2Bold } from "../../styles/typography";
 
 const Button = styled.button`
   height: 52px;
@@ -18,11 +19,7 @@ const Button = styled.button`
 
   div {
     width: 100%;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0em;
+    ${Body2Bold}
 
     color: ${(props) => (props.type === "naver" ? `var(--white)` : `var(--black)`)};
   }

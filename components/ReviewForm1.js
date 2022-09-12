@@ -3,6 +3,7 @@ import Select from "../components/Input/Select";
 import styled from "@emotion/styled";
 import DaumPostCode from "./DaumPostCode";
 import { useState } from "react";
+import { Body2Bold } from "../styles/typography";
 
 export default function ReviewForm1() {
   const [postCodeOpen, setPostCodeOpen] = useState(false);
@@ -10,7 +11,6 @@ export default function ReviewForm1() {
     console.log("data", data);
   };
 
-  console.log("postCodeOpen", postCodeOpen);
   return (
     <FormWrapper>
       <FormItem>
@@ -96,11 +96,7 @@ const FormWrapper = styled.div`
   padding: 20px;
 `;
 const TextLabel = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+  ${Body2Bold}
 
   margin-bottom: 4px;
 `;

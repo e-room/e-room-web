@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import AppLayout from "../components/layout/AppLayout";
 import { useRecoilState } from "recoil";
 import { isLoginState } from "../states";
+import { Body2, Title1 } from "../styles/typography";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
@@ -12,16 +13,16 @@ export default function LoginPage() {
     <AppLayout>
       <LoginWrapper>
         <LoginIntro>
-          <div className="title-1 text-black">
+          <Title>
             꿈의 자취방,
             <br />
             이룸에서 이루어드릴게요!
-          </div>
-          <div className="body-2 text-gray-1">
+          </Title>
+          <SubTitle>
             로그인하고 실거주자가 들려주는
             <br />
             자취방 이야기를 들어보세요!
-          </div>
+          </SubTitle>
         </LoginIntro>
         <LoginButtonGroup>
           <SocialButton type="kakao" onClick={() => setIsLogin(true)} />
@@ -58,4 +59,15 @@ const LoginButtonGroup = styled.div`
   button:nth-of-type(2) {
     margin-bottom: 8px;
   }
+`;
+
+const Title = styled.div`
+  ${Title1}
+  color: var(--black)
+`;
+
+const SubTitle = styled.div`
+  ${Body2}
+
+  color: var(--gray-1)
 `;

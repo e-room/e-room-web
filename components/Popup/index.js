@@ -4,6 +4,7 @@ import Score from "../Input/Score";
 import Button from "../Button/Button";
 import Icon from "../Icon";
 import { useState } from "react";
+import { Caption1Bold, SubTitle1 } from "../../styles/typography";
 
 export default function Popup({ title, subTitle, visible = false, onHideClick }) {
   return (
@@ -67,11 +68,7 @@ const StyledPopup = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 28px;
+  ${SubTitle1}
 
   color: var(--black);
 
@@ -80,12 +77,7 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-  /* caption/caption-bold1 */
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  ${Caption1Bold}
 
   text-align: center;
 

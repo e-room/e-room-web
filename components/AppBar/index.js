@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { SubTitle2 } from "../../styles/typography";
 import Icon from "../Icon";
 
 export default function AppBar({ rightIcon, headerText }) {
@@ -63,12 +64,7 @@ const Box = styled.div`
 `;
 
 const Header = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 24px;
-
+  ${SubTitle2}
   text-align: center;
 
   color: var(--black);

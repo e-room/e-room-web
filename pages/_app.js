@@ -12,6 +12,12 @@ const App = ({ Component, pageProps }) => {
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link
+          rel="stylesheet"
+          as="style"
+          crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
+        />
         <title>e-room</title>
       </Head>
       <RecoilRoot>

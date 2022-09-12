@@ -4,6 +4,14 @@ import Icon from "../Icon";
 import BarFilled from "../../assets/icon/bar-filled.svg";
 import BarUnFilled from "../../assets/icon/bar-unfilled.svg";
 import Toggle from "../Input/Toggle";
+import {
+  Body3,
+  Body3Bold,
+  Caption1,
+  Caption1Bold,
+  Caption2Bold,
+  Title1,
+} from "../../styles/typography";
 
 export default function BuildingInfo() {
   const DetailFields = [
@@ -84,39 +92,17 @@ const InfoField = styled.div`
 `;
 
 const Title = styled.div`
-  /* title/title1 */
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 36px;
-
+  ${Title1}
   color: var(--black);
 `;
 
 const ScoreField = styled.div`
-  /* caption/caption-bold2 */
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
-
+  ${Caption2Bold}
   color: var(--black);
 `;
 
 const AddressField = styled.div`
-  /* caption/caption-bold1 */
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-
+  ${Caption1Bold}
   color: var(--primary-1);
 `;
 
@@ -137,23 +123,13 @@ const ButtonField = styled.div`
   }
 
   .btn-title {
-    /* body/body-bold3 */
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 20px;
+    ${Body3Bold}
 
     color: var(--white);
   }
 
   .btn-sub {
-    /* caption/caption-bold2 */
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 16px;
+    ${Caption2Bold}
   }
 `;
 
@@ -169,26 +145,12 @@ const DetailScoreField = styled.div`
 
     .title {
       min-width: 70px;
-
-      /* body/body-bold3 */
-      font-family: "Pretendard";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 20px;
-
+      ${Body3Bold}
       color: var(--black);
     }
     .score {
       min-width: 40px;
-
-      /* body/body-bold3 */
-      font-family: "Pretendard";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-
+      ${Body3}
       color: var(--black);
     }
     .bar {

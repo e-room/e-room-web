@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { FontFamily, FontStyle } from "../../styles/typography";
 
 const StyledButton = styled.button`
   ${(p) => p.sizeStyle}
@@ -16,6 +17,9 @@ const StyledButton = styled.button`
   border-radius: 12px;
 
   cursor: pointer;
+
+  ${FontFamily}
+  ${FontStyle}
 
   height: var(--button-height);
   font-size: var(--button-font-size);

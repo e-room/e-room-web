@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
+import { Body2Bold } from "../styles/typography";
 import Image from "./Input/Image";
 import TextArea from "./Input/TextArea";
 import Toggle from "./Input/Toggle";
@@ -28,11 +29,7 @@ const FormWrapper = styled.div`
   padding: 20px;
 `;
 const TextLabel = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+  ${Body2Bold}
 
   margin-bottom: 4px;
 
