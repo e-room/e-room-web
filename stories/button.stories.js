@@ -1,4 +1,4 @@
-import Button from "../components/Button/Button";
+import Button from "../components/common/atoms/Button";
 
 export default {
   title: "components/Button/Button",

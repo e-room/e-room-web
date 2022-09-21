@@ -1,4 +1,4 @@
-import Score from "../components/Input/Score";
+import Score from "../components/common/atoms//Score";
 
 export default {
   title: "components/Input/Score",

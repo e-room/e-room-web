@@ -1,4 +1,4 @@
-import Popup from "../components/Popup";
+import Popup from "../components/common/atoms/Popup";
 
 export default {
   title: "components/Popup/Popup",

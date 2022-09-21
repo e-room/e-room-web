@@ -1,4 +1,4 @@
-import GroupButton from "../components/Button/GroupButton";
+import GroupButton from "../components/common/atoms/GroupButton";
 
 export default {
   title: "components/Button/GroupButton",

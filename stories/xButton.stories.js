@@ -1,4 +1,4 @@
-import XButton from "../components/Button/XButton";
+import XButton from "../components/common/atoms/XButton";
 
 export default {
   title: "components/Button/XButton",

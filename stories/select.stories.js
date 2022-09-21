@@ -1,4 +1,4 @@
-import Select from "../components/Input/Select";
+import Select from "../components/common/atoms//Select";
 
 export default {
   title: "components/Input/Select",

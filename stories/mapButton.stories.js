@@ -1,4 +1,4 @@
-import MapButton from "../components/Button/MapButton";
+import MapButton from "../components/common/atoms/MapButton";
 
 export default {
   title: "components/Button/MapButton",

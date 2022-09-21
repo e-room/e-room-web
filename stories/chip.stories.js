@@ -1,4 +1,4 @@
-import Chip from "../components/Chip";
+import Chip from "../components/common/atoms/Chip";
 
 export default {
   title: "components/Chip",

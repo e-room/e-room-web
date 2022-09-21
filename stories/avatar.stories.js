@@ -1,4 +1,4 @@
-import Avatar from "../components/Avatar";
+import Avatar from "../components/common/atoms/Avatar";
 import Img from "../assets/avatar/64.png";
 
 export default {

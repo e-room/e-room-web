@@ -1,4 +1,4 @@
-import LocationButton from "../components/Button/LocationButton";
+import LocationButton from "../components/common/atoms/LocationButton";
 
 export default {
   title: "components/Button/LocationButton",

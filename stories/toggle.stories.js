@@ -1,4 +1,4 @@
-import Toggle from "../components/Input/Toggle";
+import Toggle from "../components/common/atoms/Toggle";
 
 export default {
   title: "components/Input/Toggle",

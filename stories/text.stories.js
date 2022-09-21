@@ -1,4 +1,4 @@
-import Text from "../components/Input/Text";
+import Text from "../components/common/atoms/Text";
 
 export default {
   title: "components/Input/Text",

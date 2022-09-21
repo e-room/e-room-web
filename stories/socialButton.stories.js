@@ -1,4 +1,4 @@
-import SocialButton from "../components/Button/SocialButton";
+import SocialButton from "../components/common/atoms/SocialButton";
 
 export default {
   title: "components/Button/SocialButton",

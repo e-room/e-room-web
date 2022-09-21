@@ -1,4 +1,4 @@
-import Image from "../components/Input/Image";
+import Image from "../components/common/atoms/Image";
 
 export default {
   title: "components/Input/Image",
