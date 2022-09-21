@@ -1,4 +1,4 @@
-import AppLayout from "../components/layout/AppLayout";
+import AppLayout from "../components/common/AppLayout";
 
 import { useRecoilState } from "recoil";
 import { pageNameState } from "../states";

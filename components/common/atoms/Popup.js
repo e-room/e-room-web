@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import Score from "../Input/Score";
-import Button from "../Button/Button";
-import Icon from "../Icon";
-import { Caption1Bold, SubTitle1 } from "../../styles/typography";
+import Score from "../atoms/Score";
+import Button from "../atoms/Button";
+import Icon from "../atoms/Icon";
+import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
 
 export default function Popup({ title, subTitle, visible = false, onHideClick }) {
   return (

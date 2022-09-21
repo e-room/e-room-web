@@ -1,9 +1,9 @@
-import AppLayout from "../components/layout/AppLayout";
 import styled from "@emotion/styled";
-import Chip from "../components/Chip";
-import Button from "../components/Button/Button";
-import Score from "../components/Input/Score";
-import Icon from "../components/Icon";
+import AppLayout from "../components/common/AppLayout";
+import Chip from "../components/common/atoms/Chip";
+import Button from "../components/common/atoms/Button";
+import Score from "../components/common/atoms/Score";
+import Icon from "../components/common/atoms/Icon";
 
 import Link from "next/link";
 import PerfectScrollbar from "react-perfect-scrollbar";

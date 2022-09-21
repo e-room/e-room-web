@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { SubTitle2 } from "../../styles/typography";
-import Icon from "../Icon";
+import Icon from "../common/atoms/Icon";
 
-export default function AppBar({ rightIcon, headerText }) {
+export default function Header({ rightIcon, headerText }) {
   const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
 
   return (
@@ -13,7 +13,7 @@ export default function AppBar({ rightIcon, headerText }) {
         </Box>
         <Box>
           {headerText ? (
-            <Header>{headerText}</Header>
+            <HeaderTitle>{headerText}</HeaderTitle>
           ) : (
             <>
               <Icon icon={"logo-default"} size="lg" />
@@ -63,7 +63,7 @@ const Box = styled.div`
   min-width: 24px;
 `;
 
-const Header = styled.div`
+const HeaderTitle = styled.div`
   ${SubTitle2}
   text-align: center;
 

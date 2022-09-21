@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Body2Bold } from "../styles/typography";
-import Score from "./Input/Score";
+import { Body2Bold } from "../../styles/typography";
+import Score from "../common/atoms/Score";
 
 export default function ReviewForm2() {
   return (

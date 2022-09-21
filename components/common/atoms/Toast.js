@@ -3,6 +3,21 @@ import styled from "@emotion/styled";
 import Icon from "../Icon";
 import { css } from "@emotion/react";
 
+export default function Toast({ type = "normal", message, children }) {
+  const colorStyle = COLORS[type];
+  return (
+    <StyledToast colorStyle={colorStyle}>
+      <Icon icon={ICONS[type]} size="md" />
+      <div>{message ?? children}</div>
+    </StyledToast>
+  );
+}
+
+Toast.propTypes = {
+  type: PropTypes.oneOf(["normal", "success", "danger"]),
+  message: PropTypes.string,
+};
+
 const StyledToast = styled.div`
   ${(p) => p.colorStyle}
 
@@ -54,19 +69,4 @@ const COLORS = {
     --toast-bg-color: var(--white);
     --toast-color: var(--danger);
   `,
-};
-
-export default function Toast({ type = "normal", message, children }) {
-  const colorStyle = COLORS[type];
-  return (
-    <StyledToast colorStyle={colorStyle}>
-      <Icon icon={ICONS[type]} size="md" />
-      <div>{message ?? children}</div>
-    </StyledToast>
-  );
-}
-
-Toast.propTypes = {
-  type: PropTypes.oneOf(["normal", "success", "danger"]),
-  message: PropTypes.string,
 };

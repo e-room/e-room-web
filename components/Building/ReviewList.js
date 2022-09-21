@@ -6,10 +6,10 @@ import {
   Caption1Bold,
   Caption2Bold,
 } from "../../styles/typography";
-import Avatar from "../Avatar";
+import Avatar from "../common/atoms/Avatar";
 import Avatar24 from "../../assets/avatar/24.png";
-import Icon from "../Icon";
-import Chip from "../Chip";
+import Icon from "../common/atoms/Icon";
+import Chip from "../common/atoms/Chip";
 
 export default function ReviewList() {
   return (

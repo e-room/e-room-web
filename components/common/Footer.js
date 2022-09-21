@@ -1,11 +1,37 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import Link from "next/link";
-import Icon from "../Icon";
+import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
-import { navItems } from "./navItems";
 
-export default function NavBar() {
+const navItems = [
+  {
+    path: "/ReviewMapPage",
+    defaultIcon: "home-stroke",
+    activeIcon: "home-fill",
+    title: "둘러보기",
+  },
+  {
+    path: "/ReviewFormPage",
+    defaultIcon: "pencil-fill",
+    activeIcon: "pencil-fill",
+    title: "리뷰쓰기",
+  },
+  {
+    path: "/HeartListPage",
+    defaultIcon: "heart-stroke",
+    activeIcon: "heart-fill",
+    title: "찜목록",
+  },
+  {
+    path: "/MyPage",
+    defaultIcon: "mypage",
+    activeIcon: "mypage",
+    title: "내정보",
+  },
+];
+
+export default function Footer() {
   // TODO: home-stroke fill color 임시조치. 파일에서 직접 수정함
   const router = useRouter();
   const { pathname } = router;

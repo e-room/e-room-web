@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import AppLayout from "../../components/layout/AppLayout";
+import AppLayout from "../../components/common/AppLayout";
 import styled from "@emotion/styled";
 import BuildingInfo from "../../components/Building/BuildingInfo";
 import ImageView from "../../components/Building/ImageView";

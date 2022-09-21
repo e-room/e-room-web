@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import Icon from "../Icon";
+import Icon from "../atoms/Icon";
 import { useRef } from "react";
-import { Caption1Bold } from "../../styles/typography";
+import { Caption1Bold } from "../../../styles/typography";
 
 export default function Image({ multiple = false }) {
   const fileInputRef = useRef(null);

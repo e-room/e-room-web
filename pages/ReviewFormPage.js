@@ -1,15 +1,16 @@
-import AppLayout from "../components/layout/AppLayout";
-import Button from "../components/Button/Button";
+import AppLayout from "../components/common/AppLayout";
+import Button from "../components/common/atoms/Button";
 import styled from "@emotion/styled";
-import ReviewForm1 from "../components/ReviewForm1";
-import ReviewForm2 from "../components/ReviewForm2";
-import ReviewForm3 from "../components/ReviewForm3";
-import ReviewForm4 from "../components/ReviewForm4";
+import ReviewForm1 from "../components/review/ReviewForm1";
+import ReviewForm2 from "../components/review/ReviewForm2";
+import ReviewForm3 from "../components/review/ReviewForm3";
+import ReviewForm4 from "../components/review/ReviewForm4";
 import LoginPage from "./LoginPage";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginState, reviewStepState } from "../states";
+import { isLoginState } from "../states";
+import { reviewStepState } from "../states/reviewFormAtom";
 import { useState } from "react";
-import BottomPopup from "../components/Popup/BottomPopup";
+import BottomPopup from "../components/common/atoms/BottomPopup";
 
 export default function ReviewFormPage() {
   const isLogin = useRecoilValue(isLoginState);

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import ArrowIcon from "../../assets/arrow.svg";
+import ArrowIcon from "../../../assets/arrow.svg";
 import { useMemo, useState } from "react";
-import { Body2 } from "../../styles/typography";
+import { Body2 } from "../../../styles/typography";
 
 const options = [
   { value: "orange", label: "orange" },

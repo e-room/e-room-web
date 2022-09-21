@@ -1,7 +1,7 @@
-import SocialButton from "../components/button/SocialButton";
+import SocialButton from "../components/common/atoms/SocialButton";
 
 import styled from "@emotion/styled";
-import AppLayout from "../components/layout/AppLayout";
+import AppLayout from "../components/common/AppLayout";
 import { useRecoilState } from "recoil";
 import { isLoginState } from "../states";
 import { Body2, Title1 } from "../styles/typography";

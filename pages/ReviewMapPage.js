@@ -3,12 +3,12 @@ import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
 import styled from "@emotion/styled";
-import LocationButton from "../components/Button/LocationButton";
-import GroupButton from "../components/Button/GroupButton";
-import MapButton from "../components/Button/MapButton";
-import Button from "../components/Button/Button";
-import Icon from "../components/Icon";
-import AppLayout from "../components/layout/AppLayout";
+import LocationButton from "../components/common/atoms/LocationButton";
+import GroupButton from "../components/common/atoms/GroupButton";
+import MapButton from "../components/common/atoms/MapButton";
+import Button from "../components/common/atoms/Button";
+import Icon from "../components/common/atoms/Icon";
+import AppLayout from "../components/common/AppLayout";
 
 const initial = {
   lat: 37.5173319258532,

@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 import { GlobalStyle } from "../../styles/globalStyle";
 import styled from "@emotion/styled";
-import AppBar from "../AppBar";
-import NavBar from "../NavBar";
+import Header from "../common/Header";
+import Footer from "../common/Footer";
 
 export default function AppLayout({ appBarObject, children }) {
   return (
     <>
       <GlobalStyle />
-      <AppBar {...appBarObject} />
+      <Header {...appBarObject} />
       <MainContent>{children}</MainContent>
-      <NavBar />
+      <Footer />
     </>
   );
 }

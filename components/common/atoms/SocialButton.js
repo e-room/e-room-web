@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import Icon from "../Icon";
-import { Body2Bold } from "../../styles/typography";
+import Icon from "../atoms/Icon";
+import { Body2Bold } from "../../../styles/typography";
 
 const Button = styled.button`
   height: 52px;

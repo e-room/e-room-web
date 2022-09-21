@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import Button from "../Button/Button";
-import Icon from "../Icon";
+import Button from "../common/atoms/Button";
+import Icon from "../common/atoms/Icon";
 import BarFilled from "../../assets/icon/bar-filled.svg";
 import BarUnFilled from "../../assets/icon/bar-unfilled.svg";
-import Toggle from "../Input/Toggle";
+import Toggle from "../common/atoms/Toggle";
 import {
   Body3,
   Body3Bold,

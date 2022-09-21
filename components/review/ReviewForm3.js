@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { KEYWORD_STATES } from "../codes/codeType";
-import { Body2Bold } from "../styles/typography";
-import TextArea from "./Input/TextArea";
-import Toggle from "./Input/Toggle";
+import { KEYWORD_STATES } from "../../codes/codeType";
+import { Body2Bold } from "../../styles/typography";
+import TextArea from "../common/atoms/TextArea";
+import Toggle from "../common/atoms/Toggle";
 
 export default function ReviewForm3() {
   const [myKeywords, setMyKeywords] = useState({

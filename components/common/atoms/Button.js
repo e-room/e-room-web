@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { FontFamily, FontStyle } from "../../styles/typography";
+import { FontFamily, FontStyle } from "../../../styles/typography";
 
 const StyledButton = styled.button`
   ${(p) => p.sizeStyle}

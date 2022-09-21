@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import Icon from "../Icon";
+import Icon from "../atoms/Icon";
 
 const StyledMapButton = styled.button`
   box-sizing: border-box;

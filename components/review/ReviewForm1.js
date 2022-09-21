@@ -1,9 +1,9 @@
-import Text from "../components/Input/Text";
-import Select from "../components/Input/Select";
+import Text from "../common/atoms/Text";
+import Select from "../common/atoms/Select";
 import styled from "@emotion/styled";
-import DaumPostCode from "./DaumPostCode";
+import DaumPostCode from "../common/atoms/DaumPostCode";
 import { useState } from "react";
-import { Body2Bold } from "../styles/typography";
+import { Body2Bold } from "../../styles/typography";
 
 export default function ReviewForm1() {
   const [postCodeOpen, setPostCodeOpen] = useState(false);
