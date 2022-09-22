@@ -25,7 +25,7 @@ export default function ReviewFormPage() {
   }
 
   const onNextButtonClick = () => {
-    if (reviewStep === 3) {
+    if (reviewStep === 4) {
       setPopupVisible(true);
     } else {
       setReviewStep(reviewStep + 1);
@@ -36,10 +36,15 @@ export default function ReviewFormPage() {
     <>
       <AppLayout appBarObject={{ headerText: "리뷰 쓰기" }}>
         <Container>
-          {reviewStep === 0 && <ReviewForm1 />}
-          {reviewStep === 1 && <ReviewForm2 />}
-          {reviewStep === 2 && <ReviewForm3 />}
-          {reviewStep === 3 && <ReviewForm4 />}
+          <StepBar>
+            <CurrentStep width={(reviewStep / 5) * 100} />
+            <RemainingStep width={100 - (reviewStep / 5) * 100} />
+          </StepBar>
+
+          {reviewStep === 1 && <ReviewForm1 />}
+          {reviewStep === 2 && <ReviewForm2 />}
+          {reviewStep === 3 && <ReviewForm3 />}
+          {reviewStep === 4 && <ReviewForm4 />}
         </Container>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
@@ -56,7 +61,6 @@ export default function ReviewFormPage() {
             size="md"
             width={"100%"}
             onClick={onNextButtonClick}
-            // onClick={() => setReviewStep(reviewStep + 1)}
           />
         </BottomArea>
       )}
@@ -65,6 +69,19 @@ export default function ReviewFormPage() {
 }
 
 const Container = styled.div``;
+const StepBar = styled.div`
+  display: flex;
+`;
+const CurrentStep = styled.div`
+  height: 4px;
+  background: var(--primary-1);
+  width: ${({ width }) => `${width}%`};
+`;
+const RemainingStep = styled.div`
+  height: 4px;
+  background: var(--primary-5);
+  width: ${({ width }) => `${width}%`};
+`;
 const BottomArea = styled.div`
   width: 100%;
   display: flex;

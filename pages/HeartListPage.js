@@ -9,7 +9,7 @@ import { Body2Bold } from "../styles/typography";
 import CheckBox from "../components/common/atoms/CheckBox";
 
 export default function HeartListPage() {
-  const [popupVisible, setPopupVisible] = useState(true);
+  const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
     setPopupVisible(false);
   };
@@ -20,7 +20,6 @@ export default function HeartListPage() {
       <div onClick={() => setPopupVisible(true)}>버튼!!</div>
       {popupVisible && (
         <Popup
-          onHideClick={onHideClick}
           title={
             <>
               <Icon icon={"filter-stroke"} />
@@ -34,7 +33,13 @@ export default function HeartListPage() {
             <CheckBox />
           </Contents>
           <ButtonGroup>
-            <Button label={"취소"} size={"sm"} type={"secondary"} width={"100%"} />
+            <Button
+              label={"취소"}
+              size={"sm"}
+              type={"secondary"}
+              width={"100%"}
+              onClick={onHideClick}
+            />
             <Button label={"필터 적용하기"} size={"sm"} type={"primary"} width={"100%"} />
           </ButtonGroup>
         </Popup>

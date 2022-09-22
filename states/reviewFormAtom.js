@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const reviewStepState = atom({
   key: "reviewStepState",
-  default: 0,
+  default: 1,
 });
 
 export const reviewFormState = atom({

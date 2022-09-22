@@ -12,6 +12,7 @@ import {
   Caption2Bold,
   Title1,
 } from "../../styles/typography";
+import { useState } from "react";
 
 export default function BuildingInfo() {
   const DetailFields = [
@@ -32,6 +33,17 @@ export default function BuildingInfo() {
     { label: "505호", value: "505" },
   ];
 
+  const formValue = {
+    address: "경기 수원시 영통구 덕영대로 112-3",
+  };
+
+  const [toastVisible, setToastVisible] = useState(false);
+  const onCopyAddress = (copyText) => {
+    navigator.clipboard.writeText(copyText).then(() => {
+      setToastVisible(true);
+    });
+  };
+
   return (
     <Container>
       <InfoField>
@@ -45,7 +57,9 @@ export default function BuildingInfo() {
           <Icon icon={"star-filled"} size={"sm"} />
         </ScoreField>
         {/* &gt; = ">" */}
-        <AddressField>경기 수원시 영통구 덕영대로 112-3 &gt;</AddressField>
+        <AddressField onClick={() => onCopyAddress(formValue.address)}>
+          {formValue.address} &gt;
+        </AddressField>
       </InfoField>
       <Button style={{ margin: "18px 0" }}>
         <ButtonField>
