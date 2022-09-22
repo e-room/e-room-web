@@ -9,6 +9,9 @@ import MapButton from "../components/common/atoms/MapButton";
 import Button from "../components/common/atoms/Button";
 import Icon from "../components/common/atoms/Icon";
 import AppLayout from "../components/common/AppLayout";
+import Popup from "../components/common/atoms/Popup";
+import { Body2Bold } from "../styles/typography";
+import CheckBox from "../components/common/atoms/CheckBox";
 
 const initial = {
   lat: 37.5173319258532,
@@ -83,6 +86,11 @@ const MainMap = () => {
     map.current.setLevel(map.current.getLevel() + 1);
   };
 
+  const [popupVisible, setPopupVisible] = useState(false);
+  const onHideClick = () => {
+    setPopupVisible(false);
+  };
+
   return (
     <React.Fragment>
       <Script
@@ -94,10 +102,41 @@ const MainMap = () => {
         <link rel="dns-prefetch" href="https://dapi.kakao.com" />
       </Head>
       <AppLayout appBarObject={{ rightIcon: "search" }}>
+        {popupVisible && (
+          <Popup
+            title={
+              <>
+                <Icon icon={"filter-stroke"} />
+                <div style={{ marginLeft: 8 }}>필터</div>
+              </>
+            }
+            titleAlign={"left"}
+          >
+            <Contents>
+              <SubText>직거래 가능한 방만 보기</SubText>
+              <CheckBox />
+            </Contents>
+            <ButtonGroup>
+              <Button
+                label={"취소"}
+                size={"sm"}
+                type={"secondary"}
+                width={"100%"}
+                onClick={onHideClick}
+              />
+              <Button
+                label={"필터 적용하기"}
+                size={"sm"}
+                type={"primary"}
+                width={"100%"}
+              />
+            </ButtonGroup>
+          </Popup>
+        )}
         <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
         <MapContainer>
           <FilterItem>
-            <MapButton />
+            <MapButton onClick={() => setPopupVisible(true)} />
           </FilterItem>
           <GroupItem>
             <GroupButton
@@ -169,6 +208,22 @@ const ButtonItem = styled.div`
   display: flex;
   justify-content: center;
   z-index: 2;
+  gap: 8px;
+`;
+const Contents = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+`;
+
+const SubText = styled.div`
+  ${Body2Bold}
+  color: var(--black);
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
   gap: 8px;
 `;
 

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import Icon from "../Icon";
+import Icon from "../atoms/Icon";
 import { css } from "@emotion/react";
 
 export default function Toast({ type = "normal", message, children }) {

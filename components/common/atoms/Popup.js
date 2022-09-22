@@ -1,34 +1,39 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import Score from "../atoms/Score";
-import Button from "../atoms/Button";
 import Icon from "../atoms/Icon";
-import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
+import { SubTitle1 } from "../../../styles/typography";
 
-export default function Popup({ title, subTitle, visible = false, onHideClick }) {
+export default function Popup({
+  title,
+  titleAlign = "center",
+  visible = false,
+  onHideClick,
+  children,
+}) {
   return (
     <Overlay>
       <Container>
-        <XField>
+        {/* <XField>
           <div onClick={onHideClick}>
             <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
           </div>
-        </XField>
+        </XField> */}
         <StyledPopup visible={visible}>
-          <Title>{title}</Title>
-          <div>
-            <Score size={"xl"} />
-          </div>
-          <SubTitle>{subTitle}</SubTitle>
-          <ButtonGroup>
-            <Button label={"Label"} size="md" width={"100%"} />
-          </ButtonGroup>
+          <Title align={titleAlign}>{title}</Title>
+          {children}
         </StyledPopup>
       </Container>
     </Overlay>
   );
 }
+
+Popup.propTypes = {
+  title: PropTypes.string,
+  titleAlign: PropTypes.oneOf(["center", "left", "right"]),
+  visible: PropTypes.bool,
+  onHideClick: PropTypes.func,
+};
 
 const Overlay = styled.div`
   width: 100vw;
@@ -54,11 +59,11 @@ to {
 `;
 
 const Container = styled.div`
-  // bottom: 0;
-  // position: fixed;
+  height: 100%;
 
-  // TODO: 컨텐츠 길이에 따라 넢이 조절.. 안됨..
-  margin-top: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const XField = styled.div`
@@ -72,10 +77,11 @@ const XField = styled.div`
 const StyledPopup = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 32px 20px 20px;
   gap: 16px;
   isolation: isolate;
+
+  width: 100%;
 
   background: var(--white);
   border-radius: 32px;
@@ -88,18 +94,7 @@ const Title = styled.div`
 
   color: var(--black);
 
-  padding: 0 65px;
-  text-align: center;
-`;
-
-const SubTitle = styled.div`
-  ${Caption1Bold}
-
-  text-align: center;
-
-  color: var(--black);
-`;
-
-const ButtonGroup = styled.div`
-  width: 100%;
+  text-align: ${(p) => p.align};
+  display: flex;
+  align-items: center;
 `;
