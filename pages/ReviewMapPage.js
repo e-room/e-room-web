@@ -150,7 +150,6 @@ const MainMap = () => {
             <LocationButton onClick={setMyPosition} />
           </LocationItem>
           <ButtonItem>
-            {/* TODO: href === page name 필수인지 확인하기 */}
             <Link href={"/BuildingListPage"}>
               <a>
                 <Button
