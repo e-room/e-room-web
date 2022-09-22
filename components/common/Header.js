@@ -1,14 +1,17 @@
 import styled from "@emotion/styled";
 import { SubTitle2 } from "../../styles/typography";
 import Icon from "../common/atoms/Icon";
+import { useRouter } from "next/router";
 
 export default function Header({ rightIcon, headerText }) {
+  const router = useRouter();
+
   const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
 
   return (
     <AppBarWrapper>
       <AppBarContainer>
-        <Box>
+        <Box onClick={() => router.back()}>
           <Icon icon={"arrow-left"} size="md" />
         </Box>
         <Box>
