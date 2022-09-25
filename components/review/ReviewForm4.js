@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { Body2Bold } from "../../styles/typography";
-import Image from "../common/atoms//Image";
+import Image from "../common/atoms/Image";
 import TextArea from "../common/atoms/TextArea";
 import Toggle from "../common/atoms/Toggle";
 
