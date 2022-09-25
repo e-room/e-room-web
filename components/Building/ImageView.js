@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { Body1Bold } from "../../styles/typography";
-import flower1 from "./1.jpg";
-import flower2 from "./2.jpg";
-import flower3 from "./3.jpg";
-import flower4 from "./4.jpg";
-import flower5 from "./5.jpg";
-import flower6 from "./6.jpg";
+import flower1 from "./dummyImg/1.jpg";
+import flower2 from "./dummyImg/2.jpg";
+import flower3 from "./dummyImg/3.jpg";
+import flower4 from "./dummyImg/4.jpg";
+import flower5 from "./dummyImg/5.jpg";
+import flower6 from "./dummyImg/6.jpg";
 
 export default function ImageView() {
   const images = [flower1, flower2, flower3, flower4, flower5, flower6];

@@ -26,13 +26,7 @@ export default function Header({ rightIcon, headerText }) {
             </>
           )}
         </Box>
-        <Box>
-          {rightIcon && <Icon icon={rightIcon} size="md" />}
-
-          {/* <Icon icon={"search"} size="md" /> */}
-          {/* <Icon icon={"filter-stroke"} size="md" /> */}
-          {/* <Icon icon={"heart-stroke"} size="md" /> */}
-        </Box>
+        <Box>{rightIcon && <Icon icon={rightIcon} size="md" />}</Box>
       </AppBarContainer>
     </AppBarWrapper>
   );

@@ -1,20 +1,13 @@
 import styled from "@emotion/styled";
 import AppLayout from "../components/common/AppLayout";
-import Chip from "../components/common/atoms/Chip";
 import Button from "../components/common/atoms/Button";
-import Score from "../components/common/atoms/Score";
 import Icon from "../components/common/atoms/Icon";
 
 import Link from "next/link";
 import PerfectScrollbar from "react-perfect-scrollbar";
-
-// import { useRecoilState } from "recoil";
-// import { textState } from "../states";
+import BuildingList from "../components/building/BuildingList";
 
 export default function BuildingListPage() {
-  // const [text, setText] = useRecoilState(textState);
-
-  // console.log("pageName", text);
   return (
     <AppLayout
       appBarObject={{ rightIcon: "filter-stroke", headerText: "이 지역 자취방" }}
@@ -22,43 +15,8 @@ export default function BuildingListPage() {
       <Container>
         <PerfectScrollbar>
           <div style={{ paddingBottom: 150 }}>
-            <Banner
-            // onClick={() => {
-            //   setText("BuildingListPage");
-            // }}
-            >
-              배너영역
-            </Banner>
-            {data.map((value) => {
-              return (
-                <Link href={`/ReviewDetail/${value.buildingId}`} key={value.buildingId}>
-                  <BuildingContainer>
-                    <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
-                    <BuildingContent>
-                      <div className="body-bold-2">{value.name}</div>
-                      <AddressArea className="caption-2">{value.address}</AddressArea>
-                      <Chips>
-                        {value.isDirectDeal && <Chip label={"직거래가능"} />}
-                        <Chip label={"교통 편리"} />
-                      </Chips>
-                      <ReviewArea>
-                        <div
-                          className="caption-2"
-                          style={{ opacity: 0.5, marginRight: 8 }}
-                        >
-                          리뷰 {value.reviewCnt}개
-                        </div>
-                        <StarArea className="caption-bold-2">
-                          {/* util 화 시키기 */}
-                          {Number.parseFloat(value.scoreAvg).toFixed(1)}
-                        </StarArea>
-                        <Score size="sm" />
-                      </ReviewArea>
-                    </BuildingContent>
-                  </BuildingContainer>
-                </Link>
-              );
-            })}
+            <Banner>배너영역</Banner>
+            <BuildingList data={data} />
           </div>
           <ButtonGroup>
             <Link href={"/ReviewFormPage"}>
@@ -80,43 +38,6 @@ export default function BuildingListPage() {
 const Container = styled.div`
   height: calc(100vh - 112px);
   background-color: #fafafa !important;
-`;
-
-const BuildingContainer = styled.div`
-  height: 140px;
-  display: flex;
-  border-top: 1px solid var(--gray-4);
-
-  background: var(--white);
-  img {
-    background: var(--gray-1);
-    width: 122px;
-  }
-`;
-const BuildingContent = styled.div`
-  padding: 12px 20px;
-`;
-
-const Chips = styled.div`
-  display: flex;
-  gap: 4px;
-  margin: 9px 0;
-`;
-const ReviewArea = styled.div`
-  display: flex;
-`;
-const StarArea = styled.div`
-  color: var(--primary-1);
-`;
-
-const AddressArea = styled.div`
-  opacity: 0.5;
-
-  width: calc(100vw - 162px);
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 `;
 
 const ButtonGroup = styled.div`

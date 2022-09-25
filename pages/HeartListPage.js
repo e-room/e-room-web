@@ -1,66 +1,123 @@
-import { useState } from "react";
-import AppLayout from "../components/common/AppLayout";
-import Button from "../components/common/atoms/Button";
-import Icon from "../components/common/atoms/Icon";
-import Popup from "../components/common/atoms/Popup";
-
 import styled from "@emotion/styled";
-import { Body2Bold } from "../styles/typography";
-import CheckBox from "../components/common/atoms/CheckBox";
+import PerfectScrollbar from "react-perfect-scrollbar";
+
+import AppLayout from "../components/common/AppLayout";
+import BuildingList from "../components/building/BuildingList";
 
 export default function HeartListPage() {
-  const [popupVisible, setPopupVisible] = useState(false);
-  const onHideClick = () => {
-    setPopupVisible(false);
-  };
-
   return (
     <AppLayout appBarObject={{ headerText: "찜한 자취방" }}>
-      찜 목록
-      <div onClick={() => setPopupVisible(true)}>버튼!!</div>
-      {popupVisible && (
-        <Popup
-          title={
-            <>
-              <Icon icon={"filter-stroke"} />
-              <div style={{ marginLeft: 8 }}>필터</div>
-            </>
-          }
-          titleAlign={"left"}
-        >
-          <Contents>
-            <SubText>직거래 가능한 방만 보기</SubText>
-            <CheckBox />
-          </Contents>
-          <ButtonGroup>
-            <Button
-              label={"취소"}
-              size={"sm"}
-              type={"secondary"}
-              width={"100%"}
-              onClick={onHideClick}
-            />
-            <Button label={"필터 적용하기"} size={"sm"} type={"primary"} width={"100%"} />
-          </ButtonGroup>
-        </Popup>
-      )}
+      <Container>
+        <PerfectScrollbar>
+          <BuildingList data={data} />
+        </PerfectScrollbar>
+      </Container>
     </AppLayout>
   );
 }
-
-const Contents = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6px;
+const Container = styled.div`
+  height: calc(100vh - 112px);
+  background-color: #fafafa !important;
 `;
 
-const SubText = styled.div`
-  ${Body2Bold}
-  color: var(--black);
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 8px;
-`;
+const data = [
+  {
+    buildingId: 1,
+    name: "프라다빌", // 건물 이름
+    address: "대전광역시 유성구 어은동 103-1", // 상세 주소
+    reviewCnt: 20, // 리뷰 개수
+    scoreAvg: 4.3, // 평균 점수
+    bestCategory: {
+      description: "교통", //대표 장점
+    },
+    isDirectDeal: true, // 직거래 여부
+  },
+  {
+    buildingId: 2,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 3,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 4,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 5,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 6,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 7,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 8,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+  {
+    buildingId: 9,
+    name: "구찌빌",
+    address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
+    reviewCnt: 22,
+    scoreAvg: 3.0,
+    bestCategory: {
+      description: "건물 및 단지",
+    },
+    isDirectDeal: false,
+  },
+];
