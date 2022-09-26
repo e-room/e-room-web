@@ -29,7 +29,7 @@ export default function Popup({
 }
 
 Popup.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   titleAlign: PropTypes.oneOf(["center", "left", "right"]),
   visible: PropTypes.bool,
   onHideClick: PropTypes.func,

@@ -28,5 +28,5 @@ export default function Avatar({ size = "md", img, children }) {
 
 Avatar.propTypes = {
   size: PropTypes.oneOf(["md", "lg"]),
-  img: PropTypes.element,
+  // img: PropTypes.element,
 };
