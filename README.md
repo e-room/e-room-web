@@ -5,10 +5,11 @@
 - 코어: react, next.js
 - 스타일: storybook, emotion
 - 타입관리: prop-types
-- 상태관리: recoil
+- 상태관리: recoil, react-query
 - 주소검색: react-daum-postcode
 - 환경설정: env-cmd .env
 - 폰트: [pretendard](https://github.com/orioncactus/pretendard)
+-
 
 ## 실행
 
