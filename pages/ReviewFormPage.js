@@ -10,6 +10,7 @@ import { useRecoilValue } from "recoil";
 import { useState } from "react";
 import BottomPopup from "../components/common/atoms/BottomPopup";
 import { loginState } from "../states/authAtom";
+import { keyframes } from "@emotion/react";
 
 export default function ReviewFormPage() {
   const { status: isLogin } = useRecoilValue(loginState);
@@ -40,10 +41,26 @@ export default function ReviewFormPage() {
             <RemainingStep width={100 - (reviewStep / 5) * 100} />
           </StepBar>
 
-          {reviewStep === 1 && <ReviewForm1 />}
-          {reviewStep === 2 && <ReviewForm2 />}
-          {reviewStep === 3 && <ReviewForm3 />}
-          {reviewStep === 4 && <ReviewForm4 />}
+          {reviewStep === 1 && (
+            <FadeInUpBox>
+              <ReviewForm1 />
+            </FadeInUpBox>
+          )}
+          {reviewStep === 2 && (
+            <FadeInUpBox>
+              <ReviewForm2 />
+            </FadeInUpBox>
+          )}
+          {reviewStep === 3 && (
+            <FadeInUpBox>
+              <ReviewForm3 />
+            </FadeInUpBox>
+          )}
+          {reviewStep === 4 && (
+            <FadeInUpBox>
+              <ReviewForm4 />
+            </FadeInUpBox>
+          )}
         </Container>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
@@ -66,6 +83,22 @@ export default function ReviewFormPage() {
     </>
   );
 }
+
+const fadeInUp = keyframes`
+0% {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+}
+to {
+  opacity: 1;
+  transform: translateZ(0);
+}
+`;
+
+const FadeInUpBox = styled.div`
+  bottom: 0;
+  animation: ${fadeInUp} 1s;
+`;
 
 const Container = styled.div``;
 const StepBar = styled.div`
