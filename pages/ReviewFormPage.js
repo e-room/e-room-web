@@ -6,15 +6,14 @@ import ReviewForm2 from "../components/review/ReviewForm2";
 import ReviewForm3 from "../components/review/ReviewForm3";
 import ReviewForm4 from "../components/review/ReviewForm4";
 import LoginPage from "./LoginPage";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginState } from "../states";
-import { reviewStepState } from "../states/reviewFormAtom";
+import { useRecoilValue } from "recoil";
 import { useState } from "react";
 import BottomPopup from "../components/common/atoms/BottomPopup";
+import { loginState } from "../states/authAtom";
 
 export default function ReviewFormPage() {
-  const isLogin = useRecoilValue(isLoginState);
-  const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
+  const { status: isLogin } = useRecoilValue(loginState);
+  const [reviewStep, setReviewStep] = useState(1);
   const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
     setPopupVisible(false);

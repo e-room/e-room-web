@@ -2,12 +2,16 @@ import SocialButton from "../components/common/atoms/SocialButton";
 
 import styled from "@emotion/styled";
 import AppLayout from "../components/common/AppLayout";
-import { useRecoilState } from "recoil";
-import { isLoginState } from "../states";
+import { useSetRecoilState } from "recoil";
 import { Body2, Title1 } from "../styles/typography";
+import { loginState } from "../states/authAtom";
 
 export default function LoginPage() {
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const setLoginState = useSetRecoilState(loginState);
+
+  const onLoginClick = (type) => {
+    setLoginState((prev) => ({ ...prev, status: true, type }));
+  };
 
   return (
     <AppLayout>
@@ -25,9 +29,9 @@ export default function LoginPage() {
           </SubTitle>
         </LoginIntro>
         <LoginButtonGroup>
-          <SocialButton type="kakao" onClick={() => setIsLogin(true)} />
-          <SocialButton type="google" onClick={() => setIsLogin(true)} />
-          <SocialButton type="naver" onClick={() => setIsLogin(true)} />
+          <SocialButton type="kakao" onClick={() => onLoginClick("kakao")} />
+          <SocialButton type="google" onClick={() => onLoginClick("google")} />
+          <SocialButton type="naver" onClick={() => onLoginClick("naver")} />
         </LoginButtonGroup>
       </LoginWrapper>
     </AppLayout>
