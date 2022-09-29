@@ -13,6 +13,7 @@ import { Body2Bold } from "../styles/typography";
 import CheckBox from "../components/common/atoms/CheckBox";
 import { pageTitleState } from "../states";
 import { useSetRecoilState } from "recoil";
+import MarkerPng from "../assets/marker.png";
 
 const initial = {
   lat: 37.5173319258532,
@@ -51,11 +52,27 @@ const MainMap = () => {
 
   //map불러오기
   const initMap = useCallback(() => {
+    let imageSrc = MarkerPng.src;
+    let imageSize = new kakao.maps.Size(61, 68);
+    let imageOption = { offset: new kakao.maps.Point(30, 48) };
+
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
         level: 6,
       });
+
+      // TODO: 동기로 변경하고 setTimeout 제거
+      setTimeout(() => {
+        new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(initial.lat, initial.lng),
+          map: initialMap,
+          image: markerImage,
+        });
+      }, [500]);
+
       map.current = initialMap;
     }
   }, [kakaoMapRef.current]);

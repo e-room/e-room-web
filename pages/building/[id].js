@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import BuildingInfo from "../../components/Building/BuildingInfo";
 import ImageView from "../../components/Building/ImageView";
 import ReviewList from "../../components/Building/ReviewList";
+import BuildingMap from "../../components/building/BuildingMap";
 
 export default () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default () => {
   return (
     <AppLayout>
       <Container>
-        {/* <SubMapBar /> */}
+        <BuildingMap />
         <BuildingInfo />
         <ImageView />
         <ReviewList />
