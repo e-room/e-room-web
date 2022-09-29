@@ -11,10 +11,17 @@ export default () => {
 
   return (
     <AppLayout>
-      {/* <SubMapBar /> */}
-      <BuildingInfo />
-      <ImageView />
-      <ReviewList />
+      <Container>
+        {/* <SubMapBar /> */}
+        <BuildingInfo />
+        <ImageView />
+        <ReviewList />
+      </Container>
     </AppLayout>
   );
 };
+
+const Container = styled.div`
+  height: calc(100vh - 112px);
+  overflow: scroll;
+`;

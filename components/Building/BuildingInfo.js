@@ -80,12 +80,12 @@ export default function BuildingInfo() {
               <div className="score">{value.score}점</div>
               <div className="bar">
                 {/* TODO: svg width 작을수록 얇아지는거? 왜이럼.. */}
-                <div className="fill">
+                {/* <div className="fill">
                   <BarFilled width={`${value.score}%`} height={"4"} />
                 </div>
                 <div className="un-fill">
                   <BarUnFilled width={"100%"} height={"4"} />
-                </div>
+                </div> */}
               </div>
             </div>
           );

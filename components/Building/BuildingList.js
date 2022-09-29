@@ -6,7 +6,7 @@ import Score from "../common/atoms/Score";
 export default function BuildingList({ data }) {
   return data.map((value) => {
     return (
-      <Link href={`/ReviewDetail/${value.buildingId}`} key={value.buildingId}>
+      <Link href={`/building/${value.buildingId}`} key={value.buildingId}>
         <BuildingContainer>
           <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
           <BuildingContent>

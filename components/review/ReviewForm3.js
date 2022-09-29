@@ -68,19 +68,20 @@ export default function ReviewForm3() {
   );
 }
 
-const Box = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   margin-bottom: 150px;
+
+  overflow: scroll;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}
 
   margin-bottom: 4px;
+`;
+const Box = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;

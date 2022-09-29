@@ -2,9 +2,12 @@ import styled from "@emotion/styled";
 import { SubTitle2 } from "../../styles/typography";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+import { pageTitleState } from "../../states";
 
-export default function Header({ rightIcon, headerText }) {
+export default function Header({ rightIcon }) {
   const router = useRouter();
+  const pageTitle = useRecoilValue(pageTitleState);
 
   const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
 
@@ -15,8 +18,8 @@ export default function Header({ rightIcon, headerText }) {
           <Icon icon={"arrow-left"} size="md" />
         </Box>
         <Box>
-          {headerText ? (
-            <HeaderTitle>{headerText}</HeaderTitle>
+          {pageTitle ? (
+            <HeaderTitle>{pageTitle}</HeaderTitle>
           ) : (
             <>
               <Icon icon={"logo-default"} size="lg" />

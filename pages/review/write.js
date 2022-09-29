@@ -1,19 +1,25 @@
-import AppLayout from "../components/common/AppLayout";
-import Button from "../components/common/atoms/Button";
+import AppLayout from "../../components/common/AppLayout";
+import Button from "../../components/common/atoms/Button";
 import styled from "@emotion/styled";
-import ReviewForm1 from "../components/review/ReviewForm1";
-import ReviewForm2 from "../components/review/ReviewForm2";
-import ReviewForm3 from "../components/review/ReviewForm3";
-import ReviewForm4 from "../components/review/ReviewForm4";
-import LoginPage from "./LoginPage";
-import { useRecoilValue } from "recoil";
-import { useState } from "react";
-import BottomPopup from "../components/common/atoms/BottomPopup";
-import { loginState } from "../states/authAtom";
+import ReviewForm1 from "../../components/review/ReviewForm1";
+import ReviewForm2 from "../../components/review/ReviewForm2";
+import ReviewForm3 from "../../components/review/ReviewForm3";
+import ReviewForm4 from "../../components/review/ReviewForm4";
+// import LoginPage from "./LoginPage";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import BottomPopup from "../../components/common/atoms/BottomPopup";
+import { loginState } from "../../states/authAtom";
 import { keyframes } from "@emotion/react";
+import { pageTitleState } from "../../states";
+import { useRouter } from "next/router";
+import Login from "../login";
 
-export default function ReviewFormPage() {
+export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
+  const setPageTitleState = useSetRecoilState(pageTitleState);
+  const router = useRouter();
+
   const [reviewStep, setReviewStep] = useState(1);
   const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
@@ -21,7 +27,8 @@ export default function ReviewFormPage() {
   };
 
   if (!isLogin) {
-    return <LoginPage />;
+    return <Login />;
+    // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
   }
 
   const onNextButtonClick = () => {
@@ -31,10 +38,13 @@ export default function ReviewFormPage() {
       setReviewStep(reviewStep + 1);
     }
   };
+  // useEffect(() => {
+  //   setPageTitleState("리뷰 쓰기");
+  // }, []);
 
   return (
     <>
-      <AppLayout appBarObject={{ headerText: "리뷰 쓰기" }}>
+      <AppLayout>
         <Container>
           <StepBar>
             <CurrentStep width={(reviewStep / 5) * 100} />
@@ -100,7 +110,10 @@ const FadeInUpBox = styled.div`
   animation: ${fadeInUp} 1s;
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: calc(100vh - 112px);
+  overflow: scroll;
+`;
 const StepBar = styled.div`
   display: flex;
 `;

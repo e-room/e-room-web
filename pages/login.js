@@ -6,7 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { Body2, Title1 } from "../styles/typography";
 import { loginState } from "../states/authAtom";
 
-export default function LoginPage() {
+const Login = () => {
   const setLoginState = useSetRecoilState(loginState);
 
   const onLoginClick = (type) => {
@@ -36,7 +36,7 @@ export default function LoginPage() {
       </LoginWrapper>
     </AppLayout>
   );
-}
+};
 
 const LoginWrapper = styled.div`
   margin: 0px 20px;
@@ -75,3 +75,5 @@ const SubTitle = styled.div`
 
   color: var(--gray-1)
 `;
+
+export default Login;

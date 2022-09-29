@@ -94,6 +94,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  margin-bottom: 40px;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

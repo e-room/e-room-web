@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import Link from "next/link";
-import Head from "next/head";
 import Script from "next/script";
 import styled from "@emotion/styled";
 import LocationButton from "../components/common/atoms/LocationButton";
@@ -92,95 +91,94 @@ const MainMap = () => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Script
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false`}
         onLoad={() => kakao.maps.load(initMap)}
       />
-      <Head>
-        <link rel="preconnect" href="https://dapi.kakao.com" />
-        <link rel="dns-prefetch" href="https://dapi.kakao.com" />
-      </Head>
-      <AppLayout appBarObject={{ rightIcon: "search" }}>
-        {popupVisible && (
-          <Popup
-            title={
-              <>
-                <Icon icon={"filter-stroke"} />
-                <div style={{ marginLeft: 8 }}>필터</div>
-              </>
-            }
-            titleAlign={"left"}
-          >
-            <Contents>
-              <SubText>직거래 가능한 방만 보기</SubText>
-              <CheckBox />
-            </Contents>
-            <ButtonGroup>
-              <Button
-                label={"취소"}
-                size={"sm"}
-                type={"secondary"}
-                width={"100%"}
-                onClick={onHideClick}
-              />
-              <Button
-                label={"필터 적용하기"}
-                size={"sm"}
-                type={"primary"}
-                width={"100%"}
-              />
-            </ButtonGroup>
-          </Popup>
-        )}
-        <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
-        <MapContainer>
-          <FilterItem>
-            <MapButton onClick={() => setPopupVisible(true)} />
-          </FilterItem>
-          <GroupItem>
-            <GroupButton
-              items={[
-                { icon: "plus", onClick: zoomIn },
-                { icon: "minus", onClick: zoomOut },
-              ]}
+      {popupVisible && (
+        <Popup
+          title={
+            <>
+              <Icon icon={"filter-stroke"} />
+              <div style={{ marginLeft: 8 }}>필터</div>
+            </>
+          }
+          titleAlign={"left"}
+        >
+          <Contents>
+            <SubText>직거래 가능한 방만 보기</SubText>
+            <CheckBox />
+          </Contents>
+          <ButtonGroup>
+            <Button
+              label={"취소"}
+              size={"sm"}
+              type={"secondary"}
+              width={"100%"}
+              onClick={onHideClick}
             />
-          </GroupItem>
-          <LocationItem>
-            <LocationButton onClick={setMyPosition} />
-          </LocationItem>
-          <ButtonItem>
-            <Link href={"/BuildingListPage"}>
-              <a>
-                <Button
-                  label={"이 지역 자취방 리뷰 보기"}
-                  type={"secondary"}
-                  size={"sm"}
-                />
-              </a>
-            </Link>
-            <Link href={"/ReviewFormPage"}>
-              <a>
-                {/* //TODO: icon button기능 추가.. 필요.. */}
-                <Button type={"primary"} size={"sm"}>
-                  <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
-                  리뷰 쓰기
-                </Button>
-              </a>
-            </Link>
-          </ButtonItem>
-        </MapContainer>
+            <Button label={"필터 적용하기"} size={"sm"} type={"primary"} width={"100%"} />
+          </ButtonGroup>
+        </Popup>
+      )}
+      <AppLayout
+      // headerIcon={"search"}
+      >
+        <Container>
+          <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
+          <MapContainer>
+            <FilterItem>
+              <MapButton onClick={() => setPopupVisible(true)} />
+            </FilterItem>
+            <GroupItem>
+              <GroupButton
+                items={[
+                  { icon: "plus", onClick: zoomIn },
+                  { icon: "minus", onClick: zoomOut },
+                ]}
+              />
+            </GroupItem>
+            <LocationItem>
+              <LocationButton onClick={setMyPosition} />
+            </LocationItem>
+            <ButtonItem>
+              <Link href={"/buildings"}>
+                <a>
+                  <Button
+                    label={"이 지역 자취방 리뷰 보기"}
+                    type={"secondary"}
+                    size={"sm"}
+                  />
+                </a>
+              </Link>
+              <Link href={"/review/write"}>
+                <a>
+                  {/* //TODO: icon button기능 추가.. 필요.. */}
+                  <Button type={"primary"} size={"sm"}>
+                    <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+                    리뷰 쓰기
+                  </Button>
+                </a>
+              </Link>
+            </ButtonItem>
+          </MapContainer>
+        </Container>
       </AppLayout>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  overflow: hidden !important;
 `;
 const MapContainer = styled.div``;
+
+const Container = styled.div`
+  height: calc(100vh - 112px);
+  overflow: hidden !important;
+`;
 
 const FilterItem = styled.div`
   position: absolute;

@@ -1,19 +1,24 @@
 import styled from "@emotion/styled";
-import PerfectScrollbar from "react-perfect-scrollbar";
 
 import AppLayout from "../components/common/AppLayout";
 import BuildingList from "../components/building/BuildingList";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { heartListSelector } from "../states/heartAtom";
+import { pageTitleState } from "../states";
+import { useEffect } from "react";
 
-export default function HeartListPage() {
+export default function favorites() {
   const data = useRecoilValue(heartListSelector);
+  const setPageTitleState = useSetRecoilState(pageTitleState);
+
+  useEffect(() => {
+    setPageTitleState("찜한 자취방");
+  }, []);
+
   return (
-    <AppLayout appBarObject={{ headerText: "찜한 자취방" }}>
+    <AppLayout>
       <Container>
-        <PerfectScrollbar>
-          <BuildingList data={data} />
-        </PerfectScrollbar>
+        <BuildingList data={data} />
       </Container>
     </AppLayout>
   );
@@ -21,4 +26,5 @@ export default function HeartListPage() {
 const Container = styled.div`
   height: calc(100vh - 112px);
   background-color: #fafafa !important;
+  overflow: scroll;
 `;

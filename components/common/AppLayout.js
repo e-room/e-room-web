@@ -4,11 +4,11 @@ import styled from "@emotion/styled";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 
-export default function AppLayout({ appBarObject, children }) {
+export default function AppLayout({ children }) {
   return (
     <>
       <GlobalStyle />
-      <Header {...appBarObject} />
+      <Header />
       <MainContent>{children}</MainContent>
       <Footer />
     </>

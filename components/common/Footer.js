@@ -6,25 +6,25 @@ import { useRouter } from "next/router";
 
 const navItems = [
   {
-    path: "/ReviewMapPage",
+    path: "/home",
     defaultIcon: "home-stroke",
     activeIcon: "home-fill",
     title: "둘러보기",
   },
   {
-    path: "/ReviewFormPage",
+    path: "/review/write",
     defaultIcon: "pencil-fill",
     activeIcon: "pencil-fill",
     title: "리뷰쓰기",
   },
   {
-    path: "/HeartListPage",
+    path: "/favorites",
     defaultIcon: "heart-stroke",
     activeIcon: "heart-fill",
     title: "찜목록",
   },
   {
-    path: "/MyPage",
+    path: "/mypage",
     defaultIcon: "mypage",
     activeIcon: "mypage",
     title: "내정보",
@@ -67,7 +67,6 @@ const NavBarWrapper = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-
   background: var(--white);
   z-index: 9;
 `;

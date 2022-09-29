@@ -51,6 +51,7 @@ const FormWrapper = styled.div`
   flex-direction: column;
   padding: 20px;
   text-align: center;
+  margin-bottom: 40px;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}
