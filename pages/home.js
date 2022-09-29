@@ -11,6 +11,8 @@ import AppLayout from "../components/common/AppLayout";
 import Popup from "../components/common/atoms/Popup";
 import { Body2Bold } from "../styles/typography";
 import CheckBox from "../components/common/atoms/CheckBox";
+import { pageTitleState } from "../states";
+import { useSetRecoilState } from "recoil";
 
 const initial = {
   lat: 37.5173319258532,
@@ -42,6 +44,7 @@ const getLocation = [
 ];
 
 const MainMap = () => {
+  const setPageTitleState = useSetRecoilState(pageTitleState);
   const kakaoMapRef = useRef(null); // 지도 container ref
   const map = useRef(null);
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
@@ -56,6 +59,10 @@ const MainMap = () => {
       map.current = initialMap;
     }
   }, [kakaoMapRef.current]);
+
+  useEffect(() => {
+    setPageTitleState(null);
+  }, []);
 
   useEffect(() => {
     if (window.kakao) {

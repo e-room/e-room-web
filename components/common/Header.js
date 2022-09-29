@@ -2,19 +2,29 @@ import styled from "@emotion/styled";
 import { SubTitle2 } from "../../styles/typography";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { pageTitleState } from "../../states";
+import { reviewStepState } from "../../states/reviewAtom";
 
 export default function Header({ rightIcon }) {
   const router = useRouter();
   const pageTitle = useRecoilValue(pageTitleState);
+  const setReviewStep = useSetRecoilState(reviewStepState);
 
   const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
+
+  const onBack = () => {
+    if (pageTitle === "리뷰 쓰기") {
+      setReviewStep((step) => (step > 1 ? step - 1 : 1));
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <AppBarWrapper>
       <AppBarContainer>
-        <Box onClick={() => router.back()}>
+        <Box onClick={onBack}>
           <Icon icon={"arrow-left"} size="md" />
         </Box>
         <Box>
