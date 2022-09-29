@@ -5,31 +5,26 @@ import ReviewForm1 from "../../components/review/ReviewForm1";
 import ReviewForm2 from "../../components/review/ReviewForm2";
 import ReviewForm3 from "../../components/review/ReviewForm3";
 import ReviewForm4 from "../../components/review/ReviewForm4";
-// import LoginPage from "./LoginPage";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect, useMemo, useState } from "react";
 import BottomPopup from "../../components/common/atoms/BottomPopup";
 import { loginState } from "../../states/authAtom";
 import { keyframes } from "@emotion/react";
 import { pageTitleState } from "../../states";
 import { useRouter } from "next/router";
 import Login from "../login";
+import { reviewStepState } from "../../states/reviewAtom";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
   const setPageTitleState = useSetRecoilState(pageTitleState);
   const router = useRouter();
 
-  const [reviewStep, setReviewStep] = useState(1);
+  const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
   const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
     setPopupVisible(false);
   };
-
-  if (!isLogin) {
-    return <Login />;
-    // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
-  }
 
   const onNextButtonClick = () => {
     if (reviewStep === 4) {
@@ -38,9 +33,30 @@ export default function reviewWrite() {
       setReviewStep(reviewStep + 1);
     }
   };
-  // useEffect(() => {
-  //   setPageTitleState("리뷰 쓰기");
-  // }, []);
+
+  const Form = useMemo(() => {
+    switch (reviewStep) {
+      case 1:
+        return <ReviewForm1 />;
+      case 2:
+        return <ReviewForm2 />;
+      case 3:
+        return <ReviewForm3 />;
+      case 4:
+        return <ReviewForm4 />;
+      default:
+        return;
+    }
+  }, [reviewStep]);
+
+  useEffect(() => {
+    setPageTitleState("리뷰 쓰기");
+  }, []);
+
+  if (!isLogin) {
+    return <Login />;
+    // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
+  }
 
   return (
     <>
@@ -50,27 +66,7 @@ export default function reviewWrite() {
             <CurrentStep width={(reviewStep / 5) * 100} />
             <RemainingStep width={100 - (reviewStep / 5) * 100} />
           </StepBar>
-
-          {reviewStep === 1 && (
-            <FadeInUpBox>
-              <ReviewForm1 />
-            </FadeInUpBox>
-          )}
-          {reviewStep === 2 && (
-            <FadeInUpBox>
-              <ReviewForm2 />
-            </FadeInUpBox>
-          )}
-          {reviewStep === 3 && (
-            <FadeInUpBox>
-              <ReviewForm3 />
-            </FadeInUpBox>
-          )}
-          {reviewStep === 4 && (
-            <FadeInUpBox>
-              <ReviewForm4 />
-            </FadeInUpBox>
-          )}
+          <FadeInUpBox>{Form}</FadeInUpBox>
         </Container>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}

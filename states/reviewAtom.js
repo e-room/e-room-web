@@ -24,3 +24,8 @@ export const reviewFormState = atom({
     residenceSatisfaction: null,
   },
 });
+
+export const reviewStepState = atom({
+  key: "reviewStepState",
+  default: 1,
+});
