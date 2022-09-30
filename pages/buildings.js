@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
-import AppLayout from "../components/common/AppLayout";
-import Button from "../components/common/atoms/Button";
-import Icon from "../components/common/atoms/Icon";
+import AppLayout from "components/common/AppLayout";
+import Button from "components/common/atoms/Button";
+import Icon from "components/common/atoms/Icon";
 
 import Link from "next/link";
-import BuildingList from "../components/building/BuildingList";
+import BuildingList from "components/building/BuildingList";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { buildingListSelector } from "../states/buidlingAtom";
-import { pageTitleState } from "../states";
+import { buildingListSelector } from "states/buidlingAtom";
+import { pageTitleState } from "states";
 import { useEffect } from "react";
 
 export default function buildings() {

@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 
-import AppLayout from "../components/common/AppLayout";
-import BuildingList from "../components/building/BuildingList";
+import AppLayout from "components/common/AppLayout";
+import BuildingList from "components/building/BuildingList";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { heartListSelector } from "../states/heartAtom";
-import { pageTitleState } from "../states";
+import { heartListSelector } from "states/heartAtom";
+import { pageTitleState } from "states";
 import { useEffect } from "react";
 
 export default function favorites() {

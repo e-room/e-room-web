@@ -5,11 +5,11 @@ import {
   Caption1,
   Caption1Bold,
   Caption2Bold,
-} from "../../styles/typography";
-import Avatar from "../common/atoms/Avatar";
-import Avatar24 from "../../assets/avatar/24.png";
-import Icon from "../common/atoms/Icon";
-import Chip from "../common/atoms/Chip";
+} from "styles/typography";
+import Avatar from "components/common/atoms/Avatar";
+import Avatar24 from "assets/avatar/24.png";
+import Icon from "components/common/atoms/Icon";
+import Chip from "components/common/atoms/Chip";
 
 export default function ReviewList() {
   return (

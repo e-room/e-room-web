@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
-import Chip from "../common/atoms/Chip";
-import Score from "../common/atoms/Score";
+import Chip from "components/common/atoms/Chip";
+import Score from "components/common/atoms/Score";
 
 export default function BuildingList({ data }) {
   return data.map((value) => {

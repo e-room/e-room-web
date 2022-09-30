@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
-import { Body2Bold } from "../../styles/typography";
-import Image from "../common/atoms/Image";
-import TextArea from "../common/atoms/TextArea";
-import Toggle from "../common/atoms/Toggle";
+import { Body2Bold } from "styles/typography";
+import Image from "components/common/atoms/Image";
 
 export default function ReviewForm4() {
   return (

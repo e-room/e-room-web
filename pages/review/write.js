@@ -1,19 +1,19 @@
-import AppLayout from "../../components/common/AppLayout";
-import Button from "../../components/common/atoms/Button";
+import AppLayout from "components/common/AppLayout";
+import Button from "components/common/atoms/Button";
 import styled from "@emotion/styled";
-import ReviewForm1 from "../../components/review/ReviewForm1";
-import ReviewForm2 from "../../components/review/ReviewForm2";
-import ReviewForm3 from "../../components/review/ReviewForm3";
-import ReviewForm4 from "../../components/review/ReviewForm4";
+import ReviewForm1 from "components/review/ReviewForm1";
+import ReviewForm2 from "components/review/ReviewForm2";
+import ReviewForm3 from "components/review/ReviewForm3";
+import ReviewForm4 from "components/review/ReviewForm4";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useState } from "react";
-import BottomPopup from "../../components/common/atoms/BottomPopup";
-import { loginState } from "../../states/authAtom";
+import BottomPopup from "components/common/atoms/BottomPopup";
+import { loginState } from "states/authAtom";
 import { keyframes } from "@emotion/react";
-import { pageTitleState } from "../../states";
+import { pageTitleState } from "states";
 import { useRouter } from "next/router";
 import Login from "../login";
-import { reviewStepState } from "../../states/reviewAtom";
+import { reviewStepState } from "states/reviewAtom";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);

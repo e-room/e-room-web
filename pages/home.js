@@ -2,18 +2,18 @@ import React, { useEffect, useState, useRef, useCallback, Fragment } from "react
 import Link from "next/link";
 import Script from "next/script";
 import styled from "@emotion/styled";
-import LocationButton from "../components/common/atoms/LocationButton";
-import GroupButton from "../components/common/atoms/GroupButton";
-import MapButton from "../components/common/atoms/MapButton";
-import Button from "../components/common/atoms/Button";
-import Icon from "../components/common/atoms/Icon";
-import AppLayout from "../components/common/AppLayout";
-import Popup from "../components/common/atoms/Popup";
-import { Body2Bold } from "../styles/typography";
-import CheckBox from "../components/common/atoms/CheckBox";
-import { pageTitleState } from "../states";
+import LocationButton from "components/common/atoms/LocationButton";
+import GroupButton from "components/common/atoms/GroupButton";
+import MapButton from "components/common/atoms/MapButton";
+import Button from "components/common/atoms/Button";
+import Icon from "components/common/atoms/Icon";
+import AppLayout from "components/common/AppLayout";
+import Popup from "components/common/atoms/Popup";
+import { Body2Bold } from "styles/typography";
+import CheckBox from "components/common/atoms/CheckBox";
+import { pageTitleState } from "states";
 import { useSetRecoilState } from "recoil";
-import MarkerPng from "../assets/marker.png";
+import MarkerPng from "assets/marker.png";
 
 const initial = {
   lat: 37.5173319258532,

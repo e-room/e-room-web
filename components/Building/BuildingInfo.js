@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import Button from "../common/atoms/Button";
-import Icon from "../common/atoms/Icon";
-import BarFilled from "../../assets/icon/bar-filled.svg";
-import BarUnFilled from "../../assets/icon/bar-unfilled.svg";
-import Toggle from "../common/atoms/Toggle";
+import Button from "components/common/atoms/Button";
+import Icon from "components/common/atoms/Icon";
+import BarFilled from "assets/icon/bar-filled.svg";
+import BarUnFilled from "assets/icon/bar-unfilled.svg";
+import Toggle from "components/common/atoms/Toggle";
 import {
   Body3,
   Body3Bold,
@@ -11,7 +11,7 @@ import {
   Caption1Bold,
   Caption2Bold,
   Title1,
-} from "../../styles/typography";
+} from "styles/typography";
 import { useState } from "react";
 
 export default function BuildingInfo() {

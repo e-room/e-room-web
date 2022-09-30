@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import Script from "next/script";
 import styled from "@emotion/styled";
-import MarkerPng from "../../assets/marker.png";
+import MarkerPng from "assets/marker.png";
 
 const initial = {
   lat: 37.5173319258532,

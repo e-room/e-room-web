@@ -1,10 +1,10 @@
-import SocialButton from "../components/common/atoms/SocialButton";
+import SocialButton from "components/common/atoms/SocialButton";
 
 import styled from "@emotion/styled";
-import AppLayout from "../components/common/AppLayout";
+import AppLayout from "components/common/AppLayout";
 import { useSetRecoilState } from "recoil";
-import { Body2, Title1 } from "../styles/typography";
-import { loginState } from "../states/authAtom";
+import { Body2, Title1 } from "styles/typography";
+import { loginState } from "states/authAtom";
 
 const Login = () => {
   const setLoginState = useSetRecoilState(loginState);
