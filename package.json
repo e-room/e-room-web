@@ -32,7 +32,8 @@
     "react-dom": "^18.2.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-query": "^3.39.2",
-    "recoil": "^0.7.5"
+    "recoil": "^0.7.5",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
