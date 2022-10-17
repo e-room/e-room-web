@@ -1,35 +1,61 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Caption1Bold } from "../../../styles/typography";
+import XButton from "./XButton";
+import shortid from "shortid";
 
 export default function Image({ multiple = false }) {
   const fileInputRef = useRef(null);
 
   const [previewImgs, setPreviewImgs] = useState([]);
-
   const onClickHandler = () => {
     fileInputRef.current.click();
   };
 
   const onChangeHandler = (e) => {
-    const fileArr = e.target.files; //  사용자가 선택한 파일들
-    // setPostImages(Array.from(fileArr)); //
-    const fileURLs = [];
-    const filesLength = fileArr.length > 5 ? 5 : fileArr.length; // 최대 5개
+    const fileArr = e.target.files;
 
-    for (let i = 0; i < filesLength; i++) {
+    if (previewImgs.length > 5 || previewImgs.length + fileArr.length > 5) {
+      alert("사진은 최대 5장까지 등록이 가능합니다.");
+      return;
+    }
+
+    const fileURLs = [];
+
+    for (let i = 0; i < fileArr.length; i++) {
       const file = fileArr[i];
       const reader = new FileReader();
       reader.onload = () => {
-        fileURLs[i] = reader.result;
-        setPreviewImgs([...fileURLs]);
+        fileURLs[i] = { key: shortid.generate(), data: reader.result };
+        setPreviewImgs([...previewImgs, ...fileURLs]);
       };
       reader.readAsDataURL(file);
     }
   };
 
+  const removeImg = (id) => {
+    const imgs = [...previewImgs];
+    const filterData = imgs.filter((v) => v.key !== id);
+    setPreviewImgs(filterData);
+  };
+
+  const Preview = useMemo(() => {
+    if (!previewImgs) return;
+    return previewImgs.map((val) => {
+      return (
+        <Box key={val.key}>
+          <ButtonBox>
+            <XButton onClick={() => removeImg(val.key)} />
+          </ButtonBox>
+          <ImageBox src={val.data} />
+        </Box>
+      );
+    });
+  }, [previewImgs]);
+
+  // TODO: 모바일 화면일 때 xButton 클릭 시 영역범위가 이상함..?
   return (
     <>
       <StyledImageButton onClick={onClickHandler}>
@@ -37,16 +63,12 @@ export default function Image({ multiple = false }) {
         <Title>사진 추가</Title>
         <input
           type="file"
-          id="images"
           multiple={true}
           ref={fileInputRef}
           onChange={onChangeHandler}
         />
       </StyledImageButton>
-      {previewImgs &&
-        previewImgs.map((val) => {
-          return <ImageBox src={val} key={val} />;
-        })}
+      {Preview}
     </>
   );
 }
@@ -54,6 +76,16 @@ export default function Image({ multiple = false }) {
 Image.propTypes = {
   multiple: PropTypes.bool,
 };
+
+const Box = styled.div`
+  position: relative;
+`;
+
+const ButtonBox = styled.div`
+  position: absolute;
+  right: -9px;
+  top: -9px;
+`;
 
 const StyledImageButton = styled.button`
   width: 102px;

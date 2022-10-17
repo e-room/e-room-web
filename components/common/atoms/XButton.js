@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
 
-export default function XButton({ onClick }) {
+export default function XButton({ onClick, ...props }) {
   return (
-    <StyledXButton onClick={onClick}>
+    <StyledXButton onClick={onClick} {...props}>
       <Icon icon="x-icon" size="sm" />
     </StyledXButton>
   );
