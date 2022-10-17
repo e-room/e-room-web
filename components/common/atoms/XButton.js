@@ -2,7 +2,19 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
 
-const StyledXButton = styled.button`
+export default function XButton({ onClick }) {
+  return (
+    <StyledXButton onClick={onClick}>
+      <Icon icon="x-icon" size="sm" />
+    </StyledXButton>
+  );
+}
+
+XButton.propTypes = {
+  onClick: PropTypes.func,
+};
+
+const StyledXButton = styled.div`
   cursor: pointer;
   background: var(--primary-1);
   border: 1px solid var(--primary-1);
@@ -17,15 +29,3 @@ const StyledXButton = styled.button`
     fill: var(--white);
   }
 `;
-
-export default function XButton({ onClick }) {
-  return (
-    <StyledXButton onClick={onClick}>
-      <Icon icon="x-icon" size="sm" />
-    </StyledXButton>
-  );
-}
-
-XButton.propTypes = {
-  onClick: PropTypes.func,
-};
