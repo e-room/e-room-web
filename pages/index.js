@@ -6,7 +6,7 @@ export default function Home() {
       <a>
         <div style={{ background: "var(--primary-1)", width: "100vw", height: "100vh" }}>
           스플래시 화면~!! 클릭하면 넘어감~!!!!
-          github action 되라!~!!!!!
+          github action
         </div>
       </a>
     </Link>
