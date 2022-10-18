@@ -27,6 +27,7 @@ dist
 storybook-static
 .cache
 .next
+out
 
 # misc
 .DS_Store
