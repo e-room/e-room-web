@@ -44,14 +44,14 @@ export default function BottomSheet({
             <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
           </div>
         </XField>
-        <StyledPopup visible={visible}>
+        <StyledSheet visible={visible}>
           <Title>{title}</Title>
           <div>
             <Score size={"xl"} />
           </div>
           <SubTitle>{subTitle}</SubTitle>
           <ButtonGroup>{ButtonType()}</ButtonGroup>
-        </StyledPopup>
+        </StyledSheet>
       </Container>
     </Overlay>
   );
@@ -103,7 +103,7 @@ const XField = styled.div`
   margin-right: 20px;
 `;
 
-const StyledPopup = styled.div`
+const StyledSheet = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -123,27 +123,21 @@ const MainMap = () => {
       {popupVisible && (
         <Popup
           title={
-            <>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Icon icon={"filter-stroke"} />
               <div style={{ marginLeft: 8 }}>필터</div>
-            </>
+            </div>
           }
           titleAlign={"left"}
+          buttonType={"default"}
+          cancelText="취소"
+          submitText="필터 적용하기"
+          onCancelClick={onHideClick}
         >
           <Contents>
             <SubText>직거래 가능한 방만 보기</SubText>
             <CheckBox />
           </Contents>
-          <ButtonGroup>
-            <Button
-              label={"취소"}
-              size={"md"}
-              type={"secondary"}
-              width={"100%"}
-              onClick={onHideClick}
-            />
-            <Button label={"필터 적용하기"} size={"lg"} type={"primary"} width={"100%"} />
-          </ButtonGroup>
         </Popup>
       )}
       <AppLayout
