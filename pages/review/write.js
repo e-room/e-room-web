@@ -7,7 +7,7 @@ import ReviewForm3 from "components/review/ReviewForm3";
 import ReviewForm4 from "components/review/ReviewForm4";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useState } from "react";
-import BottomPopup from "components/common/atoms/BottomPopup";
+import BottomSheet from "components/common/atoms/BottomSheet";
 import { loginState } from "states/authAtom";
 import { keyframes } from "@emotion/react";
 import { pageTitleState } from "states";
@@ -71,7 +71,7 @@ export default function reviewWrite() {
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       {popupVisible ? (
-        <BottomPopup
+        <BottomSheet
           title={"회원님이 생각하는 이 자취방의 총 만족도는?"}
           subTitle={"3.5점"}
           onHideClick={onHideClick}
@@ -80,7 +80,7 @@ export default function reviewWrite() {
         <BottomArea>
           <Button
             label={"다음으로"}
-            size="md"
+            size="lg"
             width={"100%"}
             onClick={onNextButtonClick}
           />

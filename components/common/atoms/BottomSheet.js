@@ -1,12 +1,41 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import Score from "../atoms/Score";
-import Button from "../atoms/Button";
-import Icon from "../atoms/Icon";
+import Score from "./Score";
+import Button from "./Button";
+import Icon from "./Icon";
 import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
 
-export default function BottomPopup({ title, subTitle, visible = false, onHideClick }) {
+export default function BottomSheet({
+  title,
+  subTitle,
+  visible = false,
+  buttonType = "default",
+  onHideClick,
+}) {
+  const ButtonType = () => {
+    switch (buttonType) {
+      case "confirm":
+        return <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />;
+      case "default":
+        return (
+          <div style={{ display: "flex", gap: 8 }}>
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
+          </div>
+        );
+      case "warning":
+        return (
+          <div style={{ display: "flex", gap: 8 }}>
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button label={"Label"} size="lg" width={"100%"} type={"warning"} />
+          </div>
+        );
+      default:
+        return;
+    }
+  };
+
   return (
     <Overlay>
       <Container>
@@ -21,14 +50,20 @@ export default function BottomPopup({ title, subTitle, visible = false, onHideCl
             <Score size={"xl"} />
           </div>
           <SubTitle>{subTitle}</SubTitle>
-          <ButtonGroup>
-            <Button label={"Label"} size="md" width={"100%"} />
-          </ButtonGroup>
+          <ButtonGroup>{ButtonType()}</ButtonGroup>
         </StyledPopup>
       </Container>
     </Overlay>
   );
 }
+
+BottomSheet.propTypes = {
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
+  visible: PropTypes.bool,
+  buttonType: PropTypes.oneOf(["confirm", "default", "warning"]),
+  onHideClick: PropTypes.func,
+};
 
 const Overlay = styled.div`
   width: 100vw;

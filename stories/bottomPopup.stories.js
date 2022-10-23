@@ -1,16 +1,29 @@
-import BottomPopup from "../components/common/atoms/BottomPopup";
+import BottomSheet from "../components/common/atoms/BottomSheet";
 
 export default {
-  title: "components/Popup/BottomPopup",
-  component: BottomPopup,
+  title: "components/Popup/BottomSheet",
+  component: BottomSheet,
 };
 
 const Template = (args) => {
-  return <BottomPopup {...args} />;
+  return <BottomSheet {...args} />;
 };
 
+export const Confirm = Template.bind({});
+Confirm.args = {
+  title: "제목을 입력해주세요",
+  subTitle: "보조 텍스트를 입력해주세요",
+  buttonType: "confirm",
+};
 export const Default = Template.bind({});
 Default.args = {
-  title: "제목을 입력해주세요" /* 안녕하세요! */,
-  subTitle: "보조 텍스트를 입력해주세요" /* 안녕하세요! */,
+  title: "제목을 입력해주세요",
+  subTitle: "보조 텍스트를 입력해주세요",
+  buttonType: "default",
+};
+export const Warning = Template.bind({});
+Warning.args = {
+  title: "제목을 입력해주세요",
+  subTitle: "보조 텍스트를 입력해주세요",
+  buttonType: "warning",
 };
