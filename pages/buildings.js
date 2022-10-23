@@ -30,8 +30,8 @@ export default function buildings() {
           <Link href={"/review/write"}>
             <a>
               {/* //TODO: icon button기능 추가.. 필요.. */}
-              <Button type={"primary"} size={"sm"}>
-                <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+              <Button type={"primary"} size={"md"}>
+                <Icon icon={"plus"} size={"lg"} fill={"var(--white)"} />
                 리뷰 쓰기
               </Button>
             </a>

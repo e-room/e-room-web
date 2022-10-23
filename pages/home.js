@@ -137,12 +137,12 @@ const MainMap = () => {
           <ButtonGroup>
             <Button
               label={"취소"}
-              size={"sm"}
+              size={"md"}
               type={"secondary"}
               width={"100%"}
               onClick={onHideClick}
             />
-            <Button label={"필터 적용하기"} size={"sm"} type={"primary"} width={"100%"} />
+            <Button label={"필터 적용하기"} size={"lg"} type={"primary"} width={"100%"} />
           </ButtonGroup>
         </Popup>
       )}
@@ -172,14 +172,14 @@ const MainMap = () => {
                   <Button
                     label={"이 지역 자취방 리뷰 보기"}
                     type={"secondary"}
-                    size={"sm"}
+                    size={"md"}
                   />
                 </a>
               </Link>
               <Link href={"/review/write"}>
                 <a>
                   {/* //TODO: icon button기능 추가.. 필요.. */}
-                  <Button type={"primary"} size={"sm"}>
+                  <Button type={"primary"} size={"lg"}>
                     <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
                     리뷰 쓰기
                   </Button>

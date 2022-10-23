@@ -37,11 +37,11 @@ const StyledButton = styled.button`
 `;
 
 const SIZES = {
-  sm: css`
+  md: css`
     --button-font-size: 16px;
     --button-height: 48px;
   `,
-  md: css`
+  lg: css`
     --button-font-size: 18px;
     --button-height: 52px;
   `,
@@ -63,11 +63,21 @@ const COLORS = {
     --button-disabled-color: var(--gray-4);
     --button-disabled-label-color: var(--gray-3);
   `,
+  warning: css`
+    --button-bg-color: var(--danger);
+    --button-border-color: var(--danger);
+    --button-label-color: var(--white);
+
+    // TODO: warning disabled color 추가해야 함
+
+    --button-disabled-color: var(--primary-5);
+    --button-disabled-label-color: var(--primary-4);
+  `,
 };
 
 export default function Button({
   type = "primary",
-  size = "sm",
+  size = "md",
   label,
   disabled,
   width,
@@ -93,8 +103,8 @@ export default function Button({
 }
 
 Button.propTypes = {
-  type: PropTypes.oneOf(["primary", "secondary"]),
-  size: PropTypes.oneOf(["sm", "md"]),
+  type: PropTypes.oneOf(["primary", "secondary", "warning"]),
+  size: PropTypes.oneOf(["md", "lg"]),
   label: PropTypes.string,
   disabled: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
