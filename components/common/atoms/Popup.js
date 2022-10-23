@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
-import Icon from "../atoms/Icon";
 import { SubTitle1 } from "../../../styles/typography";
 import Button from "./Button";
 

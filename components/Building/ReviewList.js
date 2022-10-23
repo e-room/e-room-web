@@ -10,10 +10,30 @@ import Avatar from "components/common/atoms/Avatar";
 import Avatar24 from "assets/avatar/24.png";
 import Icon from "components/common/atoms/Icon";
 import Chip from "components/common/atoms/Chip";
+import { useState } from "react";
+import Popup from "components/common/atoms/Popup";
 
 export default function ReviewList() {
+  const [popupVisible, setPopupVisible] = useState(false);
+  const onCancelClick = () => setPopupVisible(false);
   return (
     <Container>
+      {popupVisible && (
+        <Popup
+          title={"정말로 이 리뷰를 삭제하시겠어요?"}
+          visible={popupVisible}
+          buttonType={"warning"}
+          cancelText={"취소"}
+          submitText={"삭제"}
+          onCancelClick={onCancelClick}
+        >
+          <PopupSubTitle>
+            삭제하면 되돌릴 수 없습니다.
+            <br />
+            신중하게 결정해주세요.
+          </PopupSubTitle>
+        </Popup>
+      )}
       <Title>실제 거주 후기</Title>
       <ReviewField>
         {Reviews.map((value) => {
@@ -24,7 +44,7 @@ export default function ReviewList() {
                   <Avatar img={Avatar24.src} />
                   {value.nickName}
                 </div>
-                <DeleteButton>삭제</DeleteButton>
+                <DeleteButton onClick={() => setPopupVisible(true)}>삭제</DeleteButton>
               </Top>
               <ScoreField>
                 <div className="score">4.5</div>
@@ -99,6 +119,12 @@ const Container = styled.div`
   padding: 12px 20px;
   background: #fafafa;
 `;
+
+const PopupSubTitle = styled.div`
+  ${Caption1Bold}
+  text-align: center;
+`;
+
 const Title = styled.div`
   ${Body1Bold}
 
