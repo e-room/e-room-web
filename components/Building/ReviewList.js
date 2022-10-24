@@ -16,6 +16,11 @@ import Popup from "components/common/atoms/Popup";
 export default function ReviewList() {
   const [popupVisible, setPopupVisible] = useState(false);
   const onCancelClick = () => setPopupVisible(false);
+
+  const onFavoriteChange = (id) => {
+    console.log("click");
+  };
+
   return (
     <Container>
       {popupVisible && (
@@ -37,14 +42,18 @@ export default function ReviewList() {
       <Title>실제 거주 후기</Title>
       <ReviewField>
         {Reviews.map((value) => {
+          const notAccess = value.id > 1;
+
           return (
-            <ReviewItem key={value.id}>
+            <ReviewItem key={value.id} blur={notAccess}>
               <Top>
                 <div className="nickname">
                   <Avatar img={Avatar24.src} />
                   {value.nickName}
                 </div>
-                <DeleteButton onClick={() => setPopupVisible(true)}>삭제</DeleteButton>
+                <DeleteButton onClick={() => !notAccess && setPopupVisible(true)}>
+                  삭제
+                </DeleteButton>
               </Top>
               <ScoreField>
                 <div className="score">4.5</div>
@@ -103,9 +112,14 @@ export default function ReviewList() {
                   관리도 안돼서 너무 별로에요.
                 </div>
               </Bad>
-              <Bottom>
-                <Icon icon={"thumb-stroke"} size={"sm"} />
-                <div className="text">추천 8개</div>
+              <Bottom favorite={value.myFavorite}>
+                <div
+                  style={{ display: "flex" }}
+                  onClick={() => onFavoriteChange(value.id)}
+                >
+                  <Icon icon={"thumb-stroke"} size={"sm"} />
+                  <div className="text">추천 8개</div>
+                </div>
               </Bottom>
             </ReviewItem>
           );
@@ -135,6 +149,7 @@ const ReviewField = styled.div``;
 
 const ReviewItem = styled.div`
   background: var(--white);
+  filter: ${(p) => (p.blur ? `blur(8px)` : "none")};
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
@@ -234,9 +249,9 @@ const Bottom = styled.div`
   align-items: center;
 
   ${Caption1}
-  color: var(--gray-1);
+  color: ${(p) => (p.favorite ? `var(--primary-1)` : `var(--gray-1)`)};
   svg {
-    fill: var(--gray-1);
+    fill: ${(p) => (p.favorite ? `var(--primary-1)` : `var(--gray-1)`)};
   }
 
   .text {
@@ -261,6 +276,7 @@ const Reviews = [
     disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
     disadvantageDescription: "단점에 대한 요약",
     reviewLikeCnt: 6,
+    myFavorite: true,
   },
   {
     id: 2,
@@ -278,5 +294,24 @@ const Reviews = [
     disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
     disadvantageDescription: "단점에 대한 요약",
     reviewLikeCnt: 6,
+    myFavorite: false,
+  },
+  {
+    id: 3,
+    profilePictureUrl: "www.amazon.com",
+    nickName: "까칠한 판다",
+    residencePeriod: "BEFORE_EIGHTEEN",
+    floorHeight: "LOW",
+    netLeasableArea: 13, //평수
+    deposit: 1000,
+    monthlyRent: 50,
+    manageMentFee: 10,
+    score: "SATISFIED", // (1~5),
+    advantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
+    advantageDescription: "장점에 대한 요약",
+    disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
+    disadvantageDescription: "단점에 대한 요약",
+    reviewLikeCnt: 6,
+    myFavorite: false,
   },
 ];
