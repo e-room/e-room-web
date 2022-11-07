@@ -1,22 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
-const StyledInputText = styled.input`
-  display: flex;
-  align-items: center;
-  padding: 16px;
-
-  border: 1px solid var(--gray-4);
-  border-radius: 12px;
-
-  ::placeholder {
-    color: var(--gray-3);
-  }
-  &:focus {
-    outline: 1px solid var(--primary-1);
-  }
-`;
-
 export default function Text({
   value,
   onChange,
@@ -44,3 +28,23 @@ Text.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
+
+const StyledInputText = styled.input`
+  display: flex;
+  align-items: center;
+  padding: 16px;
+
+  border: 1px solid var(--gray-4);
+  border-radius: 12px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  ::placeholder {
+    color: var(--gray-3);
+  }
+  &:focus {
+    outline: 1px solid var(--primary-1);
+  }
+`;
