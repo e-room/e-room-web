@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { useSetRecoilState } from "recoil";
+import { imageViewState } from "states/buidlingAtom";
 import { Body1Bold } from "styles/typography";
 import flower1 from "./dummyImg/1.jpg";
 import flower2 from "./dummyImg/2.jpg";
@@ -7,14 +9,20 @@ import flower4 from "./dummyImg/4.jpg";
 import flower5 from "./dummyImg/5.jpg";
 import flower6 from "./dummyImg/6.jpg";
 
+export const dummyImages = [flower1, flower2, flower3, flower4, flower5, flower6];
 export default function ImageView() {
-  const images = [flower1, flower2, flower3, flower4, flower5, flower6];
+  const setShowDetail = useSetRecoilState(imageViewState);
+
+  const onDetailView = () => {
+    setShowDetail(true);
+  };
+
   return (
     <Container>
       <Title>사진 모아보기</Title>
       <ImgField>
-        {images.map((value) => {
-          return <ImgCard src={value.src} key={value.src} />;
+        {dummyImages.map((value) => {
+          return <ImgCard src={value.src} key={value.src} onClick={onDetailView} />;
         })}
       </ImgField>
     </Container>

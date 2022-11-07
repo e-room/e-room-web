@@ -112,3 +112,8 @@ export const buildingListSelector = selector({
     return data;
   },
 });
+
+export const imageViewState = atom({
+  key: "imageViewState",
+  default: false,
+});
