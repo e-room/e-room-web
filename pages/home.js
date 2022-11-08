@@ -44,7 +44,8 @@ const MainMap = () => {
           {
             width: "61px",
             height: "68px",
-            backgroundImage: "url(num-pin-one.svg)",
+            backgroundImage: "url(num-pin-one.png)",
+            backgroundSize: "61px 68px",
             backgroundRepeat: "no-repeat",
             borderRadius: "8px",
             color: "var(--primary-1)",
@@ -56,7 +57,8 @@ const MainMap = () => {
           {
             width: "61px",
             height: "68px",
-            backgroundImage: "url(num-pin-two.svg)",
+            backgroundImage: "url(num-pin-two.png)",
+            backgroundSize: "61px 68px",
             backgroundRepeat: "no-repeat",
             borderRadius: "8px",
             color: "var(--primary-1)",
@@ -68,7 +70,8 @@ const MainMap = () => {
           {
             width: "61px",
             height: "68px",
-            backgroundImage: "url(num-pin-three.svg)",
+            backgroundImage: "url(num-pin-three.png)",
+            backgroundSize: "61px 68px",
             backgroundRepeat: "no-repeat",
             borderRadius: "8px",
             color: "var(--primary-1)",
