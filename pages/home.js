@@ -25,7 +25,7 @@ const MainMap = () => {
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
   //map불러오기
   const initMap = useCallback(() => {
-    let imageSrc = MarkerPng.src;
+    let imageSrc = "https://e-room-web.s3.ap-northeast-2.amazonaws.com/pin.svg";
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
