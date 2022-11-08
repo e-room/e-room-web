@@ -13,7 +13,7 @@ import { Body2Bold } from "styles/typography";
 import CheckBox from "components/common/atoms/CheckBox";
 import { pageTitleState } from "states";
 import { useSetRecoilState } from "recoil";
-import MarkerPng from "assets/marker.png";
+import MarkerPng from "assets/marker4.png";
 const initial = {
   lat: 33.453705,
   lng: 126.570677,
@@ -25,10 +25,11 @@ const MainMap = () => {
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
   //map불러오기
   const initMap = useCallback(() => {
-    let imageSrc = "https://e-room-web.s3.ap-northeast-2.amazonaws.com/pin.svg";
+    let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
