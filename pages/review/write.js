@@ -91,7 +91,7 @@ export default function reviewWrite() {
 }
 
 const fadeInUp = keyframes`
-0% {
+from {
   opacity: 0;
   transform: translate3d(0, 100%, 0);
 }
