@@ -11,6 +11,30 @@ export default function ReviewForm1() {
     console.log("data", data);
   };
 
+  const TextField = (props) => {
+    const { placeholder, width, label } = props;
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Text placeholder={placeholder} width={width} />
+        <div className="body-3" style={{ margin: "0 8px" }}>
+          {label}
+        </div>
+      </div>
+    );
+  };
+
+  const SelectField = (props) => {
+    const { items, width, label } = props;
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Select items={items} defaultValue={"2022"} width={100} />
+        <div className="body-3" style={{ margin: "0 8px" }}>
+          {label}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <FormWrapper>
       <FormItem>
@@ -24,67 +48,51 @@ export default function ReviewForm1() {
       <FormItem>
         <TextLabel>상세주소(호실)</TextLabel>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Text placeholder="예: 101" width="100px" />
-            <div className="body-3" style={{ margin: "0 8px" }}>
-              동
-            </div>
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Text placeholder="예: 301" width="100px" />
-            <div className="body-3" style={{ margin: "0 8px" }}>
-              호
-            </div>
-          </div>
+          <TextField placeholder={"예: 101"} width="100px" label={"동"} />
+          <TextField placeholder={"예: 301"} width="100px" label={"호"} />
         </div>
       </FormItem>
       <FormItem>
-        <TextLabel>거주기간</TextLabel>
-        <Select
-          items={[
-            { value: 2022, label: "2022년" },
-            { value: 2021, label: "2021년" },
-            { value: 2020, label: "2020년" },
-            { value: 2019, label: "2019년" },
-            { value: 2018, label: "2018년" },
-          ]}
-        />
-      </FormItem>
-      <FormItem>
-        <TextLabel>거주층</TextLabel>
-        <Select
-          items={[
-            { value: "low", label: "저층" },
-            { value: "middle", label: "중층" },
-            { value: "high", label: "고층" },
-          ]}
-        />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <TextLabel>거주 시작</TextLabel>
+            <SelectField
+              items={[
+                { value: 2022, label: "2022년" },
+                { value: 2021, label: "2021년" },
+                { value: 2020, label: "2020년" },
+                { value: 2019, label: "2019년" },
+                { value: 2018, label: "2018년" },
+              ]}
+              label={"부터"}
+            />
+          </div>
+          <div>
+            <TextLabel>거주기간</TextLabel>
+            <TextField placeholder={"예: 20"} width="100px" label={"개월"} />
+          </div>
+        </div>
       </FormItem>
       <FormItem>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <TextLabel>월세</TextLabel>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Text placeholder="예: 50" width="100px" />
-              <div className="body-3" style={{ margin: "0 6px" }}>
-                만원
-              </div>
-            </div>
+            <TextField placeholder={"예: 50"} width="100px" label={"만원"} />
           </div>
           <div>
             <TextLabel>관리비</TextLabel>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Text placeholder="예: 20" width="100px" />
-              <div className="body-3" style={{ margin: "0 6px" }}>
-                만원
-              </div>
-            </div>
+            <TextField placeholder={"예: 20"} width="100px" label={"만원"} />
           </div>
         </div>
       </FormItem>
       <FormItem>
+        <TextLabel>보증금</TextLabel>
+        {/* <Text placeholder="예: 500" /> */}
+        <TextField placeholder={"예: 500"} width="250px" label={"만원"} />
+      </FormItem>
+      <FormItem>
         <TextLabel>집 크기</TextLabel>
-        <Text placeholder="예: 6" />
+        <TextField placeholder={"예: 6"} width="250px" label={"평"} />
       </FormItem>
     </FormWrapper>
   );

@@ -4,19 +4,12 @@ import ArrowIcon from "../../../assets/arrow.svg";
 import { useMemo, useState } from "react";
 import { Body2 } from "../../../styles/typography";
 
-const options = [
-  { value: "orange", label: "orange" },
-  { value: "apple", label: "apple" },
-  { value: "grape", label: "grape" },
-  { value: "watermelon", label: "watermelon" },
-  { value: "lemon", label: "lemon" },
-];
-
 // TODO: 검색기능 및 여러가지 기능 추가 필요(조사 후 진행)
 // TODO: hover할때 위 아래 네모모양으로 표시됨
 export default function Select({
   placeholder = "필드를 선택해주세요.",
   items = [],
+  defaultValue,
   ...props
 }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,9 +17,8 @@ export default function Select({
     setIsVisible(!isVisible);
   };
 
-  const [defaultOption, setDefaultOption] = useState(null);
+  const [defaultOption, setDefaultOption] = useState(defaultValue);
   const onOptionChange = (option) => {
-    console.log("change value ", option);
     setDefaultOption(option);
     setIsVisible(false);
   };
@@ -63,6 +55,10 @@ export default function Select({
 }
 
 const OptionField = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   color: ${(p) => (p.defaultOption ? `var(--black)` : `var(--gray-3)`)};
 `;
 
