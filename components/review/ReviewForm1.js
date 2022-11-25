@@ -2,20 +2,33 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import styled from "@emotion/styled";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Body2Bold } from "styles/typography";
+import { reviewFormState } from "states/reviewAtom";
+import { useRecoilState } from "recoil";
 
 export default function ReviewForm1() {
   const [postCodeOpen, setPostCodeOpen] = useState(false);
+
+  const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const onHandleComplete = (data) => {
-    console.log("data", data);
+    setFormValue({
+      ...formValue,
+      address: `(${data.zonecode}) ${data.address}`,
+    });
   };
 
   const TextField = (props) => {
-    const { placeholder, width, label } = props;
+    const { placeholder, width, label, onChange, value, name } = props;
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Text placeholder={placeholder} width={width} />
+        <Text
+          placeholder={placeholder}
+          width={width}
+          onChange={onChange}
+          value={value}
+          name={name}
+        />
         <div className="body-3" style={{ margin: "0 8px" }}>
           {label}
         </div>
@@ -35,6 +48,15 @@ export default function ReviewForm1() {
     );
   };
 
+  const onLineNumberChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
   return (
     <FormWrapper>
       <FormItem>
@@ -42,13 +64,26 @@ export default function ReviewForm1() {
         <Text
           placeholder="도로명 주소로 입력해주세요"
           onClick={() => setPostCodeOpen(true)}
+          value={formValue.address}
         />
         {postCodeOpen ? <DaumPostCode onComplete={onHandleComplete} /> : ""}
       </FormItem>
       <FormItem>
         <TextLabel>상세주소(호실)</TextLabel>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <TextField placeholder={"예: 101"} width="100px" label={"동"} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Text
+              placeholder={"예: 101"}
+              width="100px"
+              onChange={onLineNumberChange}
+              value={formValue.lineNumber}
+              name={"lineNumber"}
+            />
+            <div className="body-3" style={{ margin: "0 8px" }}>
+              동
+            </div>
+          </div>
+
           <TextField placeholder={"예: 301"} width="100px" label={"호"} />
         </div>
       </FormItem>
