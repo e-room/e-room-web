@@ -31,7 +31,7 @@
   - review: review page에 들어가는 상세 컴포넌트
 * pages:
   - \_app: 가장 먼저 실행되는 파일. 공통(global) 파일 관리
-  - index: 메인 페이지(Home)
+  - index: 메인 페이지
   - 그 외는 페이지 단위의 구현
 
 - states: 상태관리

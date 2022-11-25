@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 const navItems = [
   {
-    path: "/home",
+    path: "/",
     defaultIcon: "home-stroke",
     activeIcon: "home-fill",
     title: "둘러보기",
@@ -45,8 +45,15 @@ export default function Footer() {
             <Link href={value.path} key={index}>
               <a>
                 <NavBarContent active={active}>
-                  <Icon icon={active ? value.activeIcon : value.defaultIcon} size="md" />
-                  <div className={active ? "caption-bold-2" : "caption-2 text-gray-3"}>
+                  <Icon
+                    icon={active ? value.activeIcon : value.defaultIcon}
+                    size="md"
+                  />
+                  <div
+                    className={
+                      active ? "caption-bold-2" : "caption-2 text-gray-3"
+                    }
+                  >
                     {value.title}
                   </div>
                 </NavBarContent>
