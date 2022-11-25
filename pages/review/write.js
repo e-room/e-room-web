@@ -51,6 +51,7 @@ export default function reviewWrite() {
 
   useEffect(() => {
     setPageTitleState("리뷰 쓰기");
+    setReviewStep(1);
   }, []);
 
   if (!isLogin) {
