@@ -1,16 +1,13 @@
 import styled from "@emotion/styled";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
-import BarFilled from "assets/icon/bar-filled.svg";
-import BarUnFilled from "assets/icon/bar-unfilled.svg";
 import Toggle from "components/common/atoms/Toggle";
 import {
-  Body3,
   Body3Bold,
-  Caption1,
   Caption1Bold,
   Caption2Bold,
   Title1,
+  Display2,
 } from "styles/typography";
 import { useState } from "react";
 
@@ -48,14 +45,6 @@ export default function BuildingInfo() {
     <Container>
       <InfoField>
         <Title>뉴아트빌</Title>
-        <ScoreField>
-          <div className="score">4.5</div>
-          <Icon icon={"star-filled"} size={"sm"} />
-          <Icon icon={"star-filled"} size={"sm"} />
-          <Icon icon={"star-filled"} size={"sm"} />
-          <Icon icon={"star-filled"} size={"sm"} />
-          <Icon icon={"star-filled"} size={"sm"} />
-        </ScoreField>
         {/* &gt; = ">" */}
         <AddressField onClick={() => onCopyAddress(formValue.address)}>
           {formValue.address} &gt;
@@ -72,33 +61,58 @@ export default function BuildingInfo() {
           <div className="btn-sub">문의하기</div>
         </ButtonField>
       </Button>
-      <DetailScoreField>
-        {DetailFields.map((value) => {
-          return (
-            <div className="field" key={value.title}>
-              <div className="title">{value.title}</div>
-              <div className="score">{value.score}점</div>
-              <div className="bar">
-                {/* TODO: svg width 작을수록 얇아지는거? 왜이럼.. */}
-                {/* <div className="fill">
-                  <BarFilled width={`${value.score}%`} height={"4"} />
-                </div>
-                <div className="un-fill">
-                  <BarUnFilled width={"100%"} height={"4"} />
-                </div> */}
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <DetailScoreField>
+          {DetailFields.map((value) => {
+            return (
+              <div className="field" key={value.title}>
+                <div className="title">{value.title}</div>
+                <ScoreField>
+                  <div className="score">4.5</div>
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-half"} size={"sm"} />
+                </ScoreField>
               </div>
-            </div>
-          );
-        })}
-      </DetailScoreField>
+            );
+          })}
+        </DetailScoreField>
+        <TotalBox>
+          <TotalTitle>총 만족도</TotalTitle>
+          <TotalScore>4.5</TotalScore>
+        </TotalBox>
+      </div>
       <RoomField>
         {Rooms.map((value) => {
-          return <Toggle className="toggle" label={value.label} key={value.value} />;
+          return (
+            <Toggle className="toggle" label={value.label} key={value.value} />
+          );
         })}
       </RoomField>
     </Container>
   );
 }
+
+const TotalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  border-left: 1px solid #e9e9e9;
+`;
+
+const TotalTitle = styled.div`
+  ${Body3Bold}
+  color: var(--black);
+`;
+const TotalScore = styled.div`
+  ${Display2}
+  color: var(--primary-1);
+`;
 
 const Container = styled.div`
   display: flex;
@@ -118,17 +132,18 @@ const Title = styled.div`
 `;
 
 const ScoreField = styled.div`
-  ${Caption2Bold}
-  color: var(--black);
-
   display: flex;
   align-items: center;
+  margin-right: 36px;
 
   .score {
+    ${Caption2Bold}
+    color: var(--primary-1);
+
     margin-right: 6px;
   }
   svg {
-    fill: var(--black);
+    fill: var(--primary-1);
   }
 `;
 
@@ -175,28 +190,9 @@ const DetailScoreField = styled.div`
     justify-content: space-between;
 
     .title {
-      min-width: 70px;
+      min-width: 84px;
       ${Body3Bold}
       color: var(--black);
-    }
-    .score {
-      min-width: 40px;
-      ${Body3}
-      color: var(--black);
-    }
-    .bar {
-      display: flex;
-
-      .fill {
-        z-index: 2;
-        position: absolute;
-        display: flex;
-      }
-      .un-fill {
-        z-index: 1;
-        position: relative;
-        display: flex;
-      }
     }
   }
 `;
