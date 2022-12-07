@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
 import styled from "@emotion/styled";
+
+import MarkerPng from "assets/marker4.png";
+
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
 import MapButton from "components/common/atoms/MapButton";
@@ -9,17 +13,20 @@ import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import Popup from "components/common/atoms/Popup";
-import { Body2Bold } from "styles/typography";
 import CheckBox from "components/common/atoms/CheckBox";
+import { Body2Bold } from "styles/typography";
+
 import { pageTitleState } from "states";
-import { useSetRecoilState } from "recoil";
-import MarkerPng from "assets/marker4.png";
+import { buildingMarkingSelector } from "states/buidlingAtom";
+
 const initial = {
   lat: 33.453705,
   lng: 126.570677,
 };
 const MainMap = () => {
   const setPageTitleState = useSetRecoilState(pageTitleState);
+  const buildingMarking = useRecoilValue(buildingMarkingSelector);
+
   const kakaoMapRef = useRef(null); // 지도 container ref
   const map = useRef(null);
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
@@ -85,9 +92,12 @@ const MainMap = () => {
       // TODO: 동기로 변경하고 setTimeout 제거
       const markers = [];
       setTimeout(() => {
-        getLocation.forEach((value) => {
+        buildingMarking.buildingList.forEach((value) => {
           let marker = new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(value.lat, value.lng),
+            position: new kakao.maps.LatLng(
+              value.coordinateDto.latitude,
+              value.coordinateDto.longitude
+            ),
             image: markerImage,
           });
           marker.setMap(initialMap);
