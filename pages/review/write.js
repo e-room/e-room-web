@@ -51,6 +51,7 @@ export default function reviewWrite() {
 
   useEffect(() => {
     setPageTitleState("리뷰 쓰기");
+    setReviewStep(1);
   }, []);
 
   if (!isLogin) {
@@ -91,7 +92,7 @@ export default function reviewWrite() {
 }
 
 const fadeInUp = keyframes`
-0% {
+from {
   opacity: 0;
   transform: translate3d(0, 100%, 0);
 }
