@@ -140,11 +140,12 @@ const MainMap = () => {
   const onHideClick = () => {
     setPopupVisible(false);
   };
+
   return (
     <Fragment>
       <Script
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`}
-        onLoad={() => kakao.maps.load(initMap)}
+        onLoad={() => new kakao.maps.load(initMap)}
       />
       {popupVisible && (
         <Popup
@@ -263,79 +264,3 @@ const ButtonGroup = styled.div`
   gap: 8px;
 `;
 export default MainMap;
-const dummy = () => {
-  return Array(100)
-    .fill()
-    .map(() => {
-      return {
-        lat: 33.450705,
-        lng: 126.570677,
-      };
-    });
-};
-const getLocation = [
-  {
-    lat: 33.450705,
-    lng: 126.570677,
-  },
-  {
-    lat: 33.450936,
-    lng: 126.569477,
-  },
-  {
-    lat: 33.450879,
-    lng: 126.56994,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.452493,
-    lng: 126.572938,
-  },
-  {
-    lat: 33.451373,
-    lng: 126.570538,
-  },
-  {
-    lat: 33.45129,
-    lng: 126.571701,
-  },
-  {
-    lat: 33.451457,
-    lng: 126.57101,
-  },
-  {
-    lat: 33.45131,
-    lng: 126.570018,
-  },
-  {
-    lat: 33.451099,
-    lng: 126.570799,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-  {
-    lat: 33.451393,
-    lng: 126.570738,
-  },
-];
