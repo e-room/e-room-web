@@ -30,7 +30,7 @@ export default function ImageView() {
 }
 
 const Container = styled.div`
-  padding: 12px 20px;
+  padding: 12px 0px 12px 20px;
   background: #fafafa;
 `;
 
