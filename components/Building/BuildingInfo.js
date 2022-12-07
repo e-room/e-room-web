@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { buildingSelector } from "states/buidlingAtom";
+import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
 
 export default function BuildingInfo() {
   const building = useRecoilValue(buildingSelector);
@@ -47,11 +48,16 @@ export default function BuildingInfo() {
   return (
     <Container>
       <InfoField>
-        <Title>{building.name}</Title>
-        {/* &gt; = ">" */}
-        <AddressField onClick={() => onCopyAddress(formValue.address)}>
-          {formValue.address} &gt;
-        </AddressField>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <Title>{building.name}</Title>
+            {/* &gt; = ">" */}
+            <AddressField onClick={() => onCopyAddress(formValue.address)}>
+              {formValue.address} &gt;
+            </AddressField>
+          </div>
+          <BuildingBadge width={48} height={64} />
+        </div>
       </InfoField>
       <Button style={{ margin: "18px 0" }}>
         <ButtonField>
