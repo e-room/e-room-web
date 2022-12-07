@@ -2,107 +2,183 @@ import { atom, selector } from "recoil";
 
 export const buildingListState = atom({
   key: "buildingListState",
-  default: [
-    {
-      buildingId: 1,
-      name: "프라다빌", // 건물 이름
-      address: "대전광역시 유성구 어은동 103-1", // 상세 주소
-      reviewCnt: 20, // 리뷰 개수
-      scoreAvg: 4.3, // 평균 점수
-      bestCategory: {
-        description: "교통", //대표 장점
+  default: {
+    content: [
+      {
+        buildingId: 4164,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "147",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: true, // 직거래 여부
-    },
-    {
-      buildingId: 2,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4162,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "146",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 3,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4158,
+        name: "차세대융합기술연구원",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "145",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 4,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4156,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "120",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 5,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4154,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "116",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 6,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4152,
+        name: "광교데시앙루브",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "114",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 7,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4150,
+        name: "한국나노기술원",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "109",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 8,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4148,
+        name: "경기도중소기업지원센터",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "107",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
-    },
-    {
-      buildingId: 9,
-      name: "구찌빌",
-      address: "서울특별시 관악구 신림동 관천로 12길 47 동성오피스텔",
-      reviewCnt: 22,
-      scoreAvg: 3.0,
-      bestCategory: {
-        description: "건물 및 단지",
+      {
+        buildingId: 4146,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "105",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
       },
-      isDirectDeal: false,
+      {
+        buildingId: 4144,
+        name: "",
+        address: {
+          siDo: "경기도",
+          siGunGu: "수원시 영통구",
+          eupMyeon: "이의동",
+          roadName: "광교로",
+          buildingNumber: "66",
+        },
+        reviewCnt: 0,
+        scoreAvg: null,
+        bestCategory: null,
+        directDeal: false,
+      },
+    ],
+    pageable: {
+      sort: {
+        empty: false,
+        unsorted: false,
+        sorted: true,
+      },
+      offset: 0,
+      pageNumber: 0,
+      pageSize: 10,
+      paged: true,
+      unpaged: false,
     },
-  ],
+    sort: {
+      empty: false,
+      unsorted: false,
+      sorted: true,
+    },
+    number: 0,
+    first: true,
+    last: false,
+    size: 10,
+    numberOfElements: 10,
+    empty: false,
+  },
 });
 
 export const buildingListSelector = selector({
