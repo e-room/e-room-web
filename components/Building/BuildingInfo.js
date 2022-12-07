@@ -10,8 +10,11 @@ import {
   Display2,
 } from "styles/typography";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { buildingSelector } from "states/buidlingAtom";
 
 export default function BuildingInfo() {
+  const building = useRecoilValue(buildingSelector);
   const DetailFields = [
     { title: "교통", score: 78 },
     { title: "건물/단지", score: 56 },
@@ -31,7 +34,7 @@ export default function BuildingInfo() {
   ];
 
   const formValue = {
-    address: "경기 수원시 영통구 덕영대로 112-3",
+    address: `${building.address.siDo} ${building.address.siGunGu} ${building.address.roadName} ${building.address.buildingNumber}`,
   };
 
   const [toastVisible, setToastVisible] = useState(false);
@@ -44,7 +47,7 @@ export default function BuildingInfo() {
   return (
     <Container>
       <InfoField>
-        <Title>뉴아트빌</Title>
+        <Title>{building.name}</Title>
         {/* &gt; = ">" */}
         <AddressField onClick={() => onCopyAddress(formValue.address)}>
           {formValue.address} &gt;
@@ -86,9 +89,7 @@ export default function BuildingInfo() {
       </div>
       <RoomField>
         {Rooms.map((value) => {
-          return (
-            <Toggle className="toggle" label={value.label} key={value.value} />
-          );
+          return <Toggle className="toggle" label={value.label} key={value.value} />;
         })}
       </RoomField>
     </Container>
