@@ -1,15 +1,24 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from "react";
 import Script from "next/script";
 import styled from "@emotion/styled";
 import MarkerPng from "assets/marker.png";
-
-const initial = {
-  lat: 37.5173319258532,
-  lng: 127.047377408384,
-};
+import { buildingSelector } from "states/buidlingAtom";
+import { useRecoilValue } from "recoil";
 
 const BuildingMap = () => {
+  const building = useRecoilValue(buildingSelector);
   const kakaoMapRef = useRef(null); // 지도 container ref
+
+  const initial = {
+    lat: building.coordinate.latitude,
+    lng: building.coordinate.longitude,
+  };
 
   //map불러오기
   const initMap = useCallback(() => {
@@ -17,7 +26,11 @@ const BuildingMap = () => {
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
 
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
     if (kakaoMapRef.current && kakaoMapRef) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {

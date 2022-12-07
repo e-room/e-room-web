@@ -5,13 +5,14 @@ import BuildingInfo from "components/Building/BuildingInfo";
 import ImageView, { dummyImages } from "components/Building/ImageView";
 import ReviewList from "components/Building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
-import { imageViewState } from "states/buidlingAtom";
-import { useRecoilState } from "recoil";
+import { buildingSelector, imageViewState } from "states/buidlingAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Slider from "components/building/Slider";
 
 export default () => {
   const router = useRouter();
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
+  const building = useRecoilValue(buildingSelector);
 
   const onCloseImg = () => {
     setShowImgDetail(false);
