@@ -6,9 +6,10 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { heartListSelector } from "states/heartAtom";
 import { pageTitleState } from "states";
 import { useEffect } from "react";
+import { buildingListSelector } from "states/buidlingAtom";
 
 export default function favorites() {
-  const data = useRecoilValue(heartListSelector);
+  const data = useRecoilValue(buildingListSelector);
   const setPageTitleState = useSetRecoilState(pageTitleState);
 
   useEffect(() => {
