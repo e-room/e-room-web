@@ -1,20 +1,14 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { useState } from "react";
 
-export default function CheckBox() {
-  const [checked, setChecked] = useState(true);
-
-  return (
-    <StyledChecKBox
-      type={"checkbox"}
-      checked={checked}
-      onChange={() => setChecked(!checked)}
-    />
-  );
+export default function CheckBox({ checked = false, onChange }) {
+  return <StyledChecKBox type={"checkbox"} checked={checked} onChange={onChange} />;
 }
 
-CheckBox.propTypes = {};
+CheckBox.propTypes = {
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+};
 
 const StyledChecKBox = styled.input`
   appearance: none;
