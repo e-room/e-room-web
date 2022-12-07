@@ -20,9 +20,10 @@ import { pageTitleState } from "states";
 import { buildingMarkingSelector } from "states/buidlingAtom";
 
 const initial = {
-  lat: 33.453705,
-  lng: 126.570677,
+  lat: 37.2568828036311,
+  lng: 127.069710816696,
 };
+// TODO: 스크롤해야 처음에 마커 뜸
 const MainMap = () => {
   const setPageTitleState = useSetRecoilState(pageTitleState);
   const buildingMarking = useRecoilValue(buildingMarkingSelector);
@@ -47,47 +48,7 @@ const MainMap = () => {
         map: initialMap, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 4, // 클러스터 할 최소 지도 레벨
-        styles: [
-          {
-            width: "61px",
-            height: "68px",
-            backgroundImage: "url(num-pin-one.png)",
-            backgroundSize: "61px 68px",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "8px",
-            color: "var(--primary-1)",
-            textAlign: "center",
-            fontWeight: "700",
-            lineHeight: "20px",
-            fontSize: "14px",
-          },
-          {
-            width: "61px",
-            height: "68px",
-            backgroundImage: "url(num-pin-two.png)",
-            backgroundSize: "61px 68px",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "8px",
-            color: "var(--primary-1)",
-            textAlign: "center",
-            fontWeight: "700",
-            lineHeight: "20px",
-            fontSize: "14px",
-          },
-          {
-            width: "61px",
-            height: "68px",
-            backgroundImage: "url(num-pin-three.png)",
-            backgroundSize: "61px 68px",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "8px",
-            color: "var(--primary-1)",
-            textAlign: "center",
-            fontWeight: "700",
-            lineHeight: "20px",
-            fontSize: "14px",
-          },
-        ],
+        styles: MarkerClustererStyles,
       });
       // TODO: 동기로 변경하고 setTimeout 제거
       const markers = [];
@@ -116,6 +77,7 @@ const MainMap = () => {
       initMap();
     }
   }, [initMap]);
+
   //나의 위치로 가게 해주는 함수
   const setMyPosition = () => {
     if (navigator.geolocation) {
@@ -136,11 +98,14 @@ const MainMap = () => {
   const zoomOut = () => {
     map.current.setLevel(map.current.getLevel() + 1);
   };
+
   const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
     setPopupVisible(false);
   };
 
+  const [filterChecked, setFilterChecked] = useState(true);
+  console.log(filterChecked);
   return (
     <Fragment>
       <Script
@@ -150,10 +115,10 @@ const MainMap = () => {
       {popupVisible && (
         <Popup
           title={
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <FilterPopupTitle>
               <Icon icon={"filter-stroke"} />
-              <div style={{ marginLeft: 8 }}>필터</div>
-            </div>
+              <div className="title">필터</div>
+            </FilterPopupTitle>
           }
           titleAlign={"left"}
           buttonType={"default"}
@@ -163,7 +128,10 @@ const MainMap = () => {
         >
           <Contents>
             <SubText>직거래 가능한 방만 보기</SubText>
-            <CheckBox />
+            <CheckBox
+              onChange={() => setFilterChecked(!filterChecked)}
+              checked={filterChecked}
+            />
           </Contents>
         </Popup>
       )}
@@ -213,6 +181,49 @@ const MainMap = () => {
     </Fragment>
   );
 };
+
+const MarkerClustererStyles = [
+  {
+    width: "61px",
+    height: "68px",
+    backgroundImage: "url(num-pin-one.png)",
+    backgroundSize: "61px 68px",
+    backgroundRepeat: "no-repeat",
+    borderRadius: "8px",
+    color: "var(--primary-1)",
+    textAlign: "center",
+    fontWeight: "700",
+    lineHeight: "20px",
+    fontSize: "14px",
+  },
+  {
+    width: "61px",
+    height: "68px",
+    backgroundImage: "url(num-pin-two.png)",
+    backgroundSize: "61px 68px",
+    backgroundRepeat: "no-repeat",
+    borderRadius: "8px",
+    color: "var(--primary-1)",
+    textAlign: "center",
+    fontWeight: "700",
+    lineHeight: "20px",
+    fontSize: "14px",
+  },
+  {
+    width: "61px",
+    height: "68px",
+    backgroundImage: "url(num-pin-three.png)",
+    backgroundSize: "61px 68px",
+    backgroundRepeat: "no-repeat",
+    borderRadius: "8px",
+    color: "var(--primary-1)",
+    textAlign: "center",
+    fontWeight: "700",
+    lineHeight: "20px",
+    fontSize: "14px",
+  },
+];
+
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -259,8 +270,12 @@ const SubText = styled.div`
   ${Body2Bold}
   color: var(--black);
 `;
-const ButtonGroup = styled.div`
+const FilterPopupTitle = styled.div`
   display: flex;
-  gap: 8px;
+  align-items: center;
+  .title {
+    margin-left: 8px;
+  }
 `;
+
 export default MainMap;
