@@ -1,48 +1,28 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
 import { useState } from "react";
+import { Rating } from "react-simple-star-rating";
 
-// 반별 없애기
-// TODO: drag로 선택기능
-export default function Score({ size = "md" }) {
-  const [starValue, setStarValue] = useState([false, false, false, false, false]);
-  const onStarChange = (idx) => {
-    let stars = [...starValue];
-
-    for (let i = 0; i < 5; i++) {
-      stars[i] = i <= idx ? true : false;
-    }
-
-    setStarValue(stars);
-  };
-
+export default function Score({ size = "md", value, readOnly = false }) {
+  const [rating, setRating] = useState(0);
+  const handleRating = (rate) => setRating(rate);
   return (
-    <StyledScore>
-      {starValue.map((value, index) => {
-        return (
-          <StyledIcon key={index} onClick={() => onStarChange(index)}>
-            <Icon
-              icon={value ? `star-filled` : `star-default`}
-              size={size}
-              fill={"var(--primary-1)"}
-            />
-          </StyledIcon>
-        );
-      })}
-    </StyledScore>
+    <Rating
+      onClick={handleRating}
+      value={value}
+      readonly={readOnly}
+      fillIcon={
+        <Icon icon={`star-filled`} size={size} fill={"var(--primary-1)"} />
+      }
+      emptyIcon={
+        <Icon icon={`star-default`} size={size} fill={"var(--primary-1)"} />
+      }
+    />
   );
 }
 
 Score.propTypes = {
   size: PropTypes.string,
+  value: PropTypes.any,
+  readOnly: PropTypes.bool,
 };
-
-const StyledScore = styled.div`
-  display: flex;
-`;
-
-const StyledIcon = styled.div`
-  cursor: pointer;
-  display: flex;
-`;

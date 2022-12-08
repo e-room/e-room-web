@@ -32,7 +32,7 @@ export default function BuildingList({ data }) {
                   ? Number.parseFloat(value.scoreAvg).toFixed(1)
                   : 0}
               </StarArea>
-              <Score size="sm" />
+              <Score size="sm" readOnly={true} />
             </ReviewArea>
           </BuildingContent>
         </BuildingContainer>
