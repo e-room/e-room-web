@@ -43,4 +43,5 @@ const Nickname = styled.div`
 const Email = styled.div`
   ${Caption2}
   color: var(--black);
+  opacity: 0.5;
 `;
