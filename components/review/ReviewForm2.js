@@ -18,7 +18,6 @@ export default function ReviewForm2() {
       },
     });
 
-  console.log(traffic);
   return (
     <FormWrapper>
       <FormItem>
