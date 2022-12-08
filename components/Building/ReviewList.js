@@ -51,7 +51,9 @@ export default function ReviewList() {
                   <Avatar img={Avatar24.src} />
                   {value.nickName}
                 </div>
-                <DeleteButton onClick={() => !notAccess && setPopupVisible(true)}>
+                <DeleteButton
+                  onClick={() => !notAccess && setPopupVisible(true)}
+                >
                   삭제
                 </DeleteButton>
               </Top>
@@ -97,7 +99,8 @@ export default function ReviewList() {
                   <Chip label={"♨️ 단열"} />
                 </div>
                 <div className="description">
-                  이런 것들이 장점인 것 같구요.. 저는 나름 만족하면서 살고 있답니다!
+                  이런 것들이 장점인 것 같구요.. 저는 나름 만족하면서 살고
+                  있답니다!
                 </div>
               </Good>
               <Bad>
@@ -108,8 +111,8 @@ export default function ReviewList() {
                   <Chip label={"⛰ 언덕"} />
                 </div>
                 <div className="description">
-                  이런 것들이 단점인 것 같구요.. 솔직히 관리비가 덜들긴하는데 그냥 그만큼
-                  관리도 안돼서 너무 별로에요.
+                  이런 것들이 단점인 것 같구요.. 솔직히 관리비가 덜들긴하는데
+                  그냥 그만큼 관리도 안돼서 너무 별로에요.
                 </div>
               </Bad>
               <Bottom favorite={value.myFavorite}>
@@ -168,7 +171,7 @@ const Top = styled.div`
 const DeleteButton = styled.div`
   ${Caption1Bold}
 
-  color: var(--danger);
+  color: var(--danger1);
 `;
 const ScoreField = styled.div`
   ${Caption2Bold}
