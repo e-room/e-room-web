@@ -8,32 +8,26 @@ import { reviewFormState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
 
 export default function ReviewForm1() {
+  const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const [postCodeOpen, setPostCodeOpen] = useState(false);
 
-  const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const onHandleComplete = (data) => {
     setFormValue({
       ...formValue,
-      address: `(${data.zonecode}) ${data.address}`,
+      address: {
+        ...formValue.address,
+        siDo: data.sido,
+        siGunGu: data.sigungu,
+        eupMyeon: data.bname,
+        roadName: data.roadname,
+        // buildingNumber: data.,
+        buildingOptionalDto: {
+          ...formValue.buildingOptionalDto,
+          buildingName: data.buildingName,
+        },
+      },
     });
-  };
-
-  const TextField = (props) => {
-    const { placeholder, width, label, onChange, value, name } = props;
-    return (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Text
-          placeholder={placeholder}
-          width={width}
-          onChange={onChange}
-          value={value}
-          name={name}
-        />
-        <div className="body-3" style={{ margin: "0 8px" }}>
-          {label}
-        </div>
-      </div>
-    );
+    // setPostCodeOpen(false);
   };
 
   const SelectField = (props) => {
@@ -48,15 +42,6 @@ export default function ReviewForm1() {
     );
   };
 
-  const onLineNumberChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
-
   return (
     <FormWrapper>
       <FormItem>
@@ -64,19 +49,52 @@ export default function ReviewForm1() {
         <Text
           placeholder="도로명 주소로 입력해주세요"
           onClick={() => setPostCodeOpen(true)}
-          value={formValue.address}
+          onChange={() => {}}
+          disabled={Boolean(formValue.address.siDo)}
+          value={
+            formValue.address.siDo
+              ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
+              : ""
+          }
         />
-        {postCodeOpen ? <DaumPostCode onComplete={onHandleComplete} /> : ""}
+        {postCodeOpen && <DaumPostCode onComplete={onHandleComplete} />}
       </FormItem>
+      {/* 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      */}
       <FormItem>
         <TextLabel>상세주소(호실)</TextLabel>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Text
               placeholder={"예: 101"}
-              width="100px"
-              onChange={onLineNumberChange}
-              value={formValue.lineNumber}
+              width={100}
+              onChange={(e) => {
+                setFormValue({
+                  ...formValue,
+                  roomBaseDto: {
+                    ...formValue.roomBaseDto,
+                    lineNumber: e.target.value,
+                  },
+                });
+              }}
+              value={formValue.roomBaseDto.lineNumber}
               name={"lineNumber"}
             />
             <div className="body-3" style={{ margin: "0 8px" }}>
@@ -84,7 +102,26 @@ export default function ReviewForm1() {
             </div>
           </div>
 
-          <TextField placeholder={"예: 301"} width="100px" label={"호"} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Text
+              placeholder={"예: 301"}
+              width={100}
+              onChange={(e) => {
+                setFormValue({
+                  ...formValue,
+                  roomBaseDto: {
+                    ...formValue.roomBaseDto,
+                    roomNumber: e.target.value,
+                  },
+                });
+              }}
+              value={formValue.roomBaseDto.roomNumber}
+              name={"roomNumber"}
+            />
+            <div className="body-3" style={{ margin: "0 8px" }}>
+              호
+            </div>
+          </div>
         </div>
       </FormItem>
       <FormItem>
@@ -104,7 +141,26 @@ export default function ReviewForm1() {
           </div>
           <div>
             <TextLabel>거주기간</TextLabel>
-            <TextField placeholder={"예: 20"} width="100px" label={"개월"} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Text
+                placeholder={"예: 20"}
+                width={100}
+                onChange={(e) => {
+                  setFormValue({
+                    ...formValue,
+                    reviewResidencePeriodDto: {
+                      ...formValue.reviewResidencePeriodDto,
+                      residenceDuration: e.target.value,
+                    },
+                  });
+                }}
+                value={formValue.reviewResidencePeriodDto.residenceDuration}
+                name={"residenceDuration"}
+              />
+              <div className="body-3" style={{ margin: "0 8px" }}>
+                개월
+              </div>
+            </div>
           </div>
         </div>
       </FormItem>
@@ -112,22 +168,66 @@ export default function ReviewForm1() {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <TextLabel>월세</TextLabel>
-            <TextField placeholder={"예: 50"} width="100px" label={"만원"} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Text
+                placeholder={"예: 50"}
+                width={100}
+                // onChange={onChange}
+                // value={value}
+                // name={name}
+              />
+              <div className="body-3" style={{ margin: "0 8px" }}>
+                만원
+              </div>
+            </div>
           </div>
           <div>
             <TextLabel>관리비</TextLabel>
-            <TextField placeholder={"예: 20"} width="100px" label={"만원"} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Text
+                placeholder={"예: 20"}
+                width={100}
+                // onChange={onChange}
+                // value={value}
+                // name={name}
+              />
+              <div className="body-3" style={{ margin: "0 8px" }}>
+                만원
+              </div>
+            </div>
           </div>
         </div>
       </FormItem>
       <FormItem>
         <TextLabel>보증금</TextLabel>
         {/* <Text placeholder="예: 500" /> */}
-        <TextField placeholder={"예: 500"} width="250px" label={"만원"} />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Text
+            placeholder={"예: 500"}
+            width={250}
+            // onChange={onChange}
+            // value={value}
+            // name={name}
+          />
+          <div className="body-3" style={{ margin: "0 8px" }}>
+            만원
+          </div>
+        </div>
       </FormItem>
       <FormItem>
         <TextLabel>집 크기</TextLabel>
-        <TextField placeholder={"예: 6"} width="250px" label={"평"} />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Text
+            placeholder={"예: 6"}
+            width={250}
+            // onChange={onChange}
+            // value={value}
+            // name={name}
+          />
+          <div className="body-3" style={{ margin: "0 8px" }}>
+            평
+          </div>
+        </div>
       </FormItem>
     </FormWrapper>
   );
