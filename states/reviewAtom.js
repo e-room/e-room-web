@@ -4,11 +4,11 @@ export const reviewFormState = atom({
   key: "reviewFormState",
   default: {
     address: {
-      siDo: null,
-      siGunGu: null,
-      eupMyeon: null,
-      roadName: null,
-      buildingNumber: null,
+      siDo: "",
+      siGunGu: "",
+      eupMyeon: "",
+      roadName: "",
+      buildingNumber: "",
     },
     buildingOptionalDto: {
       buildingName: null,
@@ -26,12 +26,12 @@ export const reviewFormState = atom({
       isAnonymous: null,
     },
     reviewScoreDto: {
-      traffic: null,
-      buildingComplex: null,
-      surrounding: null,
-      internal: null,
-      livingLocation: null,
-      residenceSatisfaction: null,
+      traffic: null, // 교통
+      buildingComplex: null, // 건물/단지
+      surrounding: null, // 주변/환경
+      internal: null, // 내부
+      livingLocation: null, // 생활/입지
+      residenceSatisfaction: null, // 주거만족도
     },
     reviewResidencePeriodDto: {
       residenceStartYear: null,
