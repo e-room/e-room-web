@@ -67,6 +67,6 @@ const COLORS = {
   `,
   danger: css`
     --toast-bg-color: var(--white);
-    --toast-color: var(--danger);
+    --toast-color: var(--danger1);
   `,
 };

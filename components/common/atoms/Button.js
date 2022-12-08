@@ -64,14 +64,14 @@ const COLORS = {
     --button-disabled-label-color: var(--gray-3);
   `,
   warning: css`
-    --button-bg-color: var(--danger);
-    --button-border-color: var(--danger);
+    --button-bg-color: var(--danger1);
+    --button-border-color: var(--danger1);
     --button-label-color: var(--white);
 
     // TODO: warning disabled color 추가해야 함
 
-    --button-disabled-color: var(--primary-5);
-    --button-disabled-label-color: var(--primary-4);
+    --button-disabled-color: var(--danger-5);
+    --button-disabled-label-color: var(--danger-4);
   `,
 };
 

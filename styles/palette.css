@@ -15,7 +15,11 @@
 
   --success: #3aa0ff !important;
   --caution: #ffd059 !important;
-  --danger: #ff7865 !important;
+  --danger1: #ff7865 !important;
+  --danger2: #f47e6e !important;
+  --danger3: #f79e92 !important;
+  --danger4: #f9beb6 !important;
+  --danger5: #fcdfdb !important;
 
   --kakao: #fee500 !important;
   --google: #ffffff !important;
