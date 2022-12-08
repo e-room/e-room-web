@@ -8,26 +8,38 @@ import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
 
 export default function BottomSheet({
   title,
-  subTitle,
   visible = false,
   buttonType = "default",
   onHideClick,
+  children,
 }) {
   const ButtonType = () => {
     switch (buttonType) {
       case "confirm":
-        return <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />;
+        return (
+          <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
+        );
       case "default":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button
+              label={"Label"}
+              size="lg"
+              width={"100%"}
+              type={"secondary"}
+            />
             <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
           </div>
         );
       case "warning":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button
+              label={"Label"}
+              size="lg"
+              width={"100%"}
+              type={"secondary"}
+            />
             <Button label={"Label"} size="lg" width={"100%"} type={"warning"} />
           </div>
         );
@@ -46,10 +58,7 @@ export default function BottomSheet({
         </XField>
         <StyledSheet visible={visible}>
           <Title>{title}</Title>
-          <div>
-            <Score size={"xl"} />
-          </div>
-          <SubTitle>{subTitle}</SubTitle>
+          {children}
           <ButtonGroup>{ButtonType()}</ButtonGroup>
         </StyledSheet>
       </Container>
@@ -107,6 +116,7 @@ const StyledSheet = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* width: 100%; */
   padding: 32px 20px 20px;
   gap: 16px;
   isolation: isolate;
@@ -119,8 +129,7 @@ const Title = styled.div`
   ${SubTitle1}
 
   color: var(--black);
-
-  padding: 0 65px;
+  width: 100%;
   text-align: center;
 `;
 

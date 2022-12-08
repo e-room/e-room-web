@@ -14,6 +14,8 @@ import { pageTitleState } from "states";
 import { useRouter } from "next/router";
 import Login from "../login";
 import { reviewStepState } from "states/reviewAtom";
+import IllustFemale from "assets/illust/illust-female_evaluation.svg";
+import { Caption1Bold } from "styles/typography";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
@@ -73,10 +75,17 @@ export default function reviewWrite() {
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       {popupVisible ? (
         <BottomSheet
-          title={"회원님이 생각하는 이 자취방의 총 만족도는?"}
-          subTitle={"3.5점"}
+          title={"이제 모든 리뷰를 볼 수 있어요!"}
           onHideClick={onHideClick}
-        />
+          buttonType={"confirm"}
+        >
+          <IllustFemale />
+          <Description>
+            첫 리뷰를 잘 등록했어요.
+            <br />
+            이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
+          </Description>
+        </BottomSheet>
       ) : (
         <BottomArea>
           <Button
@@ -134,4 +143,10 @@ const BottomArea = styled.div`
   button {
     margin: 0px 20px;
   }
+`;
+
+const Description = styled.div`
+  ${Caption1Bold}
+  color: var(--black);
+  text-align: center;
 `;
