@@ -16,30 +16,18 @@ export default function BottomSheet({
   const ButtonType = () => {
     switch (buttonType) {
       case "confirm":
-        return (
-          <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
-        );
+        return <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />;
       case "default":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button
-              label={"Label"}
-              size="lg"
-              width={"100%"}
-              type={"secondary"}
-            />
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
             <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
           </div>
         );
       case "warning":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button
-              label={"Label"}
-              size="lg"
-              width={"100%"}
-              type={"secondary"}
-            />
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
             <Button label={"Label"} size="lg" width={"100%"} type={"warning"} />
           </div>
         );
@@ -100,7 +88,7 @@ to {
 const Container = styled.div`
   bottom: 0;
   position: fixed;
-
+  width: 100%;
   animation: ${fadeInUp} 1s;
 `;
 
