@@ -9,14 +9,24 @@ export default function Popup({
   visible = false,
   buttonType = "default",
   onCancelClick,
+  onConfirmClick,
   children,
+  confirmText = "label",
   cancelText = "cancel",
   submitText = "submit",
 }) {
   const ButtonType = () => {
     switch (buttonType) {
       case "confirm":
-        return <Button label={"Label"} size="md" width={"100%"} type={"primary"} />;
+        return (
+          <Button
+            label={confirmText}
+            size="md"
+            width={"100%"}
+            type={"primary"}
+            onClick={onConfirmClick}
+          />
+        );
       case "default":
         return (
           <div style={{ display: "flex", gap: 8 }}>
@@ -67,6 +77,8 @@ Popup.propTypes = {
   visible: PropTypes.bool,
   buttonType: PropTypes.oneOf(["confirm", "default", "warning"]),
   onCancelClick: PropTypes.func,
+  onConfirmClick: PropTypes.func,
+  confirmText: PropTypes.string,
   cancelText: PropTypes.string,
   submitText: PropTypes.string,
 };
