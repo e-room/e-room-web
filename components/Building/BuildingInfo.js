@@ -157,6 +157,8 @@ const ScoreField = styled.div`
 const AddressField = styled.div`
   ${Caption1Bold}
   color: var(--primary-1);
+
+  margin-top: 8px;
 `;
 
 const ButtonField = styled.div`

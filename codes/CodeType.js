@@ -20,16 +20,3 @@ export const KEYWORD_STATES = {
   STORE: "🏫 상가",
   SCHOOL_ACADEMY: "🎓 학교/학원",
 };
-
-export const KeywordMap = new Map();
-KeywordMap.set(KEYWORD_STATES.PARKING, {
-  title: "주차",
-});
-
-KeywordMap.set(KEYWORD_STATES.PUBLIC_TRANSPORTATION, {
-  title: "대중교통",
-});
-
-KeywordMap.set(KEYWORD_STATES.PARK_WALK, {
-  title: "공원산책",
-});

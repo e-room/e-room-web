@@ -12,8 +12,12 @@ import Icon from "components/common/atoms/Icon";
 import Chip from "components/common/atoms/Chip";
 import { useState } from "react";
 import Popup from "components/common/atoms/Popup";
+import { reviewListState } from "states/reviewAtom";
+import { useRecoilValue } from "recoil";
+import { KEYWORD_STATES } from "codes/CodeType";
 
 export default function ReviewList() {
+  const Reviews = useRecoilValue(reviewListState);
   const [popupVisible, setPopupVisible] = useState(false);
   const onCancelClick = () => setPopupVisible(false);
 
@@ -41,19 +45,17 @@ export default function ReviewList() {
       )}
       <Title>실제 거주 후기</Title>
       <ReviewField>
-        {Reviews.map((value) => {
+        {Reviews.content.map((value) => {
           const notAccess = value.id > 1;
 
           return (
-            <ReviewItem key={value.id} blur={notAccess}>
+            <ReviewItem key={value.baseReviewResponse.reviewId} blur={notAccess}>
               <Top>
                 <div className="nickname">
                   <Avatar img={Avatar24.src} />
-                  {value.nickName}
+                  {value.authorDto.name}
                 </div>
-                <DeleteButton
-                  onClick={() => !notAccess && setPopupVisible(true)}
-                >
+                <DeleteButton onClick={() => !notAccess && setPopupVisible(true)}>
                   삭제
                 </DeleteButton>
               </Top>
@@ -67,12 +69,12 @@ export default function ReviewList() {
               </ScoreField>
               <Info>
                 <div>
-                  <div className="title">거주기간</div>
-                  <div className="content">~2022년</div>
+                  <div className="title">거주시작</div>
+                  <div className="content">2022년~</div>
                 </div>
                 <div>
-                  <div className="title">거주층</div>
-                  <div className="content">저층</div>
+                  <div className="title">거주기간</div>
+                  <div className="content">20개월</div>
                 </div>
                 <div>
                   <div className="title">집 크기</div>
@@ -80,41 +82,43 @@ export default function ReviewList() {
                 </div>
                 <div>
                   <div className="title">보증금</div>
-                  <div className="content">500만원</div>
+                  <div className="content">{value.baseReviewResponse.deposit}만원</div>
                 </div>
                 <div>
                   <div className="title">월세</div>
-                  <div className="content">45만원</div>
+                  <div className="content">
+                    {value.baseReviewResponse.monthlyRent}만원
+                  </div>
                 </div>
                 <div>
                   <div className="title">관리비</div>
-                  <div className="content">10만원</div>
+                  <div className="content">
+                    {value.baseReviewResponse.managementFee}만원
+                  </div>
                 </div>
               </Info>
-              <Good>
+              <Description>
                 <div className="title">👍🏻 장점</div>
                 <div className="badge">
-                  <Chip label={"🚘 주차"} />
-                  <Chip label={"🏠 건물관리"} />
-                  <Chip label={"♨️ 단열"} />
+                  {value.baseReviewResponse.advantage.map((v) => {
+                    return <Chip label={KEYWORD_STATES[v]} key={v} />;
+                  })}
                 </div>
                 <div className="description">
-                  이런 것들이 장점인 것 같구요.. 저는 나름 만족하면서 살고
-                  있답니다!
+                  {value.baseReviewResponse.advantageDescription}
                 </div>
-              </Good>
-              <Bad>
+              </Description>
+              <Description>
                 <div className="title">👎🏻 단점</div>
                 <div className="badge">
-                  <Chip label={"🛗 엘레베이터"} />
-                  <Chip label={"📣 동네소음"} />
-                  <Chip label={"⛰ 언덕"} />
+                  {value.baseReviewResponse.disadvantage.map((v) => {
+                    return <Chip label={KEYWORD_STATES[v]} key={v} />;
+                  })}
                 </div>
                 <div className="description">
-                  이런 것들이 단점인 것 같구요.. 솔직히 관리비가 덜들긴하는데
-                  그냥 그만큼 관리도 안돼서 너무 별로에요.
+                  {value.baseReviewResponse.disadvantageDescription}
                 </div>
-              </Bad>
+              </Description>
               <Bottom favorite={value.myFavorite}>
                 <div
                   style={{ display: "flex" }}
@@ -209,7 +213,7 @@ const Info = styled.div`
   }
 `;
 
-const Good = styled.div`
+const Description = styled.div`
   margin-top: 20px;
   .title {
     ${Caption2Bold}
@@ -217,24 +221,7 @@ const Good = styled.div`
   }
   .badge {
     display: flex;
-    gap: 3px;
-    margin: 12px 0;
-  }
-  .description {
-    ${Body3}
-
-    color: var(--black);
-  }
-`;
-
-const Bad = styled.div`
-  margin-top: 20px;
-  .title {
-    ${Caption2Bold}
-    color: var(--black);
-  }
-  .badge {
-    display: flex;
+    flex-wrap: wrap;
     gap: 3px;
     margin: 12px 0;
   }
@@ -261,60 +248,3 @@ const Bottom = styled.div`
     margin-left: 5px;
   }
 `;
-
-const Reviews = [
-  {
-    id: 1,
-    profilePictureUrl: "www.amazon.com",
-    nickName: "날씬한 코끼리",
-    residencePeriod: "BEFORE_EIGHTEEN",
-    floorHeight: "LOW",
-    netLeasableArea: 13, //평수
-    deposit: 1000,
-    monthlyRent: 50,
-    manageMentFee: 10,
-    score: "SATISFIED", // (1~5),
-    advantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    advantageDescription: "장점에 대한 요약",
-    disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    disadvantageDescription: "단점에 대한 요약",
-    reviewLikeCnt: 6,
-    myFavorite: true,
-  },
-  {
-    id: 2,
-    profilePictureUrl: "www.amazon.com",
-    nickName: "까칠한 판다",
-    residencePeriod: "BEFORE_EIGHTEEN",
-    floorHeight: "LOW",
-    netLeasableArea: 13, //평수
-    deposit: 1000,
-    monthlyRent: 50,
-    manageMentFee: 10,
-    score: "SATISFIED", // (1~5),
-    advantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    advantageDescription: "장점에 대한 요약",
-    disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    disadvantageDescription: "단점에 대한 요약",
-    reviewLikeCnt: 6,
-    myFavorite: false,
-  },
-  {
-    id: 3,
-    profilePictureUrl: "www.amazon.com",
-    nickName: "까칠한 판다",
-    residencePeriod: "BEFORE_EIGHTEEN",
-    floorHeight: "LOW",
-    netLeasableArea: 13, //평수
-    deposit: 1000,
-    monthlyRent: 50,
-    manageMentFee: 10,
-    score: "SATISFIED", // (1~5),
-    advantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    advantageDescription: "장점에 대한 요약",
-    disadvantage: ["PARKING", "PUBLIC_TRANSPORTATION", "PARK_WALK", "SECURITY"],
-    disadvantageDescription: "단점에 대한 요약",
-    reviewLikeCnt: 6,
-    myFavorite: false,
-  },
-];

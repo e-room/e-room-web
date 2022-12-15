@@ -1,6 +1,18 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
+export default function Chip({ label, children }) {
+  return (
+    <StyledChip>
+      <div>{label ?? children}</div>
+    </StyledChip>
+  );
+}
+
+Chip.propTypes = {
+  label: PropTypes.string,
+};
+
 const StyledChip = styled.div`
   display: flex;
   flex-direction: row;
@@ -20,15 +32,3 @@ const StyledChip = styled.div`
     line-height: 16px;
   }
 `;
-
-export default function Chip({ label, children }) {
-  return (
-    <StyledChip>
-      <div>{label ?? children}</div>
-    </StyledChip>
-  );
-}
-
-Chip.propTypes = {
-  label: PropTypes.string,
-};
