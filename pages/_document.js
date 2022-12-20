@@ -11,10 +11,10 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
-          <meta
+          {/* <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
-          />
+          /> */}
           <link rel="preconnect" href="https://dapi.kakao.com" />
           <link rel="dns-prefetch" href="https://dapi.kakao.com" />
           {/* 폰트 cdn */}
@@ -24,7 +24,7 @@ class MyDocument extends Document {
             // crossorigin
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
           />
-          <title>e-room</title>
+          {/* <title>e-room</title> */}
         </Head>
         <body>
           <Main />
