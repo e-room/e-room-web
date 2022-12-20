@@ -16,7 +16,7 @@ import { useState } from "react";
 import Popup from "components/common/atoms/Popup";
 import { reviewListState } from "states/reviewAtom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { KEYWORD_STATES } from "codes/CodeType";
+import { KEYWORD_STATES } from "codes/codeType";
 import Score from "components/common/atoms/Score";
 
 import { dummyImages } from "./ImageView";
@@ -137,18 +137,28 @@ export default function ReviewList() {
             <Item key={value.baseReviewResponse.reviewId} blur={notAccess}>
               <Head>
                 <Avatar img={Avatar24.src} style={{ marginRight: 6 }} />
-                <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}
+                >
                   <ScoreArea>
                     <Score size="sm" readOnly={true} value={4} />
                     <div className="score">4.5</div>
                   </ScoreArea>
                   <UserInfo>
                     {value.authorDto.name} | 22.11.27. |{" "}
-                    <span onClick={() => setShowTotalScore(true)}>세부점수 보기</span>
+                    <span onClick={() => setShowTotalScore(true)}>
+                      세부점수 보기
+                    </span>
                   </UserInfo>
                 </div>
                 <div>
-                  <DeleteButton onClick={() => !notAccess && setShowConfirmDelete(true)}>
+                  <DeleteButton
+                    onClick={() => !notAccess && setShowConfirmDelete(true)}
+                  >
                     삭제
                   </DeleteButton>
                 </div>
@@ -179,12 +189,19 @@ export default function ReviewList() {
               <ImgField>
                 {dummyImages.map((value) => {
                   return (
-                    <ImgCard src={value.src} key={value.src} onClick={onDetailView} />
+                    <ImgCard
+                      src={value.src}
+                      key={value.src}
+                      onClick={onDetailView}
+                    />
                   );
                 })}
               </ImgField>
               <LikeField favorite={isLike}>
-                <div style={{ display: "flex" }} onClick={() => setIsLike(!isLike)}>
+                <div
+                  style={{ display: "flex" }}
+                  onClick={() => setIsLike(!isLike)}
+                >
                   <Icon icon={"thumb-stroke"} size={"sm"} />
                   <div className="text">
                     추천{" "}
