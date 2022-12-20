@@ -17,7 +17,7 @@ export default function BuildingList({ data }) {
             </AddressArea>
             <Chips>
               {value.directDeal && <Chip label={"직거래가능"} />}
-              <Chip label={"교통 편리"} />
+              <Chip label={"교통 편리"} type={"tertiary"} />
             </Chips>
             <ReviewArea>
               <div
