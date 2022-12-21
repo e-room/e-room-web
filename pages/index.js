@@ -167,9 +167,7 @@ const MainMap = () => {
               </Link>
               <Link href={"/review/write"}>
                 <a>
-                  {/* //TODO: icon button기능 추가.. 필요.. */}
-                  <Button type={"primary"} size={"lg"}>
-                    <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+                  <Button type={"primary"} size={"md"} icon={"plus"}>
                     리뷰 쓰기
                   </Button>
                 </a>
