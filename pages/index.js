@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  Fragment,
-} from "react";
+import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -26,8 +20,8 @@ import { pageTitleState } from "states";
 import { buildingMarkingSelector } from "states/buidlingAtom";
 
 const initial = {
-  lat: 37.2568828036311,
-  lng: 127.069710816696,
+  lat: 37.2429616,
+  lng: 127.0800525,
 };
 // TODO: 스크롤해야 처음에 마커 뜸
 const MainMap = () => {
@@ -42,11 +36,7 @@ const MainMap = () => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(
-      imageSrc,
-      imageSize,
-      imageOption
-    );
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
