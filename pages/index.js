@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -36,7 +42,11 @@ const MainMap = () => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
@@ -105,7 +115,7 @@ const MainMap = () => {
   };
 
   const [filterChecked, setFilterChecked] = useState(true);
-  console.log(filterChecked);
+  // console.log(filterChecked);
   return (
     <Fragment>
       <Script
