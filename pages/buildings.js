@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
-import Icon from "components/common/atoms/Icon";
 import BuildingList from "components/building/BuildingList";
 
 import { pageTitleState } from "states";

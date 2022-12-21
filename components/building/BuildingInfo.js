@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
-import Toggle from "components/common/atoms/Toggle";
 import {
   Body3Bold,
   Caption1Bold,
@@ -13,6 +12,7 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { buildingSelector } from "states/buidlingAtom";
 import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
+import RoomSelector from "./RoomSelector";
 
 export default function BuildingInfo() {
   const building = useRecoilValue(buildingSelector);
@@ -46,59 +46,58 @@ export default function BuildingInfo() {
   };
 
   return (
-    <Container>
-      <InfoField>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <Title>{building.name}</Title>
-            {/* &gt; = ">" */}
-            <AddressField onClick={() => onCopyAddress(formValue.address)}>
-              {formValue.address} &gt;
-            </AddressField>
-          </div>
-          <BuildingBadge width={48} height={64} />
-        </div>
-      </InfoField>
-      <Button style={{ margin: "18px 0" }}>
-        <ButtonField>
-          <div className="btn-group">
-            <div className="btn-logo">
-              <Icon icon={"logo-white"} size={"lg"} />
+    <>
+      <Container>
+        <InfoField>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <Title>{building.name}</Title>
+              {/* &gt; = ">" */}
+              <AddressField onClick={() => onCopyAddress(formValue.address)}>
+                {formValue.address} &gt;
+              </AddressField>
             </div>
-            <div className="btn-title">직거래 가능한 호실이 있어요</div>
+            <BuildingBadge width={48} height={64} />
           </div>
-          <div className="btn-sub">문의하기</div>
-        </ButtonField>
-      </Button>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <DetailScoreField>
-          {DetailFields.map((value) => {
-            return (
-              <div className="field" key={value.title}>
-                <div className="title">{value.title}</div>
-                <ScoreField>
-                  <div className="score">4.5</div>
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-half"} size={"sm"} />
-                </ScoreField>
+        </InfoField>
+        <Button style={{ margin: "18px 0" }}>
+          <ButtonField>
+            <div className="btn-group">
+              <div className="btn-logo">
+                <Icon icon={"logo-white"} size={"lg"} />
               </div>
-            );
-          })}
-        </DetailScoreField>
-        <TotalBox>
-          <TotalTitle>총 만족도</TotalTitle>
-          <TotalScore>4.5</TotalScore>
-        </TotalBox>
-      </div>
-      <RoomField>
-        {Rooms.map((value) => {
-          return <Toggle className="toggle" label={value.label} key={value.value} />;
-        })}
-      </RoomField>
-    </Container>
+              <div className="btn-title">직거래 가능한 호실이 있어요</div>
+            </div>
+            <div className="btn-sub">문의하기</div>
+          </ButtonField>
+        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <DetailScoreField>
+            {DetailFields.map((value) => {
+              return (
+                <div className="field" key={value.title}>
+                  <div className="title">{value.title}</div>
+                  <ScoreField>
+                    <div className="score">4.5</div>
+                    <Icon icon={"star-filled"} size={"sm"} />
+                    <Icon icon={"star-filled"} size={"sm"} />
+                    <Icon icon={"star-filled"} size={"sm"} />
+                    <Icon icon={"star-filled"} size={"sm"} />
+                    <Icon icon={"star-half"} size={"sm"} />
+                  </ScoreField>
+                </div>
+              );
+            })}
+          </DetailScoreField>
+          <TotalBox>
+            <TotalTitle>총 만족도</TotalTitle>
+            <TotalScore>4.5</TotalScore>
+          </TotalBox>
+        </div>
+      </Container>
+
+      <RoomSelector data={building.rooms} />
+    </>
   );
 }
 
@@ -203,23 +202,5 @@ const DetailScoreField = styled.div`
       ${Body3Bold}
       color: var(--black);
     }
-  }
-`;
-
-const RoomField = styled.div`
-  display: flex;
-  margin: 12px 0;
-  gap: 4px;
-  overflow-x: auto;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  .toggle {
-    white-space: nowrap;
   }
 `;
