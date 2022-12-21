@@ -6,17 +6,12 @@ import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
 import Img from "assets/avatar/64.png";
 import { Body1Bold, Caption2 } from "styles/typography";
-import get from "pages/api/getTest";
 
 export default function mypage() {
   const setPageTitleState = useSetRecoilState(pageTitleState);
 
   useEffect(() => {
     setPageTitleState("내정보");
-  }, []);
-
-  useEffect(() => {
-    get();
   }, []);
 
   return (
