@@ -11,8 +11,8 @@ import BottomSheet from "components/common/atoms/BottomSheet";
 import { loginState } from "states/authAtom";
 import { keyframes } from "@emotion/react";
 import { pageTitleState } from "states";
-import { useRouter } from "next/router";
-import Login from "../login";
+import Router from "next/router";
+// import Login from "../login";
 import { reviewStepState } from "states/reviewAtom";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 import { Caption1Bold } from "styles/typography";
@@ -20,7 +20,7 @@ import { Caption1Bold } from "styles/typography";
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  const router = useRouter();
+  // const router = useRouter();
 
   const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -57,7 +57,8 @@ export default function reviewWrite() {
   }, []);
 
   if (!isLogin) {
-    return <Login />;
+    Router.push(`/login`);
+    // return <Login />;
     // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
   }
 

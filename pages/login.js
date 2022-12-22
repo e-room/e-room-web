@@ -1,17 +1,20 @@
-import SocialButton from "components/common/atoms/SocialButton";
-
-import styled from "@emotion/styled";
-import AppLayout from "components/common/AppLayout";
 import { useSetRecoilState } from "recoil";
+import styled from "@emotion/styled";
+import { getProviders, signIn } from "next-auth/react";
+
 import { Body2, Title1 } from "styles/typography";
 import { loginState } from "states/authAtom";
 
-const Login = () => {
+import AppLayout from "components/common/AppLayout";
+import SocialButton from "components/common/atoms/SocialButton";
+
+export default function Login({ providers }) {
   const setLoginState = useSetRecoilState(loginState);
 
   const onLoginClick = (type) => {
     setLoginState((prev) => ({ ...prev, status: true, type }));
   };
+  console.log(providers);
 
   return (
     <AppLayout>
@@ -29,14 +32,25 @@ const Login = () => {
           </SubTitle>
         </LoginIntro>
         <LoginButtonGroup>
-          <SocialButton type="kakao" onClick={() => onLoginClick("kakao")} />
-          <SocialButton type="google" onClick={() => onLoginClick("google")} />
-          <SocialButton type="naver" onClick={() => onLoginClick("naver")} />
+          {Object.values(providers).map((provider) => (
+            <SocialButton
+              type={provider.id}
+              onClick={() => signIn(provider.id)}
+              key={provider.id}
+            />
+          ))}
         </LoginButtonGroup>
       </LoginWrapper>
     </AppLayout>
   );
-};
+}
+
+export async function getServerSideProps(context) {
+  const providers = await getProviders();
+  return {
+    props: { providers },
+  };
+}
 
 const LoginWrapper = styled.div`
   margin: 0px 20px;
@@ -75,5 +89,3 @@ const SubTitle = styled.div`
 
   color: var(--gray-1)
 `;
-
-export default Login;
