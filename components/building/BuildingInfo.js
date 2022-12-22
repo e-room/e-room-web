@@ -95,7 +95,9 @@ export default function BuildingInfo() {
       </div>
       <RoomField>
         {Rooms.map((value) => {
-          return <Toggle className="toggle" label={value.label} key={value.value} />;
+          return (
+            <Toggle className="toggle" label={value.label} key={value.value} />
+          );
         })}
       </RoomField>
     </Container>
