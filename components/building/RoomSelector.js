@@ -6,7 +6,11 @@ export default function RoomSelector({ data }) {
     <Box>
       {data.map((value) => {
         return (
-          <Toggle className="toggle" label={`${value.roomNumber}호`} key={value.roomId} />
+          <Toggle
+            className="toggle"
+            label={`${value.roomNumber}호`}
+            key={value.roomId}
+          />
         );
       })}
     </Box>
@@ -15,9 +19,13 @@ export default function RoomSelector({ data }) {
 
 const Box = styled.div`
   display: flex;
-  margin: 12px 20px;
+  padding: 12px 20px;
   gap: 4px;
   overflow-x: auto;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  backdrop-filter: blur(12px);
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -29,4 +37,8 @@ const Box = styled.div`
   .toggle {
     white-space: nowrap;
   }
+
+  position: sticky;
+  top: 0px;
+  z-index: 9;
 `;

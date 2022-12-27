@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { buildingSelector } from "states/buidlingAtom";
 import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
-import RoomSelector from "./RoomSelector";
 
 export default function BuildingInfo() {
   const building = useRecoilValue(buildingSelector);
@@ -46,58 +45,54 @@ export default function BuildingInfo() {
   };
 
   return (
-    <>
-      <Container>
-        <InfoField>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <Title>{building.name}</Title>
-              {/* &gt; = ">" */}
-              <AddressField onClick={() => onCopyAddress(formValue.address)}>
-                {formValue.address} &gt;
-              </AddressField>
-            </div>
-            <BuildingBadge width={48} height={64} />
-          </div>
-        </InfoField>
-        <Button style={{ margin: "18px 0" }}>
-          <ButtonField>
-            <div className="btn-group">
-              <div className="btn-logo">
-                <Icon icon={"logo-white"} size={"lg"} />
-              </div>
-              <div className="btn-title">직거래 가능한 호실이 있어요</div>
-            </div>
-            <div className="btn-sub">문의하기</div>
-          </ButtonField>
-        </Button>
+    <Container>
+      <InfoField>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <DetailScoreField>
-            {DetailFields.map((value) => {
-              return (
-                <div className="field" key={value.title}>
-                  <div className="title">{value.title}</div>
-                  <ScoreField>
-                    <div className="score">4.5</div>
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-half"} size={"sm"} />
-                  </ScoreField>
-                </div>
-              );
-            })}
-          </DetailScoreField>
-          <TotalBox>
-            <TotalTitle>총 만족도</TotalTitle>
-            <TotalScore>4.5</TotalScore>
-          </TotalBox>
+          <div>
+            <Title>{building.name}</Title>
+            {/* &gt; = ">" */}
+            <AddressField onClick={() => onCopyAddress(formValue.address)}>
+              {formValue.address} &gt;
+            </AddressField>
+          </div>
+          <BuildingBadge width={48} height={64} />
         </div>
-      </Container>
-
-      <RoomSelector data={building.rooms} />
-    </>
+      </InfoField>
+      <Button style={{ margin: "18px 0" }}>
+        <ButtonField>
+          <div className="btn-group">
+            <div className="btn-logo">
+              <Icon icon={"logo-white"} size={"lg"} />
+            </div>
+            <div className="btn-title">직거래 가능한 호실이 있어요</div>
+          </div>
+          <div className="btn-sub">문의하기</div>
+        </ButtonField>
+      </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <DetailScoreField>
+          {DetailFields.map((value) => {
+            return (
+              <div className="field" key={value.title}>
+                <div className="title">{value.title}</div>
+                <ScoreField>
+                  <div className="score">4.5</div>
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-half"} size={"sm"} />
+                </ScoreField>
+              </div>
+            );
+          })}
+        </DetailScoreField>
+        <TotalBox>
+          <TotalTitle>총 만족도</TotalTitle>
+          <TotalScore>4.5</TotalScore>
+        </TotalBox>
+      </div>
+    </Container>
   );
 }
 
