@@ -42,22 +42,29 @@ export default function ReviewForm1() {
     );
   };
 
+  const addressValue = formValue.address.siDo
+    ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
+    : "";
+
   return (
-    <FormWrapper>
+    <FormWrapper
+      onTouchStart={() => {
+        if (postCodeOpen) setPostCodeOpen(false);
+      }}
+    >
       <FormItem>
         <TextLabel>주소</TextLabel>
         <Text
           placeholder="도로명 주소로 입력해주세요"
           onClick={() => setPostCodeOpen(true)}
-          onChange={() => {}}
-          disabled={Boolean(formValue.address.siDo)}
-          value={
-            formValue.address.siDo
-              ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
-              : ""
-          }
+          readOnly={Boolean(formValue.address.siDo)}
+          value={addressValue}
         />
-        {postCodeOpen && <DaumPostCode onComplete={onHandleComplete} />}
+        {postCodeOpen && (
+          <AddressFrame>
+            <DaumPostCode onComplete={onHandleComplete} />
+          </AddressFrame>
+        )}
       </FormItem>
       {/* 
       
@@ -248,4 +255,12 @@ const FormItem = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 24px;
+  position: relative;
+`;
+
+const AddressFrame = styled.div`
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  top: 84px;
 `;
