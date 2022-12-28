@@ -100,7 +100,7 @@ export default function ReviewForm1() {
           label={"거주 시작"}
           unit={"부터"}
           width={"100%"}
-          value={`${startedAt}년`}
+          value={startedAt}
           onChange={onStartedAtChange}
           items={[
             { value: 2022, label: "2022년" },

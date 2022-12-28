@@ -28,6 +28,7 @@ export default function Select({
     setTimeout(() => setIsVisible(false), 100);
   };
 
+  // TODO: 공통컴포넌트로 분리 필요
   return (
     <StyledSelect>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -35,7 +36,7 @@ export default function Select({
         <div style={{ display: "flex", alignItems: "center" }}>
           <SelectField onClick={onOptionsShow} onBlur={onBlur}>
             <OptionField defaultOption={value}>
-              {value ?? placeholder}
+              {value ? `${value}년` : placeholder}
             </OptionField>
             <div className="toggle-icon">
               <ArrowIcon width={11} height={6} fill={`var(--gray-1)`} />
@@ -52,6 +53,7 @@ export default function Select({
                         onChange(option);
                         setIsVisible(false);
                       }}
+                      isSelect={value && option.value === value}
                     >
                       {option.label}
                     </Option>
@@ -125,11 +127,24 @@ const Option = styled.button`
   text-align: left;
   padding: 16px;
 
-  ${Body2}
+  ${(p) => (p.isSelect ? Body2Bold : Body2)}
 
   &:hover {
     background: var(--gray-4);
   }
+
+  ${(p) =>
+    p.isSelect &&
+    `
+    color: var(--primary-1);
+    background: var(--primary-6);
+    :nth-of-type(1) {
+      border-radius: 12px 12px 0px 0px;
+    }
+    :nth-last-of-type(1) {
+      border-radius: 0px 0px 12px 12px;
+    }
+  `}
 `;
 
 const StyledSelect = styled.div`
