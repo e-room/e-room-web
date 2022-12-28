@@ -2,14 +2,18 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import styled from "@emotion/styled";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
-import { useCallback, useState } from "react";
-import { Body2Bold } from "styles/typography";
+import { useState } from "react";
 import { reviewFormState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
 
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const [postCodeOpen, setPostCodeOpen] = useState(false);
+
+  const [startedAt, setStartedAt] = useState(2022);
+  const onStartedAtChange = (e) => {
+    setStartedAt(e.value);
+  };
 
   const onHandleComplete = (data) => {
     setFormValue({
@@ -91,11 +95,20 @@ export default function ReviewForm1() {
         />
       </GridItem>
       <GridItem>
-        <Text
+        <Select
           placeholder={"예: 20"}
           label={"거주 시작"}
           unit={"부터"}
           width={"100%"}
+          value={`${startedAt}년`}
+          onChange={onStartedAtChange}
+          items={[
+            { value: 2022, label: "2022년" },
+            { value: 2021, label: "2021년" },
+            { value: 2020, label: "2020년" },
+            { value: 2019, label: "2019년" },
+            { value: 2018, label: "2018년" },
+          ]}
         />
         <Text
           placeholder={"예: 20"}
