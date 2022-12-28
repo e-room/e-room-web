@@ -24,42 +24,45 @@ export default function Select({
   // onOptionChange 할 때 blur(focus out)이 먼저 일어나서 값을 변경할 수 없음
   // ref나 따로 연결해서 사용해야 함
   const onBlur = (e) => {
+    console.log("on blur");
     setTimeout(() => setIsVisible(false), 100);
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      {label && <TextLabel>{label}</TextLabel>}
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <SelectField onClick={onOptionsShow} onBlur={onBlur}>
-          <OptionField defaultOption={value}>
-            {value ?? placeholder}
-          </OptionField>
-          <div className="toggle-icon">
-            <ArrowIcon width={11} height={6} fill={`var(--gray-1)`} />
-          </div>
-        </SelectField>
-        {isVisible && (
-          <OptionList>
-            {items &&
-              items.map((option) => {
-                return (
-                  <Option
-                    key={option.value}
-                    onClick={() => {
-                      onChange(option);
-                      setIsVisible(false);
-                    }}
-                  >
-                    {option.label}
-                  </Option>
-                );
-              })}
-          </OptionList>
-        )}
-        {unit && <TextUnit>{unit}</TextUnit>}
+    <StyledSelect>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {label && <TextLabel>{label}</TextLabel>}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <SelectField onClick={onOptionsShow} onBlur={onBlur}>
+            <OptionField defaultOption={value}>
+              {value ?? placeholder}
+            </OptionField>
+            <div className="toggle-icon">
+              <ArrowIcon width={11} height={6} fill={`var(--gray-1)`} />
+            </div>
+          </SelectField>
+          {isVisible && (
+            <OptionList>
+              {items &&
+                items.map((option) => {
+                  return (
+                    <Option
+                      key={option.value}
+                      onClick={() => {
+                        onChange(option);
+                        setIsVisible(false);
+                      }}
+                    >
+                      {option.label}
+                    </Option>
+                  );
+                })}
+            </OptionList>
+          )}
+          {unit && <TextUnit>{unit}</TextUnit>}
+        </div>
       </div>
-    </div>
+    </StyledSelect>
   );
 }
 
@@ -129,7 +132,15 @@ const Option = styled.button`
   }
 `;
 
-const StyledSelect = styled.div``;
+const StyledSelect = styled.div`
+  &:focus {
+    outline: none;
+    border: 1px solid var(--primary-1);
+    svg {
+      fill: var(--primary-1);
+    }
+  }
+`;
 
 const TextLabel = styled.div`
   ${Body2Bold}
