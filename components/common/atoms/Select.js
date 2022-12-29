@@ -102,6 +102,7 @@ const SelectField = styled.button`
 
   &:focus {
     outline: none;
+    -webkit-appearance: none;
     border: 1px solid var(--primary-1);
     svg {
       fill: var(--primary-1);
