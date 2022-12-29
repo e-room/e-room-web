@@ -8,22 +8,22 @@ export const reviewFormState = atom({
       siGunGu: "",
       eupMyeon: "",
       roadName: "",
-      buildingNumber: "",
+      buildingNumber: "", // x
     },
     buildingOptionalDto: {
       buildingName: null,
-      hasElevator: null,
+      hasElevator: null, // x
     },
     roomBaseDto: {
       lineNumber: null,
       roomNumber: null,
     },
     reviewBaseDto: {
-      deposit: null,
-      monthlyRent: null,
-      managementFee: null,
-      netLeasableArea: null,
-      isAnonymous: null,
+      deposit: null, // 보증금
+      monthlyRent: null, // 월세
+      managementFee: null, // 관리비
+      netLeasableArea: null, // 면적
+      isAnonymous: null, // ?
     },
     reviewScoreDto: {
       traffic: null, // 교통
@@ -34,8 +34,8 @@ export const reviewFormState = atom({
       residenceSatisfaction: null, // 주거만족도
     },
     reviewResidencePeriodDto: {
-      residenceStartYear: null,
-      residenceDuration: null,
+      residenceStartYear: null, // 거주시작
+      residenceDuration: null, // 거주기간
     },
     advantageKeywordList: [],
     advantageDescription: null,
