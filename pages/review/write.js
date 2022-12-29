@@ -12,7 +12,7 @@ import { loginState } from "states/authAtom";
 import { keyframes } from "@emotion/react";
 import { pageTitleState } from "states";
 import Router from "next/router";
-// import Login from "../login";
+import Login from "../login";
 import { reviewStepState } from "states/reviewAtom";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 import { Caption1Bold } from "styles/typography";
@@ -57,8 +57,8 @@ export default function reviewWrite() {
   }, []);
 
   if (!isLogin) {
-    Router.push(`/login`);
-    // return <Login />;
+    // Router.push(`/login`);
+    return <Login />;
     // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
   }
 

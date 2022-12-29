@@ -1,5 +1,6 @@
 import { useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 import { Body2, Title1 } from "styles/typography";
 import { loginState } from "states/authAtom";
@@ -9,9 +10,13 @@ import SocialButton from "components/common/atoms/SocialButton";
 
 export default function Login() {
   const setLoginState = useSetRecoilState(loginState);
+  const router = useRouter();
 
-  const onLoginClick = (type) => {
-    setLoginState((prev) => ({ ...prev, status: true, type }));
+  const onLoginClick = (type = "naver") => {
+    // setLoginState((prev) => ({ ...prev, status: true, type }));
+    router.push(
+      `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=${router.pathname}`
+    );
   };
 
   return (
@@ -39,6 +44,11 @@ export default function Login() {
   );
 }
 
+export async function getStaticProps() {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
 const LoginWrapper = styled.div`
   margin: 0px 20px;
   margin-top: 25vh;
