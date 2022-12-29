@@ -1,6 +1,5 @@
 import { useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
-import { getProviders, signIn } from "next-auth/react";
 
 import { Body2, Title1 } from "styles/typography";
 import { loginState } from "states/authAtom";
@@ -8,13 +7,12 @@ import { loginState } from "states/authAtom";
 import AppLayout from "components/common/AppLayout";
 import SocialButton from "components/common/atoms/SocialButton";
 
-export default function Login({ providers }) {
+export default function Login() {
   const setLoginState = useSetRecoilState(loginState);
 
   const onLoginClick = (type) => {
     setLoginState((prev) => ({ ...prev, status: true, type }));
   };
-  console.log(providers);
 
   return (
     <AppLayout>
@@ -32,24 +30,13 @@ export default function Login({ providers }) {
           </SubTitle>
         </LoginIntro>
         <LoginButtonGroup>
-          {Object.values(providers).map((provider) => (
-            <SocialButton
-              type={provider.id}
-              onClick={() => signIn(provider.id)}
-              key={provider.id}
-            />
-          ))}
+          <SocialButton type="kakao" onClick={() => onLoginClick("kakao")} />
+          <SocialButton type="google" onClick={() => onLoginClick("google")} />
+          <SocialButton type="naver" onClick={() => onLoginClick("naver")} />
         </LoginButtonGroup>
       </LoginWrapper>
     </AppLayout>
   );
-}
-
-export async function getServerSideProps(context) {
-  const providers = await getProviders();
-  return {
-    props: { providers },
-  };
 }
 
 const LoginWrapper = styled.div`
@@ -81,11 +68,11 @@ const LoginButtonGroup = styled.div`
 
 const Title = styled.div`
   ${Title1}
-  color: var(--black)
+  color: var(--black);
 `;
 
 const SubTitle = styled.div`
   ${Body2}
 
-  color: var(--gray-1)
+  color: var(--gray-1);
 `;
