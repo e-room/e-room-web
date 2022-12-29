@@ -236,6 +236,34 @@ export const buildingState = atom({
         roomId: 7459,
         roomNumber: 100,
       },
+      {
+        roomId: 7559,
+        roomNumber: 101,
+      },
+      {
+        roomId: 7659,
+        roomNumber: 102,
+      },
+      {
+        roomId: 7759,
+        roomNumber: 103,
+      },
+      {
+        roomId: 7859,
+        roomNumber: 104,
+      },
+      {
+        roomId: 7959,
+        roomNumber: 105,
+      },
+      {
+        roomId: 8059,
+        roomNumber: 106,
+      },
+      {
+        roomId: 8159,
+        roomNumber: 107,
+      },
     ],
     buildingSummaries: {
       TRAFFIC: 2.833543274061768, // 교통

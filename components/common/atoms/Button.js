@@ -2,17 +2,19 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { FontFamily, FontStyle } from "../../../styles/typography";
+import Icon from "./Icon";
 
 const StyledButton = styled.button`
   ${(p) => p.sizeStyle}
   ${(p) => p.colorStyle}
   ${(p) => p.customStyles}
-  
+  ${(p) => p.isIcon && `gap: 10px`};
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 24px;
+  padding: ${(p) => (p.isIcon ? `12px 16px` : `12px 24px`)};
   box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.04);
   border-radius: 12px;
 
@@ -33,6 +35,10 @@ const StyledButton = styled.button`
     background: var(--button-disabled-color);
     border: 1px solid var(--button-disabled-color);
     color: var(--button-disabled-label-color);
+  }
+
+  svg {
+    fill: var(--button-label-color);
   }
 `;
 
@@ -83,6 +89,7 @@ export default function Button({
   width,
   children,
   style,
+  icon,
   ...props
 }) {
   const sizeStyle = SIZES[size];
@@ -95,8 +102,10 @@ export default function Button({
       disabled={disabled}
       style={{ width }}
       customStyles={style}
+      isIcon={icon ? true : false}
       {...props}
     >
+      {icon && <Icon icon={icon} size={size} />}
       {label ?? children}
     </StyledButton>
   );

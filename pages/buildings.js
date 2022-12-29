@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
-import Icon from "components/common/atoms/Icon";
 import BuildingList from "components/building/BuildingList";
 
 import { pageTitleState } from "states";
@@ -31,9 +30,7 @@ export default function buildings() {
         <ButtonGroup>
           <Link href={"/review/write"}>
             <a>
-              {/* //TODO: icon button기능 추가.. 필요.. */}
-              <Button type={"primary"} size={"md"}>
-                <Icon icon={"plus"} size={"lg"} fill={"var(--white)"} />
+              <Button type={"primary"} size={"md"} icon={"plus"}>
                 리뷰 쓰기
               </Button>
             </a>

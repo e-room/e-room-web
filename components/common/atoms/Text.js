@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import { Body2Bold, Body3 } from "styles/typography";
 
 export default function Text({
   value,
@@ -7,17 +8,25 @@ export default function Text({
   placeholder = "필드를 입력해주세요.",
   width,
   height,
+  label,
+  unit,
   ...props
 }) {
   return (
-    <StyledInputText
-      type={"text"}
-      placeholder={placeholder}
-      onChange={onChange}
-      value={value}
-      style={{ width, height }}
-      {...props}
-    />
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      {label && <TextLabel>{label}</TextLabel>}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <StyledInputText
+          type={"text"}
+          placeholder={placeholder}
+          onChange={onChange}
+          value={value}
+          style={{ width, height }}
+          {...props}
+        />
+        {unit && <TextUnit>{unit}</TextUnit>}
+      </div>
+    </div>
   );
 }
 
@@ -27,6 +36,8 @@ Text.propTypes = {
   placeholder: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.string,
+  unit: PropTypes.string,
 };
 
 const StyledInputText = styled.input`
@@ -45,6 +56,21 @@ const StyledInputText = styled.input`
     color: var(--gray-3);
   }
   &:focus {
-    outline: 1px solid var(--primary-1);
+    outline: none;
+    border: 1px solid var(--primary-1);
   }
+`;
+
+const TextLabel = styled.div`
+  ${Body2Bold}
+
+  margin-bottom: 4px;
+`;
+
+const TextUnit = styled.div`
+  ${Body3}
+  white-space: nowrap;
+  margin-left: 8px;
+  width: 30px;
+  min-width: 30px;
 `;

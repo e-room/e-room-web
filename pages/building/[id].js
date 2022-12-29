@@ -9,6 +9,8 @@ import { buildingSelector, imageViewState } from "states/buidlingAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Slider from "components/building/Slider";
 
+import RoomSelector from "components/building/RoomSelector";
+
 export default () => {
   const router = useRouter();
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
@@ -25,6 +27,7 @@ export default () => {
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
         <BuildingMap />
         <BuildingInfo />
+        <RoomSelector data={building.rooms} />
         <ImageView />
         <ReviewList />
       </Container>

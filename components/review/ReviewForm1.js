@@ -2,14 +2,18 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import styled from "@emotion/styled";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
-import { useCallback, useState } from "react";
-import { Body2Bold } from "styles/typography";
+import { useState } from "react";
 import { reviewFormState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
 
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const [postCodeOpen, setPostCodeOpen] = useState(false);
+
+  const [startedAt, setStartedAt] = useState(2022);
+  const onStartedAtChange = (e) => {
+    setStartedAt(e.value);
+  };
 
   const onHandleComplete = (data) => {
     setFormValue({
@@ -30,204 +34,141 @@ export default function ReviewForm1() {
     // setPostCodeOpen(false);
   };
 
-  const SelectField = (props) => {
-    const { items, width, label } = props;
-    return (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Select items={items} defaultValue={"2022"} width={100} />
-        <div className="body-3" style={{ margin: "0 8px" }}>
-          {label}
-        </div>
-      </div>
-    );
-  };
+  const addressValue = formValue.address.siDo
+    ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
+    : "";
 
   return (
-    <FormWrapper>
+    <FormWrapper
+      onTouchStart={() => {
+        if (postCodeOpen) setPostCodeOpen(false);
+      }}
+    >
       <FormItem>
-        <TextLabel>주소</TextLabel>
         <Text
           placeholder="도로명 주소로 입력해주세요"
+          label={"주소"}
           onClick={() => setPostCodeOpen(true)}
-          onChange={() => {}}
-          disabled={Boolean(formValue.address.siDo)}
-          value={
-            formValue.address.siDo
-              ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
-              : ""
-          }
+          readOnly={Boolean(formValue.address.siDo)}
+          value={addressValue}
+          width={"100%"}
         />
-        {postCodeOpen && <DaumPostCode onComplete={onHandleComplete} />}
+        {postCodeOpen && (
+          <AddressFrame>
+            <DaumPostCode onComplete={onHandleComplete} />
+          </AddressFrame>
+        )}
       </FormItem>
-      {/* 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      */}
+      <GridItem>
+        <Text
+          placeholder={"예: 101"}
+          label={"상세주소(호실)"}
+          unit={"동"}
+          width={"100%"}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              roomBaseDto: {
+                ...formValue.roomBaseDto,
+                lineNumber: e.target.value,
+              },
+            });
+          }}
+          value={formValue.roomBaseDto.lineNumber}
+          name={"lineNumber"}
+        />
+        <Text
+          placeholder={"예: 301"}
+          unit={"호"}
+          width={"100%"}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              roomBaseDto: {
+                ...formValue.roomBaseDto,
+                roomNumber: e.target.value,
+              },
+            });
+          }}
+          value={formValue.roomBaseDto.roomNumber}
+          name={"roomNumber"}
+        />
+      </GridItem>
+      <GridItem>
+        <Select
+          placeholder={"예: 20"}
+          label={"거주 시작"}
+          unit={"부터"}
+          width={"100%"}
+          value={startedAt}
+          onChange={onStartedAtChange}
+          items={[
+            { value: 2022, label: "2022년" },
+            { value: 2021, label: "2021년" },
+            { value: 2020, label: "2020년" },
+            { value: 2019, label: "2019년" },
+            { value: 2018, label: "2018년" },
+          ]}
+        />
+        <Text
+          placeholder={"예: 20"}
+          label={"거주 기간"}
+          unit={"개월"}
+          width={"100%"}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewResidencePeriodDto: {
+                ...formValue.reviewResidencePeriodDto,
+                residenceDuration: e.target.value,
+              },
+            });
+          }}
+          value={formValue.reviewResidencePeriodDto.residenceDuration}
+          name={"residenceDuration"}
+        />
+      </GridItem>
+      <GridItem>
+        <Text
+          placeholder={"예: 50"}
+          label={"월세"}
+          unit={"만원"}
+          width={"100%"}
+          // onChange={onChange}
+          // value={value}
+          // name={name}
+        />
+        <Text
+          placeholder={"예: 20"}
+          label={"관리비"}
+          unit={"만원"}
+          width={"100%"}
+          // onChange={onChange}
+          // value={value}
+          // name={name}
+        />
+      </GridItem>
       <FormItem>
-        <TextLabel>상세주소(호실)</TextLabel>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Text
-              placeholder={"예: 101"}
-              width={100}
-              onChange={(e) => {
-                setFormValue({
-                  ...formValue,
-                  roomBaseDto: {
-                    ...formValue.roomBaseDto,
-                    lineNumber: e.target.value,
-                  },
-                });
-              }}
-              value={formValue.roomBaseDto.lineNumber}
-              name={"lineNumber"}
-            />
-            <div className="body-3" style={{ margin: "0 8px" }}>
-              동
-            </div>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Text
-              placeholder={"예: 301"}
-              width={100}
-              onChange={(e) => {
-                setFormValue({
-                  ...formValue,
-                  roomBaseDto: {
-                    ...formValue.roomBaseDto,
-                    roomNumber: e.target.value,
-                  },
-                });
-              }}
-              value={formValue.roomBaseDto.roomNumber}
-              name={"roomNumber"}
-            />
-            <div className="body-3" style={{ margin: "0 8px" }}>
-              호
-            </div>
-          </div>
-        </div>
-      </FormItem>
-      <FormItem>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <TextLabel>거주 시작</TextLabel>
-            <SelectField
-              items={[
-                { value: 2022, label: "2022년" },
-                { value: 2021, label: "2021년" },
-                { value: 2020, label: "2020년" },
-                { value: 2019, label: "2019년" },
-                { value: 2018, label: "2018년" },
-              ]}
-              label={"부터"}
-            />
-          </div>
-          <div>
-            <TextLabel>거주기간</TextLabel>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Text
-                placeholder={"예: 20"}
-                width={100}
-                onChange={(e) => {
-                  setFormValue({
-                    ...formValue,
-                    reviewResidencePeriodDto: {
-                      ...formValue.reviewResidencePeriodDto,
-                      residenceDuration: e.target.value,
-                    },
-                  });
-                }}
-                value={formValue.reviewResidencePeriodDto.residenceDuration}
-                name={"residenceDuration"}
-              />
-              <div className="body-3" style={{ margin: "0 8px" }}>
-                개월
-              </div>
-            </div>
-          </div>
-        </div>
-      </FormItem>
-      <FormItem>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <TextLabel>월세</TextLabel>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Text
-                placeholder={"예: 50"}
-                width={100}
-                // onChange={onChange}
-                // value={value}
-                // name={name}
-              />
-              <div className="body-3" style={{ margin: "0 8px" }}>
-                만원
-              </div>
-            </div>
-          </div>
-          <div>
-            <TextLabel>관리비</TextLabel>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Text
-                placeholder={"예: 20"}
-                width={100}
-                // onChange={onChange}
-                // value={value}
-                // name={name}
-              />
-              <div className="body-3" style={{ margin: "0 8px" }}>
-                만원
-              </div>
-            </div>
-          </div>
-        </div>
+        <Text
+          placeholder={"예: 500"}
+          label={"보증금"}
+          unit={"만원"}
+          width={"100%"}
+          // onChange={onChange}
+          // value={value}
+          // name={name}
+        />
       </FormItem>
       <FormItem>
-        <TextLabel>보증금</TextLabel>
-        {/* <Text placeholder="예: 500" /> */}
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Text
-            placeholder={"예: 500"}
-            width={250}
-            // onChange={onChange}
-            // value={value}
-            // name={name}
-          />
-          <div className="body-3" style={{ margin: "0 8px" }}>
-            만원
-          </div>
-        </div>
-      </FormItem>
-      <FormItem>
-        <TextLabel>집 크기</TextLabel>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Text
-            placeholder={"예: 6"}
-            width={250}
-            // onChange={onChange}
-            // value={value}
-            // name={name}
-          />
-          <div className="body-3" style={{ margin: "0 8px" }}>
-            평
-          </div>
-        </div>
+        <Text
+          placeholder={"예: 6"}
+          label={"집 크기"}
+          unit={"평"}
+          width={"100%"}
+          // onChange={onChange}
+          // value={value}
+          // name={name}
+        />
       </FormItem>
     </FormWrapper>
   );
@@ -239,13 +180,25 @@ const FormWrapper = styled.div`
   padding: 20px;
   margin-bottom: 40px;
 `;
-const TextLabel = styled.div`
-  ${Body2Bold}
 
-  margin-bottom: 4px;
-`;
 const FormItem = styled.div`
-  display: flex;
-  flex-direction: column;
   margin-bottom: 24px;
+  position: relative;
+`;
+
+const AddressFrame = styled.div`
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  top: 84px;
+`;
+
+const GridItem = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  align-items: end;
+
+  margin-bottom: 24px;
+  position: relative;
 `;
