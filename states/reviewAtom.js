@@ -8,7 +8,7 @@ export const reviewFormState = atom({
       siGunGu: "",
       eupMyeon: "",
       roadName: "",
-      buildingNumber: "", // x
+      buildingNumber: "",
     },
     buildingOptionalDto: {
       buildingName: null,
@@ -31,7 +31,7 @@ export const reviewFormState = atom({
       surrounding: null, // 주변/환경
       internal: null, // 내부
       livingLocation: null, // 생활/입지
-      residenceSatisfaction: null, // 주거만족도
+      residenceSatisfaction: null, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
     },
     reviewResidencePeriodDto: {
       residenceStartYear: null, // 거주시작
