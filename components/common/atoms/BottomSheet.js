@@ -10,13 +10,20 @@ export default function BottomSheet({
   visible = false,
   buttonType = "default",
   onHideClick,
+  onSubmit,
   children,
 }) {
   const ButtonType = () => {
     switch (buttonType) {
       case "confirm":
         return (
-          <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
+          <Button
+            label={"Label"}
+            size="lg"
+            width={"100%"}
+            type={"primary"}
+            onClick={onSubmit}
+          />
         );
       case "default":
         return (
@@ -71,6 +78,7 @@ BottomSheet.propTypes = {
   visible: PropTypes.bool,
   buttonType: PropTypes.oneOf(["confirm", "default", "warning"]),
   onHideClick: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 const Overlay = styled.div`

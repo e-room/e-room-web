@@ -21,10 +21,10 @@ export default function ReviewForm1() {
         eupMyeon: data.bname,
         roadName: data.roadname,
         buildingNumber: roadAddressArray[roadAddressArray.length - 1],
-        buildingOptionalDto: {
-          ...formValue.buildingOptionalDto,
-          buildingName: data.buildingName,
-        },
+      },
+      buildingOptionalDto: {
+        ...formValue.buildingOptionalDto,
+        buildingName: data.buildingName,
       },
     });
     // setPostCodeOpen(false);

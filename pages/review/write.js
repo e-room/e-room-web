@@ -13,13 +13,14 @@ import { keyframes } from "@emotion/react";
 import { pageTitleState } from "states";
 import Router from "next/router";
 import Login from "../login";
-import { reviewStepState } from "states/reviewAtom";
+import { reviewFormState, reviewStepState } from "states/reviewAtom";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 import { Caption1Bold } from "styles/typography";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
   const setPageTitleState = useSetRecoilState(pageTitleState);
+  const [formValue, setFormValue] = useRecoilState(reviewFormState);
   // const router = useRouter();
 
   const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
@@ -31,6 +32,25 @@ export default function reviewWrite() {
   const onNextButtonClick = () => {
     if (reviewStep === 4) {
       setPopupVisible(true);
+    } else if (reviewStep === 2) {
+      const traffic = formValue.reviewScoreDto.traffic;
+      const buildingComplex = formValue.reviewScoreDto.buildingComplex;
+      const surrounding = formValue.reviewScoreDto.surrounding;
+      const internal = formValue.reviewScoreDto.internal;
+      const livingLocation = formValue.reviewScoreDto.livingLocation;
+
+      const totalScore =
+        (traffic + buildingComplex + surrounding + internal + livingLocation) /
+        5;
+
+      setFormValue({
+        ...formValue,
+        reviewScoreDto: {
+          ...formValue.reviewScoreDto,
+          residenceSatisfaction: totalScore,
+        },
+      });
+      setReviewStep(reviewStep + 1);
     } else {
       setReviewStep(reviewStep + 1);
     }
@@ -50,6 +70,10 @@ export default function reviewWrite() {
         return;
     }
   }, [reviewStep]);
+
+  const onSubmit = () => {
+    console.log("리뷰 등록", formValue);
+  };
 
   useEffect(() => {
     setPageTitleState("리뷰 쓰기");
@@ -78,6 +102,7 @@ export default function reviewWrite() {
         <BottomSheet
           title={"이제 모든 리뷰를 볼 수 있어요!"}
           onHideClick={onHideClick}
+          onSubmit={onSubmit}
           buttonType={"confirm"}
         >
           <IllustFemale />
