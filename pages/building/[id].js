@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import AppLayout from "components/common/AppLayout";
 import styled from "@emotion/styled";
-import BuildingInfo from "components/Building/BuildingInfo";
-import ImageView, { dummyImages } from "components/Building/ImageView";
-import ReviewList from "components/Building/ReviewList";
+import BuildingInfo from "components/building/BuildingInfo";
+import ImageView, { dummyImages } from "components/building/ImageView";
+import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import { buildingSelector, imageViewState } from "states/buidlingAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Slider from "components/building/Slider";
+
+import RoomSelector from "components/building/RoomSelector";
 
 export default () => {
   const router = useRouter();
@@ -25,6 +27,7 @@ export default () => {
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
         <BuildingMap />
         <BuildingInfo />
+        <RoomSelector data={building.rooms} />
         <ImageView />
         <ReviewList />
       </Container>

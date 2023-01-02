@@ -20,8 +20,8 @@ import { pageTitleState } from "states";
 import { buildingMarkingSelector } from "states/buidlingAtom";
 
 const initial = {
-  lat: 37.2568828036311,
-  lng: 127.069710816696,
+  lat: 37.2429616,
+  lng: 127.0800525,
 };
 // TODO: 스크롤해야 처음에 마커 뜸
 const MainMap = () => {
@@ -105,7 +105,7 @@ const MainMap = () => {
   };
 
   const [filterChecked, setFilterChecked] = useState(true);
-  console.log(filterChecked);
+  // console.log(filterChecked);
   return (
     <Fragment>
       <Script
@@ -167,9 +167,7 @@ const MainMap = () => {
               </Link>
               <Link href={"/review/write"}>
                 <a>
-                  {/* //TODO: icon button기능 추가.. 필요.. */}
-                  <Button type={"primary"} size={"lg"}>
-                    <Icon icon={"plus"} size={"md"} fill={"var(--white)"} />
+                  <Button type={"primary"} size={"md"} icon={"plus"}>
                     리뷰 쓰기
                   </Button>
                 </a>

@@ -9,6 +9,6 @@ module.exports = {
     return config;
   },
   env: {
-    NEXT_PUBLIC_KAKAO_APP_KEY : '7825714128d19a402fd2f559cd77866c'
-  }
+    NEXT_PUBLIC_KAKAO_APP_KEY: "7825714128d19a402fd2f559cd77866c",
+  },
 };

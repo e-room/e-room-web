@@ -1,14 +1,14 @@
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import Link from "next/link";
 import styled from "@emotion/styled";
+
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
-import Icon from "components/common/atoms/Icon";
-
-import Link from "next/link";
 import BuildingList from "components/building/BuildingList";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { buildingListSelector } from "states/buidlingAtom";
+
 import { pageTitleState } from "states";
-import { useEffect } from "react";
+import { buildingListSelector } from "states/buidlingAtom";
 
 export default function buildings() {
   const data = useRecoilValue(buildingListSelector);
@@ -17,6 +17,7 @@ export default function buildings() {
   useEffect(() => {
     setPageTitleState("이 지역 자취방");
   }, []);
+
   return (
     <AppLayout
     // appBarObject={{ rightIcon: "filter-stroke", headerText: "" }}
@@ -29,9 +30,7 @@ export default function buildings() {
         <ButtonGroup>
           <Link href={"/review/write"}>
             <a>
-              {/* //TODO: icon button기능 추가.. 필요.. */}
-              <Button type={"primary"} size={"md"}>
-                <Icon icon={"plus"} size={"lg"} fill={"var(--white)"} />
+              <Button type={"primary"} size={"md"} icon={"plus"}>
                 리뷰 쓰기
               </Button>
             </a>

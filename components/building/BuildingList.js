@@ -12,25 +12,20 @@ export default function BuildingList({ data }) {
           <BuildingContent>
             <div className="body-bold-2">{value.name}</div>
             <AddressArea className="caption-2">
-              {value.address.siDo} {value.address.siGunGu}{" "}
-              {value.address.roadName} {value.address.buildingNumber}
+              {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
+              {value.address.buildingNumber}
             </AddressArea>
             <Chips>
               {value.directDeal && <Chip label={"직거래가능"} />}
-              <Chip label={"교통 편리"} type={"tertiary"} />
+              <Chip label={"교통 편리"} type={"secondary"} />
             </Chips>
             <ReviewArea>
-              <div
-                className="caption-2"
-                style={{ opacity: 0.5, marginRight: 8 }}
-              >
+              <div className="caption-2" style={{ opacity: 0.5, marginRight: 8 }}>
                 리뷰 {value.reviewCnt}개
               </div>
               <StarArea className="caption-bold-2">
                 {/* util 화 시키기 */}
-                {value.scoreAvg
-                  ? Number.parseFloat(value.scoreAvg).toFixed(1)
-                  : 0}
+                {value.scoreAvg ? Number.parseFloat(value.scoreAvg).toFixed(1) : 0}
               </StarArea>
               <Score size="sm" readOnly={true} />
             </ReviewArea>

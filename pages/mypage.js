@@ -13,6 +13,7 @@ export default function mypage() {
   useEffect(() => {
     setPageTitleState("내정보");
   }, []);
+
   return (
     <AppLayout>
       <MyInfo>

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
-import Toggle from "components/common/atoms/Toggle";
 import {
   Body3Bold,
   Caption1Bold,
@@ -93,11 +92,6 @@ export default function BuildingInfo() {
           <TotalScore>4.5</TotalScore>
         </TotalBox>
       </div>
-      <RoomField>
-        {Rooms.map((value) => {
-          return <Toggle className="toggle" label={value.label} key={value.value} />;
-        })}
-      </RoomField>
     </Container>
   );
 }
@@ -203,23 +197,5 @@ const DetailScoreField = styled.div`
       ${Body3Bold}
       color: var(--black);
     }
-  }
-`;
-
-const RoomField = styled.div`
-  display: flex;
-  margin: 12px 0;
-  gap: 4px;
-  overflow-x: auto;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  .toggle {
-    white-space: nowrap;
   }
 `;
