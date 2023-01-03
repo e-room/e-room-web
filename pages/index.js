@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -36,7 +42,11 @@ const MainMap = () => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
@@ -112,29 +122,28 @@ const MainMap = () => {
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`}
         onLoad={() => new kakao.maps.load(initMap)}
       />
-      {popupVisible && (
-        <Popup
-          title={
-            <FilterPopupTitle>
-              <Icon icon={"filter-stroke"} />
-              <div className="title">필터</div>
-            </FilterPopupTitle>
-          }
-          titleAlign={"left"}
-          buttonType={"default"}
-          cancelText="취소"
-          submitText="필터 적용하기"
-          onCancelClick={onHideClick}
-        >
-          <Contents>
-            <SubText>직거래 가능한 방만 보기</SubText>
-            <CheckBox
-              onChange={() => setFilterChecked(!filterChecked)}
-              checked={filterChecked}
-            />
-          </Contents>
-        </Popup>
-      )}
+      <Popup
+        visible={popupVisible}
+        title={
+          <FilterPopupTitle>
+            <Icon icon={"filter-stroke"} />
+            <div className="title">필터</div>
+          </FilterPopupTitle>
+        }
+        titleAlign={"left"}
+        buttonType={"default"}
+        cancelText="취소"
+        submitText="필터 적용하기"
+        onCancelClick={onHideClick}
+      >
+        <Contents>
+          <SubText>직거래 가능한 방만 보기</SubText>
+          <CheckBox
+            onChange={() => setFilterChecked(!filterChecked)}
+            checked={filterChecked}
+          />
+        </Contents>
+      </Popup>
       <AppLayout
       // headerIcon={"search"}
       >

@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import { css, keyframes } from "@emotion/react";
 import { SubTitle1 } from "../../../styles/typography";
 import Button from "./Button";
+import { useEffect, useState } from "react";
 
 export default function Popup({
   title,
@@ -37,7 +39,12 @@ export default function Popup({
               type={"secondary"}
               onClick={onCancelClick}
             />
-            <Button label={submitText} size="md" width={"100%"} type={"primary"} />
+            <Button
+              label={submitText}
+              size="md"
+              width={"100%"}
+              type={"primary"}
+            />
           </div>
         );
       case "warning":
@@ -50,7 +57,12 @@ export default function Popup({
               type={"secondary"}
               onClick={onCancelClick}
             />
-            <Button label={submitText} size="md" width={"100%"} type={"warning"} />
+            <Button
+              label={submitText}
+              size="md"
+              width={"100%"}
+              type={"warning"}
+            />
           </div>
         );
       default:
@@ -58,9 +70,27 @@ export default function Popup({
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    let timeoutId;
+    if (visible) {
+      setIsOpen(true);
+    } else {
+      timeoutId = setTimeout(() => setIsOpen(false), 300);
+    }
+
+    return () => {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [visible]);
+
+  if (!isOpen) return null;
+
   return (
     <Overlay>
-      <Container>
+      <Container visible={visible}>
         <StyledPopup visible={visible}>
           <Title align={titleAlign}>{title}</Title>
           {children}
@@ -83,6 +113,34 @@ Popup.propTypes = {
   submitText: PropTypes.string,
 };
 
+const fadeIn = keyframes`
+from {
+  opacity: 0;
+  transform: scale(0.88);
+}
+to {
+  opacity: 1;
+  transform: scale(1);
+}
+`;
+const fadeOut = keyframes`
+from {
+  opacity: 1;
+  transform: scale(1);
+}
+to {
+  opacity: 0;
+  transform: scale(0.88);
+}
+`;
+
+const modalSettings = (visible) => css`
+  visibility: ${visible ? "visible" : "hidden"};
+  z-index: 15;
+  animation: ${visible ? fadeIn : fadeOut} 0.3s ease-in-out;
+  transition: visibility 0.3s ease-in-out;
+`;
+
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
@@ -93,7 +151,8 @@ const Overlay = styled.div`
   touch-action: none;
   z-index: 10;
 
-  background: rgba(0, 0, 0, 0.4);
+  /** var(--black) and opacity 20% **/
+  background: rgba(33, 33, 33, 0.2);
 `;
 
 const Container = styled.div`
@@ -102,6 +161,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${(p) => modalSettings(p.visible)}
 `;
 
 const StyledPopup = styled.div`
