@@ -98,21 +98,22 @@ export default function reviewWrite() {
         </Container>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
-      {popupVisible ? (
-        <BottomSheet
-          title={"이제 모든 리뷰를 볼 수 있어요!"}
-          onHideClick={onHideClick}
-          onSubmit={onSubmit}
-          buttonType={"confirm"}
-        >
-          <IllustFemale />
-          <Description>
-            첫 리뷰를 잘 등록했어요.
-            <br />
-            이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
-          </Description>
-        </BottomSheet>
-      ) : (
+      <BottomSheet
+        title={"이제 모든 리뷰를 볼 수 있어요!"}
+        onHideClick={onHideClick}
+        onSubmit={onSubmit}
+        buttonType={"confirm"}
+        visible={popupVisible}
+      >
+        <IllustFemale />
+        <Description>
+          첫 리뷰를 잘 등록했어요.
+          <br />
+          이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
+        </Description>
+      </BottomSheet>
+
+      {popupVisible ? null : (
         <BottomArea>
           <Button
             label={"다음으로"}

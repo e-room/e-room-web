@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import Button from "./Button";
 import Icon from "./Icon";
 import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
+import { useEffect, useState } from "react";
 
 export default function BottomSheet({
   title,
@@ -54,15 +55,32 @@ export default function BottomSheet({
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    let timeoutId;
+    if (visible) {
+      setIsOpen(true);
+    } else {
+      timeoutId = setTimeout(() => setIsOpen(false), 300);
+    }
+
+    return () => {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [visible]);
+
+  if (!isOpen) return null;
   return (
     <Overlay>
-      <Container>
+      <Container visible={visible}>
         <XField>
           <div onClick={onHideClick}>
             <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
           </div>
         </XField>
-        <StyledSheet visible={visible}>
+        <StyledSheet>
           <Title>{title}</Title>
           {children}
           <ButtonGroup>{ButtonType()}</ButtonGroup>
@@ -81,18 +99,6 @@ BottomSheet.propTypes = {
   onSubmit: PropTypes.func,
 };
 
-const Overlay = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  z-index: 10;
-
-  background: rgba(0, 0, 0, 0.4);
-`;
-
 const fadeInUp = keyframes`
 from {
   opacity: 0;
@@ -103,12 +109,43 @@ to {
   transform: translateZ(0);
 }
 `;
+const fadeOutDown = keyframes`
+from {
+  opacity: 1;
+  transform: translateZ(0);
+}
+to {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+}
+`;
+
+const modalSettings = (visible) => css`
+  visibility: ${visible ? "visible" : "hidden"};
+  z-index: 15;
+  animation: ${visible ? fadeInUp : fadeOutDown} 0.3s ease-in-out;
+  transition: visibility 0.3s ease-in-out;
+`;
+
+const Overlay = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 10;
+
+  /** var(--black) and opacity 20% **/
+  background: rgba(33, 33, 33, 0.2);
+`;
 
 const Container = styled.div`
   bottom: 0;
   position: fixed;
   width: 100%;
-  animation: ${fadeInUp} 1s;
+
+  ${(p) => modalSettings(p.visible)}
 `;
 
 const XField = styled.div`
@@ -123,7 +160,6 @@ const StyledSheet = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 100%; */
   padding: 32px 20px 20px;
   gap: 16px;
   isolation: isolate;
