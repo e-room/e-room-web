@@ -1,6 +1,7 @@
 import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
 import { useState } from "react";
 import { reviewFormState } from "states/reviewAtom";
@@ -206,11 +207,22 @@ export default function ReviewForm1() {
   );
 }
 
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   margin-bottom: 40px;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 
 const FormItem = styled.div`

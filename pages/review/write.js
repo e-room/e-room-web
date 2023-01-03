@@ -130,17 +130,16 @@ export default function reviewWrite() {
 const fadeInUp = keyframes`
 from {
   opacity: 0;
-  transform: translate3d(0, 100%, 0);
+  transform: translateY(40px);
 }
 to {
   opacity: 1;
-  transform: translateZ(0);
+  transform: translateY(0);
 }
 `;
 
 const FadeInUpBox = styled.div`
-  bottom: 0;
-  animation: ${fadeInUp} 1s;
+  /* animation: ${fadeInUp} 0.56s ease-in-out; */
 `;
 
 const Container = styled.div`
