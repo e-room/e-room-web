@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
 import { useMemo, useRef, useState } from "react";
-import { Caption1Bold } from "../../../styles/typography";
+import { Caption1Bold } from "styles/typography";
 import XButton from "./XButton";
 import shortid from "shortid";
 
-export default function Image({ multiple = false }) {
+export default function Image(props) {
+  const { multiple = false, setFiles, files } = props;
+
   const fileInputRef = useRef(null);
 
   const [previewImgs, setPreviewImgs] = useState([]);
@@ -21,6 +23,9 @@ export default function Image({ multiple = false }) {
       alert("사진은 최대 5장까지 등록이 가능합니다.");
       return;
     }
+
+    console.log(fileArr);
+    setFiles([...files, ...fileArr]);
 
     const fileURLs = [];
 
@@ -39,6 +44,8 @@ export default function Image({ multiple = false }) {
     const imgs = [...previewImgs];
     const filterData = imgs.filter((v) => v.key !== id);
     setPreviewImgs(filterData);
+    const list = [...files];
+    const filterList = list.filter((v) => v.name);
   };
 
   const Preview = useMemo(() => {

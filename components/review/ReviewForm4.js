@@ -2,8 +2,11 @@ import styled from "@emotion/styled";
 import { Body2Bold } from "styles/typography";
 import Image from "components/common/atoms/Image";
 import { keyframes } from "@emotion/react";
+import { useState } from "react";
 
 export default function ReviewForm4() {
+  const [files, setFiles] = useState([]);
+  console.log("files", files);
   return (
     <FormWrapper>
       <TextLabel>
@@ -15,7 +18,7 @@ export default function ReviewForm4() {
         최대 5장까지 올릴 수 있어요.
       </div>
       <ImageBox>
-        <Image />
+        <Image setFiles={setFiles} files={files} />
       </ImageBox>
     </FormWrapper>
   );
