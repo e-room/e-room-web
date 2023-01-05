@@ -16,11 +16,13 @@ import Login from "../login";
 import { reviewFormState, reviewStepState } from "states/reviewAtom";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 import { Caption1Bold } from "styles/typography";
+import axios from "axios";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
   const setPageTitleState = useSetRecoilState(pageTitleState);
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
+
   // const router = useRouter();
 
   const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
@@ -40,8 +42,7 @@ export default function reviewWrite() {
       const livingLocation = formValue.reviewScoreDto.livingLocation;
 
       const totalScore =
-        (traffic + buildingComplex + surrounding + internal + livingLocation) /
-        5;
+        (traffic + buildingComplex + surrounding + internal + livingLocation) / 5;
 
       setFormValue({
         ...formValue,
@@ -71,8 +72,25 @@ export default function reviewWrite() {
     }
   }, [reviewStep]);
 
-  const onSubmit = () => {
-    console.log("리뷰 등록", formValue);
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.append("request", JSON.stringify(formValue));
+    formValue.reviewImageList.forEach((file) => {
+      formData.append("reviewImageList", file.data);
+    });
+
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("success", response);
+      });
+
+    // for (const value of formData) console.log(value);
+    // console.log("리뷰 등록", formValue);
   };
 
   useEffect(() => {

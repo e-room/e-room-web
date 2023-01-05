@@ -46,7 +46,7 @@ export default function ReviewForm1() {
           placeholder="도로명 주소로 입력해주세요"
           label={"주소"}
           onClick={() => setPostCodeOpen(true)}
-          readOnly={Boolean(formValue.address.siDo)}
+          readOnly={true}
           value={addressValue}
           width={"100%"}
         />
@@ -93,7 +93,7 @@ export default function ReviewForm1() {
       </GridItem>
       <GridItem>
         <Select
-          placeholder={"예: 20"}
+          placeholder={"예: 2022"}
           label={"거주 시작"}
           unit={"부터"}
           width={"100%"}
