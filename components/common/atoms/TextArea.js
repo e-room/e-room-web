@@ -13,7 +13,7 @@ export default function TextArea({
     <StyledInputText
       placeholder={placeholder}
       onChange={onChange}
-      value={value}
+      defaultValue={value || ""}
       style={{ width, height }}
       {...props}
     />
