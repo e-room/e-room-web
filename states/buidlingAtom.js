@@ -184,9 +184,10 @@ export const buildingListState = atom({
 
 export const buildingListSelector = selector({
   key: "buildingListSelector",
-  get: ({ get }) => {
-    const data = get(buildingListState);
-    return data;
+  get: async () => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`);
+    console.log("건물리스트 실행");
+    return response.data;
   },
 });
 
@@ -201,7 +202,7 @@ export const buildingMarkingSelector = selector({
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
     );
-    console.log("getBuilding 실행");
+    console.log("마커 실행");
     return response.data;
   },
 });
