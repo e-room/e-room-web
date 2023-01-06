@@ -35,6 +35,7 @@ export default function reviewWrite() {
     if (reviewStep === 4) {
       setPopupVisible(true);
     } else if (reviewStep === 2) {
+      // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
       const traffic = formValue.reviewScoreDto.traffic;
       const buildingComplex = formValue.reviewScoreDto.buildingComplex;
       const surrounding = formValue.reviewScoreDto.surrounding;
@@ -42,7 +43,8 @@ export default function reviewWrite() {
       const livingLocation = formValue.reviewScoreDto.livingLocation;
 
       const totalScore =
-        (traffic + buildingComplex + surrounding + internal + livingLocation) / 5;
+        (traffic + buildingComplex + surrounding + internal + livingLocation) /
+        5;
 
       setFormValue({
         ...formValue,
@@ -80,11 +82,15 @@ export default function reviewWrite() {
     });
 
     await axios
-      .post(`${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((response) => {
         console.log("success", response);
       });
@@ -99,7 +105,7 @@ export default function reviewWrite() {
   }, []);
 
   if (!isLogin) {
-    // Router.push(`/login`);
+    Router.push(`/login`);
     // return <Login />;
     // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
   }

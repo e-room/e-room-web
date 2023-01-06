@@ -44,7 +44,11 @@ export default function buildings({ data }) {
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`);
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`, {
+    headers: {
+      isLocal: true,
+    },
+  });
 
   // Pass data to the page via props
   return {
