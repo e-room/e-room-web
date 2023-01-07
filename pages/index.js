@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -25,9 +31,11 @@ const initial = {
 };
 // TODO: 스크롤해야 처음에 마커 뜸
 const MainMap = () => {
+  // const buildingMarking = JSON.parse(data);
+  // console.log("this", buildingMarking);
   const setPageTitleState = useSetRecoilState(pageTitleState);
   const buildingMarking = useRecoilValue(buildingMarkingSelector);
-
+  console.log(buildingMarking);
   const kakaoMapRef = useRef(null); // 지도 container ref
   const map = useRef(null);
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
@@ -36,7 +44,11 @@ const MainMap = () => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
@@ -112,29 +124,28 @@ const MainMap = () => {
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`}
         onLoad={() => new kakao.maps.load(initMap)}
       />
-      {popupVisible && (
-        <Popup
-          title={
-            <FilterPopupTitle>
-              <Icon icon={"filter-stroke"} />
-              <div className="title">필터</div>
-            </FilterPopupTitle>
-          }
-          titleAlign={"left"}
-          buttonType={"default"}
-          cancelText="취소"
-          submitText="필터 적용하기"
-          onCancelClick={onHideClick}
-        >
-          <Contents>
-            <SubText>직거래 가능한 방만 보기</SubText>
-            <CheckBox
-              onChange={() => setFilterChecked(!filterChecked)}
-              checked={filterChecked}
-            />
-          </Contents>
-        </Popup>
-      )}
+      <Popup
+        visible={popupVisible}
+        title={
+          <FilterPopupTitle>
+            <Icon icon={"filter-stroke"} />
+            <div className="title">필터</div>
+          </FilterPopupTitle>
+        }
+        titleAlign={"left"}
+        buttonType={"default"}
+        cancelText="취소"
+        submitText="필터 적용하기"
+        onCancelClick={onHideClick}
+      >
+        <Contents>
+          <SubText>직거래 가능한 방만 보기</SubText>
+          <CheckBox
+            onChange={() => setFilterChecked(!filterChecked)}
+            checked={filterChecked}
+          />
+        </Contents>
+      </Popup>
       <AppLayout
       // headerIcon={"search"}
       >
@@ -179,6 +190,22 @@ const MainMap = () => {
     </Fragment>
   );
 };
+
+// This gets called on every request
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   const res = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+//   );
+//   const data = await JSON.stringify(res.data);
+
+//   // Pass data to the page via props
+//   return {
+//     props: {
+//       data: data,
+//     },
+//   };
+// }
 
 const MarkerClustererStyles = [
   {

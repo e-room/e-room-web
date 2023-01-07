@@ -5,6 +5,7 @@ import TextArea from "components/common/atoms/TextArea";
 import Toggle from "components/common/atoms/Toggle";
 import { reviewFormState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
+import { keyframes } from "@emotion/react";
 
 export default function ReviewForm3() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -93,7 +94,16 @@ export default function ReviewForm3() {
     </FormWrapper>
   );
 }
-
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,6 +111,7 @@ const FormWrapper = styled.div`
   margin-bottom: 150px;
 
   overflow: scroll;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

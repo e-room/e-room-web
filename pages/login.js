@@ -1,16 +1,23 @@
-import SocialButton from "components/common/atoms/SocialButton";
-
-import styled from "@emotion/styled";
-import AppLayout from "components/common/AppLayout";
 import { useSetRecoilState } from "recoil";
+import styled from "@emotion/styled";
+import { useRouter } from "next/router";
+
 import { Body2, Title1 } from "styles/typography";
 import { loginState } from "states/authAtom";
 
-const Login = () => {
-  const setLoginState = useSetRecoilState(loginState);
+import AppLayout from "components/common/AppLayout";
+import SocialButton from "components/common/atoms/SocialButton";
 
-  const onLoginClick = (type) => {
-    setLoginState((prev) => ({ ...prev, status: true, type }));
+export default function Login() {
+  const setLoginState = useSetRecoilState(loginState);
+  const router = useRouter();
+  console.log(router.pathname);
+
+  const onLoginClick = (type = "naver") => {
+    // setLoginState((prev) => ({ ...prev, status: true, type }));
+    router.push(
+      `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=/review/write&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
+    );
   };
 
   return (
@@ -36,7 +43,7 @@ const Login = () => {
       </LoginWrapper>
     </AppLayout>
   );
-};
+}
 
 const LoginWrapper = styled.div`
   margin: 0px 20px;
@@ -67,13 +74,11 @@ const LoginButtonGroup = styled.div`
 
 const Title = styled.div`
   ${Title1}
-  color: var(--black)
+  color: var(--black);
 `;
 
 const SubTitle = styled.div`
   ${Body2}
 
-  color: var(--gray-1)
+  color: var(--gray-1);
 `;
-
-export default Login;

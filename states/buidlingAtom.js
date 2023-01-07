@@ -1,3 +1,4 @@
+import axios from "axios";
 import { atom, selector } from "recoil";
 
 export const buildingListState = atom({
@@ -183,9 +184,12 @@ export const buildingListState = atom({
 
 export const buildingListSelector = selector({
   key: "buildingListSelector",
-  get: ({ get }) => {
-    const data = get(buildingListState);
-    return data;
+  get: async () => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_HOST}/building`
+    );
+    console.log("건물리스트 실행");
+    return response.data;
   },
 });
 
@@ -194,16 +198,8 @@ export const imageViewState = atom({
   default: false,
 });
 
-export const buildingMarkingSelector = selector({
-  key: "buildingMarkingSelector",
-  get: ({ get }) => {
-    const data = get(buildingMarkingState);
-    return data;
-  },
-});
-
-export const buildingMarkingState = atom({
-  key: "buildingMarkingState",
+export const buildingMarking = atom({
+  key: "buildingMarking",
   default: {
     buildingList: [
       {
@@ -212,7 +208,6 @@ export const buildingMarkingState = atom({
           latitude: 37.2568828036311,
         },
         buildingId: 4126,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -220,7 +215,6 @@ export const buildingMarkingState = atom({
           latitude: 37.2407110462924,
         },
         buildingId: 4128,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -228,7 +222,6 @@ export const buildingMarkingState = atom({
           latitude: 37.2405717983718,
         },
         buildingId: 4130,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -236,7 +229,6 @@ export const buildingMarkingState = atom({
           latitude: 37.24100322776,
         },
         buildingId: 4132,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -244,7 +236,6 @@ export const buildingMarkingState = atom({
           latitude: 37.2408811857691,
         },
         buildingId: 4134,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -252,7 +243,6 @@ export const buildingMarkingState = atom({
           latitude: 37.2685352773205,
         },
         buildingId: 4136,
-        directDeal: true,
       },
       {
         coordinateDto: {
@@ -886,6 +876,18 @@ export const buildingMarkingState = atom({
       },
     ],
     buildingCount: 96,
+  },
+});
+export const buildingMarkingSelector = selector({
+  key: "buildingMarkingSelector",
+  get: ({ get }) => {
+    const data = get(buildingMarking);
+    return data;
+    // const response = await axios.get(
+    //   `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+    // );
+    // console.log("마커 실행");
+    // return response.data;
   },
 });
 

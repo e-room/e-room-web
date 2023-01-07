@@ -1,5 +1,14 @@
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: "https://dev.e-room.app/:path*",
+  //     },
+  //   ];
+  // },
+  staticPageGenerationTimeout: 100,
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,

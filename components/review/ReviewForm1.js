@@ -1,6 +1,7 @@
 import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
 import { useState } from "react";
 import { reviewFormState } from "states/reviewAtom";
@@ -10,12 +11,8 @@ export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const [postCodeOpen, setPostCodeOpen] = useState(false);
 
-  const [startedAt, setStartedAt] = useState(2022);
-  const onStartedAtChange = (e) => {
-    setStartedAt(e.value);
-  };
-
   const onHandleComplete = (data) => {
+    const roadAddressArray = data.roadAddress.split(" ");
     setFormValue({
       ...formValue,
       address: {
@@ -24,11 +21,11 @@ export default function ReviewForm1() {
         siGunGu: data.sigungu,
         eupMyeon: data.bname,
         roadName: data.roadname,
-        // buildingNumber: data.,
-        buildingOptionalDto: {
-          ...formValue.buildingOptionalDto,
-          buildingName: data.buildingName,
-        },
+        buildingNumber: roadAddressArray[roadAddressArray.length - 1],
+      },
+      buildingOptionalDto: {
+        ...formValue.buildingOptionalDto,
+        buildingName: data.buildingName,
       },
     });
     // setPostCodeOpen(false);
@@ -49,7 +46,7 @@ export default function ReviewForm1() {
           placeholder="도로명 주소로 입력해주세요"
           label={"주소"}
           onClick={() => setPostCodeOpen(true)}
-          readOnly={Boolean(formValue.address.siDo)}
+          readOnly={true}
           value={addressValue}
           width={"100%"}
         />
@@ -96,12 +93,20 @@ export default function ReviewForm1() {
       </GridItem>
       <GridItem>
         <Select
-          placeholder={"예: 20"}
+          placeholder={"예: 2022"}
           label={"거주 시작"}
           unit={"부터"}
           width={"100%"}
-          value={startedAt}
-          onChange={onStartedAtChange}
+          value={formValue.reviewResidencePeriodDto.residenceStartYear}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewResidencePeriodDto: {
+                ...formValue.reviewResidencePeriodDto,
+                residenceStartYear: e.value,
+              },
+            });
+          }}
           items={[
             { value: 2022, label: "2022년" },
             { value: 2021, label: "2021년" },
@@ -134,18 +139,32 @@ export default function ReviewForm1() {
           label={"월세"}
           unit={"만원"}
           width={"100%"}
-          // onChange={onChange}
-          // value={value}
-          // name={name}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewBaseDto: {
+                ...formValue.reviewBaseDto,
+                monthlyRent: e.target.value,
+              },
+            });
+          }}
+          value={formValue.reviewBaseDto.monthlyRent}
         />
         <Text
           placeholder={"예: 20"}
           label={"관리비"}
           unit={"만원"}
           width={"100%"}
-          // onChange={onChange}
-          // value={value}
-          // name={name}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewBaseDto: {
+                ...formValue.reviewBaseDto,
+                managementFee: e.target.value,
+              },
+            });
+          }}
+          value={formValue.reviewBaseDto.managementFee}
         />
       </GridItem>
       <FormItem>
@@ -154,9 +173,16 @@ export default function ReviewForm1() {
           label={"보증금"}
           unit={"만원"}
           width={"100%"}
-          // onChange={onChange}
-          // value={value}
-          // name={name}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewBaseDto: {
+                ...formValue.reviewBaseDto,
+                deposit: e.target.value,
+              },
+            });
+          }}
+          value={formValue.reviewBaseDto.deposit}
         />
       </FormItem>
       <FormItem>
@@ -165,20 +191,38 @@ export default function ReviewForm1() {
           label={"집 크기"}
           unit={"평"}
           width={"100%"}
-          // onChange={onChange}
-          // value={value}
-          // name={name}
+          onChange={(e) => {
+            setFormValue({
+              ...formValue,
+              reviewBaseDto: {
+                ...formValue.reviewBaseDto,
+                netLeasableArea: e.target.value,
+              },
+            });
+          }}
+          value={formValue.reviewBaseDto.netLeasableArea}
         />
       </FormItem>
     </FormWrapper>
   );
 }
 
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   margin-bottom: 40px;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 
 const FormItem = styled.div`

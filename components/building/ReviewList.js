@@ -85,49 +85,45 @@ export default function ReviewList() {
 
   return (
     <Container>
-      {showConfirmDelete && (
-        <Popup
-          title={"정말로 이 리뷰를 삭제하시겠어요?"}
-          visible={showConfirmDelete}
-          buttonType={"warning"}
-          cancelText={"취소"}
-          submitText={"삭제"}
-          onCancelClick={() => setShowConfirmDelete(false)}
-        >
-          <PopupSubTitle>
-            삭제하면 되돌릴 수 없습니다.
-            <br />
-            신중하게 결정해주세요.
-          </PopupSubTitle>
-        </Popup>
-      )}
-      {showTotalScore && (
-        <Popup
-          title={"까칠한 판다리나님의 세부 점수"}
-          visible={showTotalScore}
-          buttonType={"confirm"}
-          confirmText={"닫기"}
-          onConfirmClick={() => setShowTotalScore(false)}
-        >
-          <DetailScoreField>
-            {DetailFields.map((value) => {
-              return (
-                <div className="field" key={value.title}>
-                  <div className="title">{value.title}</div>
-                  <ScoreField>
-                    <div className="score">4.5</div>
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-filled"} size={"sm"} />
-                    <Icon icon={"star-half"} size={"sm"} />
-                  </ScoreField>
-                </div>
-              );
-            })}
-          </DetailScoreField>
-        </Popup>
-      )}
+      <Popup
+        title={"정말로 이 리뷰를 삭제하시겠어요?"}
+        visible={showConfirmDelete}
+        buttonType={"warning"}
+        cancelText={"취소"}
+        submitText={"삭제"}
+        onCancelClick={() => setShowConfirmDelete(false)}
+      >
+        <PopupSubTitle>
+          삭제하면 되돌릴 수 없습니다.
+          <br />
+          신중하게 결정해주세요.
+        </PopupSubTitle>
+      </Popup>
+      <Popup
+        title={"까칠한 판다리나님의 세부 점수"}
+        visible={showTotalScore}
+        buttonType={"confirm"}
+        confirmText={"닫기"}
+        onConfirmClick={() => setShowTotalScore(false)}
+      >
+        <DetailScoreField>
+          {DetailFields.map((value) => {
+            return (
+              <div className="field" key={value.title}>
+                <div className="title">{value.title}</div>
+                <ScoreField>
+                  <div className="score">4.5</div>
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-filled"} size={"sm"} />
+                  <Icon icon={"star-half"} size={"sm"} />
+                </ScoreField>
+              </div>
+            );
+          })}
+        </DetailScoreField>
+      </Popup>
       <Title>실제 거주 후기</Title>
       <div>
         {Reviews.content.map((value) => {
@@ -150,11 +146,15 @@ export default function ReviewList() {
                   </ScoreArea>
                   <UserInfo>
                     {value.authorDto.name} | 22.11.27. |{" "}
-                    <span onClick={() => setShowTotalScore(true)}>세부점수 보기</span>
+                    <span onClick={() => setShowTotalScore(true)}>
+                      세부점수 보기
+                    </span>
                   </UserInfo>
                 </div>
                 <div>
-                  <DeleteButton onClick={() => !notAccess && setShowConfirmDelete(true)}>
+                  <DeleteButton
+                    onClick={() => !notAccess && setShowConfirmDelete(true)}
+                  >
                     삭제
                   </DeleteButton>
                 </div>
@@ -176,7 +176,11 @@ export default function ReviewList() {
                     <div className="badge">
                       {v.chips.map((v) => {
                         return (
-                          <Chip label={KEYWORD_STATES[v]} key={v} type={"tertiary"} />
+                          <Chip
+                            label={KEYWORD_STATES[v]}
+                            key={v}
+                            type={"tertiary"}
+                          />
                         );
                       })}
                     </div>
@@ -187,12 +191,19 @@ export default function ReviewList() {
               <ImgField>
                 {dummyImages.map((value) => {
                   return (
-                    <ImgCard src={value.src} key={value.src} onClick={onDetailView} />
+                    <ImgCard
+                      src={value.src}
+                      key={value.src}
+                      onClick={onDetailView}
+                    />
                   );
                 })}
               </ImgField>
               <LikeField favorite={isLike}>
-                <div style={{ display: "flex" }} onClick={() => setIsLike(!isLike)}>
+                <div
+                  style={{ display: "flex" }}
+                  onClick={() => setIsLike(!isLike)}
+                >
                   <Icon icon={"thumb-stroke"} size={"sm"} />
                   <div className="text">
                     추천{" "}

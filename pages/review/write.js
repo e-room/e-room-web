@@ -11,16 +11,19 @@ import BottomSheet from "components/common/atoms/BottomSheet";
 import { loginState } from "states/authAtom";
 import { keyframes } from "@emotion/react";
 import { pageTitleState } from "states";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import Login from "../login";
-import { reviewStepState } from "states/reviewAtom";
+import { reviewFormState, reviewStepState } from "states/reviewAtom";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 import { Caption1Bold } from "styles/typography";
+import axios from "axios";
 
 export default function reviewWrite() {
   const { status: isLogin } = useRecoilValue(loginState);
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  const router = useRouter();
+  const [formValue, setFormValue] = useRecoilState(reviewFormState);
+
+  // const router = useRouter();
 
   const [reviewStep, setReviewStep] = useRecoilState(reviewStepState);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -31,6 +34,26 @@ export default function reviewWrite() {
   const onNextButtonClick = () => {
     if (reviewStep === 4) {
       setPopupVisible(true);
+    } else if (reviewStep === 2) {
+      // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
+      const traffic = formValue.reviewScoreDto.traffic;
+      const buildingComplex = formValue.reviewScoreDto.buildingComplex;
+      const surrounding = formValue.reviewScoreDto.surrounding;
+      const internal = formValue.reviewScoreDto.internal;
+      const livingLocation = formValue.reviewScoreDto.livingLocation;
+
+      const totalScore =
+        (traffic + buildingComplex + surrounding + internal + livingLocation) /
+        5;
+
+      setFormValue({
+        ...formValue,
+        reviewScoreDto: {
+          ...formValue.reviewScoreDto,
+          residenceSatisfaction: totalScore,
+        },
+      });
+      setReviewStep(reviewStep + 1);
     } else {
       setReviewStep(reviewStep + 1);
     }
@@ -51,15 +74,43 @@ export default function reviewWrite() {
     }
   }, [reviewStep]);
 
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.append("request", JSON.stringify(formValue));
+    formValue.reviewImageList.forEach((file) => {
+      formData.append("reviewImageList", file.data);
+    });
+
+    await axios
+      .post(
+        `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("success", response);
+      });
+
+    // for (const value of formData) console.log(value);
+    // console.log("리뷰 등록", formValue);
+  };
+
   useEffect(() => {
     setPageTitleState("리뷰 쓰기");
     setReviewStep(1);
   }, []);
 
-  if (!isLogin) {
-    return <Login />;
-    // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
-  }
+  useEffect(() => {
+    if (!isLogin) {
+      Router.push(`/login`);
+      // return <Login />;
+      // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
+    }
+  }, [isLogin]);
 
   return (
     <>
@@ -73,20 +124,22 @@ export default function reviewWrite() {
         </Container>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
-      {popupVisible ? (
-        <BottomSheet
-          title={"이제 모든 리뷰를 볼 수 있어요!"}
-          onHideClick={onHideClick}
-          buttonType={"confirm"}
-        >
-          <IllustFemale />
-          <Description>
-            첫 리뷰를 잘 등록했어요.
-            <br />
-            이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
-          </Description>
-        </BottomSheet>
-      ) : (
+      <BottomSheet
+        title={"이제 모든 리뷰를 볼 수 있어요!"}
+        onHideClick={onHideClick}
+        onSubmit={onSubmit}
+        buttonType={"confirm"}
+        visible={popupVisible}
+      >
+        <IllustFemale />
+        <Description>
+          첫 리뷰를 잘 등록했어요.
+          <br />
+          이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
+        </Description>
+      </BottomSheet>
+
+      {popupVisible ? null : (
         <BottomArea>
           <Button
             label={"다음으로"}
@@ -103,17 +156,16 @@ export default function reviewWrite() {
 const fadeInUp = keyframes`
 from {
   opacity: 0;
-  transform: translate3d(0, 100%, 0);
+  transform: translateY(40px);
 }
 to {
   opacity: 1;
-  transform: translateZ(0);
+  transform: translateY(0);
 }
 `;
 
 const FadeInUpBox = styled.div`
-  bottom: 0;
-  animation: ${fadeInUp} 1s;
+  /* animation: ${fadeInUp} 0.56s ease-in-out; */
 `;
 
 const Container = styled.div`

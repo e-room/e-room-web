@@ -3,6 +3,7 @@ import { Body2Bold } from "styles/typography";
 import Score from "components/common/atoms/Score";
 import { useRecoilState } from "recoil";
 import { reviewFormState } from "states/reviewAtom";
+import { keyframes } from "@emotion/react";
 
 export default function ReviewForm2() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -83,12 +84,23 @@ export default function ReviewForm2() {
   );
 }
 
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   text-align: center;
   margin-bottom: 40px;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}
