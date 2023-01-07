@@ -16,7 +16,7 @@ export default function Login() {
   const onLoginClick = (type = "naver") => {
     // setLoginState((prev) => ({ ...prev, status: true, type }));
     router.push(
-      `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_url=${router.pathname}&isLocal=true`
+      `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=${router.pathname}&is_local=true`
     );
   };
 
