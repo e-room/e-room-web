@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { buildingListSelector } from "states/buidlingAtom";
 
 export default function favorites() {
-  const data = useRecoilValue(buildingListSelector);
+  // const data = useRecoilValue(buildingListSelector);
   const setPageTitleState = useSetRecoilState(pageTitleState);
 
   useEffect(() => {
@@ -18,9 +18,7 @@ export default function favorites() {
 
   return (
     <AppLayout>
-      <Container>
-        <BuildingList data={data} />
-      </Container>
+      <Container>{/* <BuildingList data={data} /> */}</Container>
     </AppLayout>
   );
 }

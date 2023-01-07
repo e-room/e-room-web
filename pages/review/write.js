@@ -104,11 +104,13 @@ export default function reviewWrite() {
     setReviewStep(1);
   }, []);
 
-  if (!isLogin) {
-    Router.push(`/login`);
-    // return <Login />;
-    // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
-  }
+  useEffect(() => {
+    if (!isLogin) {
+      Router.push(`/login`);
+      // return <Login />;
+      // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
+    }
+  }, [isLogin]);
 
   return (
     <>
