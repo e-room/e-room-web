@@ -8,6 +8,7 @@ module.exports = {
   //     },
   //   ];
   // },
+  staticPageGenerationTimeout: 100,
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
