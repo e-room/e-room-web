@@ -1,4 +1,7 @@
+import { useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
+import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
+
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import {
@@ -8,29 +11,15 @@ import {
   Title1,
   Display2,
 } from "styles/typography";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { buildingSelector } from "states/buidlingAtom";
-import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
+import Toast from "components/common/atoms/Toast";
 
-export default function BuildingInfo() {
-  const building = useRecoilValue(buildingSelector);
+export default function BuildingInfo({ building }) {
   const DetailFields = [
     { title: "교통", score: 78 },
     { title: "건물/단지", score: 56 },
     { title: "내부", score: 100 },
     { title: "주변/환경", score: 20 },
     { title: "생활/입지", score: 88 },
-  ];
-
-  const Rooms = [
-    { label: "전체", value: "all" },
-    { label: "102호", value: "102" },
-    { label: "106호", value: "106" },
-    { label: "201호", value: "201" },
-    { label: "307호", value: "307" },
-    { label: "402호", value: "402" },
-    { label: "505호", value: "505" },
   ];
 
   const formValue = {
@@ -44,8 +33,26 @@ export default function BuildingInfo() {
     });
   };
 
+  const toast = useMemo(() => {
+    return (
+      <Toast
+        message={"도로명 주소를 클립보드에 복사했어요"}
+        visible={toastVisible}
+      />
+    );
+  }, [toastVisible]);
+
+  useEffect(() => {
+    if (toastVisible) {
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 1000);
+    }
+  }, [toastVisible]);
+
   return (
     <Container>
+      {toast}
       <InfoField>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
@@ -58,7 +65,7 @@ export default function BuildingInfo() {
           <BuildingBadge width={48} height={64} />
         </div>
       </InfoField>
-      <Button style={{ margin: "18px 0" }}>
+      <Button style={{ margin: "18px 0" }} size={"lg"}>
         <ButtonField>
           <div className="btn-group">
             <div className="btn-logo">
