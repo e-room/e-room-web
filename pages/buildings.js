@@ -42,7 +42,14 @@ export default function buildings({ data }) {
 }
 
 export async function getStaticProps(context) {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=`,
+    {
+      headers: {
+        mocking: 239,
+      },
+    }
+  );
   const data = await JSON.stringify(res.data);
 
   return {
