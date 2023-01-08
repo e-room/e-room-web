@@ -41,19 +41,14 @@ export default function buildings({ data }) {
   );
 }
 
-// // This gets called on every request
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   // const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`);
+export async function getStaticProps(context) {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building`);
+  const data = await JSON.stringify(res.data);
 
-//   // Pass data to the page via props
-//   return {
-//     props: {
-//       data: [],
-//       // data: res.data,
-//     },
-//   };
-// }
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
+}
 
 const Container = styled.div`
   height: calc(100vh - 112px);
