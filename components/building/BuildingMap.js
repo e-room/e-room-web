@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import Script from "next/script";
 import styled from "@emotion/styled";
-import MarkerPng from "assets/marker.png";
+import MarkerPng from "assets/marker4.png";
 import { buildingSelector } from "states/buidlingAtom";
 import { useRecoilValue } from "recoil";
 
