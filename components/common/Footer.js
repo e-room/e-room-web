@@ -60,14 +60,19 @@ export default function Footer() {
   );
 }
 
+/* 
+NavBar border-radius 16px로 바껴서 수정 시도했는데, 이게 radius가 안먹고있더라구요, 
+근데 overflow hidden해도 해결이 안되어서 우선 코멘트 남깁니다! -희범-
+*/
 const NavBarWrapper = styled.footer`
   box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 16px 16px 0px 0px;
   width: 100%;
   height: 56px;
   position: fixed;
   bottom: 0;
   background: var(--white);
+  overflow: hidden;
 `;
 
 const NavBarContainer = styled.div`
@@ -75,6 +80,7 @@ const NavBarContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 const NavBarContent = styled.div`
