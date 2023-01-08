@@ -1,32 +1,32 @@
-import { useRouter } from "next/router";
-import AppLayout from "components/common/AppLayout";
+import { useRecoilState } from "recoil";
+import axios from "axios";
 import styled from "@emotion/styled";
+
+import { imageViewState } from "states/buidlingAtom";
+
+import AppLayout from "components/common/AppLayout";
 import BuildingInfo from "components/building/BuildingInfo";
 import ImageView, { dummyImages } from "components/building/ImageView";
 import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
-import { buildingSelector, imageViewState } from "states/buidlingAtom";
-import { useRecoilState, useRecoilValue } from "recoil";
 import Slider from "components/building/Slider";
-
 import RoomSelector from "components/building/RoomSelector";
 
-export default () => {
-  const router = useRouter();
+export default ({ data }) => {
+  const building = JSON.parse(data);
+  console.log(building);
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
-  const building = useRecoilValue(buildingSelector);
 
   const onCloseImg = () => {
     setShowImgDetail(false);
   };
-  // router.query.id
 
   return (
     <AppLayout>
       <Container>
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
-        <BuildingMap />
-        <BuildingInfo />
+        <BuildingMap building={building} />
+        <BuildingInfo building={building} />
         <RoomSelector data={building.rooms} />
         <ImageView />
         <ReviewList />
@@ -34,19 +34,31 @@ export default () => {
     </AppLayout>
   );
 };
-// export async function getStaticPaths() {
-//   return {
-//     paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
-//     fallback: false, // can also be true or 'blocking'
-//   };
-// }
-// // `getStaticPaths` requires using `getStaticProps`
-// export async function getStaticProps(context) {
-//   return {
-//     // Passed to the page component as props
-//     props: { post: {} },
-//   };
-// }
+
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { id: "47" } }],
+    fallback: true, // can also be true or 'blocking'
+  };
+}
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps({ params }) {
+  console.log("aa", params);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`,
+    {
+      headers: {
+        mocking: 239,
+      },
+    }
+  );
+  const data = await JSON.stringify(res.data);
+  return {
+    // Passed to the page component as props
+    props: { data },
+  };
+}
 
 const Container = styled.div`
   height: calc(100vh - 112px);
