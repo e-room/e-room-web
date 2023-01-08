@@ -19,8 +19,8 @@ export default async function handler(req, res) {
         path: "/",
       });
 
-      res.status(200).json({ message: "test" });
-      //   res.redirect(301, redirectPath);
+      // res.status(200).json({ message: "test" });
+      res.redirect(301, redirectPath);
       break;
 
     case "POST":
