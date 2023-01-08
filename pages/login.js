@@ -14,7 +14,7 @@ export default function Login() {
   console.log(router.pathname);
 
   const onLoginClick = (type = "naver") => {
-    // setLoginState((prev) => ({ ...prev, status: true, type }));
+    setLoginState((prev) => ({ ...prev, status: true, type }));
     router.push(
       `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=/review/write&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
     );
