@@ -23,19 +23,16 @@ import CheckBox from "components/common/atoms/CheckBox";
 import { Body2Bold } from "styles/typography";
 
 import { pageTitleState } from "states";
-import { buildingMarkingSelector } from "states/buidlingAtom";
+import axios from "axios";
 
 const initial = {
   lat: 37.2429616,
   lng: 127.0800525,
 };
 // TODO: 스크롤해야 처음에 마커 뜸
-const MainMap = () => {
-  // const buildingMarking = JSON.parse(data);
-  // console.log("this", buildingMarking);
+const MainMap = ({ data }) => {
+  const buildingMarking = JSON.parse(data);
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  const buildingMarking = useRecoilValue(buildingMarkingSelector);
-  console.log(buildingMarking);
   const kakaoMapRef = useRef(null); // 지도 container ref
   const map = useRef(null);
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
@@ -192,21 +189,16 @@ const MainMap = () => {
   );
 };
 
-// This gets called on every request
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await axios.get(
-//     `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
-//   );
-//   const data = await JSON.stringify(res.data);
+export async function getStaticProps(context) {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+  );
+  const data = await JSON.stringify(res.data);
 
-//   // Pass data to the page via props
-//   return {
-//     props: {
-//       data: data,
-//     },
-//   };
-// }
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
+}
 
 const MarkerClustererStyles = [
   {

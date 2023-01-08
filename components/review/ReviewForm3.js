@@ -48,7 +48,7 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel>장점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>장점 설명</TextLabel>
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -60,7 +60,7 @@ export default function ReviewForm3() {
         }}
         value={formValue.advantageDescription}
       />
-      <TextLabel>단점 키워드</TextLabel>
+      <TextLabel style={{ marginTop: 32 }}>단점 키워드</TextLabel>
       <Box>
         {Object.entries(KEYWORD_STATES).map((item) => {
           const active = formValue["disadvantageKeywordList"].some(
@@ -79,7 +79,7 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel>단점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>단점 설명</TextLabel>
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
