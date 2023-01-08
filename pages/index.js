@@ -59,8 +59,9 @@ const MainMap = () => {
       let clusterer = new kakao.maps.MarkerClusterer({
         map: initialMap, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        minLevel: 5, // 클러스터 할 최소 지도 레벨
         styles: MarkerClustererStyles,
+        gridSize: 88,
       });
       // TODO: 동기로 변경하고 setTimeout 제거
       const markers = [];
@@ -209,43 +210,43 @@ const MainMap = () => {
 
 const MarkerClustererStyles = [
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-one.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-two.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-three.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
 ];
 
