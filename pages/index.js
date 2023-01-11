@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -17,17 +23,16 @@ import CheckBox from "components/common/atoms/CheckBox";
 import { Body2Bold } from "styles/typography";
 
 import { pageTitleState } from "states";
-import { buildingMarkingSelector } from "states/buidlingAtom";
+import axios from "axios";
 
 const initial = {
   lat: 37.2429616,
   lng: 127.0800525,
 };
 // TODO: 스크롤해야 처음에 마커 뜸
-const MainMap = () => {
+const MainMap = ({ data }) => {
+  const buildingMarking = JSON.parse(data);
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  const buildingMarking = useRecoilValue(buildingMarkingSelector);
-
   const kakaoMapRef = useRef(null); // 지도 container ref
   const map = useRef(null);
   // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
@@ -36,7 +41,11 @@ const MainMap = () => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
@@ -47,8 +56,9 @@ const MainMap = () => {
       let clusterer = new kakao.maps.MarkerClusterer({
         map: initialMap, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        minLevel: 5, // 클러스터 할 최소 지도 레벨
         styles: MarkerClustererStyles,
+        gridSize: 88,
       });
       // TODO: 동기로 변경하고 setTimeout 제거
       const markers = [];
@@ -112,29 +122,28 @@ const MainMap = () => {
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`}
         onLoad={() => new kakao.maps.load(initMap)}
       />
-      {popupVisible && (
-        <Popup
-          title={
-            <FilterPopupTitle>
-              <Icon icon={"filter-stroke"} />
-              <div className="title">필터</div>
-            </FilterPopupTitle>
-          }
-          titleAlign={"left"}
-          buttonType={"default"}
-          cancelText="취소"
-          submitText="필터 적용하기"
-          onCancelClick={onHideClick}
-        >
-          <Contents>
-            <SubText>직거래 가능한 방만 보기</SubText>
-            <CheckBox
-              onChange={() => setFilterChecked(!filterChecked)}
-              checked={filterChecked}
-            />
-          </Contents>
-        </Popup>
-      )}
+      <Popup
+        visible={popupVisible}
+        title={
+          <FilterPopupTitle>
+            <Icon icon={"filter-stroke"} />
+            <div className="title">필터</div>
+          </FilterPopupTitle>
+        }
+        titleAlign={"left"}
+        buttonType={"default"}
+        cancelText="취소"
+        submitText="필터 적용하기"
+        onCancelClick={onHideClick}
+      >
+        <Contents>
+          <SubText>직거래 가능한 방만 보기</SubText>
+          <CheckBox
+            onChange={() => setFilterChecked(!filterChecked)}
+            checked={filterChecked}
+          />
+        </Contents>
+      </Popup>
       <AppLayout
       // headerIcon={"search"}
       >
@@ -180,45 +189,56 @@ const MainMap = () => {
   );
 };
 
+export async function getStaticProps(context) {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+  );
+  const data = await JSON.stringify(res.data);
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
+}
+
 const MarkerClustererStyles = [
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-one.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-two.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
   {
-    width: "61px",
-    height: "68px",
+    width: "120px",
+    height: "120px",
     backgroundImage: "url(num-pin-three.png)",
-    backgroundSize: "61px 68px",
+    backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--primary-1)",
+    color: "var(--white)",
     textAlign: "center",
     fontWeight: "700",
-    lineHeight: "20px",
-    fontSize: "14px",
+    lineHeight: "120px",
+    fontSize: "16px",
   },
 ];
 

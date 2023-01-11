@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import Toggle from "components/common/atoms/Toggle";
 
 export default function RoomSelector({ data }) {
+  // TODO: 없어도 [전체] 태그는 보이게
   return (
     <Box>
       {data.map((value) => {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import Link from "next/link";
 import styled from "@emotion/styled";
 
@@ -8,11 +8,11 @@ import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
 
 import { pageTitleState } from "states";
-import { buildingListSelector } from "states/buidlingAtom";
+import axios from "axios";
 
-export default function buildings() {
-  const data = useRecoilValue(buildingListSelector);
+export default function buildings({ data }) {
   const setPageTitleState = useSetRecoilState(pageTitleState);
+  console.log("data", data);
 
   useEffect(() => {
     setPageTitleState("이 지역 자취방");
@@ -25,7 +25,7 @@ export default function buildings() {
       <Container>
         <div style={{ paddingBottom: 150 }}>
           <Banner>배너영역</Banner>
-          <BuildingList data={data} />
+          {/* <BuildingList data={data} /> */}
         </div>
         <ButtonGroup>
           <Link href={"/review/write"}>
@@ -39,6 +39,22 @@ export default function buildings() {
       </Container>
     </AppLayout>
   );
+}
+
+export async function getStaticProps(context) {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=`,
+    {
+      headers: {
+        mocking: 239,
+      },
+    }
+  );
+  const data = await JSON.stringify(res.data);
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
 }
 
 const Container = styled.div`

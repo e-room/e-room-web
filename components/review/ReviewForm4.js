@@ -1,6 +1,8 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Body2Bold } from "styles/typography";
-import Image from "components/common/atoms/Image";
+import Images from "components/common/atoms/Images";
+import { useState } from "react";
 
 export default function ReviewForm4() {
   return (
@@ -14,16 +16,28 @@ export default function ReviewForm4() {
         최대 5장까지 올릴 수 있어요.
       </div>
       <ImageBox>
-        <Image />
+        <Images />
       </ImageBox>
     </FormWrapper>
   );
 }
 
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
+
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

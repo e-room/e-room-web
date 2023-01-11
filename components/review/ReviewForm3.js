@@ -5,6 +5,7 @@ import TextArea from "components/common/atoms/TextArea";
 import Toggle from "components/common/atoms/Toggle";
 import { reviewFormState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
+import { keyframes } from "@emotion/react";
 
 export default function ReviewForm3() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -47,7 +48,7 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel>장점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>장점 설명</TextLabel>
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -59,7 +60,7 @@ export default function ReviewForm3() {
         }}
         value={formValue.advantageDescription}
       />
-      <TextLabel>단점 키워드</TextLabel>
+      <TextLabel style={{ marginTop: 32 }}>단점 키워드</TextLabel>
       <Box>
         {Object.entries(KEYWORD_STATES).map((item) => {
           const active = formValue["disadvantageKeywordList"].some(
@@ -78,7 +79,7 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel>단점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>단점 설명</TextLabel>
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -93,7 +94,16 @@ export default function ReviewForm3() {
     </FormWrapper>
   );
 }
-
+const fadeInUp = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,6 +111,7 @@ const FormWrapper = styled.div`
   margin-bottom: 150px;
 
   overflow: scroll;
+  animation: ${fadeInUp} 0.56s ease-in-out;
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

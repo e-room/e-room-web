@@ -7,12 +7,9 @@ import React, {
 } from "react";
 import Script from "next/script";
 import styled from "@emotion/styled";
-import MarkerPng from "assets/marker.png";
-import { buildingSelector } from "states/buidlingAtom";
-import { useRecoilValue } from "recoil";
+import MarkerPng from "assets/marker4.png";
 
-const BuildingMap = () => {
-  const building = useRecoilValue(buildingSelector);
+const BuildingMap = ({ building }) => {
   const kakaoMapRef = useRef(null); // 지도 container ref
 
   const initial = {

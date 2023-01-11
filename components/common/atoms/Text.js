@@ -20,7 +20,7 @@ export default function Text({
           type={"text"}
           placeholder={placeholder}
           onChange={onChange}
-          value={value}
+          defaultValue={value || ""}
           style={{ width, height }}
           {...props}
         />
