@@ -12,8 +12,8 @@ import axios from "axios";
 
 export default function buildings({ data }) {
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  console.log("data", data);
-
+  const parseData = JSON.parse(data);
+  console.log(parseData);
   useEffect(() => {
     setPageTitleState("이 지역 자취방");
   }, []);
@@ -25,7 +25,7 @@ export default function buildings({ data }) {
       <Container>
         <div style={{ paddingBottom: 150 }}>
           <Banner>배너영역</Banner>
-          {/* <BuildingList data={data} /> */}
+          <BuildingList data={parseData} />
         </div>
         <ButtonGroup>
           <Link href={"/review/write"}>
@@ -43,7 +43,7 @@ export default function buildings({ data }) {
 
 export async function getStaticProps(context) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=`,
+    `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=47`,
     {
       headers: {
         mocking: 239,
