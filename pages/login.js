@@ -9,8 +9,11 @@ import { loginState } from "states/authAtom";
 const Login = () => {
   const setLoginState = useSetRecoilState(loginState);
 
-  const onLoginClick = (type) => {
-    setLoginState((prev) => ({ ...prev, status: true, type }));
+  const onLoginClick = (type = "naver") => {
+    // setLoginState((prev) => ({ ...prev, status: true, type }));
+    router.push(
+      `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=/review/write&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
+    );
   };
 
   return (
