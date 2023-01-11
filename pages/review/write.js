@@ -77,38 +77,22 @@ export default function reviewWrite() {
     try {
       const formData = new FormData();
       formData.append("request", JSON.stringify(formValue));
-      // formValue.reviewImageList.forEach((file) => {
-      //   formData.append("reviewImages", file.data);
-      // });
-
-      const config = {
-        "Content-Type": "multipart/form-data",
-        mocking: 239,
-      };
-      axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-
-      await axios({
-        method: "post",
-        url: `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
-        data: formData,
-        headers: config,
+      formValue.reviewImageList.forEach((file) => {
+        formData.append("reviewImages", file.data);
       });
 
-      // await axios
-      //   .post(
-      //     `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
-      //     formData,
-      //     config
-      //   )
-      //   .then((response) => {
-      //     console.log("success", response);
-      //   });
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
+          formData,
+          config
+        )
+        .then((response) => {
+          console.log("리뷰쓰기 성공", response);
+        });
     } catch (e) {
-      console.log("submit error", e);
+      console.log("리뷰쓰기 실패", e);
     }
-
-    // for (const value of formData) console.log(value);
-    // console.log("리뷰 등록", formValue);
   };
 
   useEffect(() => {
@@ -116,15 +100,12 @@ export default function reviewWrite() {
     setReviewStep(1);
   }, []);
 
-  useEffect(() => {
-    console.log("isLogin", isLogin);
-    if (!isLogin) {
-      // TODO: 계정 인증 후 없으면 리다이렉트
-      Router.push(`/login`);
-      // return <Login />;
-      // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
-    }
-  }, [isLogin]);
+  // useEffect(() => {
+  //   if (!isLogin) {
+  //     // TODO: 계정 인증 후 없으면 리다이렉트
+  //     Router.push(`/login`);
+  //   }
+  // }, [isLogin]);
 
   return (
     <>
