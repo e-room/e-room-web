@@ -2,16 +2,18 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import Chip from "components/common/atoms/Chip";
 import Score from "components/common/atoms/Score";
-
+import { Body2Bold, Caption2, Caption2Bold } from "styles/typography";
+import Image from "next/image";
+import testImg from "assets/marker4.png";
 export default function BuildingList({ data }) {
   return data.content.map((value) => {
     return (
       <Link href={`/building/${value.buildingId}`} key={value.buildingId}>
         <BuildingContainer>
-          <img src="https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?update=20180726" />
+          <Image src={testImg} width={122} height={122} objectFit={"cover"} />
           <BuildingContent>
-            <div className="body-bold-2">{value.name}</div>
-            <AddressArea className="caption-2">
+            <div className="building-name">{value.name}</div>
+            <AddressArea>
               {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
               {value.address.buildingNumber}
             </AddressArea>
@@ -20,10 +22,10 @@ export default function BuildingList({ data }) {
               <Chip label={"교통 편리"} type={"secondary"} />
             </Chips>
             <ReviewArea>
-              <div className="caption-2" style={{ opacity: 0.5, marginRight: 8 }}>
+              <div className="review-count" style={{ opacity: 0.5, marginRight: 8 }}>
                 리뷰 {value.reviewCnt}개
               </div>
-              <StarArea className="caption-bold-2">
+              <StarArea>
                 {/* util 화 시키기 */}
                 {value.scoreAvg ? Number.parseFloat(value.scoreAvg).toFixed(1) : 0}
               </StarArea>
@@ -48,6 +50,9 @@ const BuildingContainer = styled.div`
 `;
 const BuildingContent = styled.div`
   padding: 12px 20px;
+  .building-name {
+    ${Body2Bold}
+  }
 `;
 
 const Chips = styled.div`
@@ -57,12 +62,17 @@ const Chips = styled.div`
 `;
 const ReviewArea = styled.div`
   display: flex;
+  .review-count {
+    ${Caption2}
+  }
 `;
 const StarArea = styled.div`
+  ${Caption2Bold}
   color: var(--primary-1);
 `;
 
 const AddressArea = styled.div`
+  ${Caption2}
   opacity: 0.5;
 
   width: calc(100vw - 162px);
