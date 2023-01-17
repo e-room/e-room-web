@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  Fragment,
-} from "react";
+import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
 import Script from "next/script";
@@ -41,11 +35,7 @@ const MainMap = ({ data }) => {
     let imageSrc = MarkerPng.src;
     let imageSize = new kakao.maps.Size(61, 68);
     let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(
-      imageSrc,
-      imageSize,
-      imageOption
-    );
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
     if (kakaoMapRef.current && !map.current) {
       const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
@@ -190,9 +180,7 @@ const MainMap = ({ data }) => {
 };
 
 export async function getStaticProps(context) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
-  );
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building/marking`);
   const data = await JSON.stringify(res.data);
 
   return {
@@ -248,7 +236,7 @@ const MapWrapper = styled.div`
 `;
 const MapContainer = styled.div``;
 const Container = styled.div`
-  height: calc(100vh - 112px);
+  /* height: calc(100vh - 112px); */
   overflow: hidden !important;
 `;
 const FilterItem = styled.div`

@@ -38,7 +38,7 @@ export default ({ data }) => {
 export async function getStaticPaths() {
   return {
     paths: [{ params: { id: "47" } }],
-    fallback: true, // can also be true or 'blocking'
+    fallback: false, // can also be true or 'blocking'
   };
 }
 

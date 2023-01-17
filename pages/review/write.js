@@ -43,8 +43,7 @@ export default function reviewWrite() {
       const livingLocation = formValue.reviewScoreDto.livingLocation;
 
       const totalScore =
-        (traffic + buildingComplex + surrounding + internal + livingLocation) /
-        5;
+        (traffic + buildingComplex + surrounding + internal + livingLocation) / 5;
 
       setFormValue({
         ...formValue,
@@ -75,28 +74,25 @@ export default function reviewWrite() {
   }, [reviewStep]);
 
   const onSubmit = async () => {
-    const formData = new FormData();
-    formData.append("request", JSON.stringify(formValue));
-    formValue.reviewImageList.forEach((file) => {
-      formData.append("reviewImageList", file.data);
-    });
-
-    await axios
-      .post(
-        `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("success", response);
+    try {
+      const formData = new FormData();
+      formData.append("request", JSON.stringify(formValue));
+      formValue.reviewImageList.forEach((file) => {
+        formData.append("reviewImages", file.data);
       });
 
-    // for (const value of formData) console.log(value);
-    // console.log("리뷰 등록", formValue);
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
+          formData,
+          config
+        )
+        .then((response) => {
+          console.log("리뷰쓰기 성공", response);
+        });
+    } catch (e) {
+      console.log("리뷰쓰기 실패", e);
+    }
   };
 
   useEffect(() => {
@@ -104,13 +100,12 @@ export default function reviewWrite() {
     setReviewStep(1);
   }, []);
 
-  useEffect(() => {
-    if (!isLogin) {
-      Router.push(`/login`);
-      // return <Login />;
-      // return router.push("/login"); // TODO: 이거 왜 라우트 안되지?
-    }
-  }, [isLogin]);
+  // useEffect(() => {
+  //   if (!isLogin) {
+  //     // TODO: 계정 인증 후 없으면 리다이렉트
+  //     Router.push(`/login`);
+  //   }
+  // }, [isLogin]);
 
   return (
     <>
