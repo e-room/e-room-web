@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ArrowIcon from "../../../assets/arrow.svg";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Body2, Body2Bold, Body3 } from "../../../styles/typography";
 
 // TODO: 검색기능 및 여러가지 기능 추가 필요(조사 후 진행)
@@ -15,7 +15,7 @@ export default function Select({
   unit,
   ...props
 }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const onOptionsShow = () => {
     setIsVisible(!isVisible);
   };
@@ -29,38 +29,37 @@ export default function Select({
   };
 
   // TODO: 공통컴포넌트로 분리 필요
+
   return (
     <StyledSelect>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {label && <TextLabel>{label}</TextLabel>}
         <div style={{ display: "flex", alignItems: "center" }}>
-          <SelectField onClick={onOptionsShow} onBlur={onBlur}>
+          <SelectField onClick={onOptionsShow} focus={isVisible}>
             <OptionField defaultOption={value}>
               {value ? `${value}년` : placeholder}
             </OptionField>
             <div className="toggle-icon">
               <ArrowIcon width={11} height={6} fill={`var(--gray-1)`} />
             </div>
-          </SelectField>
-          {isVisible && (
-            <OptionList>
-              {items &&
-                items.map((option) => {
-                  return (
-                    <Option
-                      key={option.value}
-                      onClick={() => {
-                        onChange(option);
-                        setIsVisible(false);
-                      }}
-                      isSelect={value && option.value === value}
-                    >
-                      {option.label}
-                    </Option>
-                  );
-                })}
+            <OptionList visible={isVisible}>
+              {items.map((option) => {
+                return (
+                  <Option
+                    key={option.value}
+                    onClick={() => {
+                      onChange(option);
+                      setIsVisible(false);
+                    }}
+                    isSelect={value && option.value === value}
+                  >
+                    {option.label}
+                  </Option>
+                );
+              })}
             </OptionList>
-          )}
+          </SelectField>
+
           {unit && <TextUnit>{unit}</TextUnit>}
         </div>
       </div>
@@ -76,13 +75,12 @@ const OptionField = styled.div`
   color: ${(p) => (p.defaultOption ? `var(--black)` : `var(--gray-3)`)};
 `;
 
-const SelectField = styled.button`
+const SelectField = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px;
   width: 100%;
-  height: 56px;
 
   border: 1px solid var(--gray-4);
   border-radius: 12px;
@@ -100,25 +98,24 @@ const SelectField = styled.button`
     margin-left: 10px;
   }
 
-  &:focus {
-    outline: none;
-    -webkit-appearance: none;
-    border: 1px solid var(--primary-1);
+  ${(p) =>
+    p.focus &&
+    `border: 1px solid var(--primary-1);
     svg {
       fill: var(--primary-1);
-    }
-  }
+    }`}
 `;
 
 const OptionList = styled.div`
+  display: ${(p) => (p.visible ? "block" : "none")};
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
   background: var(--white);
   border-radius: 12px;
-  margin-top: 3px;
-
+  width: 100%;
   position: absolute;
   z-index: 9;
-  top: 84px;
+  top: 59px;
+  left: 0;
 `;
 
 const Option = styled.button`
@@ -127,6 +124,8 @@ const Option = styled.button`
   width: 100%;
   text-align: left;
   padding: 16px;
+
+  overflow: hidden;
 
   ${(p) => (p.isSelect ? Body2Bold : Body2)}
 

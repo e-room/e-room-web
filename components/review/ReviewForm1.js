@@ -92,6 +92,7 @@ export default function ReviewForm1() {
         />
       </GridItem>
       <GridItem>
+        {/* TODO: select onblur시 옵션 숨김 */}
         <Select
           placeholder={"예: 2022"}
           label={"거주 시작"}
