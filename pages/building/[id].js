@@ -11,10 +11,11 @@ import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
 import RoomSelector from "components/building/RoomSelector";
+import { useEffect, useState } from "react";
 
 export default ({ data }) => {
   const building = JSON.parse(data);
-  console.log(building);
+  console.log("buildingInfo", building);
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
@@ -35,16 +36,7 @@ export default ({ data }) => {
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [{ params: { id: "47" } }],
-    fallback: false, // can also be true or 'blocking'
-  };
-}
-
-// `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params }) {
-  console.log("aa", params);
+export async function getServerSideProps({ params }) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`,
     {
