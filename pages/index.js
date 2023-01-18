@@ -119,6 +119,11 @@ const MainMap = ({ data }) => {
 
   const [filterChecked, setFilterChecked] = useState(true);
   // console.log(filterChecked);
+
+  useEffect(() => {
+    localStorage.setItem("buildingMarking", data);
+  }, []);
+
   return (
     <Fragment>
       <Popup
