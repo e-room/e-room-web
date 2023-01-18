@@ -26,15 +26,15 @@ export const reviewFormState = atom({
       isAnonymous: true, // TODO: 익명성 여부 판단인데, 일단은 전부 true
     },
     reviewScoreDto: {
-      traffic: null, // 교통
-      buildingComplex: null, // 건물/단지
-      surrounding: null, // 주변/환경
-      internal: null, // 내부
-      livingLocation: null, // 생활/입지
-      residenceSatisfaction: null, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
+      traffic: 0, // 교통
+      buildingComplex: 0, // 건물/단지
+      surrounding: 0, // 주변/환경
+      internal: 0, // 내부
+      livingLocation: 0, // 생활/입지
+      residenceSatisfaction: 0, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
     },
     reviewResidencePeriodDto: {
-      residenceStartYear: null, // 거주시작
+      residenceStartYear: 2022, // 거주시작
       residenceDuration: null, // 거주기간
     },
     advantageKeywordList: [],
