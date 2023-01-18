@@ -15,7 +15,7 @@ export default function Select({
   unit,
   ...props
 }) {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const onOptionsShow = () => {
     setIsVisible(!isVisible);
   };
