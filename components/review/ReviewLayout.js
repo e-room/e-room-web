@@ -15,6 +15,12 @@ import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
 
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, consume as stream
+  },
+};
+
 export default function ReviewLayout({ children }) {
   const router = useRouter();
   const { index = 1 } = router.query;
@@ -26,7 +32,7 @@ export default function ReviewLayout({ children }) {
   const onHideClick = () => {
     setPopupVisible(false);
   };
-  const onSubmit = async () => {
+  const onSubmit = () => {
     try {
       // TODO: totalScore 계산해서 넣기
 
@@ -50,22 +56,16 @@ export default function ReviewLayout({ children }) {
       const formData = new FormData();
       formData.append("request", JSON.stringify(formValue));
       formValue.reviewImageList.forEach((file) => {
-        formData.append("reviewImages", file.data);
+        if (!file) return;
+        formData.append("reviewImages", file);
       });
-
-      await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_HOST}/building/room/review`,
-          formData,
-          config
-        )
-        .then((response) => {
-          console.log("리뷰쓰기 성공", response);
-        });
+      axios.post(`/api/createReview`, formData).then((response) => {
+        console.log("리뷰쓰기 성공", response.data);
+        setPopupVisible(true);
+      });
     } catch (e) {
       console.log("리뷰쓰기 실패", e);
     }
-    setPopupVisible(true);
   };
   useEffect(() => {
     setPageTitleState("리뷰 쓰기");
@@ -100,7 +100,13 @@ export default function ReviewLayout({ children }) {
 
       {index === "4" ? (
         <BottomArea>
-          <Button label={"리뷰 등록하기"} size="lg" width={"100%"} onClick={onSubmit} />
+          <Button
+            label={"리뷰 등록하기"}
+            size="lg"
+            width={"100%"}
+            onClick={onSubmit}
+            useSubmit={true}
+          />
         </BottomArea>
       ) : (
         <BottomArea>
