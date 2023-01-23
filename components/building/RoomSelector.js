@@ -1,16 +1,29 @@
 import styled from "@emotion/styled";
 import Toggle from "components/common/atoms/Toggle";
+import { useState } from "react";
 
 export default function RoomSelector({ data }) {
-  // TODO: 없어도 [전체] 태그는 보이게
+  const [showRoom, setShowRoom] = useState("all");
+  const onActive = (id) => {
+    setShowRoom(id);
+  };
   return (
     <Box>
+      <Toggle
+        className="toggle"
+        label={`전체`}
+        key={"all"}
+        active={showRoom === "all"}
+        onClick={() => onActive("all")}
+      />
       {data.map((value) => {
         return (
           <Toggle
             className="toggle"
             label={`${value.roomNumber}호`}
             key={value.roomId}
+            active={showRoom === value.roomId}
+            onClick={() => onActive(value.roomId)}
           />
         );
       })}

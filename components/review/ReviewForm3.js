@@ -32,8 +32,11 @@ export default function ReviewForm3() {
       <TextLabel>장점 키워드</TextLabel>
       <Box>
         {Object.entries(KEYWORD_STATES).map((item) => {
-          const active = formValue["advantageKeywordList"].some(
+          const active = formValue.advantageKeywordList.some(
             (keyword) => keyword === item[0]
+          );
+          const hasDisadvantiage = formValue.disadvantageKeywordList.includes(
+            item[0]
           );
           return (
             <Toggle
@@ -41,9 +44,11 @@ export default function ReviewForm3() {
               key={item[0]}
               style={{ margin: "6px 2px" }}
               active={active}
-              onClick={() =>
-                onKeyWordClick("advantageKeywordList", item[0], active)
-              }
+              disabled={hasDisadvantiage}
+              onClick={() => {
+                if (!hasDisadvantiage)
+                  onKeyWordClick("advantageKeywordList", item[0], active);
+              }}
             />
           );
         })}
@@ -63,8 +68,11 @@ export default function ReviewForm3() {
       <TextLabel style={{ marginTop: 32 }}>단점 키워드</TextLabel>
       <Box>
         {Object.entries(KEYWORD_STATES).map((item) => {
-          const active = formValue["disadvantageKeywordList"].some(
+          const active = formValue.disadvantageKeywordList.some(
             (keyword) => keyword === item[0]
+          );
+          const hasAdvantiage = formValue.advantageKeywordList.includes(
+            item[0]
           );
           return (
             <Toggle
@@ -72,9 +80,11 @@ export default function ReviewForm3() {
               key={item[0]}
               style={{ margin: "6px 2px" }}
               active={active}
-              onClick={() =>
-                onKeyWordClick("disadvantageKeywordList", item[0], active)
-              }
+              disabled={hasAdvantiage}
+              onClick={() => {
+                if (!hasAdvantiage)
+                  onKeyWordClick("disadvantageKeywordList", item[0], active);
+              }}
             />
           );
         })}
