@@ -29,7 +29,8 @@ const StyledToggle = styled.div`
 
   padding: 8px 12px;
 
-  background: ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-4)`)};
+  background: ${(p) => (p.active ? `var(--primary-1)` : `var(--white)`)};
+  border: 1px solid ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-4)`)};
   border-radius: 32px;
 
   color: ${(p) => (p.active ? `var(--white)` : `var(--gray-2)`)};
@@ -51,6 +52,7 @@ const StyledToggle = styled.div`
     `
     background: var(--gray-4);
     color: var(--gray-3);
+    border: 1px solid var(--gray-4);
     cursor: none;
     `}
 `;
