@@ -28,7 +28,7 @@ export default ({ data }) => {
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
         <BuildingMap building={building} />
         <BuildingInfo building={building} />
-        <RoomSelector data={building.rooms} />
+        {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
         <ImageView />
         <ReviewList />
       </Container>
