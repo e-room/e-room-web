@@ -11,18 +11,18 @@ export const reviewFormState = atom({
       buildingNumber: "",
     },
     buildingOptionalDto: {
-      buildingName: null,
-      hasElevator: null, // x
+      buildingName: "",
+      hasElevator: false, // x
     },
     roomBaseDto: {
-      lineNumber: null,
-      roomNumber: null,
+      lineNumber: null, // number
+      roomNumber: null, // number
     },
     reviewBaseDto: {
-      deposit: null, // 보증금
-      monthlyRent: null, // 월세
-      managementFee: null, // 관리비
-      netLeasableArea: null, // 면적
+      deposit: null, // 보증금 // number
+      monthlyRent: null, // 월세 // number
+      managementFee: null, // 관리비 // number
+      netLeasableArea: null, // 면적 // number
       isAnonymous: true, // TODO: 익명성 여부 판단인데, 일단은 전부 true
     },
     reviewScoreDto: {
@@ -31,18 +31,22 @@ export const reviewFormState = atom({
       surrounding: 0, // 주변/환경
       internal: 0, // 내부
       livingLocation: 0, // 생활/입지
-      residenceSatisfaction: 0, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
+      residenceSatisfaction: 3, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
     },
     reviewResidencePeriodDto: {
       residenceStartYear: 2022, // 거주시작
-      residenceDuration: null, // 거주기간
+      residenceDuration: null, // 거주기간 // number
     },
     advantageKeywordList: [],
     advantageDescription: null,
     disadvantageDescription: null,
     disadvantageKeywordList: [],
-    reviewImageList: [],
   },
+});
+
+export const reviewImageListState = atom({
+  key: "reviewImageListState",
+  default: [],
 });
 
 export const reviewStepState = atom({
