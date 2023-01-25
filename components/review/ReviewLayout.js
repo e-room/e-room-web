@@ -9,30 +9,27 @@ import { Caption1Bold } from "styles/typography";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 
 import { pageTitleState } from "states";
-import { reviewFormState } from "states/reviewAtom";
+import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 
 import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disallow body parsing, consume as stream
-  },
-};
-
 export default function ReviewLayout({ children }) {
   const router = useRouter();
+
+  const [reviewImageList, setReviewImageList] =
+    useRecoilState(reviewImageListState);
   const { index = 1 } = router.query;
 
   const [popupVisible, setPopupVisible] = useState(false);
   const setPageTitleState = useSetRecoilState(pageTitleState);
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
 
-  const onHideClick = () => {
-    setPopupVisible(false);
+  const goHome = () => {
+    router.push(`/`);
   };
-  const onSubmit = () => {
+  const onSubmit = async () => {
     try {
       // TODO: totalScore 계산해서 넣기
 
@@ -55,16 +52,21 @@ export default function ReviewLayout({ children }) {
 
       const formData = new FormData();
       formData.append("request", JSON.stringify(formValue));
-      formValue.reviewImageList.forEach((file) => {
+      reviewImageList.forEach((file) => {
         if (!file) return;
-        formData.append("reviewImages", file);
+        formData.append("reviewImageList", file.data);
       });
-      axios.post(`/api/createReview`, formData).then((response) => {
-        console.log("리뷰쓰기 성공", response.data);
-        setPopupVisible(true);
-      });
+      await axios
+        .post("/api/upload", formData)
+        .then((response) => {
+          console.log("리뷰쓰기 성공", response);
+          setPopupVisible(true);
+        })
+        .catch((error) => {
+          console.log("리뷰쓰기 실패!", error);
+        });
     } catch (e) {
-      console.log("리뷰쓰기 실패", e);
+      console.log("리뷰쓰기 실패", e.response.data);
     }
   };
   useEffect(() => {
@@ -85,10 +87,10 @@ export default function ReviewLayout({ children }) {
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       <BottomSheet
         title={"이제 모든 리뷰를 볼 수 있어요!"}
-        onHideClick={onHideClick}
-        onSubmit={onSubmit}
+        onSubmit={goHome}
         buttonType={"confirm"}
         visible={popupVisible}
+        submitLabel={"확인"}
       >
         <IllustFemale />
         <Description>
