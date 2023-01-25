@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Body2Bold, Body3 } from "styles/typography";
 
 export default function Text({
+  type = "text",
   value,
   onChange,
   placeholder = "필드를 입력해주세요.",
@@ -17,7 +18,7 @@ export default function Text({
       {label && <TextLabel>{label}</TextLabel>}
       <div style={{ display: "flex", alignItems: "center" }}>
         <StyledInputText
-          type={"text"}
+          type={type}
           placeholder={placeholder}
           onChange={onChange}
           defaultValue={value || ""}
@@ -58,6 +59,10 @@ const StyledInputText = styled.input`
   &:focus {
     outline: none;
     border: 1px solid var(--primary-1);
+  }
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 `;
 
