@@ -12,6 +12,7 @@ export default function BottomSheet({
   buttonType = "default",
   onHideClick,
   onSubmit,
+  submitLabel,
   children,
 }) {
   const ButtonType = () => {
@@ -19,7 +20,7 @@ export default function BottomSheet({
       case "confirm":
         return (
           <Button
-            label={"Label"}
+            label={submitLabel}
             size="lg"
             width={"100%"}
             type={"primary"}
@@ -75,11 +76,13 @@ export default function BottomSheet({
   return (
     <Overlay>
       <Container visible={visible}>
-        <XField>
-          <div onClick={onHideClick}>
-            <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
-          </div>
-        </XField>
+        {onHideClick && (
+          <XField>
+            <div onClick={onHideClick}>
+              <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
+            </div>
+          </XField>
+        )}
         <StyledSheet>
           <Title>{title}</Title>
           {children}
