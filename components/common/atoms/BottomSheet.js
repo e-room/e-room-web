@@ -10,7 +10,6 @@ export default function BottomSheet({
   title,
   visible = false,
   buttonType = "default",
-  onHideClick,
   onSubmit,
   submitLabel,
   children,
@@ -76,13 +75,6 @@ export default function BottomSheet({
   return (
     <Overlay>
       <Container visible={visible}>
-        {onHideClick && (
-          <XField>
-            <div onClick={onHideClick}>
-              <Icon icon={"x-icon"} size={"md"} fill={`var(--white)`} />
-            </div>
-          </XField>
-        )}
         <StyledSheet>
           <Title>{title}</Title>
           {children}
@@ -149,14 +141,6 @@ const Container = styled.div`
   width: 100%;
 
   ${(p) => modalSettings(p.visible)}
-`;
-
-const XField = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  margin-bottom: 8px;
-  margin-right: 20px;
 `;
 
 const StyledSheet = styled.div`
