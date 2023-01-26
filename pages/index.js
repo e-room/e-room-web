@@ -53,7 +53,11 @@ const MainMap = ({ data }) => {
       let imageSrc = MarkerPng.src;
       let imageSize = new kakao.maps.Size(61, 68);
       let imageOption = { offset: new kakao.maps.Point(30, 48) };
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
 
       map.current = new kakao.maps.Map(container, options);
 
@@ -193,8 +197,10 @@ const MainMap = ({ data }) => {
   );
 };
 
-export async function getStaticProps(context) {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building/marking`);
+export async function getServerSideProps(context) {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+  );
   const data = await JSON.stringify(res.data);
 
   return {

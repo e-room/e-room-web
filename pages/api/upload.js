@@ -45,9 +45,13 @@ export const upload = async (req, res) => {
   );
 
   const status = api.status;
-
+  console.log("status==> ", status);
+  console.log("api ===> ", api);
   if (status === 200) {
     res.status(status).json({ success: true });
+  } else if (status === 400) {
+    alert(api.data);
+    return;
   } else {
     return res.status(500).json("Unknown Error");
   }
