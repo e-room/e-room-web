@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import shortid from "shortid";
 import Image from "next/image";
@@ -8,10 +8,22 @@ import Icon from "./Icon";
 import XButton from "./XButton";
 import { reviewImageListState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
+import Toast from "./Toast";
 
 export default function Images() {
   const [reviewImageList, setReviewImageList] =
     useRecoilState(reviewImageListState);
+
+  const [toastVisible, setToastVisible] = useState(false);
+  const toast = useMemo(() => {
+    return (
+      <Toast
+        message={"사진은 최대 5장까지 등록이 가능합니다."}
+        visible={toastVisible}
+        type={"danger"}
+      />
+    );
+  }, [toastVisible]);
 
   const fileInputRef = useRef(null);
 
@@ -25,8 +37,8 @@ export default function Images() {
       reviewImageList.length > 5 ||
       reviewImageList.length + fileArr.length > 5
     ) {
-      alert("사진은 최대 5장까지 등록이 가능합니다.");
-      return;
+      // alert("사진은 최대 5장까지 등록이 가능합니다.");
+      return setToastVisible(true);
     }
 
     const fileURLs = [];
@@ -73,8 +85,17 @@ export default function Images() {
     });
   }, [reviewImageList]);
 
+  useEffect(() => {
+    if (toastVisible) {
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 3000);
+    }
+  }, [toastVisible]);
+
   return (
     <>
+      {toast}
       <StyledImageButton onClick={onClickHandler}>
         <Icon icon="plus" size="md" fill={"var(--primary-1"} />
         <Title>사진 추가</Title>
