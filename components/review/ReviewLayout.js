@@ -14,6 +14,7 @@ import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
+import imgCompress from "utils/imgCompress";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -52,9 +53,10 @@ export default function ReviewLayout({ children }) {
 
       const formData = new FormData();
       formData.append("request", JSON.stringify(formValue));
-      reviewImageList.forEach((file) => {
+      reviewImageList.forEach(async (file) => {
         if (!file) return;
-        formData.append("reviewImageList", file.data);
+        const compress = await imgCompress(file.data);
+        formData.append("reviewImageList", compress);
       });
       await axios
         .post("/api/upload", formData)
