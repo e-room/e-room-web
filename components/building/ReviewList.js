@@ -14,16 +14,17 @@ import Icon from "components/common/atoms/Icon";
 import Chip from "components/common/atoms/Chip";
 import { useState } from "react";
 import Popup from "components/common/atoms/Popup";
-import { reviewListState } from "states/reviewAtom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { KEYWORD_STATES } from "codes/codeType";
 import Score from "components/common/atoms/Score";
 
 import { dummyImages } from "./ImageView";
 import { imageViewState } from "states/buidlingAtom";
+import parseFloat from "utils/parseFloat";
 
-export default function ReviewList() {
-  const Reviews = useRecoilValue(reviewListState);
+export default function ReviewList({ data }) {
+  console.log("review", data);
+  const Reviews = data;
   const setShowDetail = useSetRecoilState(imageViewState);
   const [isLike, setIsLike] = useState(false);
 
@@ -33,6 +34,7 @@ export default function ReviewList() {
   const [showTotalScore, setShowTotalScore] = useState(false);
 
   const Infos = (value) => {
+    const m2 = parseFloat(value.baseReviewDto.netLeasableArea * 3.3058, 1);
     return [
       {
         title: "거주시작",
@@ -40,23 +42,23 @@ export default function ReviewList() {
       },
       {
         title: "거주기간",
-        content: "20개월",
+        content: `${value.baseReviewDto.residenceDuration}개월`,
       },
       {
         title: "집 크기",
-        content: "13평 (42.9m²)",
+        content: `${value.baseReviewDto.netLeasableArea}평 (${m2}m²)`,
       },
       {
         title: "보증금",
-        content: `${value.baseReviewResponse.deposit}만원`,
+        content: `${value.baseReviewDto.deposit}만원`,
       },
       {
         title: "월세",
-        content: `${value.baseReviewResponse.monthlyRent}만원`,
+        content: `${value.baseReviewDto.monthlyRent}만원`,
       },
       {
         title: "관리비",
-        content: `${value.baseReviewResponse.managementFee}만원`,
+        content: `${value.baseReviewDto.managementFee}만원`,
       },
     ];
   };
@@ -65,72 +67,77 @@ export default function ReviewList() {
     return [
       {
         title: "👍🏻 장점",
-        chips: value.baseReviewResponse.advantage,
-        content: value.baseReviewResponse.advantageDescription,
+        chips: value.baseReviewDto.advantage,
+        content: value.baseReviewDto.advantageDescription,
       },
       {
         title: "👎🏻 단점",
-        chips: value.baseReviewResponse.disadvantage,
-        content: value.baseReviewResponse.disadvantageDescription,
+        chips: value.baseReviewDto.disadvantage,
+        content: value.baseReviewDto.disadvantageDescription,
       },
     ];
   };
-  const DetailFields = [
-    { title: "교통", score: 78 },
-    { title: "건물/단지", score: 56 },
-    { title: "내부", score: 100 },
-    { title: "주변/환경", score: 20 },
-    { title: "생활/입지", score: 88 },
-  ];
+  const DetailFields = (value) => {
+    return [
+      { title: "교통", score: value.reviewScoreDto.traffic },
+      { title: "건물/단지", score: value.reviewScoreDto.buildingComplex },
+      { title: "내부", score: value.reviewScoreDto.internal },
+      { title: "주변/환경", score: value.reviewScoreDto.surrounding },
+      { title: "생활/입지", score: value.reviewScoreDto.livingLocation },
+    ];
+  };
 
   return (
     <Container>
-      <Popup
-        title={"정말로 이 리뷰를 삭제하시겠어요?"}
-        visible={showConfirmDelete}
-        buttonType={"warning"}
-        cancelText={"취소"}
-        submitText={"삭제"}
-        onCancelClick={() => setShowConfirmDelete(false)}
-      >
-        <PopupSubTitle>
-          삭제하면 되돌릴 수 없습니다.
-          <br />
-          신중하게 결정해주세요.
-        </PopupSubTitle>
-      </Popup>
-      <Popup
-        title={"까칠한 판다리나님의 세부 점수"}
-        visible={showTotalScore}
-        buttonType={"confirm"}
-        confirmText={"닫기"}
-        onConfirmClick={() => setShowTotalScore(false)}
-      >
-        <DetailScoreField>
-          {DetailFields.map((value) => {
-            return (
-              <div className="field" key={value.title}>
-                <div className="title">{value.title}</div>
-                <ScoreField>
-                  <div className="score">4.5</div>
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-half"} size={"sm"} />
-                </ScoreField>
-              </div>
-            );
-          })}
-        </DetailScoreField>
-      </Popup>
       <Title>실제 거주 후기</Title>
       <div>
         {Reviews.content.map((value) => {
           const notAccess = value.id > 1;
 
           return (
-            <Item key={value.baseReviewResponse.reviewId} blur={notAccess}>
+            <Item key={value.baseReviewDto.reviewId} blur={notAccess}>
+              <Popup
+                title={"정말로 이 리뷰를 삭제하시겠어요?"}
+                visible={showConfirmDelete}
+                buttonType={"warning"}
+                cancelText={"취소"}
+                submitText={"삭제"}
+                onCancelClick={() => setShowConfirmDelete(false)}
+              >
+                <PopupSubTitle>
+                  삭제하면 되돌릴 수 없습니다.
+                  <br />
+                  신중하게 결정해주세요.
+                </PopupSubTitle>
+              </Popup>
+              <Popup
+                title={`${value.authorDto.name}님의 세부 점수`}
+                visible={showTotalScore}
+                buttonType={"confirm"}
+                confirmText={"닫기"}
+                onConfirmClick={() => setShowTotalScore(false)}
+              >
+                <DetailScoreField>
+                  {DetailFields(value).map((val) => {
+                    return (
+                      <div className="field" key={val.title}>
+                        <div className="title">{val.title}</div>
+                        <ScoreField>
+                          <div className="score">
+                            {parseFloat(val.score, 1)}
+                          </div>
+                          <Score
+                            size="sm"
+                            readOnly={true}
+                            value={parseFloat(val.score, 1)}
+                            allowFraction={true}
+                          />
+                        </ScoreField>
+                      </div>
+                    );
+                  })}
+                </DetailScoreField>
+              </Popup>
               <Head>
                 <Avatar img={Avatar24.src} style={{ marginRight: 6 }} />
                 <div
@@ -141,8 +148,21 @@ export default function ReviewList() {
                   }}
                 >
                   <ScoreArea>
-                    <Score size="sm" readOnly={true} value={4} />
-                    <div className="score">4.5</div>
+                    <Score
+                      size="sm"
+                      readOnly={true}
+                      value={parseFloat(
+                        value.reviewScoreDto.residenceSatisfaction,
+                        1
+                      )}
+                      allowFraction={true}
+                    />
+                    <div className="score">
+                      {parseFloat(
+                        value.reviewScoreDto.residenceSatisfaction,
+                        1
+                      )}
+                    </div>
                   </ScoreArea>
                   <UserInfo>
                     {value.authorDto.name} | 22.11.27. |{" "}
@@ -208,8 +228,8 @@ export default function ReviewList() {
                   <div className="text">
                     추천{" "}
                     {isLike
-                      ? value.baseReviewResponse.reviewLikeCnt + 1
-                      : value.baseReviewResponse.reviewLikeCnt}
+                      ? value.baseReviewDto.reviewLikeCnt + 1
+                      : value.baseReviewDto.reviewLikeCnt}
                     개
                   </div>
                 </div>
@@ -321,6 +341,7 @@ const AdvantageField = styled.div`
     ${Body3}
 
     color: var(--black);
+    word-break: break-all;
   }
 `;
 const ImgField = styled.div`

@@ -1,5 +1,5 @@
 export default (value, length) => {
   return typeof value === "number"
     ? Number.parseFloat(value).toFixed(length)
-    : 0;
+    : Number.parseFloat(0).toFixed(length);
 };

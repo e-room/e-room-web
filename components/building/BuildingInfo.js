@@ -13,6 +13,7 @@ import {
 } from "styles/typography";
 import Toast from "components/common/atoms/Toast";
 import parseFloat from "utils/parseFloat";
+import Score from "components/common/atoms/Score";
 
 export default function BuildingInfo({ building }) {
   const { buildingSummaries } = building;
@@ -87,11 +88,12 @@ export default function BuildingInfo({ building }) {
                 <div className="title">{value.title}</div>
                 <ScoreField>
                   <div className="score">{parseFloat(value.score, 1)}</div>
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-half"} size={"sm"} />
+                  <Score
+                    size="sm"
+                    readOnly={true}
+                    value={parseFloat(value.score, 1)}
+                    allowFraction={true}
+                  />
                 </ScoreField>
               </div>
             );

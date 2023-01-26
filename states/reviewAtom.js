@@ -22,7 +22,7 @@ export const reviewFormState = atom({
       deposit: null, // 보증금 // number
       monthlyRent: null, // 월세 // number
       managementFee: null, // 관리비 // number
-      netLeasableArea: null, // 면적 // number
+      netLeasableArea: null, // 면적(평) // number
       isAnonymous: true, // TODO: 익명성 여부 판단인데, 일단은 전부 true
     },
     reviewScoreDto: {
