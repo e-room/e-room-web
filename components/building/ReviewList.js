@@ -38,7 +38,7 @@ export default function ReviewList({ data }) {
     return [
       {
         title: "거주시작",
-        content: "2022년~",
+        content: `${value.baseReviewDto.residenceStartYear}년~`,
       },
       {
         title: "거주기간",
