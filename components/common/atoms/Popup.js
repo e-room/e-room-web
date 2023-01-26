@@ -168,16 +168,16 @@ const Container = styled.div`
 const StyledPopup = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 32px 20px 20px;
-  gap: 16px;
+  padding: 32px 16px 16px;
+  gap: 24px;
   isolation: isolate;
 
-  width: 100%;
+  width: calc(100vw - 40px);
+  max-width: 320px;
+  box-sizing: border-box;
 
   background: var(--white);
-  border-radius: 32px;
-
-  margin: 0px 20px;
+  border-radius: 24px;
 `;
 
 const Title = styled.div`

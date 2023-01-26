@@ -1,10 +1,14 @@
-import React, { useEffect, useState, useRef, useCallback, Fragment } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import React, { useEffect, useState, useRef, Fragment } from "react";
+import { useSetRecoilState } from "recoil";
+import axios from "axios";
 import Link from "next/link";
-import Script from "next/script";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
+import { Body2Bold } from "styles/typography";
+
+import { pageTitleState } from "states";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
@@ -14,69 +18,81 @@ import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import Popup from "components/common/atoms/Popup";
 import CheckBox from "components/common/atoms/CheckBox";
-import { Body2Bold } from "styles/typography";
-
-import { pageTitleState } from "states";
-import axios from "axios";
 
 const initial = {
   lat: 37.2429616,
   lng: 127.0800525,
 };
-// TODO: 스크롤해야 처음에 마커 뜸
-const MainMap = ({ data }) => {
-  const buildingMarking = JSON.parse(data);
-  const setPageTitleState = useSetRecoilState(pageTitleState);
-  const kakaoMapRef = useRef(null); // 지도 container ref
-  const map = useRef(null);
-  // const [mapCenter, setMapCenter] = useState({ lat: initial.lat, lng: initial.lng });
-  //map불러오기
-  const initMap = useCallback(() => {
-    let imageSrc = MarkerPng.src;
-    let imageSize = new kakao.maps.Size(61, 68);
-    let imageOption = { offset: new kakao.maps.Point(30, 48) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
-    if (kakaoMapRef.current && !map.current) {
-      const initialMap = new kakao.maps.Map(kakaoMapRef.current, {
+const MainMap = ({ data }) => {
+  const router = useRouter();
+  const buildingMarking = JSON.parse(data);
+  console.log("buildingMarking", buildingMarking);
+  const setPageTitleState = useSetRecoilState(pageTitleState);
+  const map = useRef(null);
+
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    const $script = document.createElement("script");
+    $script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`;
+    $script.addEventListener("load", () => setMapLoaded(true));
+    document.head.appendChild($script);
+  }, []);
+
+  useEffect(() => {
+    if (!mapLoaded) return;
+
+    kakao.maps.load(() => {
+      var container = document.getElementById("map");
+      var options = {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
-        level: 6,
-      });
+        level: 8,
+      };
+
+      let imageSrc = MarkerPng.src;
+      let imageSize = new kakao.maps.Size(61, 68);
+      let imageOption = { offset: new kakao.maps.Point(30, 48) };
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
+
+      map.current = new kakao.maps.Map(container, options);
+
       // 마커 클러스터러를 생성합니다
       let clusterer = new kakao.maps.MarkerClusterer({
-        map: initialMap, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 5, // 클러스터 할 최소 지도 레벨
         styles: MarkerClustererStyles,
         gridSize: 88,
       });
-      // TODO: 동기로 변경하고 setTimeout 제거
+
       const markers = [];
-      setTimeout(() => {
-        buildingMarking.buildingList.forEach((value) => {
-          let marker = new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(
-              value.coordinateDto.latitude,
-              value.coordinateDto.longitude
-            ),
-            image: markerImage,
-          });
-          marker.setMap(initialMap);
-          markers.push(marker);
+      buildingMarking.buildingList.forEach((value) => {
+        let marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(
+            value.coordinateDto.latitude,
+            value.coordinateDto.longitude
+          ),
+          clickable: true,
+          image: markerImage,
         });
-        clusterer.addMarkers(markers);
-      }, [1000]);
-      map.current = initialMap;
-    }
-  }, [kakaoMapRef.current]);
+        marker.setMap(map.current);
+        kakao.maps.event.addListener(marker, "click", function () {
+          router.push(`/building/${value.buildingId}`);
+        });
+        markers.push(marker);
+      });
+      clusterer.addMarkers(markers);
+    });
+  }, [mapLoaded]);
+
   useEffect(() => {
     setPageTitleState(null);
   }, []);
-  useEffect(() => {
-    if (window.kakao) {
-      initMap();
-    }
-  }, [initMap]);
 
   //나의 위치로 가게 해주는 함수
   const setMyPosition = () => {
@@ -84,12 +100,13 @@ const MainMap = ({ data }) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude; // 위도
         const lng = position.coords.longitude; // 경도
-        // setMapCenter({ lat, lng });
+
         let myPosition = new kakao.maps.LatLng(lat, lng);
         map.current.setCenter(myPosition);
       });
     }
   };
+
   //줌인
   const zoomIn = () => {
     map.current.setLevel(map.current.getLevel() - 1);
@@ -106,12 +123,13 @@ const MainMap = ({ data }) => {
 
   const [filterChecked, setFilterChecked] = useState(true);
   // console.log(filterChecked);
+
+  useEffect(() => {
+    localStorage.setItem("buildingMarking", data);
+  }, []);
+
   return (
     <Fragment>
-      <Script
-        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`}
-        onLoad={() => new kakao.maps.load(initMap)}
-      />
       <Popup
         visible={popupVisible}
         title={
@@ -138,7 +156,7 @@ const MainMap = ({ data }) => {
       // headerIcon={"search"}
       >
         <Container>
-          <MapWrapper id="map" ref={kakaoMapRef}></MapWrapper>
+          <MapWrapper id="map" />
           <MapContainer>
             <FilterItem>
               <MapButton onClick={() => setPopupVisible(true)} />
@@ -179,8 +197,10 @@ const MainMap = ({ data }) => {
   );
 };
 
-export async function getStaticProps(context) {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building/marking`);
+export async function getServerSideProps(context) {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+  );
   const data = await JSON.stringify(res.data);
 
   return {

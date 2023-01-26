@@ -12,14 +12,18 @@ import {
   Display2,
 } from "styles/typography";
 import Toast from "components/common/atoms/Toast";
+import parseFloat from "utils/parseFloat";
+import Score from "components/common/atoms/Score";
 
 export default function BuildingInfo({ building }) {
+  const { buildingSummaries } = building;
+  const totalScore = buildingSummaries.RESIDENCESATISFACTION;
   const DetailFields = [
-    { title: "교통", score: 78 },
-    { title: "건물/단지", score: 56 },
-    { title: "내부", score: 100 },
-    { title: "주변/환경", score: 20 },
-    { title: "생활/입지", score: 88 },
+    { title: "교통", score: buildingSummaries.TRAFFIC ?? 0 },
+    { title: "건물/단지", score: buildingSummaries.BUILDINGCOMPLEX ?? 0 },
+    { title: "내부", score: buildingSummaries.INTERNAL ?? 0 },
+    { title: "주변/환경", score: buildingSummaries.SURROUNDING ?? 0 },
+    { title: "생활/입지", score: buildingSummaries.LIVINGLOCATION ?? 0 },
   ];
 
   const formValue = {
@@ -83,12 +87,13 @@ export default function BuildingInfo({ building }) {
               <div className="field" key={value.title}>
                 <div className="title">{value.title}</div>
                 <ScoreField>
-                  <div className="score">4.5</div>
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-filled"} size={"sm"} />
-                  <Icon icon={"star-half"} size={"sm"} />
+                  <div className="score">{parseFloat(value.score, 1)}</div>
+                  <Score
+                    size="sm"
+                    readOnly={true}
+                    value={parseFloat(value.score, 1)}
+                    allowFraction={true}
+                  />
                 </ScoreField>
               </div>
             );
@@ -96,7 +101,7 @@ export default function BuildingInfo({ building }) {
         </DetailScoreField>
         <TotalBox>
           <TotalTitle>총 만족도</TotalTitle>
-          <TotalScore>4.5</TotalScore>
+          <TotalScore>{parseFloat(totalScore, 1)}</TotalScore>
         </TotalBox>
       </div>
     </Container>

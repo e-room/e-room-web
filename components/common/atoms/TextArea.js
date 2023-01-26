@@ -46,6 +46,7 @@ const StyledInputText = styled.textarea`
     color: var(--gray-3);
   }
   &:focus {
-    outline: 1px solid var(--primary-1);
+    outline: none;
+    border: 1px solid var(--primary-1);
   }
 `;

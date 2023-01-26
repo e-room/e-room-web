@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
-export default function Toggle({ label, children, active = false, ...props }) {
+export default function Toggle({
+  label,
+  children,
+  active = false,
+  disabled = false,
+  ...props
+}) {
   return (
-    <StyledToggle {...props} active={active}>
+    <StyledToggle {...props} active={active} disabled={disabled}>
       {label ?? children}
     </StyledToggle>
   );
@@ -12,6 +18,7 @@ export default function Toggle({ label, children, active = false, ...props }) {
 Toggle.propTypes = {
   label: PropTypes.string,
   active: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 const StyledToggle = styled.div`
@@ -22,7 +29,8 @@ const StyledToggle = styled.div`
 
   padding: 8px 12px;
 
-  background: ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-4)`)};
+  background: ${(p) => (p.active ? `var(--primary-1)` : `var(--white)`)};
+  border: 1px solid ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-4)`)};
   border-radius: 32px;
 
   color: ${(p) => (p.active ? `var(--white)` : `var(--gray-2)`)};
@@ -38,4 +46,13 @@ const StyledToggle = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  ${(p) =>
+    p.disabled === true &&
+    `
+    background: var(--gray-4);
+    color: var(--gray-3);
+    border: 1px solid var(--gray-4);
+    cursor: none;
+    `}
 `;

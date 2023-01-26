@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import shortid from "shortid";
 import Image from "next/image";
@@ -6,13 +6,12 @@ import styled from "@emotion/styled";
 import { Caption1Bold } from "styles/typography";
 import Icon from "./Icon";
 import XButton from "./XButton";
-import { reviewFormState } from "states/reviewAtom";
+import { reviewImageListState } from "states/reviewAtom";
 import { useRecoilState } from "recoil";
 
 export default function Images() {
-  const [formValue, setFormValue] = useRecoilState(reviewFormState);
-  const { reviewImageList } = formValue;
-  console.log(reviewImageList);
+  const [reviewImageList, setReviewImageList] =
+    useRecoilState(reviewImageListState);
 
   const fileInputRef = useRef(null);
 
@@ -22,7 +21,10 @@ export default function Images() {
   const onChangeHandler = (e) => {
     const fileArr = e.target.files;
 
-    if (reviewImageList.length > 5 || reviewImageList.length + fileArr.length > 5) {
+    if (
+      reviewImageList.length > 5 ||
+      reviewImageList.length + fileArr.length > 5
+    ) {
       alert("사진은 최대 5장까지 등록이 가능합니다.");
       return;
     }
@@ -31,13 +33,15 @@ export default function Images() {
 
     for (let i = 0; i < fileArr.length; i++) {
       const file = fileArr[i];
+
       const reader = new FileReader();
       reader.onload = () => {
-        fileURLs[i] = { key: shortid.generate(), view: reader.result, data: file };
-        setFormValue({
-          ...formValue,
-          reviewImageList: [...reviewImageList, ...fileURLs],
-        });
+        fileURLs[i] = {
+          key: shortid.generate(),
+          view: reader.result,
+          data: file,
+        };
+        setReviewImageList([...reviewImageList, ...fileURLs]);
       };
       reader.readAsDataURL(file);
     }
@@ -46,10 +50,7 @@ export default function Images() {
   const removeImg = (id) => {
     const imgs = [...reviewImageList];
     const filterData = imgs.filter((v) => v.key !== id);
-    setFormValue({
-      ...formValue,
-      reviewImageList: filterData,
-    });
+    setReviewImageList(filterData);
   };
 
   const Preview = useCallback(() => {
@@ -61,7 +62,12 @@ export default function Images() {
           <ButtonBox>
             <XButton onClick={() => removeImg(val.key)} />
           </ButtonBox>
-          <ImageBox src={val.view} width={102} height={102} objectFit={"cover"} />
+          <ImageBox
+            src={val.view}
+            width={102}
+            height={102}
+            objectFit={"cover"}
+          />
         </Box>
       );
     });

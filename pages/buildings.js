@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import Link from "next/link";
 import styled from "@emotion/styled";
@@ -9,14 +9,37 @@ import BuildingList from "components/building/BuildingList";
 
 import { pageTitleState } from "states";
 import axios from "axios";
+import Banner1 from "assets/banner/banner1.png";
 
 export default function buildings({ data }) {
   const setPageTitleState = useSetRecoilState(pageTitleState);
-  const parseData = JSON.parse(data);
-  console.log(parseData);
+  // const parseData = data ? JSON.parse(data) : [];
+  const [parseData, setParseData] = useState([]);
+  console.log("buildingList", parseData);
+
   useEffect(() => {
     setPageTitleState("이 지역 자취방");
+    const buildingMarking = JSON.parse(
+      localStorage.getItem("buildingMarking")
+    ).buildingList.map((v) => v.buildingId);
+
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=${buildingMarking}`,
+        {
+          headers: {
+            mocking: 239,
+          },
+        }
+      )
+      .then((res) => {
+        setParseData(res.data);
+      });
   }, []);
+
+  if (parseData.length <= 0) {
+    return <div>loading...</div>;
+  }
 
   return (
     <AppLayout
@@ -24,7 +47,9 @@ export default function buildings({ data }) {
     >
       <Container>
         <div style={{ paddingBottom: 150 }}>
-          <Banner>배너영역</Banner>
+          <Banner>
+            <img src={Banner1.src} width={"100%"} height={"100%"} />
+          </Banner>
           <BuildingList data={parseData} />
         </div>
         <ButtonGroup>
@@ -41,21 +66,29 @@ export default function buildings({ data }) {
   );
 }
 
-export async function getStaticProps(context) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=47`,
-    {
-      headers: {
-        mocking: 239,
-      },
-    }
-  );
-  const data = await JSON.stringify(res.data);
+// export async function getServerSideProps(context) {
+//   // console.log("zz", buildingIds);
+//   const test =
+//     typeof window !== "undefined"
+//       ? JSON.parse(localStorage.getItem("buildingMarking"))
+//       : null;
 
-  return {
-    props: { data }, // will be passed to the page component as props
-  };
-}
+//   console.log("test", test);
+
+//   const res = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=47`,
+//     {
+//       headers: {
+//         mocking: 239,
+//       },
+//     }
+//   );
+//   const data = await JSON.stringify(res.data);
+
+//   return {
+//     props: { data }, // will be passed to the page component as props
+//   };
+// }
 
 const Container = styled.div`
   height: calc(100vh - 112px);

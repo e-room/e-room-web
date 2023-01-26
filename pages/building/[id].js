@@ -12,9 +12,12 @@ import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
 import RoomSelector from "components/building/RoomSelector";
 
-export default ({ data }) => {
+export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
-  console.log(building);
+  const buildingImages = JSON.parse(imgs);
+  const buildingReviews = JSON.parse(reviews);
+  // console.log("images", buildingImages);
+  console.log("buildingInfo", building);
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
@@ -27,24 +30,15 @@ export default ({ data }) => {
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
         <BuildingMap building={building} />
         <BuildingInfo building={building} />
-        <RoomSelector data={building.rooms} />
+        {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
         <ImageView />
-        <ReviewList />
+        <ReviewList data={buildingReviews} />
       </Container>
     </AppLayout>
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [{ params: { id: "47" } }],
-    fallback: false, // can also be true or 'blocking'
-  };
-}
-
-// `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params }) {
-  console.log("aa", params);
+export async function getServerSideProps({ params }) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`,
     {
@@ -53,10 +47,28 @@ export async function getStaticProps({ params }) {
       },
     }
   );
-  const data = await JSON.stringify(res.data);
+  const res1 = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`,
+    {
+      headers: {
+        mocking: 239,
+      },
+    }
+  );
+  const res2 = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review`,
+    {
+      headers: {
+        mocking: 239,
+      },
+    }
+  );
+  const data = JSON.stringify(res.data);
+  const imgs = JSON.stringify(res1.data);
+  const reviews = JSON.stringify(res2.data);
   return {
     // Passed to the page component as props
-    props: { data },
+    props: { data, imgs, reviews },
   };
 }
 

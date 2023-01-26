@@ -13,6 +13,7 @@ export default function ReviewForm1() {
 
   const onHandleComplete = (data) => {
     const roadAddressArray = data.roadAddress.split(" ");
+    const buildingNumber = roadAddressArray[roadAddressArray.length - 1];
     setFormValue({
       ...formValue,
       address: {
@@ -21,7 +22,7 @@ export default function ReviewForm1() {
         siGunGu: data.sigungu,
         eupMyeon: data.bname,
         roadName: data.roadname,
-        buildingNumber: roadAddressArray[roadAddressArray.length - 1],
+        buildingNumber: buildingNumber,
       },
       buildingOptionalDto: {
         ...formValue.buildingOptionalDto,
@@ -58,6 +59,7 @@ export default function ReviewForm1() {
       </FormItem>
       <GridItem>
         <Text
+          type={"number"}
           placeholder={"예: 101"}
           label={"상세주소(호실)"}
           unit={"동"}
@@ -67,7 +69,7 @@ export default function ReviewForm1() {
               ...formValue,
               roomBaseDto: {
                 ...formValue.roomBaseDto,
-                lineNumber: e.target.value,
+                lineNumber: Number(e.target.value),
               },
             });
           }}
@@ -75,6 +77,7 @@ export default function ReviewForm1() {
           name={"lineNumber"}
         />
         <Text
+          type={"number"}
           placeholder={"예: 301"}
           unit={"호"}
           width={"100%"}
@@ -83,7 +86,7 @@ export default function ReviewForm1() {
               ...formValue,
               roomBaseDto: {
                 ...formValue.roomBaseDto,
-                roomNumber: e.target.value,
+                roomNumber: Number(e.target.value),
               },
             });
           }}
@@ -92,6 +95,7 @@ export default function ReviewForm1() {
         />
       </GridItem>
       <GridItem>
+        {/* TODO: select onblur시 옵션 숨김 */}
         <Select
           placeholder={"예: 2022"}
           label={"거주 시작"}
@@ -116,6 +120,7 @@ export default function ReviewForm1() {
           ]}
         />
         <Text
+          type={"number"}
           placeholder={"예: 20"}
           label={"거주 기간"}
           unit={"개월"}
@@ -125,7 +130,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewResidencePeriodDto: {
                 ...formValue.reviewResidencePeriodDto,
-                residenceDuration: e.target.value,
+                residenceDuration: Number(e.target.value),
               },
             });
           }}
@@ -135,6 +140,7 @@ export default function ReviewForm1() {
       </GridItem>
       <GridItem>
         <Text
+          type={"number"}
           placeholder={"예: 50"}
           label={"월세"}
           unit={"만원"}
@@ -144,13 +150,14 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                monthlyRent: e.target.value,
+                monthlyRent: Number(e.target.value),
               },
             });
           }}
           value={formValue.reviewBaseDto.monthlyRent}
         />
         <Text
+          type={"number"}
           placeholder={"예: 20"}
           label={"관리비"}
           unit={"만원"}
@@ -160,7 +167,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                managementFee: e.target.value,
+                managementFee: Number(e.target.value),
               },
             });
           }}
@@ -169,6 +176,7 @@ export default function ReviewForm1() {
       </GridItem>
       <FormItem>
         <Text
+          type={"number"}
           placeholder={"예: 500"}
           label={"보증금"}
           unit={"만원"}
@@ -178,7 +186,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                deposit: e.target.value,
+                deposit: Number(e.target.value),
               },
             });
           }}
@@ -187,6 +195,7 @@ export default function ReviewForm1() {
       </FormItem>
       <FormItem>
         <Text
+          type={"number"}
           placeholder={"예: 6"}
           label={"집 크기"}
           unit={"평"}
@@ -196,7 +205,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                netLeasableArea: e.target.value,
+                netLeasableArea: Number(e.target.value),
               },
             });
           }}
