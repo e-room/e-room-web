@@ -5,6 +5,7 @@ import Score from "components/common/atoms/Score";
 import { Body2Bold, Caption2, Caption2Bold } from "styles/typography";
 import Image from "next/image";
 import testImg from "assets/marker4.png";
+import parseFloat from "utils/parseFloat";
 export default function BuildingList({ data }) {
   return data.content.map((value) => {
     return (
@@ -14,21 +15,21 @@ export default function BuildingList({ data }) {
           <BuildingContent>
             <div className="building-name">{value.name}</div>
             <AddressArea>
-              {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
-              {value.address.buildingNumber}
+              {value.address.siDo} {value.address.siGunGu}{" "}
+              {value.address.roadName} {value.address.buildingNumber}
             </AddressArea>
             <Chips>
               {value.directDeal && <Chip label={"직거래가능"} />}
               <Chip label={"교통 편리"} type={"secondary"} />
             </Chips>
             <ReviewArea>
-              <div className="review-count" style={{ opacity: 0.5, marginRight: 8 }}>
+              <div
+                className="review-count"
+                style={{ opacity: 0.5, marginRight: 8 }}
+              >
                 리뷰 {value.reviewCnt}개
               </div>
-              <StarArea>
-                {/* util 화 시키기 */}
-                {value.scoreAvg ? Number.parseFloat(value.scoreAvg).toFixed(1) : 0}
-              </StarArea>
+              <StarArea>{parseFloat(value.scoreAvg, 1)}</StarArea>
               <Score size="sm" readOnly={true} />
             </ReviewArea>
           </BuildingContent>
