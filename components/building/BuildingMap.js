@@ -34,6 +34,9 @@ const BuildingMap = ({ building }) => {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
         level: 3,
         draggable: false,
+        scrollwheel: false,
+        disableDoubleClick: true,
+        disableDoubleClickZoom: true,
       });
 
       setTimeout(() => {
