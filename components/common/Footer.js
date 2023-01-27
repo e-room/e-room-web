@@ -8,24 +8,28 @@ import { Caption2, Caption2Bold } from "styles/typography";
 const navItems = [
   {
     path: "/",
+    activePaths: ["/", "/buildings", "/login"],
     defaultIcon: "home-stroke",
     activeIcon: "home-fill",
     title: "둘러보기",
   },
   {
     path: "/review/write",
+    activePaths: ["/review/write", "/review/write/[index]"],
     defaultIcon: "pencil-fill",
     activeIcon: "pencil-fill",
     title: "리뷰쓰기",
   },
   {
     path: "/favorites",
+    activePaths: ["/favorites"],
     defaultIcon: "heart-stroke",
     activeIcon: "heart-fill",
     title: "찜목록",
   },
   {
     path: "/mypage",
+    activePaths: ["/mypage"],
     defaultIcon: "mypage",
     activeIcon: "mypage",
     title: "내정보",
@@ -35,11 +39,12 @@ const navItems = [
 export default function Footer() {
   const router = useRouter();
   const { pathname } = router;
+
   return (
     <NavBarWrapper>
       <NavBarContainer>
         {navItems.map((value, index) => {
-          const active = value.path === pathname;
+          const active = value.activePaths.includes(pathname);
 
           return (
             <Link href={value.path} key={index}>
@@ -89,9 +94,9 @@ const NavBarContent = styled.div`
   max-height: 56px;
   div {
     ${(p) => (p.active ? Caption2Bold : Caption2)}
-    color: ${(props) => (props.active ? `var(--primary-1)` : `var(--gray-3)`)};
+    color: ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-3)`)};
   }
   svg {
-    fill: ${(props) => (props.active ? `var(--primary-1)` : `var(--gray-3)`)};
+    fill: ${(p) => (p.active ? `var(--primary-1)` : `var(--gray-3)`)};
   }
 `;
