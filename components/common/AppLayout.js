@@ -4,11 +4,11 @@ import styled from "@emotion/styled";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ pageTitle, children }) {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Header pageTitle={pageTitle} />
       <MainContent>{children}</MainContent>
       <Footer />
     </>
@@ -20,5 +20,5 @@ AppLayout.propTypes = {
 };
 
 const MainContent = styled.div`
-  margin: 56px 0;
+  margin: 44px 0;
 `;

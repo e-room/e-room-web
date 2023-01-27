@@ -37,7 +37,6 @@ export default function Images() {
       reviewImageList.length > 5 ||
       reviewImageList.length + fileArr.length > 5
     ) {
-      // alert("사진은 최대 5장까지 등록이 가능합니다.");
       return setToastVisible(true);
     }
 

@@ -2,12 +2,9 @@ import styled from "@emotion/styled";
 import { SubTitle2 } from "../../styles/typography";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
-import { pageTitleState } from "../../states";
 
-export default function Header({ rightIcon }) {
+export default function Header({ pageTitle, icon }) {
   const router = useRouter();
-  const pageTitle = useRecoilValue(pageTitleState);
 
   const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
 
@@ -17,47 +14,43 @@ export default function Header({ rightIcon }) {
 
   return (
     <AppBarWrapper>
-      <AppBarContainer>
-        <Box onClick={onBack}>
-          <Icon icon={"arrow-left"} size="md" />
-        </Box>
-        <Box>
-          {pageTitle ? (
-            <HeaderTitle>{pageTitle}</HeaderTitle>
-          ) : (
-            <>
-              <Icon icon={"logo-default"} size="lg" />
-              <LogoTitle>
-                <span>e</span>room
-              </LogoTitle>
-            </>
-          )}
-        </Box>
-        <Box>{rightIcon && <Icon icon={rightIcon} size="md" />}</Box>
-      </AppBarContainer>
+      <Box onClick={onBack}>
+        <Icon icon={"arrow-left"} size="md" />
+      </Box>
+      <Box>
+        {pageTitle ? (
+          <HeaderTitle>{pageTitle}</HeaderTitle>
+        ) : (
+          <>
+            <Icon icon={"logo-default"} size="lg" />
+            <LogoTitle>
+              <span>e</span>room
+            </LogoTitle>
+          </>
+        )}
+      </Box>
+      <Box>{icon && <Icon icon={icon} size="md" />}</Box>
     </AppBarWrapper>
   );
 }
 
-const AppBarWrapper = styled.div`
+const AppBarWrapper = styled.header`
   width: 100%;
-  height: 56px;
+  height: 44px;
 
   position: fixed;
   top: 0;
   left: 0;
+  padding: 0 20px 0 16px;
+  box-sizing: border-box;
 
   background: var(--white);
   z-index: 9;
-`;
+  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
 
-const AppBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 16px;
-  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
-  height: 56px;
 `;
 
 const Box = styled.div`
@@ -75,11 +68,7 @@ const HeaderTitle = styled.div`
 `;
 
 const LogoTitle = styled.div`
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 27px;
+  ${SubTitle2}
   color: var(--primary-1);
   span {
     color: var(--primary-3);

@@ -25,14 +25,14 @@ export default ({ data, imgs, reviews }) => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout pageTitle={`${building.name ?? ""} 리뷰`}>
       <Container>
         {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
         <BuildingMap building={building} />
         <BuildingInfo building={building} />
         {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
         <ImageView />
-        <ReviewList data={buildingReviews} />
+        {buildingReviews.length > 0 && <ReviewList data={buildingReviews} />}
       </Container>
     </AppLayout>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,8 +6,6 @@ import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
 import { Body2Bold } from "styles/typography";
-
-import { pageTitleState } from "states";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
@@ -28,7 +25,6 @@ const MainMap = ({ data }) => {
   const router = useRouter();
   const buildingMarking = JSON.parse(data);
   console.log("buildingMarking", buildingMarking);
-  const setPageTitleState = useSetRecoilState(pageTitleState);
   const map = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -90,10 +86,6 @@ const MainMap = ({ data }) => {
     });
   }, [mapLoaded]);
 
-  useEffect(() => {
-    setPageTitleState(null);
-  }, []);
-
   //나의 위치로 가게 해주는 함수
   const setMyPosition = () => {
     if (navigator.geolocation) {
@@ -152,9 +144,7 @@ const MainMap = ({ data }) => {
           />
         </Contents>
       </Popup>
-      <AppLayout
-      // headerIcon={"search"}
-      >
+      <AppLayout>
         <Container>
           <MapWrapper id="map" />
           <MapContainer>

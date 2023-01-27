@@ -45,7 +45,10 @@ export default function Footer() {
             <Link href={value.path} key={index}>
               <a>
                 <NavBarContent active={active}>
-                  <Icon icon={active ? value.activeIcon : value.defaultIcon} size="md" />
+                  <Icon
+                    icon={active ? value.activeIcon : value.defaultIcon}
+                    size="md"
+                  />
                   <div>{value.title}</div>
                 </NavBarContent>
               </a>

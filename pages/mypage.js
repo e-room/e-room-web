@@ -1,21 +1,12 @@
-import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
 import AppLayout from "components/common/AppLayout";
-import { pageTitleState } from "states";
 import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
 import Img from "assets/avatar/64.png";
 import { Body1Bold, Caption2 } from "styles/typography";
 
 export default function mypage() {
-  const setPageTitleState = useSetRecoilState(pageTitleState);
-
-  useEffect(() => {
-    setPageTitleState("내정보");
-  }, []);
-
   return (
-    <AppLayout>
+    <AppLayout pageTitle={"내정보"}>
       <MyInfo>
         <Avatar size={"lg"} img={Img.src} />
         <div style={{ width: "100%" }}>

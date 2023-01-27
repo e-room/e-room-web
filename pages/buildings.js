@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import Link from "next/link";
 import styled from "@emotion/styled";
 
@@ -7,18 +6,15 @@ import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
 
-import { pageTitleState } from "states";
 import axios from "axios";
 import Banner1 from "assets/banner/banner1.png";
 
 export default function buildings({ data }) {
-  const setPageTitleState = useSetRecoilState(pageTitleState);
   // const parseData = data ? JSON.parse(data) : [];
   const [parseData, setParseData] = useState([]);
   console.log("buildingList", parseData);
 
   useEffect(() => {
-    setPageTitleState("이 지역 자취방");
     const buildingMarking = JSON.parse(
       localStorage.getItem("buildingMarking")
     ).buildingList.map((v) => v.buildingId);
@@ -42,9 +38,7 @@ export default function buildings({ data }) {
   }
 
   return (
-    <AppLayout
-    // appBarObject={{ rightIcon: "filter-stroke", headerText: "" }}
-    >
+    <AppLayout pageTitle={"이 지역 자취방"}>
       <Container>
         <div style={{ paddingBottom: 150 }}>
           <Banner>
