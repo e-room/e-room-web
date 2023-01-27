@@ -39,7 +39,7 @@ const MainMap = ({ data }) => {
   useEffect(() => {
     if (!mapLoaded) return;
 
-    kakao.maps.load(() => {
+    kakao.maps.load(async () => {
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
@@ -55,10 +55,10 @@ const MainMap = ({ data }) => {
         imageOption
       );
 
-      map.current = new kakao.maps.Map(container, options);
+      map.current = await new kakao.maps.Map(container, options);
 
       // 마커 클러스터러를 생성합니다
-      let clusterer = new kakao.maps.MarkerClusterer({
+      let clusterer = await new kakao.maps.MarkerClusterer({
         map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 5, // 클러스터 할 최소 지도 레벨
@@ -67,7 +67,7 @@ const MainMap = ({ data }) => {
       });
 
       const markers = [];
-      buildingMarking.buildingList.forEach((value) => {
+      await buildingMarking.buildingList.forEach((value) => {
         let marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(
             value.coordinateDto.latitude,
@@ -147,40 +147,38 @@ const MainMap = ({ data }) => {
       <AppLayout>
         <Container>
           <MapWrapper id="map" />
-          <MapContainer>
-            <FilterItem>
-              <MapButton onClick={() => setPopupVisible(true)} />
-            </FilterItem>
-            <GroupItem>
-              <GroupButton
-                items={[
-                  { icon: "plus", onClick: zoomIn },
-                  { icon: "minus", onClick: zoomOut },
-                ]}
-              />
-            </GroupItem>
-            <LocationItem>
-              <LocationButton onClick={setMyPosition} />
-            </LocationItem>
-            <ButtonItem>
-              <Link href={"/buildings"}>
-                <a>
-                  <Button
-                    label={"이 지역 자취방 리뷰 보기"}
-                    type={"secondary"}
-                    size={"md"}
-                  />
-                </a>
-              </Link>
-              <Link href={"/review/write"}>
-                <a>
-                  <Button type={"primary"} size={"md"} icon={"plus"}>
-                    리뷰 쓰기
-                  </Button>
-                </a>
-              </Link>
-            </ButtonItem>
-          </MapContainer>
+          <FilterItem>
+            <MapButton onClick={() => setPopupVisible(true)} />
+          </FilterItem>
+          <GroupItem>
+            <GroupButton
+              items={[
+                { icon: "plus", onClick: zoomIn },
+                { icon: "minus", onClick: zoomOut },
+              ]}
+            />
+          </GroupItem>
+          <LocationItem>
+            <LocationButton onClick={setMyPosition} />
+          </LocationItem>
+          <ButtonItem>
+            <Link href={"/buildings"}>
+              <a>
+                <Button
+                  label={"이 지역 자취방 리뷰 보기"}
+                  type={"secondary"}
+                  size={"md"}
+                />
+              </a>
+            </Link>
+            <Link href={"/review/write"}>
+              <a>
+                <Button type={"primary"} size={"md"} icon={"plus"}>
+                  리뷰 쓰기
+                </Button>
+              </a>
+            </Link>
+          </ButtonItem>
         </Container>
       </AppLayout>
     </Fragment>
@@ -191,7 +189,7 @@ export async function getServerSideProps(context) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
   );
-  const data = await JSON.stringify(res.data);
+  const data = JSON.stringify(res.data);
 
   return {
     props: { data }, // will be passed to the page component as props
@@ -243,10 +241,9 @@ const MarkerClustererStyles = [
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
-`;
-const MapContainer = styled.div``;
-const Container = styled.div`
   /* height: calc(100vh - 112px); */
+`;
+const Container = styled.div`
   overflow: hidden !important;
 `;
 const FilterItem = styled.div`
@@ -268,7 +265,7 @@ const LocationItem = styled.div`
   z-index: 2;
 `;
 const ButtonItem = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 64px;
   width: 100%;
   display: flex;
