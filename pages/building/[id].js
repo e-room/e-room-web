@@ -16,6 +16,7 @@ export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
+  console.log("buildingReviews", buildingReviews);
   // console.log("images", buildingImages);
   console.log("buildingInfo", building);
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
@@ -32,7 +33,9 @@ export default ({ data, imgs, reviews }) => {
         <BuildingInfo building={building} />
         {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
         <ImageView />
-        {buildingReviews.length > 0 && <ReviewList data={buildingReviews} />}
+        {buildingReviews.content.length > 0 && (
+          <ReviewList data={buildingReviews} />
+        )}
       </Container>
     </AppLayout>
   );
