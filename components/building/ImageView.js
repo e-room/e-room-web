@@ -9,8 +9,15 @@ import flower4 from "./dummyImg/4.jpg";
 import flower5 from "./dummyImg/5.jpg";
 import flower6 from "./dummyImg/6.jpg";
 
-export const dummyImages = [flower1, flower2, flower3, flower4, flower5, flower6];
-export default function ImageView() {
+export const dummyImages = [
+  flower1,
+  flower2,
+  flower3,
+  flower4,
+  flower5,
+  flower6,
+];
+export default function ImageView({ data }) {
   const setShowDetail = useSetRecoilState(imageViewState);
 
   const onDetailView = () => {
@@ -21,8 +28,10 @@ export default function ImageView() {
     <Container>
       <Title>사진 모아보기</Title>
       <ImgField>
-        {dummyImages.map((value) => {
-          return <ImgCard src={value.src} key={value.src} onClick={onDetailView} />;
+        {data.map((value) => {
+          return (
+            <ImgCard src={value.url} key={value.uuid} onClick={onDetailView} />
+          );
         })}
       </ImgField>
     </Container>

@@ -17,7 +17,7 @@ export default ({ data, imgs, reviews }) => {
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
   console.log("buildingReviews", buildingReviews);
-  // console.log("images", buildingImages);
+  console.log("images", buildingImages);
   console.log("buildingInfo", building);
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
@@ -28,11 +28,15 @@ export default ({ data, imgs, reviews }) => {
   return (
     <AppLayout pageTitle={`${building.name ?? ""} 리뷰`}>
       <Container>
-        {showImgDetail && <Slider data={dummyImages} onClose={onCloseImg} />}
+        {showImgDetail && (
+          <Slider data={buildingImages.reviewImageList} onClose={onCloseImg} />
+        )}
         <BuildingMap building={building} />
         <BuildingInfo building={building} />
         {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
-        <ImageView />
+        {buildingImages.reviewImageCount > 0 && (
+          <ImageView data={buildingImages.reviewImageList} />
+        )}
         {buildingReviews.content.length > 0 && (
           <ReviewList data={buildingReviews} />
         )}

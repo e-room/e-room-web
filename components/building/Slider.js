@@ -100,7 +100,7 @@ export default function Slider({ data, onClose }) {
             return (
               <img
                 key={i}
-                src={el.src}
+                src={el.url}
                 style={{
                   objectFit: "contain",
                   width: "100%",
