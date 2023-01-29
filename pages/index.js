@@ -28,6 +28,7 @@ const MainMap = ({ data }) => {
   const map = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const imsiMarkerList = [];
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -67,6 +68,7 @@ const MainMap = ({ data }) => {
       });
 
       const markers = [];
+
       await buildingMarking.buildingList.forEach((value) => {
         let marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(
@@ -81,10 +83,31 @@ const MainMap = ({ data }) => {
           router.push(`/building/${value.buildingId}`);
         });
         markers.push(marker);
+        imsiMarkerList.push({ marker, id: value.buildingId });
       });
       clusterer.addMarkers(markers);
+
+      setLocalStorage();
+
+      kakao.maps.event.addListener(map.current, "idle", () => {
+        setLocalStorage();
+      });
     });
   }, [mapLoaded]);
+
+  const setLocalStorage = () => {
+    if (map.current) {
+      const bounds = map.current.getBounds();
+      const inBounds = imsiMarkerList.filter((overlay) => {
+        if (bounds.contain(overlay.marker.getPosition())) {
+          return overlay.id;
+        }
+      });
+      const ids = [];
+      inBounds.forEach((value) => ids.push(value.id));
+      localStorage.setItem("buildingMarking", ids);
+    }
+  };
 
   //나의 위치로 가게 해주는 함수
   const setMyPosition = () => {
@@ -116,9 +139,9 @@ const MainMap = ({ data }) => {
   const [filterChecked, setFilterChecked] = useState(true);
   // console.log(filterChecked);
 
-  useEffect(() => {
-    localStorage.setItem("buildingMarking", data);
-  }, []);
+  // useEffect(() => {
+  //   localStorage.setItem("buildingMarking", data);
+  // }, []);
 
   return (
     <Fragment>

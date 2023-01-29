@@ -15,9 +15,7 @@ export default function buildings({ data }) {
   console.log("buildingList", parseData);
 
   useEffect(() => {
-    const buildingMarking = JSON.parse(
-      localStorage.getItem("buildingMarking")
-    ).buildingList.map((v) => v.buildingId);
+    const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
       .get(
@@ -59,30 +57,6 @@ export default function buildings({ data }) {
     </AppLayout>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   // console.log("zz", buildingIds);
-//   const test =
-//     typeof window !== "undefined"
-//       ? JSON.parse(localStorage.getItem("buildingMarking"))
-//       : null;
-
-//   console.log("test", test);
-
-//   const res = await axios.get(
-//     `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=47`,
-//     {
-//       headers: {
-//         mocking: 239,
-//       },
-//     }
-//   );
-//   const data = await JSON.stringify(res.data);
-
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   };
-// }
 
 const Container = styled.div`
   height: calc(100vh - 112px);
