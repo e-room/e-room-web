@@ -21,4 +21,8 @@ AppLayout.propTypes = {
 
 const MainContent = styled.div`
   margin: 44px 0;
+  @media (min-width: 720px) {
+    margin: 44px auto;
+    width: 720px;
+  }
 `;
