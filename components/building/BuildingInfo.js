@@ -40,7 +40,9 @@ export default function BuildingInfo({ building }) {
   const toast = useMemo(() => {
     return (
       <Toast
-        message={"도로명 주소를 클립보드에 복사했어요"}
+        icon={"check-circle"}
+        iconColor={"success"}
+        text={"주소를 클립보드에 복사했어요."}
         visible={toastVisible}
       />
     );

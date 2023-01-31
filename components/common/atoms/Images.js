@@ -18,9 +18,10 @@ export default function Images() {
   const toast = useMemo(() => {
     return (
       <Toast
-        message={"사진은 최대 5장까지 등록이 가능합니다."}
+        icon={"check-circle"}
+        iconColor={"success"}
+        text={"사진은 최대 5장까지 등록이 가능합니다."}
         visible={toastVisible}
-        type={"danger"}
       />
     );
   }, [toastVisible]);

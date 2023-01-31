@@ -2,17 +2,16 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
 import { css, keyframes } from "@emotion/react";
-import { Body2Bold } from "styles/typography";
+import { Body2 } from "styles/typography";
 import { useEffect, useState } from "react";
 
 export default function Toast({
   visible = false,
-  type = "normal",
-  message,
+  icon = "check-circle",
+  iconColor = "black",
+  text,
   children,
 }) {
-  const colorStyle = COLORS[type];
-
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     let timeoutId;
@@ -32,16 +31,17 @@ export default function Toast({
   if (!isOpen) return null;
 
   return (
-    <StyledToast colorStyle={colorStyle} visible={visible}>
-      <Icon icon={ICONS[type]} size="md" />
-      <div className="message">{message ?? children}</div>
+    <StyledToast visible={visible} iconColor={iconColor}>
+      <Icon icon={icon} size="md" />
+      <div className="message">{text ?? children}</div>
     </StyledToast>
   );
 }
 
 Toast.propTypes = {
-  type: PropTypes.oneOf(["normal", "success", "danger"]),
-  message: PropTypes.string,
+  icon: PropTypes.string,
+  iconColor: PropTypes.string,
+  text: PropTypes.string,
 };
 
 const fadeInUp = keyframes`
@@ -73,22 +73,18 @@ const modalSettings = (visible) => css`
 `;
 
 const StyledToast = styled.div`
-  ${(p) => p.colorStyle}
-
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  padding: 15px 20px;
-  gap: 10px;
+  padding: 16px 20px;
+  gap: 12px;
 
-  background: var(--toast-bg-color);
+  background: var(--white);
 
-  border: 1px solid var(--toast-border-color);
-  border-radius: 8px;
-
-  box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(24px);
+  box-shadow: 28px 28px 56px rgba(37, 39, 37, 0.08),
+    0px 0px 64px rgba(37, 39, 37, 0.04);
+  border-radius: 12px;
 
   position: absolute;
   bottom: 64px;
@@ -97,39 +93,14 @@ const StyledToast = styled.div`
 
   ${(p) => modalSettings(p.visible)}
 
-  color: var(--toast-color);
+  color: var(--black);
   svg {
-    fill: var(--toast-color);
+    fill: ${(p) => p.iconColor && `var(--${p.iconColor})`};
   }
 
   .message {
-    display: flex;
-    justify-content: center;
     width: 100%;
 
-    ${Body2Bold}
+    ${Body2}
   }
 `;
-
-const ICONS = {
-  normal: "check-circle",
-  success: "check-circle",
-  danger: "exclamation-circle",
-};
-const COLORS = {
-  normal: css`
-    --toast-bg-color: var(--primary-1);
-    --toast-border-color: var(--primary-1);
-    --toast-color: var(--white);
-  `,
-  success: css`
-    --toast-bg-color: var(--white);
-    --toast-border-color: var(--white);
-    --toast-color: var(--success);
-  `,
-  danger: css`
-    --toast-bg-color: var(--white);
-    --toast-border-color: var(--white);
-    --toast-color: var(--danger1);
-  `,
-};
