@@ -21,6 +21,7 @@ import Score from "components/common/atoms/Score";
 import { dummyImages } from "./ImageView";
 import { imageViewState } from "states/buidlingAtom";
 import parseFloat from "utils/parseFloat";
+import dayjs from "dayjs";
 
 export default function ReviewList({ data }) {
   console.log("review", data);
@@ -165,7 +166,8 @@ export default function ReviewList({ data }) {
                     </div>
                   </ScoreArea>
                   <UserInfo>
-                    {value.authorDto.name} | 22.11.27. |{" "}
+                    {value.authorDto.name} |{" "}
+                    {dayjs(value.baseReviewDto.createdAt).format("YY.MM.DD.")} |{" "}
                     <span onClick={() => setShowTotalScore(true)}>
                       세부점수 보기
                     </span>
