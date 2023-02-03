@@ -14,36 +14,59 @@ export default function Images() {
   const [reviewImageList, setReviewImageList] =
     useRecoilState(reviewImageListState);
 
-  const [toastVisible, setToastVisible] = useState(false);
+  const [toastParam, setToastParam] = useState({ visible: false, type: null });
   const toast = useMemo(() => {
+    if (!toastParam.visible) return;
+    const toastOptions = {
+      max: {
+        icon: "check-circle",
+        iconColor: "success",
+        text: "사진을 모두 등록했어요.",
+      },
+      over: {
+        icon: "exclamation-circle",
+        iconColor: "caution",
+        text: "사진은 최대 5장까지 등록할 수 있어요.",
+      },
+    };
     return (
       <Toast
-        icon={"check-circle"}
-        iconColor={"success"}
-        text={"사진은 최대 5장까지 등록이 가능합니다."}
-        visible={toastVisible}
+        icon={toastOptions[toastParam.type]?.icon}
+        iconColor={toastOptions[toastParam.type]?.iconColor}
+        text={toastOptions[toastParam.type]?.text}
+        visible={toastParam.visible}
       />
     );
-  }, [toastVisible]);
+  }, [toastParam]);
 
   const fileInputRef = useRef(null);
 
   const onClickHandler = () => {
+    if (reviewImageList.length > 5) {
+      return setToastParam({ visible: true, type: "over" });
+    }
     fileInputRef.current.click();
   };
   const onChangeHandler = (e) => {
-    const fileArr = e.target.files;
+    let fileArr = e.target.files;
+    console.log("real", fileArr);
+    if (reviewImageList.length + fileArr.length === 5) {
+      setToastParam({ visible: true, type: "max" });
+    }
 
     if (
       reviewImageList.length > 5 ||
       reviewImageList.length + fileArr.length > 5
     ) {
-      return setToastVisible(true);
+      setToastParam({ visible: true, type: "over" });
     }
 
     const fileURLs = [];
 
+    console.log("fileArr", fileArr);
+
     for (let i = 0; i < fileArr.length; i++) {
+      if (i > 4) return;
       const file = fileArr[i];
 
       const reader = new FileReader();
@@ -86,12 +109,12 @@ export default function Images() {
   }, [reviewImageList]);
 
   useEffect(() => {
-    if (toastVisible) {
+    if (toastParam.visible) {
       setTimeout(() => {
-        setToastVisible(false);
+        setToastParam({ visible: false, type: null });
       }, 3000);
     }
-  }, [toastVisible]);
+  }, [toastParam.visible]);
 
   return (
     <>
