@@ -36,10 +36,10 @@ const navItems = [
   },
 ];
 
-export default function Footer() {
+export default function Footer({ enabled }) {
   const router = useRouter();
   const { pathname } = router;
-
+  if (!enabled) return;
   return (
     <NavBarWrapper>
       <NavBarContainer>

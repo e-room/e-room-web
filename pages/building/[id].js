@@ -11,6 +11,8 @@ import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
 import RoomSelector from "components/building/RoomSelector";
+import Link from "next/link";
+import Button from "components/common/atoms/Button";
 
 export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
@@ -26,7 +28,7 @@ export default ({ data, imgs, reviews }) => {
   };
 
   return (
-    <AppLayout pageTitle={`${building.name ?? ""} 리뷰`}>
+    <AppLayout pageTitle={`${building.name ?? ""} 리뷰`} enabledNavbar={false}>
       <Container>
         {showImgDetail && (
           <Slider data={buildingImages.reviewImageList} onClose={onCloseImg} />
@@ -40,6 +42,16 @@ export default ({ data, imgs, reviews }) => {
         {buildingReviews.content.length > 0 && (
           <ReviewList data={buildingReviews} />
         )}
+
+        <ButtonItem>
+          <Link href={"/review/write"}>
+            <a>
+              <Button type={"primary"} size={"md"} icon={"plus"}>
+                리뷰 쓰기
+              </Button>
+            </a>
+          </Link>
+        </ButtonItem>
       </Container>
     </AppLayout>
   );
@@ -80,6 +92,14 @@ export async function getServerSideProps({ params }) {
 }
 
 const Container = styled.div`
-  height: calc(100vh - 112px);
   overflow: scroll;
+`;
+
+const ButtonItem = styled.div`
+  position: fixed;
+  bottom: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
 `;

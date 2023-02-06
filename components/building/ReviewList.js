@@ -245,7 +245,7 @@ export default function ReviewList({ data }) {
 }
 
 const Container = styled.div`
-  padding: 12px 20px;
+  padding: 12px 20px 170px 20px;
   background: #fafafa;
 `;
 
@@ -306,7 +306,7 @@ const UserInfo = styled.div`
 const DeleteButton = styled.div`
   ${Caption1Bold}
 
-  color: var(--danger1);
+  color: var(--danger-1);
   width: 25px;
 `;
 
