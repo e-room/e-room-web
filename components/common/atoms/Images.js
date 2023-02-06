@@ -42,14 +42,15 @@ export default function Images() {
   const fileInputRef = useRef(null);
 
   const onClickHandler = () => {
-    if (reviewImageList.length > 5) {
+    if (reviewImageList.length >= 5) {
       return setToastParam({ visible: true, type: "over" });
+    } else {
+      fileInputRef.current.click();
     }
-    fileInputRef.current.click();
   };
   const onChangeHandler = (e) => {
     let fileArr = e.target.files;
-    console.log("real", fileArr);
+
     if (reviewImageList.length + fileArr.length === 5) {
       setToastParam({ visible: true, type: "max" });
     }
@@ -63,10 +64,11 @@ export default function Images() {
 
     const fileURLs = [];
 
-    console.log("fileArr", fileArr);
-
     for (let i = 0; i < fileArr.length; i++) {
-      if (i > 4) return;
+      if (i > 4 - reviewImageList.length) {
+        return;
+      }
+
       const file = fileArr[i];
 
       const reader = new FileReader();
