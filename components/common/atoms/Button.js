@@ -4,6 +4,44 @@ import { css } from "@emotion/react";
 import { FontFamily, FontStyle } from "../../../styles/typography";
 import Icon from "./Icon";
 
+export default function Button({
+  type = "primary",
+  size = "md",
+  label,
+  disabled,
+  width,
+  children,
+  style,
+  icon,
+  ...props
+}) {
+  const sizeStyle = SIZES[size];
+  const colorStyle = COLORS[type];
+  return (
+    <StyledButton
+      type={type}
+      sizeStyle={sizeStyle}
+      colorStyle={colorStyle}
+      disabled={disabled}
+      style={{ width }}
+      customStyles={style}
+      isIcon={icon ? true : false}
+      {...props}
+    >
+      {icon && <Icon icon={icon} size={size} />}
+      {label ?? children}
+    </StyledButton>
+  );
+}
+
+Button.propTypes = {
+  type: PropTypes.oneOf(["primary", "secondary", "warning"]),
+  size: PropTypes.oneOf(["md", "lg"]),
+  label: PropTypes.string,
+  disabled: PropTypes.bool,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
 const StyledButton = styled.button`
   ${(p) => p.sizeStyle}
   ${(p) => p.colorStyle}
@@ -70,51 +108,11 @@ const COLORS = {
     --button-disabled-label-color: var(--gray-3);
   `,
   warning: css`
-    --button-bg-color: var(--danger1);
-    --button-border-color: var(--danger1);
+    --button-bg-color: var(--danger-1);
+    --button-border-color: var(--danger-1);
     --button-label-color: var(--white);
-
-    // TODO: warning disabled color 추가해야 함
 
     --button-disabled-color: var(--danger-5);
     --button-disabled-label-color: var(--danger-4);
   `,
-};
-
-export default function Button({
-  type = "primary",
-  size = "md",
-  label,
-  disabled,
-  width,
-  children,
-  style,
-  icon,
-  ...props
-}) {
-  const sizeStyle = SIZES[size];
-  const colorStyle = COLORS[type];
-  return (
-    <StyledButton
-      type={type}
-      sizeStyle={sizeStyle}
-      colorStyle={colorStyle}
-      disabled={disabled}
-      style={{ width }}
-      customStyles={style}
-      isIcon={icon ? true : false}
-      {...props}
-    >
-      {icon && <Icon icon={icon} size={size} />}
-      {label ?? children}
-    </StyledButton>
-  );
-}
-
-Button.propTypes = {
-  type: PropTypes.oneOf(["primary", "secondary", "warning"]),
-  size: PropTypes.oneOf(["md", "lg"]),
-  label: PropTypes.string,
-  disabled: PropTypes.bool,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

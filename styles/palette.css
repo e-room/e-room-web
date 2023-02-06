@@ -22,11 +22,11 @@
 
   --success: #3aa0ff !important;
   --caution: #ffd059 !important;
-  --danger1: #ff7865 !important;
-  --danger2: #f47e6e !important;
-  --danger3: #f79e92 !important;
-  --danger4: #f9beb6 !important;
-  --danger5: #fcdfdb !important;
+  --danger-1: #ff7865 !important;
+  --danger-2: #f47e6e !important;
+  --danger-3: #f79e92 !important;
+  --danger-4: #f9beb6 !important;
+  --danger-5: #fcdfdb !important;
 
   --kakao: #fee500 !important;
   --google: #ffffff !important;
