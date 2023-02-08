@@ -148,21 +148,23 @@ const MainMap = ({ data }) => {
 
   return (
     <Fragment>
-      <SearchField>
-        <Icon icon={"arrow-left"} size={"md"} />
-        <input
-          placeholder="주소나 건물 이름으로 검색해보세요"
-          onChange={(e) => {
-            setSearchValue(e.target.value);
-          }}
-          value={searchValue}
-        />
-        {searchValue && (
-          <div className={"x-icon"} onClick={() => setSearchValue("")}>
-            <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
-          </div>
-        )}
-      </SearchField>
+      {searchVisible && (
+        <SearchField>
+          <Icon icon={"arrow-left"} size={"md"} />
+          <input
+            placeholder="주소나 건물 이름으로 검색해보세요"
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+            value={searchValue}
+          />
+          {searchValue && (
+            <div className={"x-icon"} onClick={() => setSearchValue("")}>
+              <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
+            </div>
+          )}
+        </SearchField>
+      )}
       <Popup
         visible={popupVisible}
         title={
@@ -190,7 +192,7 @@ const MainMap = ({ data }) => {
           <Icon
             icon={"search"}
             size={"md"}
-            onClick={() => searchVisible(true)}
+            onClick={() => setSearchVisible(true)}
           />
         }
       >
