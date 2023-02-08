@@ -124,7 +124,9 @@ export default function ReviewList({ data }) {
                       <div className="field" key={val.title}>
                         <div className="title">{val.title}</div>
                         <ScoreField>
-                          <div className="score">{parseFloat(val.score, 1)}</div>
+                          <div className="score">
+                            {parseFloat(val.score, 1)}
+                          </div>
                           <Score
                             size="sm"
                             readOnly={true}
@@ -150,21 +152,31 @@ export default function ReviewList({ data }) {
                     <Score
                       size="sm"
                       readOnly={true}
-                      value={parseFloat(value.reviewScoreDto.residenceSatisfaction, 1)}
+                      value={parseFloat(
+                        value.reviewScoreDto.residenceSatisfaction,
+                        1
+                      )}
                       allowFraction={true}
                     />
                     <div className="score">
-                      {parseFloat(value.reviewScoreDto.residenceSatisfaction, 1)}
+                      {parseFloat(
+                        value.reviewScoreDto.residenceSatisfaction,
+                        1
+                      )}
                     </div>
                   </ScoreArea>
                   <UserInfo>
                     {value.authorDto.name} |{" "}
                     {dayjs(value.baseReviewDto.createdAt).format("YY.MM.DD.")} |{" "}
-                    <span onClick={() => setShowTotalScore(true)}>세부점수 보기</span>
+                    <span onClick={() => setShowTotalScore(true)}>
+                      세부점수 보기
+                    </span>
                   </UserInfo>
                 </div>
                 <div>
-                  <DeleteButton onClick={() => !notAccess && setShowConfirmDelete(true)}>
+                  <DeleteButton
+                    onClick={() => !notAccess && setShowConfirmDelete(true)}
+                  >
                     삭제
                   </DeleteButton>
                 </div>
@@ -186,26 +198,38 @@ export default function ReviewList({ data }) {
                     <div className="badge">
                       {v.chips.map((v) => {
                         return (
-                          <Chip label={KEYWORD_STATES[v]} key={v} type={"tertiary"} />
+                          <Chip
+                            label={KEYWORD_STATES[v]}
+                            key={v}
+                            type={"tertiary"}
+                          />
                         );
                       })}
                     </div>
                     <div className="description">{v.content}</div>
-                    <div className="more">
+                    {/* //TODO: 더 보기 기능 */}
+                    {/* <div className="more">
                       더보기 <Icon icon={"arrow-down"} size={"sm"} />
-                    </div>
+                    </div> */}
                   </AdvantageField>
                 );
               })}
               <ImgField>
                 {dummyImages.map((value) => {
                   return (
-                    <ImgCard src={value.src} key={value.src} onClick={onDetailView} />
+                    <ImgCard
+                      src={value.src}
+                      key={value.src}
+                      onClick={onDetailView}
+                    />
                   );
                 })}
               </ImgField>
               <LikeField favorite={isLike}>
-                <div style={{ display: "flex" }} onClick={() => setIsLike(!isLike)}>
+                <div
+                  style={{ display: "flex" }}
+                  onClick={() => setIsLike(!isLike)}
+                >
                   <Icon icon={"thumb-stroke"} size={"sm"} />
                   <div className="text">
                     추천{" "}
@@ -324,11 +348,11 @@ const AdvantageField = styled.div`
 
     color: var(--black);
     word-break: break-word;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: vertical; */
   }
 
   .more {
