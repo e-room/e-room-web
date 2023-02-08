@@ -143,8 +143,26 @@ const MainMap = ({ data }) => {
   //   localStorage.setItem("buildingMarking", data);
   // }, []);
 
+  const [searchValue, setSearchValue] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false);
+
   return (
     <Fragment>
+      <SearchField>
+        <Icon icon={"arrow-left"} size={"md"} />
+        <input
+          placeholder="주소나 건물 이름으로 검색해보세요"
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+          }}
+          value={searchValue}
+        />
+        {searchValue && (
+          <div className={"x-icon"} onClick={() => setSearchValue("")}>
+            <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
+          </div>
+        )}
+      </SearchField>
       <Popup
         visible={popupVisible}
         title={
@@ -167,7 +185,15 @@ const MainMap = ({ data }) => {
           />
         </Contents>
       </Popup>
-      <AppLayout>
+      <AppLayout
+        additionalFunction={
+          <Icon
+            icon={"search"}
+            size={"md"}
+            onClick={() => searchVisible(true)}
+          />
+        }
+      >
         <Container>
           <MapWrapper id="map" />
           <FilterItem>
@@ -311,6 +337,55 @@ const FilterPopupTitle = styled.div`
   align-items: center;
   .title {
     margin-left: 8px;
+  }
+`;
+
+const SearchField = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: var(--white);
+
+  box-sizing: border-box;
+  padding: 12px;
+  gap: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input {
+    width: 100%;
+    height: 24px;
+    border: none;
+
+    ::placeholder {
+      /* TODO: typography 적용 필요 */
+      font-family: "Pretendard";
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: var(--gray-3);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .x-icon {
+    border-radius: 100%;
+    background: var(--gray-3);
+    min-width: 16px;
+    min-height: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

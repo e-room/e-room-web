@@ -34,6 +34,7 @@ import ThumbStroke from "../../../assets/icon/thumb-stroke.svg";
 import ThumbsUpFill from "../../../assets/icon/thumbs-up-fill.svg";
 import ThumbsUpStroke from "../../../assets/icon/thumbs-up-stroke.svg";
 import XIcon from "../../../assets/icon/x-icon.svg";
+import XIconXS from "../../../assets/icon/x-icon-xs.svg";
 
 import LogoDefault from "../../../assets/logo/logo-default.svg";
 import LogoWhite from "../../../assets/logo/logo-white.svg";
@@ -41,6 +42,7 @@ import LogoWhite from "../../../assets/logo/logo-white.svg";
 export default function Icon(props) {
   const { icon, size = "md", fill } = props;
   const SIZES = {
+    xs: 12,
     sm: 16,
     md: 24,
     lg: 32,
@@ -123,6 +125,8 @@ export default function Icon(props) {
       return <ThumbsUpStroke {...args} />;
     case "x-icon":
       return <XIcon {...args} />;
+    case "x-icon-xs":
+      return <XIconXS {...args} />;
     case "logo-default":
       return <LogoDefault {...args} />;
     case "logo-white":
