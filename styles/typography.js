@@ -76,21 +76,21 @@ export const SubTitle2 = css`
 export const Body1 = css`
   ${FontFamily}
   ${FontStyle}
-  font-weight: 400;
+  font-weight: 500;
   font-size: 18px;
   line-height: 24px;
 `;
 export const Body2 = css`
   ${FontFamily}
   ${FontStyle}
-  font-weight: 400;
+  font-weight: 500;
   font-size: 16px;
   line-height: 24px;
 `;
 export const Body3 = css`
   ${FontFamily}
   ${FontStyle}
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
 `;
@@ -119,14 +119,14 @@ export const Body3Bold = css`
 export const Caption1 = css`
   ${FontFamily}
   ${FontStyle}
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
 `;
 export const Caption2 = css`
   ${FontFamily}
   ${FontStyle}
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12px;
   line-height: 16px;
 `;

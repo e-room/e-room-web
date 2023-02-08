@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Body2Bold } from "styles/typography";
+import { Body2Bold, Body3 } from "styles/typography";
 import Score from "components/common/atoms/Score";
 import { useRecoilState } from "recoil";
 import { reviewFormState } from "states/reviewAtom";
@@ -23,9 +23,7 @@ export default function ReviewForm2() {
     <FormWrapper>
       <FormItem>
         <TextLabel>교통점수</TextLabel>
-        <div className="body-3">
-          버스, 지하철 등 교통수단 이용이 편리한가요?
-        </div>
+        <Description>버스, 지하철 등 교통수단 이용이 편리한가요?</Description>
         <ScoreField>
           <Score
             size="xl"
@@ -36,7 +34,7 @@ export default function ReviewForm2() {
       </FormItem>
       <FormItem>
         <TextLabel>건물 및 단지 점수</TextLabel>
-        <div className="body-3">주차나 보안, 부대시설 등에 만족하시나요?</div>
+        <Description>주차나 보안, 부대시설 등에 만족하시나요?</Description>
         <ScoreField>
           <Score
             size="xl"
@@ -47,7 +45,7 @@ export default function ReviewForm2() {
       </FormItem>
       <FormItem>
         <TextLabel>내부 점수</TextLabel>
-        <div className="body-3">채광, 환기, 수납, 방음 등에 만족하시나요?</div>
+        <Description>채광, 환기, 수납, 방음 등에 만족하시나요?</Description>
         <ScoreField>
           <Score
             size="xl"
@@ -58,7 +56,7 @@ export default function ReviewForm2() {
       </FormItem>
       <FormItem>
         <TextLabel>주변 및 환경 점수</TextLabel>
-        <div className="body-3">치안, 공원 및 자연환경 등에 만족하시나요?</div>
+        <Description>치안, 공원 및 자연환경 등에 만족하시나요?</Description>
         <ScoreField>
           <Score
             size="xl"
@@ -69,9 +67,9 @@ export default function ReviewForm2() {
       </FormItem>
       <FormItem>
         <TextLabel>생활 및 입지 점수</TextLabel>
-        <div className="body-3">
+        <Description>
           학군, 식당, 카페, 마트 등 인프라가 잘 갖추어져 있나요?
-        </div>
+        </Description>
         <ScoreField>
           <Score
             size="xl"
@@ -107,6 +105,10 @@ const TextLabel = styled.div`
 
   margin-bottom: 4px;
 `;
+const Description = styled.div`
+  ${Body3}
+`;
+
 const FormItem = styled.div`
   display: flex;
   flex-direction: column;

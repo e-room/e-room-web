@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import axios from "axios";
 import Link from "next/link";
 import styled from "@emotion/styled";
+
+import Banner1 from "assets/banner/banner1.png";
 
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
-
-import { pageTitleState } from "states";
-import axios from "axios";
-import Banner1 from "assets/banner/banner1.png";
+import Icon from "components/common/atoms/Icon";
+import Popup from "components/common/atoms/Popup";
+import CheckBox from "components/common/atoms/CheckBox";
+import { Body2Bold } from "styles/typography";
 
 export default function buildings({ data }) {
-  const setPageTitleState = useSetRecoilState(pageTitleState);
   // const parseData = data ? JSON.parse(data) : [];
   const [parseData, setParseData] = useState([]);
   console.log("buildingList", parseData);
 
   useEffect(() => {
-    setPageTitleState("이 지역 자취방");
-    const buildingMarking = JSON.parse(
-      localStorage.getItem("buildingMarking")
-    ).buildingList.map((v) => v.buildingId);
+    const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
       .get(
@@ -37,14 +35,51 @@ export default function buildings({ data }) {
       });
   }, []);
 
+  const [popupVisible, setPopupVisible] = useState(false);
+  const onHideClick = () => {
+    setPopupVisible(false);
+  };
+
+  const [filterChecked, setFilterChecked] = useState(true);
+
   if (parseData.length <= 0) {
     return <div>loading...</div>;
   }
 
   return (
     <AppLayout
-    // appBarObject={{ rightIcon: "filter-stroke", headerText: "" }}
+      pageTitle={"이 지역 자취방"}
+      additionalFunction={
+        <Icon
+          icon={popupVisible ? "filter-fill" : "filter-stroke"}
+          size={"md"}
+          fill={popupVisible && "var(--primary-1)"}
+          onClick={() => setPopupVisible(true)}
+        />
+      }
     >
+      <Popup
+        visible={popupVisible}
+        title={
+          <FilterPopupTitle>
+            <Icon icon={"filter-stroke"} />
+            <div className="title">필터</div>
+          </FilterPopupTitle>
+        }
+        titleAlign={"left"}
+        buttonType={"default"}
+        cancelText="취소"
+        submitText="필터 적용하기"
+        onCancelClick={onHideClick}
+      >
+        <Contents>
+          <SubText>직거래 가능한 방만 보기</SubText>
+          <CheckBox
+            onChange={() => setFilterChecked(!filterChecked)}
+            checked={filterChecked}
+          />
+        </Contents>
+      </Popup>
       <Container>
         <div style={{ paddingBottom: 150 }}>
           <Banner>
@@ -66,30 +101,6 @@ export default function buildings({ data }) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   // console.log("zz", buildingIds);
-//   const test =
-//     typeof window !== "undefined"
-//       ? JSON.parse(localStorage.getItem("buildingMarking"))
-//       : null;
-
-//   console.log("test", test);
-
-//   const res = await axios.get(
-//     `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=47`,
-//     {
-//       headers: {
-//         mocking: 239,
-//       },
-//     }
-//   );
-//   const data = await JSON.stringify(res.data);
-
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   };
-// }
-
 const Container = styled.div`
   height: calc(100vh - 112px);
   background-color: #fafafa !important;
@@ -107,4 +118,23 @@ const Banner = styled.div`
   width: 100%;
   height: 84px;
   background-color: var(--primary-5);
+`;
+
+const FilterPopupTitle = styled.div`
+  display: flex;
+  align-items: center;
+  .title {
+    margin-left: 8px;
+  }
+`;
+const Contents = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+`;
+
+const SubText = styled.div`
+  ${Body2Bold}
+  color: var(--black);
 `;

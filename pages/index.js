@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,8 +6,6 @@ import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
 import { Body2Bold } from "styles/typography";
-
-import { pageTitleState } from "states";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
@@ -28,10 +25,10 @@ const MainMap = ({ data }) => {
   const router = useRouter();
   const buildingMarking = JSON.parse(data);
   console.log("buildingMarking", buildingMarking);
-  const setPageTitleState = useSetRecoilState(pageTitleState);
   const map = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const imsiMarkerList = [];
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -43,7 +40,7 @@ const MainMap = ({ data }) => {
   useEffect(() => {
     if (!mapLoaded) return;
 
-    kakao.maps.load(() => {
+    kakao.maps.load(async () => {
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
@@ -59,10 +56,10 @@ const MainMap = ({ data }) => {
         imageOption
       );
 
-      map.current = new kakao.maps.Map(container, options);
+      map.current = await new kakao.maps.Map(container, options);
 
       // 마커 클러스터러를 생성합니다
-      let clusterer = new kakao.maps.MarkerClusterer({
+      let clusterer = await new kakao.maps.MarkerClusterer({
         map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 5, // 클러스터 할 최소 지도 레벨
@@ -71,7 +68,8 @@ const MainMap = ({ data }) => {
       });
 
       const markers = [];
-      buildingMarking.buildingList.forEach((value) => {
+
+      await buildingMarking.buildingList.forEach((value) => {
         let marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(
             value.coordinateDto.latitude,
@@ -85,14 +83,31 @@ const MainMap = ({ data }) => {
           router.push(`/building/${value.buildingId}`);
         });
         markers.push(marker);
+        imsiMarkerList.push({ marker, id: value.buildingId });
       });
       clusterer.addMarkers(markers);
+
+      setLocalStorage();
+
+      kakao.maps.event.addListener(map.current, "idle", () => {
+        setLocalStorage();
+      });
     });
   }, [mapLoaded]);
 
-  useEffect(() => {
-    setPageTitleState(null);
-  }, []);
+  const setLocalStorage = () => {
+    if (map.current) {
+      const bounds = map.current.getBounds();
+      const inBounds = imsiMarkerList.filter((overlay) => {
+        if (bounds.contain(overlay.marker.getPosition())) {
+          return overlay.id;
+        }
+      });
+      const ids = [];
+      inBounds.forEach((value) => ids.push(value.id));
+      localStorage.setItem("buildingMarking", ids);
+    }
+  };
 
   //나의 위치로 가게 해주는 함수
   const setMyPosition = () => {
@@ -124,9 +139,9 @@ const MainMap = ({ data }) => {
   const [filterChecked, setFilterChecked] = useState(true);
   // console.log(filterChecked);
 
-  useEffect(() => {
-    localStorage.setItem("buildingMarking", data);
-  }, []);
+  // useEffect(() => {
+  //   localStorage.setItem("buildingMarking", data);
+  // }, []);
 
   return (
     <Fragment>
@@ -152,45 +167,41 @@ const MainMap = ({ data }) => {
           />
         </Contents>
       </Popup>
-      <AppLayout
-      // headerIcon={"search"}
-      >
+      <AppLayout>
         <Container>
           <MapWrapper id="map" />
-          <MapContainer>
-            <FilterItem>
-              <MapButton onClick={() => setPopupVisible(true)} />
-            </FilterItem>
-            <GroupItem>
-              <GroupButton
-                items={[
-                  { icon: "plus", onClick: zoomIn },
-                  { icon: "minus", onClick: zoomOut },
-                ]}
-              />
-            </GroupItem>
-            <LocationItem>
-              <LocationButton onClick={setMyPosition} />
-            </LocationItem>
-            <ButtonItem>
-              <Link href={"/buildings"}>
-                <a>
-                  <Button
-                    label={"이 지역 자취방 리뷰 보기"}
-                    type={"secondary"}
-                    size={"md"}
-                  />
-                </a>
-              </Link>
-              <Link href={"/review/write"}>
-                <a>
-                  <Button type={"primary"} size={"md"} icon={"plus"}>
-                    리뷰 쓰기
-                  </Button>
-                </a>
-              </Link>
-            </ButtonItem>
-          </MapContainer>
+          <FilterItem>
+            <MapButton onClick={() => setPopupVisible(true)} />
+          </FilterItem>
+          <GroupItem>
+            <GroupButton
+              items={[
+                { icon: "plus", onClick: zoomIn },
+                { icon: "minus", onClick: zoomOut },
+              ]}
+            />
+          </GroupItem>
+          <LocationItem>
+            <LocationButton onClick={setMyPosition} />
+          </LocationItem>
+          <ButtonItem>
+            <Link href={"/buildings"}>
+              <a>
+                <Button
+                  label={"이 지역 자취방 리뷰 보기"}
+                  type={"secondary"}
+                  size={"md"}
+                />
+              </a>
+            </Link>
+            <Link href={"/review/write"}>
+              <a>
+                <Button type={"primary"} size={"md"} icon={"plus"}>
+                  리뷰 쓰기
+                </Button>
+              </a>
+            </Link>
+          </ButtonItem>
         </Container>
       </AppLayout>
     </Fragment>
@@ -201,7 +212,7 @@ export async function getServerSideProps(context) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
   );
-  const data = await JSON.stringify(res.data);
+  const data = JSON.stringify(res.data);
 
   return {
     props: { data }, // will be passed to the page component as props
@@ -253,10 +264,9 @@ const MarkerClustererStyles = [
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
-`;
-const MapContainer = styled.div``;
-const Container = styled.div`
   /* height: calc(100vh - 112px); */
+`;
+const Container = styled.div`
   overflow: hidden !important;
 `;
 const FilterItem = styled.div`
@@ -278,7 +288,7 @@ const LocationItem = styled.div`
   z-index: 2;
 `;
 const ButtonItem = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 64px;
   width: 100%;
   display: flex;

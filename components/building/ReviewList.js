@@ -21,6 +21,7 @@ import Score from "components/common/atoms/Score";
 import { dummyImages } from "./ImageView";
 import { imageViewState } from "states/buidlingAtom";
 import parseFloat from "utils/parseFloat";
+import dayjs from "dayjs";
 
 export default function ReviewList({ data }) {
   console.log("review", data);
@@ -165,7 +166,8 @@ export default function ReviewList({ data }) {
                     </div>
                   </ScoreArea>
                   <UserInfo>
-                    {value.authorDto.name} | 22.11.27. |{" "}
+                    {value.authorDto.name} |{" "}
+                    {dayjs(value.baseReviewDto.createdAt).format("YY.MM.DD.")} |{" "}
                     <span onClick={() => setShowTotalScore(true)}>
                       세부점수 보기
                     </span>
@@ -205,6 +207,10 @@ export default function ReviewList({ data }) {
                       })}
                     </div>
                     <div className="description">{v.content}</div>
+                    {/* //TODO: 더 보기 기능 */}
+                    {/* <div className="more">
+                      더보기 <Icon icon={"arrow-down"} size={"sm"} />
+                    </div> */}
                   </AdvantageField>
                 );
               })}
@@ -243,7 +249,7 @@ export default function ReviewList({ data }) {
 }
 
 const Container = styled.div`
-  padding: 12px 20px;
+  padding: 12px 20px 170px 20px;
   background: #fafafa;
 `;
 
@@ -304,7 +310,7 @@ const UserInfo = styled.div`
 const DeleteButton = styled.div`
   ${Caption1Bold}
 
-  color: var(--danger1);
+  color: var(--danger-1);
   width: 25px;
 `;
 
@@ -341,7 +347,25 @@ const AdvantageField = styled.div`
     ${Body3}
 
     color: var(--black);
-    word-break: break-all;
+    word-break: break-word;
+    /* text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; */
+  }
+
+  .more {
+    ${Body3}
+
+    margin-top: 12px;
+    color: var(--gray-1);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    svg {
+      fill: var(--gray-1);
+    }
   }
 `;
 const ImgField = styled.div`

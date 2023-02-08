@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,12 +8,12 @@ import styled from "@emotion/styled";
 import { Caption1Bold } from "styles/typography";
 import IllustFemale from "assets/illust/illust-female_evaluation.svg";
 
-import { pageTitleState } from "states";
 import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 
 import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
+import imgCompress from "utils/imgCompress";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -23,7 +23,6 @@ export default function ReviewLayout({ children }) {
   const { index = 1 } = router.query;
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const setPageTitleState = useSetRecoilState(pageTitleState);
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
 
   const goHome = () => {
@@ -52,9 +51,10 @@ export default function ReviewLayout({ children }) {
 
       const formData = new FormData();
       formData.append("request", JSON.stringify(formValue));
-      reviewImageList.forEach((file) => {
+      reviewImageList.forEach(async (file) => {
         if (!file) return;
-        formData.append("reviewImageList", file.data);
+        const compress = await imgCompress(file.data);
+        formData.append("reviewImageList", compress);
       });
       await axios
         .post("/api/upload", formData)
@@ -69,13 +69,10 @@ export default function ReviewLayout({ children }) {
       console.log("리뷰쓰기 실패", e.response.data);
     }
   };
-  useEffect(() => {
-    setPageTitleState("리뷰 쓰기");
-  }, []);
 
   return (
     <>
-      <AppLayout>
+      <AppLayout pageTitle={"리뷰 쓰기"}>
         <Container>
           <StepBar>
             <CurrentStep width={(index / 5) * 100} />

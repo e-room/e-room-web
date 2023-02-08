@@ -4,13 +4,18 @@ import styled from "@emotion/styled";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 
-export default function AppLayout({ children }) {
+export default function AppLayout({
+  pageTitle,
+  enabledNavbar = true,
+  additionalFunction,
+  children,
+}) {
   return (
     <>
       <GlobalStyle />
-      <Header />
-      <MainContent>{children}</MainContent>
-      <Footer />
+      <Header pageTitle={pageTitle} additionalFunction={additionalFunction} />
+      <MainContent enabledNavbar={enabledNavbar}>{children}</MainContent>
+      <Footer enabled={enabledNavbar} />
     </>
   );
 }
@@ -20,5 +25,9 @@ AppLayout.propTypes = {
 };
 
 const MainContent = styled.div`
-  margin: 56px 0;
+  margin: ${(p) => (p.enabledNavbar ? "44px 0" : "44px 0px 0px 0px")};
+  @media (min-width: 720px) {
+    margin: 44px auto;
+    width: 720px;
+  }
 `;

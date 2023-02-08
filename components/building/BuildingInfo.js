@@ -40,7 +40,9 @@ export default function BuildingInfo({ building }) {
   const toast = useMemo(() => {
     return (
       <Toast
-        message={"도로명 주소를 클립보드에 복사했어요"}
+        icon={"check-circle"}
+        iconColor={"success"}
+        text={"주소를 클립보드에 복사했어요."}
         visible={toastVisible}
       />
     );
@@ -57,30 +59,27 @@ export default function BuildingInfo({ building }) {
   return (
     <Container>
       {toast}
-      <InfoField>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <Title>{building.name}</Title>
-            {/* &gt; = ">" */}
-            <AddressField onClick={() => onCopyAddress(formValue.address)}>
-              {formValue.address} &gt;
-            </AddressField>
-          </div>
-          <BuildingBadge width={48} height={64} />
+
+      <FlexBox>
+        <NameField>
+          <Title>{building.name}</Title>
+          {/* &gt; = ">" */}
+          <AddressField onClick={() => onCopyAddress(formValue.address)}>
+            {formValue.address} &gt;
+          </AddressField>
+        </NameField>
+        <BuildingBadge width={48} height={64} />
+      </FlexBox>
+
+      <ButtonField size={"lg"}>
+        <div className="btn-group">
+          <Icon icon={"logo-white"} size={"lg"} />
+          <div className="btn-title">직거래 가능한 호실이 있어요</div>
         </div>
-      </InfoField>
-      <Button style={{ margin: "18px 0" }} size={"lg"}>
-        <ButtonField>
-          <div className="btn-group">
-            <div className="btn-logo">
-              <Icon icon={"logo-white"} size={"lg"} />
-            </div>
-            <div className="btn-title">직거래 가능한 호실이 있어요</div>
-          </div>
-          <div className="btn-sub">문의하기</div>
-        </ButtonField>
-      </Button>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="btn-sub">문의하기</div>
+      </ButtonField>
+
+      <FlexBox>
         <DetailScoreField>
           {DetailFields.map((value) => {
             return (
@@ -103,7 +102,7 @@ export default function BuildingInfo({ building }) {
           <TotalTitle>총 만족도</TotalTitle>
           <TotalScore>{parseFloat(totalScore, 1)}</TotalScore>
         </TotalBox>
-      </div>
+      </FlexBox>
     </Container>
   );
 }
@@ -133,7 +132,12 @@ const Container = styled.div`
   padding: 12px 20px;
 `;
 
-const InfoField = styled.div`
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NameField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -142,6 +146,11 @@ const InfoField = styled.div`
 const Title = styled.div`
   ${Title1}
   color: var(--black);
+`;
+
+const AddressField = styled.div`
+  ${Caption1Bold}
+  color: var(--primary-1);
 `;
 
 const ScoreField = styled.div`
@@ -160,33 +169,22 @@ const ScoreField = styled.div`
   }
 `;
 
-const AddressField = styled.div`
-  ${Caption1Bold}
-  color: var(--primary-1);
-
-  margin-top: 8px;
-`;
-
-const ButtonField = styled.div`
+const ButtonField = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  color: var(--white);
+  margin: 18px 0;
 
   .btn-group {
     display: flex;
     align-items: center;
-  }
-
-  .btn-logo {
-    display: flex;
-    margin-right: 8px;
+    gap: 8px;
   }
 
   .btn-title {
     ${Body3Bold}
-
-    color: var(--white);
   }
 
   .btn-sub {

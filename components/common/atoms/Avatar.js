@@ -8,7 +8,11 @@ const SIZES = {
 export default function Avatar({ size = "md", img, children, ...props }) {
   return (
     <StyledAvatar size={SIZES[size]} {...props}>
-      {img ? <img src={img} width={SIZES[size]} height={SIZES[size]} /> : children}
+      {img ? (
+        <img src={img} width={SIZES[size]} height={SIZES[size]} />
+      ) : (
+        children
+      )}
     </StyledAvatar>
   );
 }
@@ -21,7 +25,6 @@ Avatar.propTypes = {
 const StyledAvatar = styled.div`
   display: flex;
   img {
-    border: 1px solid var(--gray-3);
     border-radius: 100%;
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
