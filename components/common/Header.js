@@ -3,10 +3,8 @@ import { SubTitle2 } from "../../styles/typography";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
 
-export default function Header({ pageTitle, icon }) {
+export default function Header({ pageTitle, additionalFunction }) {
   const router = useRouter();
-
-  const rightIcons = ["three-dot", "search", "filter-stroke", "heart-stroke"];
 
   const onBack = () => {
     router.back();
@@ -29,7 +27,7 @@ export default function Header({ pageTitle, icon }) {
           </>
         )}
       </Box>
-      <Box>{icon && <Icon icon={icon} size="md" />}</Box>
+      <Box>{additionalFunction ?? null}</Box>
     </AppBarWrapper>
   );
 }

@@ -7,12 +7,13 @@ import Footer from "../common/Footer";
 export default function AppLayout({
   pageTitle,
   enabledNavbar = true,
+  additionalFunction,
   children,
 }) {
   return (
     <>
       <GlobalStyle />
-      <Header pageTitle={pageTitle} />
+      <Header pageTitle={pageTitle} additionalFunction={additionalFunction} />
       <MainContent enabledNavbar={enabledNavbar}>{children}</MainContent>
       <Footer enabled={enabledNavbar} />
     </>
