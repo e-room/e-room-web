@@ -12,7 +12,6 @@ import ImageView from "components/building/ImageView";
 import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
-import RoomSelector from "components/building/RoomSelector";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import Toast from "components/common/atoms/Toast";
@@ -21,9 +20,11 @@ export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
+
   console.log("buildingReviews", buildingReviews);
   console.log("images", buildingImages);
   console.log("buildingInfo", building);
+
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
@@ -63,7 +64,7 @@ export default ({ data, imgs, reviews }) => {
         <Icon
           icon={favorite ? "heart-fill" : "heart-stroke"}
           size={"md"}
-          fill={favorite && "var(--primary-1)"}
+          fill={favorite ? "var(--primary-1)" : "var(--black)"}
           onClick={onFavoriteChange}
         />
       }
@@ -75,7 +76,6 @@ export default ({ data, imgs, reviews }) => {
         )}
         <BuildingMap building={building} />
         <BuildingInfo building={building} />
-        {building.rooms.length > 0 && <RoomSelector data={building.rooms} />}
         {buildingImages.reviewImageCount > 0 && (
           <ImageView data={buildingImages.reviewImageList} />
         )}

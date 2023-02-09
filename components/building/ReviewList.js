@@ -22,10 +22,12 @@ import { dummyImages } from "./ImageView";
 import { imageViewState } from "states/buidlingAtom";
 import parseFloat from "utils/parseFloat";
 import dayjs from "dayjs";
+// import axios from "axios";
 
 export default function ReviewList({ data }) {
   console.log("review", data);
   const Reviews = data;
+
   const setShowDetail = useSetRecoilState(imageViewState);
   const [isLike, setIsLike] = useState(false);
 
@@ -88,12 +90,26 @@ export default function ReviewList({ data }) {
     ];
   };
 
+  // const getReviewImages = async (reviewId) => {
+  //   const response = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_API_HOST}/review/${reviewId}/images`,
+  //     {
+  //       headers: {
+  //         mocking: 239,
+  //       },
+  //     }
+  //   );
+  // };
+
   return (
     <Container>
       <Title>실제 거주 후기</Title>
       <div>
         {Reviews.content.map((value) => {
           const notAccess = value.id > 1;
+          // const reviewId = value.baseReviewDto.reviewId;
+
+          // const images = getReviewImages(reviewId);
 
           return (
             <Item key={value.baseReviewDto.reviewId} blur={notAccess}>

@@ -22,14 +22,11 @@ export default function buildings({ data }) {
     const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
-      .get(
-        `${process.env.NEXT_PUBLIC_API_HOST}/building?buildingIds=${buildingMarking}`,
-        {
-          headers: {
-            mocking: 239,
-          },
-        }
-      )
+      .get(`/apis/building?buildingIds=${buildingMarking}`, {
+        headers: {
+          mocking: 239,
+        },
+      })
       .then((res) => {
         setParseData(res.data);
       });
@@ -53,7 +50,7 @@ export default function buildings({ data }) {
         <Icon
           icon={popupVisible ? "filter-fill" : "filter-stroke"}
           size={"md"}
-          fill={popupVisible && "var(--primary-1)"}
+          fill={popupVisible ? "var(--primary-1)" : "var(--black)"}
           onClick={() => setPopupVisible(true)}
         />
       }

@@ -60,7 +60,7 @@ export default function BuildingInfo({ building }) {
     <Container>
       {toast}
 
-      <FlexBox>
+      <FlexBox style={{ marginBottom: 18 }}>
         <NameField>
           <Title>{building.name}</Title>
           {/* &gt; = ">" */}
@@ -71,13 +71,14 @@ export default function BuildingInfo({ building }) {
         <BuildingBadge width={48} height={64} />
       </FlexBox>
 
-      <ButtonField size={"lg"}>
+      {/* TODO: 직거래 기능 풀리면 주석 해제 */}
+      {/* <ButtonField size={"lg"}>
         <div className="btn-group">
           <Icon icon={"logo-white"} size={"lg"} />
           <div className="btn-title">직거래 가능한 호실이 있어요</div>
         </div>
         <div className="btn-sub">문의하기</div>
-      </ButtonField>
+      </ButtonField> */}
 
       <FlexBox>
         <DetailScoreField>
