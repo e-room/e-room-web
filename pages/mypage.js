@@ -9,11 +9,9 @@ import {
   Caption2,
 } from "styles/typography";
 import Icon from "components/common/atoms/Icon";
+import Link from "next/link";
 
 export default function mypage() {
-  const goInstagram = () => {
-    alert("인스타그램");
-  };
   const goContact = () => {
     alert("문의하기");
   };
@@ -38,10 +36,18 @@ export default function mypage() {
         <ServiceInfo>
           <AreaTitle>서비스 정보</AreaTitle>
           <MenuList>
-            <MenuItem onClick={goInstagram}>
-              <div>공식 인스타그램</div>
-              <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
-            </MenuItem>
+            <Link href={`${process.env.NEXT_PUBLIC_INSTAGRAM_LINK}`}>
+              <a target="_blank" rel="noreferrer">
+                <MenuItem>
+                  <div>공식 인스타그램</div>
+                  <Icon
+                    icon={"arrow-right"}
+                    size={"md"}
+                    fill={"var(--gray-3)"}
+                  />
+                </MenuItem>
+              </a>
+            </Link>
             <MenuItem onClick={goContact}>
               <div>문의하기</div>
               <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
