@@ -31,7 +31,7 @@ export const reviewFormState = atom({
       surrounding: 0, // 주변/환경
       internal: 0, // 내부
       livingLocation: 0, // 생활/입지
-      residenceSatisfaction: 3, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
+      residenceSatisfaction: 0, // 총 만족도 TODO: 임시로 계산해서 넣어주기(백엔드에서 뺄때까지)
     },
     reviewResidencePeriodDto: {
       residenceStartYear: 2022, // 거주시작

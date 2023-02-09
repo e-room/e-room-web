@@ -31,26 +31,26 @@ export default function ReviewLayout({ children }) {
   const onSubmit = async () => {
     try {
       // TODO: totalScore 계산해서 넣기
+      const traffic = formValue.reviewScoreDto.traffic;
+      const buildingComplex = formValue.reviewScoreDto.buildingComplex;
+      const surrounding = formValue.reviewScoreDto.surrounding;
+      const internal = formValue.reviewScoreDto.internal;
+      const livingLocation = formValue.reviewScoreDto.livingLocation;
 
-      // const traffic = formValue.reviewScoreDto.traffic;
-      // const buildingComplex = formValue.reviewScoreDto.buildingComplex;
-      // const surrounding = formValue.reviewScoreDto.surrounding;
-      // const internal = formValue.reviewScoreDto.internal;
-      // const livingLocation = formValue.reviewScoreDto.livingLocation;
+      const totalScore =
+        (traffic + buildingComplex + surrounding + internal + livingLocation) /
+        5;
 
-      // const totalScore =
-      //   (traffic + buildingComplex + surrounding + internal + livingLocation) / 5;
-
-      // setFormValue({
-      //   ...formValue,
-      //   reviewScoreDto: {
-      //     ...formValue.reviewScoreDto,
-      //     residenceSatisfaction: totalScore,
-      //   },
-      // });
+      const formatFormValue = {
+        ...formValue,
+        reviewScoreDto: {
+          ...formValue.reviewScoreDto,
+          residenceSatisfaction: totalScore,
+        },
+      };
 
       const formData = new FormData();
-      formData.append("request", JSON.stringify(formValue));
+      formData.append("request", JSON.stringify(formatFormValue));
       reviewImageList.forEach(async (file) => {
         if (!file) return;
         const compress = await imgCompress(file.data);
