@@ -95,7 +95,7 @@ export default ({ data, imgs, reviews }) => {
           <ImageView data={buildingImages.reviewImageList} />
         )}
         {buildingReviews.content.length > 0 && (
-          <ReviewList data={buildingReviews} />
+          <ReviewList data={buildingReviews} buildingId={id} />
         )}
 
         <ButtonItem>

@@ -22,9 +22,10 @@ import { dummyImages } from "./ImageView";
 import { imageViewState } from "states/buidlingAtom";
 import parseFloat from "utils/parseFloat";
 import dayjs from "dayjs";
-// import axios from "axios";
+import axios from "axios";
+import accessValid from "utils/accessValid";
 
-export default function ReviewList({ data }) {
+export default function ReviewList({ data, buildingId }) {
   console.log("review", data);
   const Reviews = data;
 
@@ -33,6 +34,26 @@ export default function ReviewList({ data }) {
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const onDetailView = () => setShowDetail(true);
+
+  const onReviewDelete = async () => {
+    const valid = await accessValid({
+      redirect_uri: `/building/${buildingId}`,
+    });
+    if (valid) {
+      setShowConfirmDelete(true);
+    }
+  };
+
+  const onDelete = async (reviewId) => {
+    await axios
+      .delete(`/apis/building/room/review/${reviewId}`, {
+        headers: {
+          mocking: 239,
+        },
+      })
+      .then((res) => setShowConfirmDelete(false))
+      .catch((err) => console.log("리뷰 삭제가 실패했습니다.", err));
+  };
 
   const [showTotalScore, setShowTotalScore] = useState(false);
 
@@ -106,13 +127,10 @@ export default function ReviewList({ data }) {
       <Title>실제 거주 후기</Title>
       <div>
         {Reviews.content.map((value) => {
-          const notAccess = value.id > 1;
-          // const reviewId = value.baseReviewDto.reviewId;
-
           // const images = getReviewImages(reviewId);
 
           return (
-            <Item key={value.baseReviewDto.reviewId} blur={notAccess}>
+            <Item key={value.baseReviewDto.reviewId}>
               <Popup
                 title={"정말로 이 리뷰를 삭제하시겠어요?"}
                 visible={showConfirmDelete}
@@ -120,6 +138,7 @@ export default function ReviewList({ data }) {
                 cancelText={"취소"}
                 submitText={"삭제"}
                 onCancelClick={() => setShowConfirmDelete(false)}
+                onConfirmClick={() => onDelete(value.baseReviewDto.reviewId)}
               >
                 <PopupSubTitle>
                   삭제하면 되돌릴 수 없습니다.
@@ -190,9 +209,7 @@ export default function ReviewList({ data }) {
                   </UserInfo>
                 </div>
                 <div>
-                  <DeleteButton
-                    onClick={() => !notAccess && setShowConfirmDelete(true)}
-                  >
+                  <DeleteButton onClick={() => onReviewDelete()}>
                     삭제
                   </DeleteButton>
                 </div>
@@ -287,7 +304,6 @@ const Item = styled.div`
   gap: 20px;
 
   background: var(--white);
-  filter: ${(p) => (p.blur ? `blur(8px)` : "none")};
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
