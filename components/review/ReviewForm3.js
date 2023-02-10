@@ -111,7 +111,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-bottom: 180px;
+  margin-bottom: 100px;
 
   overflow: scroll;
 

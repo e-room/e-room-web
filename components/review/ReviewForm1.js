@@ -185,7 +185,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-bottom: 140px;
+  margin-bottom: 80px;
 
   ${animation_fadeInUp_view}
 `;

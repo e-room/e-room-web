@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
@@ -15,20 +14,25 @@ import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
 import imgCompress from "utils/imgCompress";
 import calculateByReviewScore from "utils/calculateByReviewScore";
+import valueCheck from "utils/valueCheck";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
 
-  const [reviewImageList, setReviewImageList] =
-    useRecoilState(reviewImageListState);
+  const reviewImageList = useRecoilValue(reviewImageListState);
   const { index = 1 } = router.query;
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const [formValue, setFormValue] = useRecoilState(reviewFormState);
+  const formValue = useRecoilValue(reviewFormState);
 
   const goHome = () => {
     router.push(`/`);
   };
+
+  const goNext = () => {
+    router.push(`/review/write/${Number(index) + 1}`);
+  };
+
   const onSubmit = async () => {
     try {
       const totalScore = calculateByReviewScore(formValue);
@@ -122,9 +126,12 @@ export default function ReviewLayout({ children }) {
         </BottomArea>
       ) : (
         <BottomArea>
-          <Link href={`/review/write/${Number(index) + 1}`}>
-            <Button label={"다음으로"} size="lg" width={"100%"} />
-          </Link>
+          <Button
+            label={"다음으로"}
+            size="lg"
+            width={"100%"}
+            onClick={goNext}
+          />
         </BottomArea>
       )}
     </>
