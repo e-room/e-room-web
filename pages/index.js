@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
-import { Body2Bold } from "styles/typography";
+import { Body2, Body2Bold } from "styles/typography";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
@@ -15,11 +15,6 @@ import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import Popup from "components/common/atoms/Popup";
 import CheckBox from "components/common/atoms/CheckBox";
-
-const initial = {
-  lat: 37.2429616,
-  lng: 127.0800525,
-};
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -41,10 +36,16 @@ const MainMap = ({ data }) => {
     if (!mapLoaded) return;
 
     kakao.maps.load(async () => {
+      const centerPoint = JSON.parse(localStorage.getItem("centerPoint"));
+      const initial = {
+        lat: centerPoint?.lat ?? 37.2429616,
+        lng: centerPoint?.lng ?? 127.0800525,
+      };
+
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(initial.lat, initial.lng),
-        level: 8,
+        level: centerPoint?.level ?? 8,
       };
 
       let imageSrc = MarkerPng.src;
@@ -87,10 +88,13 @@ const MainMap = ({ data }) => {
       });
       clusterer.addMarkers(markers);
 
+      setCenterPoint();
       setLocalStorage();
 
       kakao.maps.event.addListener(map.current, "idle", () => {
+        setCenterPoint();
         setLocalStorage();
+        // setCenterPoint();
       });
     });
   }, [mapLoaded]);
@@ -106,6 +110,21 @@ const MainMap = ({ data }) => {
       const ids = [];
       inBounds.forEach((value) => ids.push(value.id));
       localStorage.setItem("buildingMarking", ids);
+    }
+  };
+  const setCenterPoint = () => {
+    if (map.current) {
+      const centerPoint = map.current.getCenter();
+      const level = map.current.getLevel();
+
+      localStorage.setItem(
+        "centerPoint",
+        JSON.stringify({
+          lat: centerPoint.getLat(),
+          lng: centerPoint.getLng(),
+          level: level,
+        })
+      );
     }
   };
 
@@ -365,12 +384,7 @@ const SearchField = styled.div`
     border: none;
 
     ::placeholder {
-      /* TODO: typography 적용 필요 */
-      font-family: "Pretendard";
-      font-style: normal;
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 24px;
+      ${Body2}
 
       color: var(--gray-3);
     }
