@@ -1,8 +1,9 @@
-import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+
+import { animation_fadeInUp_view } from "styles/keyframes";
 import { Body2Bold, Body3 } from "styles/typography";
+
 import Images from "components/common/atoms/Images";
-import { useState } from "react";
 
 export default function ReviewForm4() {
   return (
@@ -22,22 +23,12 @@ export default function ReviewForm4() {
   );
 }
 
-const fadeInUp = keyframes`
-from {
-  opacity: 0;
-  transform: translateY(40px);
-}
-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-`;
-
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  animation: ${fadeInUp} 0.56s ease-in-out;
+
+  ${animation_fadeInUp_view}
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

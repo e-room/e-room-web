@@ -1,9 +1,11 @@
-import styled from "@emotion/styled";
-import { Body2Bold, Body3 } from "styles/typography";
-import Score from "components/common/atoms/Score";
 import { useRecoilState } from "recoil";
+import styled from "@emotion/styled";
+
 import { reviewFormState } from "states/reviewAtom";
-import { keyframes } from "@emotion/react";
+import { Body2Bold, Body3 } from "styles/typography";
+import { animation_fadeInUp_view } from "styles/keyframes";
+
+import Score from "components/common/atoms/Score";
 
 export default function ReviewForm2() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -82,23 +84,14 @@ export default function ReviewForm2() {
   );
 }
 
-const fadeInUp = keyframes`
-from {
-  opacity: 0;
-  transform: translateY(40px);
-}
-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   text-align: center;
-  margin-bottom: 40px;
-  animation: ${fadeInUp} 0.56s ease-in-out;
+  margin-bottom: 140px;
+
+  ${animation_fadeInUp_view}
 `;
 const TextLabel = styled.div`
   ${Body2Bold}

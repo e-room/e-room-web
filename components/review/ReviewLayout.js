@@ -50,21 +50,45 @@ export default function ReviewLayout({ children }) {
       };
 
       const formData = new FormData();
-      formData.append("request", JSON.stringify(formatFormValue));
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(formatFormValue)], {
+          type: "application/json",
+        })
+      );
+      // formData.append("request", JSON.stringify(formatFormValue));
       reviewImageList.forEach(async (file) => {
         if (!file) return;
         const compress = await imgCompress(file.data);
         formData.append("reviewImageList", compress);
       });
-      await axios
-        .post("/api/upload", formData)
-        .then((response) => {
-          console.log("리뷰쓰기 성공", response);
+      for (const pair of formData.entries()) console.log(pair);
+      await axios({
+        method: "post",
+        url: `/apis/building/room/review`,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          mocking: 239,
+        },
+      })
+        .then((res) => {
+          console.log("리뷰쓰기 성공", res);
           setPopupVisible(true);
         })
-        .catch((error) => {
-          console.log("리뷰쓰기 실패!", error);
+        .catch((err) => {
+          console.log("리뷰쓰기 실패!", err);
         });
+
+      // await axios
+      //   .post("/api/upload", formData)
+      //   .then((response) => {
+      //     console.log("리뷰쓰기 성공", response);
+      //     setPopupVisible(true);
+      //   })
+      //   .catch((error) => {
+      //     console.log("리뷰쓰기 실패!", error);
+      //   });
     } catch (e) {
       console.log("리뷰쓰기 실패", e.response.data);
     }
@@ -73,13 +97,11 @@ export default function ReviewLayout({ children }) {
   return (
     <>
       <AppLayout pageTitle={"리뷰 쓰기"}>
-        <Container>
-          <StepBar>
-            <CurrentStep width={(index / 5) * 100} />
-            <RemainingStep width={100 - (index / 5) * 100} />
-          </StepBar>
-          <div>{children}</div>
-        </Container>
+        <StepBar>
+          <CurrentStep width={(index / 5) * 100} />
+          <RemainingStep width={100 - (index / 5) * 100} />
+        </StepBar>
+        <div>{children}</div>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       <BottomSheet
@@ -118,12 +140,13 @@ export default function ReviewLayout({ children }) {
   );
 }
 
-const Container = styled.div`
-  height: calc(100vh - 112px);
-  overflow: scroll;
-`;
 const StepBar = styled.div`
   display: flex;
+  position: fixed;
+  top: 44px;
+  left: 0;
+  z-index: 11;
+  width: 100%;
 `;
 const CurrentStep = styled.div`
   height: 4px;

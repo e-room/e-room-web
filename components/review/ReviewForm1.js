@@ -1,11 +1,13 @@
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import styled from "@emotion/styled";
+
+import { animation_fadeInUp_view } from "styles/keyframes";
+import { reviewFormState } from "states/reviewAtom";
+
 import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
-import { useState } from "react";
-import { reviewFormState } from "states/reviewAtom";
-import { useRecoilState } from "recoil";
 
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -57,43 +59,6 @@ export default function ReviewForm1() {
           </AddressFrame>
         )}
       </FormItem>
-      <GridItem>
-        <Text
-          type={"number"}
-          placeholder={"예: 101"}
-          label={"상세주소(호실)"}
-          unit={"동"}
-          width={"100%"}
-          onChange={(e) => {
-            setFormValue({
-              ...formValue,
-              roomBaseDto: {
-                ...formValue.roomBaseDto,
-                lineNumber: Number(e.target.value),
-              },
-            });
-          }}
-          value={formValue.roomBaseDto.lineNumber}
-          name={"lineNumber"}
-        />
-        <Text
-          type={"number"}
-          placeholder={"예: 301"}
-          unit={"호"}
-          width={"100%"}
-          onChange={(e) => {
-            setFormValue({
-              ...formValue,
-              roomBaseDto: {
-                ...formValue.roomBaseDto,
-                roomNumber: Number(e.target.value),
-              },
-            });
-          }}
-          value={formValue.roomBaseDto.roomNumber}
-          name={"roomNumber"}
-        />
-      </GridItem>
       <GridItem>
         {/* TODO: select onblur시 옵션 숨김 */}
         <Select
@@ -216,22 +181,13 @@ export default function ReviewForm1() {
   );
 }
 
-const fadeInUp = keyframes`
-from {
-  opacity: 0;
-  transform: translateY(40px);
-}
-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-`;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-bottom: 40px;
-  animation: ${fadeInUp} 0.56s ease-in-out;
+  margin-bottom: 140px;
+
+  ${animation_fadeInUp_view}
 `;
 
 const FormItem = styled.div`
