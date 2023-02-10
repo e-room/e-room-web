@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
-import { css, keyframes } from "@emotion/react";
 import { Body2 } from "styles/typography";
 import { useEffect, useState } from "react";
+import { fadeInUp_OutDown } from "styles/keyframes";
 
 export default function Toast({
   visible = false,
@@ -44,34 +44,6 @@ Toast.propTypes = {
   text: PropTypes.string,
 };
 
-const fadeInUp = keyframes`
-from {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
-to {
-  opacity: 1;
-  transform: translateZ(0);
-}
-`;
-const fadeOutDown = keyframes`
-from {
-  opacity: 1;
-  transform: translateZ(0);
-}
-to {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
-`;
-
-const modalSettings = (visible) => css`
-  visibility: ${visible ? "visible" : "hidden"};
-  z-index: 15;
-  animation: ${visible ? fadeInUp : fadeOutDown} 0.3s ease-in-out;
-  transition: visibility 0.3s ease-in-out;
-`;
-
 const StyledToast = styled.div`
   display: flex;
   flex-direction: row;
@@ -91,7 +63,7 @@ const StyledToast = styled.div`
   left: 20px;
   right: 20px;
 
-  ${(p) => modalSettings(p.visible)}
+  ${(p) => fadeInUp_OutDown(p.visible)}
 
   color: var(--black);
   svg {

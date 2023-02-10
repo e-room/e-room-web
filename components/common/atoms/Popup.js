@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/react";
-import { SubTitle1 } from "../../../styles/typography";
+import { SubTitle1 } from "styles/typography";
 import Button from "./Button";
 import { useEffect, useState } from "react";
+import { fadeIn_Down } from "styles/keyframes";
 
 export default function Popup({
   title,
@@ -62,6 +62,7 @@ export default function Popup({
               size="md"
               width={"100%"}
               type={"warning"}
+              onClick={onConfirmClick}
             />
           </div>
         );
@@ -113,34 +114,6 @@ Popup.propTypes = {
   submitText: PropTypes.string,
 };
 
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-  transform: scale(0.88);
-}
-to {
-  opacity: 1;
-  transform: scale(1);
-}
-`;
-const fadeOut = keyframes`
-from {
-  opacity: 1;
-  transform: scale(1);
-}
-to {
-  opacity: 0;
-  transform: scale(0.88);
-}
-`;
-
-const modalSettings = (visible) => css`
-  visibility: ${visible ? "visible" : "hidden"};
-  z-index: 15;
-  animation: ${visible ? fadeIn : fadeOut} 0.3s ease-in-out;
-  transition: visibility 0.3s ease-in-out;
-`;
-
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
@@ -162,7 +135,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  ${(p) => modalSettings(p.visible)}
+  ${(p) => fadeIn_Down(p.visible)}
 `;
 
 const StyledPopup = styled.div`

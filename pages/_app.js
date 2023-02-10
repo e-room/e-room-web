@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import "styles/reset.css";
 import "styles/palette.css";
-import "react-perfect-scrollbar/dist/css/styles.css";
 
 import { RecoilRoot } from "recoil";
 

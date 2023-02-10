@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/react";
 import Button from "./Button";
-import Icon from "./Icon";
-import { Caption1Bold, SubTitle1 } from "../../../styles/typography";
+import { Caption1Bold, SubTitle1 } from "styles/typography";
 import { useEffect, useState } from "react";
+import { fadeInUp_OutDown } from "styles/keyframes";
 
 export default function BottomSheet({
   title,
@@ -94,34 +93,6 @@ BottomSheet.propTypes = {
   onSubmit: PropTypes.func,
 };
 
-const fadeInUp = keyframes`
-from {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
-to {
-  opacity: 1;
-  transform: translateZ(0);
-}
-`;
-const fadeOutDown = keyframes`
-from {
-  opacity: 1;
-  transform: translateZ(0);
-}
-to {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
-`;
-
-const modalSettings = (visible) => css`
-  visibility: ${visible ? "visible" : "hidden"};
-  z-index: 15;
-  animation: ${visible ? fadeInUp : fadeOutDown} 0.3s ease-in-out;
-  transition: visibility 0.3s ease-in-out;
-`;
-
 const Overlay = styled.div`
   width: 100vw;
   height: 100vh;
@@ -140,7 +111,7 @@ const Container = styled.div`
   position: fixed;
   width: 100%;
 
-  ${(p) => modalSettings(p.visible)}
+  ${(p) => fadeInUp_OutDown(p.visible)}
 `;
 
 const StyledSheet = styled.div`
