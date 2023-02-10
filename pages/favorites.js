@@ -4,18 +4,24 @@ import AppLayout from "components/common/AppLayout";
 import BuildingList from "components/building/BuildingList";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import accessValid from "utils/accessValid";
 
 export default function favorites() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const getData = async () => {
-    setLoading(true);
-    await axios
-      .get(`/apis/member/favorite`, {
-        headers: { mocking: 239 },
-      })
-      .then((res) => setData(res.data));
-    setLoading(false);
+    const valid = await accessValid({ redirect_uri: `/favorites` });
+    if (valid) {
+      setLoading(true);
+      await axios
+        .get(`/apis/member/favorite`, {
+          headers: {
+            mocking: 239,
+          },
+        })
+        .then((res) => setData(res.data));
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

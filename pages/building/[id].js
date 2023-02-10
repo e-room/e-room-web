@@ -15,8 +15,13 @@ import Slider from "components/building/Slider";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import Toast from "components/common/atoms/Toast";
+import { useRouter } from "next/router";
+import accessValid from "utils/accessValid";
 
 export default ({ data, imgs, reviews }) => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const building = JSON.parse(data);
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
@@ -52,8 +57,18 @@ export default ({ data, imgs, reviews }) => {
 
   const [favorite, setFavorite] = useState(false);
   const onFavoriteChange = useCallback(() => {
-    setToastVisible(true);
-    setFavorite(!favorite);
+    const valid = accessValid({ redirect_uri: `/building/${id}` });
+    if (valid) {
+      axios
+        .post(`/apis/member/favorite/${id}`)
+        .then(() => {
+          setToastVisible(true);
+          setFavorite(!favorite);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }, [favorite]);
 
   return (
