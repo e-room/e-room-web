@@ -14,6 +14,7 @@ import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
 import imgCompress from "utils/imgCompress";
+import calculateByReviewScore from "utils/calculateByReviewScore";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -30,17 +31,7 @@ export default function ReviewLayout({ children }) {
   };
   const onSubmit = async () => {
     try {
-      // TODO: totalScore 계산해서 넣기
-      const traffic = formValue.reviewScoreDto.traffic;
-      const buildingComplex = formValue.reviewScoreDto.buildingComplex;
-      const surrounding = formValue.reviewScoreDto.surrounding;
-      const internal = formValue.reviewScoreDto.internal;
-      const livingLocation = formValue.reviewScoreDto.livingLocation;
-
-      const totalScore =
-        (traffic + buildingComplex + surrounding + internal + livingLocation) /
-        5;
-
+      const totalScore = calculateByReviewScore(formValue);
       const formatFormValue = {
         ...formValue,
         reviewScoreDto: {
@@ -96,7 +87,7 @@ export default function ReviewLayout({ children }) {
 
   return (
     <>
-      <AppLayout pageTitle={"리뷰 쓰기"}>
+      <AppLayout pageTitle={"리뷰 쓰기"} enabledNavbar={false}>
         <StepBar>
           <CurrentStep width={(index / 5) * 100} />
           <RemainingStep width={100 - (index / 5) * 100} />
@@ -164,7 +155,7 @@ const BottomArea = styled.div`
   display: flex;
   justify-content: center;
   position: fixed;
-  bottom: 64px;
+  bottom: 8px;
 
   button {
     margin: 0px 20px;
