@@ -6,7 +6,7 @@ import accessValid from "utils/accessValid";
 
 export default function reviewWrite() {
   useEffect(() => {
-    accessValid({ redirect_uri: `review/write` });
+    accessValid({ redirect_uri: `/review/write` });
   }, []);
 
   // TODO: reviewform1, 2,,, 로직 개선
