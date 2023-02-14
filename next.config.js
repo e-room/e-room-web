@@ -19,4 +19,7 @@ module.exports = {
   env: {
     NEXT_PUBLIC_KAKAO_APP_KEY: process.env.NEXT_PUBLIC_KAKAO_APP_KEY,
   },
+  images: {
+    domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
+  },
 };

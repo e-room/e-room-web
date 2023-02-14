@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
 
@@ -18,7 +18,8 @@ import { dummyImages } from "./ImageView";
 
 export default function ReviewList({ data, buildingId }) {
   console.log("review", data);
-  const Reviews = data;
+  const [Reviews, setReviews] = useState(data);
+  // const Reviews = data;
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -45,16 +46,40 @@ export default function ReviewList({ data, buildingId }) {
     }
   };
 
-  // const getReviewImages = async (reviewId) => {
-  //   const response = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_API_HOST}/review/${reviewId}/images`,
-  //     {
-  //       headers: {
-  //         mocking: 239,
-  //       },
-  //     }
-  //   );
-  // };
+  const getReviewImages = async (reviewId) => {
+    if (!reviewId) return;
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_HOST}/review/${reviewId}/images`,
+        {
+          headers: {
+            mocking: 239,
+          },
+        }
+      );
+      return response.data.reviewImageList;
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  useEffect(() => {
+    async function callData() {
+      console.log("실행");
+      try {
+        const copy = { ...Reviews };
+        const promises = copy.content.map(async (value) => {
+          value.images = await getReviewImages(value.baseReviewDto.reviewId);
+          return value;
+        });
+        await Promise.all(promises);
+        setReviews(copy);
+      } catch (e) {
+        console.log("zzz", e);
+      }
+    }
+    callData();
+  }, []);
 
   return (
     <Container>
@@ -75,7 +100,6 @@ export default function ReviewList({ data, buildingId }) {
           />
         )}
         {Reviews.content.map((value) => {
-          // const images = getReviewImages(reviewId);
           return (
             <Item key={value.baseReviewDto.reviewId}>
               <AuthorInfo
@@ -84,7 +108,9 @@ export default function ReviewList({ data, buildingId }) {
                 onDeletePopup={onDeletePopup}
               />
               <ReviewInfo value={value} />
-              <ImageField images={dummyImages} onDetailView={onDetailView} />
+              {value.images && (
+                <ImageField images={value.images} onDetailView={onDetailView} />
+              )}
               <LikeField value={value} isLike={isLike} setIsLike={setIsLike} />
             </Item>
           );
