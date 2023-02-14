@@ -45,19 +45,20 @@ export default function ReviewLayout({ children }) {
       };
 
       const formData = new FormData();
-      formData.append(
-        "request",
-        new Blob([JSON.stringify(formatFormValue)], {
-          type: "application/json",
-        })
-      );
+      // formData.append(
+      //   "request",
+      //   new Blob([JSON.stringify(formatFormValue)], {
+      //     type: "application/json",
+      //   })
+      // );
       // formData.append("request", JSON.stringify(formatFormValue));
-      reviewImageList.forEach(async (file) => {
-        if (!file) return;
-        const compress = await imgCompress(file.data);
+      for (let i = 0; i < reviewImageList.length; i++) {
+        const compress = await imgCompress(reviewImageList[i].data);
         formData.append("reviewImageList", compress);
-      });
-      for (const pair of formData.entries()) console.log(pair);
+      }
+
+      for (const [key, value] of formData.entries())
+        console.log("key, value", key, value);
       await axios({
         method: "post",
         url: `/apis/building/room/review`,
@@ -126,12 +127,7 @@ export default function ReviewLayout({ children }) {
         </BottomArea>
       ) : (
         <BottomArea>
-          <Button
-            label={"다음으로"}
-            size="lg"
-            width={"100%"}
-            onClick={goNext}
-          />
+          <Button label={"다음으로"} size="lg" width={"100%"} onClick={goNext} />
         </BottomArea>
       )}
     </>
