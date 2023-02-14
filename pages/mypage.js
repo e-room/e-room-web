@@ -29,8 +29,13 @@ export default function mypage() {
     }
   };
 
-  const onWithdrawal = () => {
-    alert("탈퇴하기");
+  const onWithdrawal = async () => {
+    const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_HOST}/member/exit`,{ withCredentials: true });
+    if(response.status === 200) {
+      router.push("/");
+    } else {
+      alert("탈퇴하기가 실패했습니다.");
+    }
   };
 
   return (
