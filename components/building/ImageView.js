@@ -2,21 +2,8 @@ import styled from "@emotion/styled";
 import { useSetRecoilState } from "recoil";
 import { imageViewState } from "states/buidlingAtom";
 import { Body1Bold } from "styles/typography";
-import flower1 from "./dummyImg/1.jpg";
-import flower2 from "./dummyImg/2.jpg";
-import flower3 from "./dummyImg/3.jpg";
-import flower4 from "./dummyImg/4.jpg";
-import flower5 from "./dummyImg/5.jpg";
-import flower6 from "./dummyImg/6.jpg";
+import Image from "next/image";
 
-export const dummyImages = [
-  flower1,
-  flower2,
-  flower3,
-  flower4,
-  flower5,
-  flower6,
-];
 export default function ImageView({ data }) {
   const setShowDetail = useSetRecoilState(imageViewState);
 
@@ -30,7 +17,14 @@ export default function ImageView({ data }) {
       <ImgField>
         {data.map((value) => {
           return (
-            <ImgCard src={value.url} key={value.uuid} onClick={onDetailView} />
+            <ImageBox
+              src={value.url}
+              key={value.uuid}
+              width={117}
+              height={117}
+              objectFit={"cover"}
+              onClick={onDetailView}
+            />
           );
         })}
       </ImgField>
@@ -57,14 +51,16 @@ const ImgField = styled.div`
   scrollbar-width: none;
   -ms-overflow-style: none;
 
+  // TODO: 사진 가로 스크롤 기능...
+  /* display: flex; */
+  /* gap: 8px; */
+
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const ImgCard = styled.img`
-  width: 117px;
-  height: 117px;
+const ImageBox = styled(Image)`
   border-radius: 8px;
-  margin-right: 8px;
+  margin-right: 8px !important;
 `;

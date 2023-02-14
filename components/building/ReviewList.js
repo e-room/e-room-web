@@ -14,7 +14,6 @@ import ReviewInfo from "./reviewItems/ReviewInfo";
 import LikeField from "./reviewItems/LikeField";
 import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
-import { dummyImages } from "./ImageView";
 
 export default function ReviewList({ data, buildingId }) {
   console.log("review", data);
