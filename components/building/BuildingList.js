@@ -10,63 +10,73 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 export default function BuildingList({ data }) {
   const currentData = data.content;
-  console.log("currentData", currentData);
+  // console.log("currentData", currentData);
   const [cursorId, setCursorId] = useState(
     currentData[currentData.length - 1]?.buildingId
   );
   const [nextItem, setNextItem] = useState([]);
-  console.log("nextItem", nextItem);
-  const nextFetch = async () => {
-    const buildingMarking = localStorage.getItem("buildingMarking");
-    // await axios
-    //   .get(
-    //     `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
-    //     {
-    //       headers: {
-    //         mocking: 239,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     setNextItem(res.data.content);
-    //   });
-  };
-
   const target = useRef(null);
   const [state, setState] = useState({
     item: [...currentData],
     isLoading: false,
   });
+  console.log("state", state);
+  // console.log("nextItem", nextItem);
+  const nextFetch = async () => {
+    // if (state.item[state.item.length - 1].buildingId === cursorId) return;
+    console.log("2");
+    const buildingMarking = localStorage.getItem("buildingMarking");
+    // console.log("cursorId", cursorId);
+    await axios
+      .get(
+        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
+        {
+          headers: {
+            mocking: 239,
+          },
+        }
+      )
+      .then((res) => {
+        if (res?.data?.content && res.data.content.length > 0) {
+          setNextItem(res.data.content);
+          setCursorId(res.data.content[res.data.content.length - 1].buildingId);
+        }
+      });
+  };
+
   const fetchItems = async (nextItem) => {
     setState((prev) => ({
       ...prev,
       isLoading: true,
     }));
-    // await nextFetch();
+    await nextFetch();
     setState((prev) => ({
       item: [...prev.item, ...nextItem],
       isLoading: false,
     }));
   };
-  // useEffect(() => {
-  //   let observer;
-  //   if (target) {
-  //     observer = new IntersectionObserver(
-  //       async ([e], observer) => {
-  //         if (e.isIntersecting) {
-  //           observer.unobserve(e.target);
-  //           await fetchItems(nextItem);
-  //           observer.observe(e.target);
-  //         }
-  //       },
-  //       { threshold: 1 }
-  //     );
-  //     observer.observe(target.current);
-  //   }
-  //   return () => observer.disconnect();
-  // }, [target]);
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(
+        async ([e], observer) => {
+          console.log(e.isIntersecting);
+          if (e.isIntersecting) {
+            observer.unobserve(e.target);
+            console.log("1");
+            await fetchItems(nextItem);
+            observer.observe(e.target);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(target.current);
+    }
+    return () => observer.disconnect();
+  }, [target]);
 
   const { item, isLoading } = state;
+  console.log("item", item.length);
 
   return item.map((value) => {
     return (
