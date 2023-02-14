@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import AppLayout from "components/common/AppLayout";
 import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
@@ -10,15 +11,24 @@ import {
 } from "styles/typography";
 import Icon from "components/common/atoms/Icon";
 import Link from "next/link";
+import axios from "axios";
 
 export default function mypage() {
+  const router = useRouter();
+
   const goContact = () => {
     alert("문의하기");
   };
 
-  const onLogout = () => {
-    alert("로그아웃");
+  const onLogout = async () => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/logout`,{ withCredentials: true });
+    if(response.status === 200) {
+      router.push("/");
+    } else {
+      alert("로그아웃에 실패했습니다.");
+    }
   };
+
   const onWithdrawal = () => {
     alert("탈퇴하기");
   };
@@ -54,12 +64,12 @@ export default function mypage() {
             </MenuItem>
           </MenuList>
           <ButtonGroup>
-            <div className="logout" onClick={onLogout}>
+            <Button className="logout" onClick={onLogout}>
               로그아웃
-            </div>
-            <div className="withdrawal" onClick={onWithdrawal}>
+            </Button>
+            <Button className="withdrawal" onClick={onWithdrawal}>
               탈퇴하기
-            </div>
+            </Button>
           </ButtonGroup>
         </ServiceInfo>
       </Container>
@@ -142,4 +152,8 @@ const ButtonGroup = styled.div`
   .withdrawal {
     opacity: 0.5;
   }
+`;
+
+const Button = styled.div`
+  cursor: pointer;
 `;
