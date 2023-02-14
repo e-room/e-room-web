@@ -6,45 +6,118 @@ import { Body2Bold, Caption2, Caption2Bold } from "styles/typography";
 import Image from "next/image";
 import testImg from "assets/marker4.png";
 import parseFloat from "utils/parseFloat";
+import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 export default function BuildingList({ data }) {
-  return data.content.map((value) => {
+  const currentData = data.content;
+  console.log("currentData", currentData);
+  const [cursorId, setCursorId] = useState(
+    currentData[currentData.length - 1].buildingId
+  );
+  const [nextItem, setNextItem] = useState([]);
+  console.log("nextItem", nextItem);
+  const nextFetch = async () => {
+    const buildingMarking = localStorage.getItem("buildingMarking");
+    await axios
+      .get(
+        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
+        {
+          headers: {
+            mocking: 239,
+          },
+        }
+      )
+      .then((res) => {
+        setNextItem(res.data.content);
+      });
+  };
+
+  const target = useRef(null);
+  const [state, setState] = useState({
+    item: [...currentData],
+    isLoading: false,
+  });
+  const fetchItems = async (nextItem) => {
+    setState((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
+    await nextFetch();
+    setState((prev) => ({
+      item: [...prev.item, ...nextItem],
+      isLoading: false,
+    }));
+  };
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(
+        async ([e], observer) => {
+          if (e.isIntersecting) {
+            observer.unobserve(e.target);
+            await fetchItems(nextItem);
+            observer.observe(e.target);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(target.current);
+    }
+    return () => observer.disconnect();
+  }, [target]);
+
+  const { item, isLoading } = state;
+
+  return item.map((value) => {
     return (
-      <Link href={`/building/${value.buildingId}`} key={value.buildingId}>
-        <BuildingContainer>
-          <Image src={testImg} width={122} height={122} objectFit={"cover"} />
-          <BuildingContent>
-            <div className="building-name">{value.name}</div>
-            <AddressArea>
-              {value.address.siDo} {value.address.siGunGu}{" "}
-              {value.address.roadName} {value.address.buildingNumber}
-            </AddressArea>
-            <Chips>
-              {value.directDeal && <Chip label={"직거래가능"} />}
-              <Chip label={"교통 편리"} type={"secondary"} />
-            </Chips>
-            <ReviewArea>
-              <div
-                className="review-count"
-                style={{ opacity: 0.5, marginRight: 8 }}
-              >
-                리뷰 {value.reviewCnt}개
-              </div>
-              <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
-              <div style={{ marginTop: 2 }}>
-                <Score
-                  size="sm"
-                  readOnly={true}
-                  value={value.avgScore}
-                  allowFraction={true}
-                />
-              </div>
-            </ReviewArea>
-          </BuildingContent>
-        </BuildingContainer>
-      </Link>
+      <div>
+        <Link href={`/building/${value.buildingId}`} key={value.buildingId}>
+          <BuildingContainer>
+            <Image src={testImg} width={122} height={122} objectFit={"cover"} />
+            <BuildingContent>
+              <div className="building-name">{value.name}</div>
+              <AddressArea>
+                {value.address.siDo} {value.address.siGunGu}{" "}
+                {value.address.roadName} {value.address.buildingNumber}
+              </AddressArea>
+              <Chips>
+                {value.directDeal && <Chip label={"직거래가능"} />}
+                <Chip label={"교통 편리"} type={"secondary"} />
+              </Chips>
+              <ReviewArea>
+                <div
+                  className="review-count"
+                  style={{ opacity: 0.5, marginRight: 8 }}
+                >
+                  리뷰 {value.reviewCnt}개
+                </div>
+                <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
+                <div style={{ marginTop: 2 }}>
+                  <Score
+                    size="sm"
+                    readOnly={true}
+                    value={value.avgScore}
+                    allowFraction={true}
+                  />
+                </div>
+              </ReviewArea>
+            </BuildingContent>
+          </BuildingContainer>
+        </Link>
+        <div ref={target}>{isLoading && <Loading>Loading...</Loading>}</div>
+      </div>
     );
   });
 }
+
+const Loading = styled.div`
+  text-align: center;
+  border: 1px solid black;
+  height: 200px;
+  font-size: 2rem;
+  background-color: aliceblue;
+`;
+
 const BuildingContainer = styled.div`
   height: 140px;
   display: flex;

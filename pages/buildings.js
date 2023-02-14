@@ -22,7 +22,7 @@ export default function buildings({ data }) {
     const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
-      .get(`/apis/building?buildingIds=${buildingMarking}`, {
+      .get(`/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC`, {
         headers: {
           mocking: 239,
         },
