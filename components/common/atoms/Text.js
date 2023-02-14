@@ -21,7 +21,7 @@ export default function Text({
           type={type}
           placeholder={placeholder}
           onChange={onChange}
-          defaultValue={value || ""}
+          value={value || ""}
           style={{ width, height }}
           {...props}
         />
