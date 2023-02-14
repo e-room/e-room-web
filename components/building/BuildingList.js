@@ -89,7 +89,7 @@ export default function BuildingList({ data }) {
                   리뷰 {value.reviewCnt}개
                 </div>
                 <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
-                <div style={{ marginTop: 2 }}>
+                <div style={{ marginTop: 3 }}>
                   <Score
                     size="sm"
                     readOnly={true}
@@ -116,7 +116,6 @@ const Loading = styled.div`
 `;
 
 const BuildingContainer = styled.div`
-  height: 140px;
   display: flex;
   border-top: 1px solid var(--gray-4);
 
@@ -147,6 +146,7 @@ const Chips = styled.div`
 const ReviewArea = styled.div`
   display: flex;
   align-items: center;
+  max-height: 16px;
   .review-count {
     ${Caption2}
   }
