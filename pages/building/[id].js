@@ -58,12 +58,23 @@ export default ({ data, imgs, reviews }) => {
   const [favorite, setFavorite] = useState(false);
   const onFavoriteChange = useCallback(() => {
     const valid = accessValid({ redirect_uri: `/building/${id}` });
-    if (valid) {
+    if (!valid) return;
+    if (favorite) {
+      axios
+        .delete(`/apis/member/favorite/${id}`)
+        .then((res) => {
+          console.log(res);
+          setFavorite(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
       axios
         .post(`/apis/member/favorite/${id}`)
         .then(() => {
           setToastVisible(true);
-          setFavorite(!favorite);
+          setFavorite(true);
         })
         .catch((error) => {
           console.error(error);
