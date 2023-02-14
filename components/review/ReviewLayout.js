@@ -45,20 +45,19 @@ export default function ReviewLayout({ children }) {
       };
 
       const formData = new FormData();
-      // formData.append(
-      //   "request",
-      //   new Blob([JSON.stringify(formatFormValue)], {
-      //     type: "application/json",
-      //   })
-      // );
-      // formData.append("request", JSON.stringify(formatFormValue));
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(formatFormValue)], {
+          type: "application/json",
+        })
+      );
       for (let i = 0; i < reviewImageList.length; i++) {
         const compress = await imgCompress(reviewImageList[i].data);
-        formData.append("reviewImageList", compress);
+        console.log("compress", compress);
+        console.log("data", reviewImageList[i].data);
+        formData.append("reviewImageList", compress, compress.name);
       }
 
-      for (const [key, value] of formData.entries())
-        console.log("key, value", key, value);
       await axios({
         method: "post",
         url: `/apis/building/room/review`,
@@ -75,16 +74,6 @@ export default function ReviewLayout({ children }) {
         .catch((err) => {
           console.log("리뷰쓰기 실패!", err);
         });
-
-      // await axios
-      //   .post("/api/upload", formData)
-      //   .then((response) => {
-      //     console.log("리뷰쓰기 성공", response);
-      //     setPopupVisible(true);
-      //   })
-      //   .catch((error) => {
-      //     console.log("리뷰쓰기 실패!", error);
-      //   });
     } catch (e) {
       console.log("리뷰쓰기 실패", e.response.data);
     }
