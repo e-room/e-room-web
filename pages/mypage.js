@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import AppLayout from "components/common/AppLayout";
 import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
-import Img from "assets/avatar/64.png";
+import accessValid from "utils/accessValid";
 import {
   Body1Bold,
   Body2Bold,
@@ -12,17 +12,36 @@ import {
 import Icon from "components/common/atoms/Icon";
 import Link from "next/link";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function mypage() {
   const router = useRouter();
+  const [profile, setProfile] = useState({
+    name: null,
+    email: null,
+    profileImageUrl: null,
+  });
+  const getProfile = async () => {
+    const valid = await accessValid({ redirect_uri: `/mypage` });
+    if (valid) {
+      try {
+        const response = await axios.get(`/apis/member/profile`, {
+          withCredentials: true,
+        });
+        setProfile(response.data);
+      } catch (e) {
+        console.error("회원정보를 가져오지 못했습니다.", e);
+      }
+    }
+  };
 
   const goContact = () => {
     alert("문의하기");
   };
 
   const onLogout = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/logout`,{ withCredentials: true });
-    if(response.status === 200) {
+    const response = await axios.get(`/apis/logout`, { withCredentials: true });
+    if (response.status === 200) {
       router.push("/");
     } else {
       alert("로그아웃에 실패했습니다.");
@@ -30,22 +49,28 @@ export default function mypage() {
   };
 
   const onWithdrawal = async () => {
-    const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_HOST}/member/exit`,{ withCredentials: true });
-    if(response.status === 200) {
+    const response = await axios.delete(`/apis/member/exit`, {
+      withCredentials: true,
+    });
+    if (response.status === 200) {
       router.push("/");
     } else {
       alert("탈퇴하기가 실패했습니다.");
     }
   };
 
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <AppLayout pageTitle={"내정보"}>
       <Container>
         <MyInfo>
-          <Avatar size={"lg"} img={Img.src} />
+          <Avatar size={"lg"} img={profile.profileImageUrl} />
           <Box>
-            <div className="nickname">하품하는 망아지</div>
-            <div className="email">hbnhb@kakao.com</div>
+            <div className="nickname">{profile.name}</div>
+            <div className="email">{profile.email}</div>
           </Box>
         </MyInfo>
         <ServiceInfo>
