@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 
 export default ({ images, onDetailView }) => {
-  console.log("images", images);
   if (!images) return;
   return (
     <ImgField>

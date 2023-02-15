@@ -64,7 +64,6 @@ export default function ReviewLayout({ children }) {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          mocking: 239,
         },
       })
         .then((res) => {
@@ -116,7 +115,12 @@ export default function ReviewLayout({ children }) {
         </BottomArea>
       ) : (
         <BottomArea>
-          <Button label={"다음으로"} size="lg" width={"100%"} onClick={goNext} />
+          <Button
+            label={"다음으로"}
+            size="lg"
+            width={"100%"}
+            onClick={goNext}
+          />
         </BottomArea>
       )}
     </>

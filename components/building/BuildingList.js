@@ -25,12 +25,7 @@ export default function BuildingList(props) {
     const buildingMarking = localStorage.getItem("buildingMarking");
 
     const response = await axios.get(
-      `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
-      {
-        headers: {
-          mocking: 239,
-        },
-      }
+      `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`
     );
 
     const nextItem = response.data.content;

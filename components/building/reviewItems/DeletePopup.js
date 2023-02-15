@@ -6,11 +6,7 @@ import { Caption1Bold } from "styles/typography";
 export default ({ reviewId, showConfirmDelete, setShowConfirmDelete }) => {
   const onDelete = async () => {
     await axios
-      .delete(`/apis/building/room/review/${reviewId}`, {
-        headers: {
-          mocking: 239,
-        },
-      })
+      .delete(`/apis/building/room/review/${reviewId}`)
       .then((res) => setShowConfirmDelete(false))
       .catch((err) => console.log("리뷰 삭제가 실패했습니다.", err));
   };
@@ -23,7 +19,7 @@ export default ({ reviewId, showConfirmDelete, setShowConfirmDelete }) => {
       cancelText={"취소"}
       submitText={"삭제"}
       onCancelClick={() => setShowConfirmDelete(false)}
-      onConfirmClick={() => onDelete(value.baseReviewDto.reviewId)}
+      onConfirmClick={() => onDelete()}
     >
       <PopupSubTitle>
         삭제하면 되돌릴 수 없습니다.

@@ -7,20 +7,13 @@ import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
 
 export default function favorites() {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const getData = async () => {
     const valid = await accessValid({ redirect_uri: `/favorites` });
     if (valid) {
-      setLoading(true);
       await axios
-        .get(`/apis/member/favorite`, {
-          headers: {
-            mocking: 239,
-          },
-        })
-        .then((res) => setData(res.data));
-      setLoading(false);
+        .get(`/apis/member/favorite`)
+        .then((res) => setData(res.data.content));
     }
   };
 
@@ -28,12 +21,10 @@ export default function favorites() {
     getData();
   }, []);
 
-  if (loading) return <div>loading...</div>;
-
   return (
     <AppLayout pageTitle={"찜한 자취방"}>
       <Container>
-        {data?.content?.length > 0 && <BuildingList data={data} />}
+        {data.length > 0 ? <BuildingList data={data} /> : <div>no data</div>}
       </Container>
     </AppLayout>
   );

@@ -20,11 +20,7 @@ export default function buildings() {
     const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
-      .get(`/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC`, {
-        headers: {
-          mocking: 239,
-        },
-      })
+      .get(`/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC`)
       .then((res) => {
         setParseData(res.data.content);
       });
