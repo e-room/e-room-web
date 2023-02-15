@@ -13,10 +13,8 @@ import Popup from "components/common/atoms/Popup";
 import CheckBox from "components/common/atoms/CheckBox";
 import { Body2Bold } from "styles/typography";
 
-export default function buildings({ data }) {
-  // const parseData = data ? JSON.parse(data) : [];
+export default function buildings() {
   const [parseData, setParseData] = useState([]);
-  console.log("buildingList", parseData);
 
   useEffect(() => {
     const buildingMarking = localStorage.getItem("buildingMarking");
@@ -28,7 +26,7 @@ export default function buildings({ data }) {
         },
       })
       .then((res) => {
-        setParseData(res.data);
+        setParseData(res.data.content);
       });
   }, []);
 
@@ -38,10 +36,6 @@ export default function buildings({ data }) {
   };
 
   const [filterChecked, setFilterChecked] = useState(true);
-
-  if (parseData.length <= 0) {
-    return <div>loading...</div>;
-  }
 
   return (
     <AppLayout
@@ -82,7 +76,11 @@ export default function buildings({ data }) {
           <Banner>
             <img src={Banner1.src} width={"100%"} height={"100%"} />
           </Banner>
-          <BuildingList data={parseData} />
+          {parseData.length > 0 ? (
+            <BuildingList data={parseData} />
+          ) : (
+            <div>no data</div>
+          )}
         </div>
         <ButtonGroup>
           <Link href={"/review/write"}>

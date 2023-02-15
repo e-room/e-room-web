@@ -48,14 +48,11 @@ export default function ReviewList({ data, buildingId }) {
   const getReviewImages = async (reviewId) => {
     if (!reviewId) return;
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_HOST}/review/${reviewId}/images`,
-        {
-          headers: {
-            mocking: 239,
-          },
-        }
-      );
+      const response = await axios.get(`/apis/review/${reviewId}/images`, {
+        headers: {
+          mocking: 239,
+        },
+      });
       return response.data.reviewImageList;
     } catch (e) {
       console.log("error", e);

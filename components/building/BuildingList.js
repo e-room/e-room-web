@@ -8,48 +8,40 @@ import testImg from "assets/marker4.png";
 import parseFloat from "utils/parseFloat";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-export default function BuildingList({ data }) {
-  const currentData = data.content;
-  // console.log("currentData", currentData);
-  const [cursorId, setCursorId] = useState(
-    currentData[currentData.length - 1]?.buildingId
-  );
-  const [nextItem, setNextItem] = useState([]);
-  const target = useRef(null);
+
+export default function BuildingList(props) {
+  const { data } = props;
+
+  const [target, setTarget] = useState(null);
   const [state, setState] = useState({
-    item: [...currentData],
+    item: data,
     isLoading: false,
   });
-  console.log("state", state);
-  // console.log("nextItem", nextItem);
-  const nextFetch = async () => {
-    // if (state.item[state.item.length - 1].buildingId === cursorId) return;
-    console.log("2");
-    const buildingMarking = localStorage.getItem("buildingMarking");
-    // console.log("cursorId", cursorId);
-    await axios
-      .get(
-        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
-        {
-          headers: {
-            mocking: 239,
-          },
-        }
-      )
-      .then((res) => {
-        if (res?.data?.content && res.data.content.length > 0) {
-          setNextItem(res.data.content);
-          setCursorId(res.data.content[res.data.content.length - 1].buildingId);
-        }
-      });
-  };
 
-  const fetchItems = async (nextItem) => {
+  let cursorId = data[data.length - 1].buildingId;
+
+  const fetchItems = async () => {
+    if (!cursorId) return;
+    const buildingMarking = localStorage.getItem("buildingMarking");
+
+    const response = await axios.get(
+      `/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC&cursorIds=${cursorId}`,
+      {
+        headers: {
+          mocking: 239,
+        },
+      }
+    );
+
+    const nextItem = response.data.content;
+    cursorId = nextItem[nextItem.length - 1]?.buildingId ?? null;
+
+    if (nextItem.length < 1) return;
+
     setState((prev) => ({
       ...prev,
       isLoading: true,
     }));
-    await nextFetch();
     setState((prev) => ({
       item: [...prev.item, ...nextItem],
       isLoading: false,
@@ -59,62 +51,71 @@ export default function BuildingList({ data }) {
     let observer;
     if (target) {
       observer = new IntersectionObserver(
-        async ([e], observer) => {
-          console.log(e.isIntersecting);
-          if (e.isIntersecting) {
-            observer.unobserve(e.target);
-            console.log("1");
-            await fetchItems(nextItem);
-            observer.observe(e.target);
+        async ([entry], observer) => {
+          if (entry.isIntersecting) {
+            observer.unobserve(entry.target);
+            await fetchItems();
+            observer.observe(entry.target);
           }
         },
         { threshold: 1 }
       );
-      observer.observe(target.current);
+      observer.observe(target);
     }
-    return () => observer.disconnect();
+    return () => observer && observer.disconnect();
   }, [target]);
 
   const { item, isLoading } = state;
-  console.log("item", item.length);
 
-  return item.map((value) => {
-    return (
-      <div>
-        <Link href={`/building/${value.buildingId}`} key={value.buildingId}>
-          <BuildingContainer>
-            <Image src={testImg} width={122} height={122} objectFit={"cover"} />
-            <BuildingContent>
-              <div className="building-name">{value.name}</div>
-              <AddressArea>
-                {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
-                {value.address.buildingNumber}
-              </AddressArea>
-              <Chips>
-                {value.directDeal && <Chip label={"직거래가능"} />}
-                <Chip label={"교통 편리"} type={"secondary"} />
-              </Chips>
-              <ReviewArea>
-                <div className="review-count" style={{ opacity: 0.5, marginRight: 8 }}>
-                  리뷰 {value.reviewCnt}개
-                </div>
-                <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
-                <div style={{ marginTop: 3 }}>
-                  <Score
-                    size="sm"
-                    readOnly={true}
-                    value={value.avgScore}
-                    allowFraction={true}
-                  />
-                </div>
-              </ReviewArea>
-            </BuildingContent>
-          </BuildingContainer>
-        </Link>
-        <div ref={target}>{isLoading && <Loading>Loading...</Loading>}</div>
-      </div>
-    );
-  });
+  return (
+    <div>
+      {item.map((value) => {
+        return (
+          <div key={value.buildingId}>
+            <Link href={`/building/${value.buildingId}`}>
+              <BuildingContainer>
+                <Image
+                  src={testImg}
+                  width={122}
+                  height={122}
+                  objectFit={"cover"}
+                />
+                <BuildingContent>
+                  <div className="building-name">{value.name}</div>
+                  <AddressArea>
+                    {value.address.siDo} {value.address.siGunGu}{" "}
+                    {value.address.roadName} {value.address.buildingNumber}
+                  </AddressArea>
+                  <Chips>
+                    {value.directDeal && <Chip label={"직거래가능"} />}
+                    <Chip label={"교통 편리"} type={"secondary"} />
+                  </Chips>
+                  <ReviewArea>
+                    <div
+                      className="review-count"
+                      style={{ opacity: 0.5, marginRight: 8 }}
+                    >
+                      리뷰 {value.reviewCnt}개
+                    </div>
+                    <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
+                    <div style={{ marginTop: 3 }}>
+                      <Score
+                        size="sm"
+                        readOnly={true}
+                        value={value.avgScore}
+                        allowFraction={true}
+                      />
+                    </div>
+                  </ReviewArea>
+                </BuildingContent>
+              </BuildingContainer>
+            </Link>
+          </div>
+        );
+      })}
+      <div ref={setTarget}>{isLoading && <Loading>Loading...</Loading>}</div>
+    </div>
+  );
 }
 
 const Loading = styled.div`
