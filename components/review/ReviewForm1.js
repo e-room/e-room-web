@@ -31,11 +31,14 @@ export default function ReviewForm1() {
         buildingName: data.buildingName,
       },
     });
-    // setPostCodeOpen(false);
   };
 
-  const addressValue = formValue.address.siDo
-    ? `${formValue.address.siDo} ${formValue.address.siGunGu} ${formValue.address.roadName} ${formValue.address.buildingNumber}`
+  const { siDo, siGunGu, roadName, buildingNumber } = formValue.address;
+  const { buildingName } = formValue.buildingOptionalDto;
+  const addressValue = siDo
+    ? buildingName
+      ? `${siDo} ${siGunGu} ${roadName} ${buildingNumber} (${buildingName})`
+      : `${siDo} ${siGunGu} ${roadName} ${buildingNumber}`
     : "";
 
   return (
