@@ -5,16 +5,13 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
-import { Body2, Body2Bold } from "styles/typography";
+import { Body2 } from "styles/typography";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
-import MapButton from "components/common/atoms/MapButton";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
-import Popup from "components/common/atoms/Popup";
-import CheckBox from "components/common/atoms/CheckBox";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -60,7 +57,7 @@ const MainMap = ({ data }) => {
       map.current = await new kakao.maps.Map(container, options);
 
       // 마커 클러스터러를 생성합니다
-      let clusterer = await new kakao.maps.MarkerClusterer({
+      const clusterer = await new kakao.maps.MarkerClusterer({
         map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 5, // 클러스터 할 최소 지도 레벨
@@ -150,18 +147,6 @@ const MainMap = ({ data }) => {
     map.current.setLevel(map.current.getLevel() + 1);
   };
 
-  const [popupVisible, setPopupVisible] = useState(false);
-  const onHideClick = () => {
-    setPopupVisible(false);
-  };
-
-  const [filterChecked, setFilterChecked] = useState(true);
-  // console.log(filterChecked);
-
-  // useEffect(() => {
-  //   localStorage.setItem("buildingMarking", data);
-  // }, []);
-
   const [searchValue, setSearchValue] = useState("");
   const [searchVisible, setSearchVisible] = useState(false);
 
@@ -184,28 +169,6 @@ const MainMap = ({ data }) => {
           )}
         </SearchField>
       )}
-      <Popup
-        visible={popupVisible}
-        title={
-          <FilterPopupTitle>
-            <Icon icon={"filter-stroke"} />
-            <div className="title">필터</div>
-          </FilterPopupTitle>
-        }
-        titleAlign={"left"}
-        buttonType={"default"}
-        cancelText="취소"
-        submitText="필터 적용하기"
-        onCancelClick={onHideClick}
-      >
-        <Contents>
-          <SubText>직거래 가능한 방만 보기</SubText>
-          <CheckBox
-            onChange={() => setFilterChecked(!filterChecked)}
-            checked={filterChecked}
-          />
-        </Contents>
-      </Popup>
       <AppLayout
         additionalFunction={
           <Icon
@@ -217,9 +180,6 @@ const MainMap = ({ data }) => {
       >
         <Container>
           <MapWrapper id="map" />
-          <FilterItem>
-            <MapButton onClick={() => setPopupVisible(true)} />
-          </FilterItem>
           <GroupItem>
             <GroupButton
               items={[
@@ -316,12 +276,7 @@ const MapWrapper = styled.div`
 const Container = styled.div`
   overflow: hidden !important;
 `;
-const FilterItem = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 68px;
-  z-index: 2;
-`;
+
 const GroupItem = styled.div`
   position: absolute;
   right: 20px;
@@ -342,23 +297,6 @@ const ButtonItem = styled.div`
   justify-content: center;
   z-index: 2;
   gap: 8px;
-`;
-const Contents = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6px;
-`;
-const SubText = styled.div`
-  ${Body2Bold}
-  color: var(--black);
-`;
-const FilterPopupTitle = styled.div`
-  display: flex;
-  align-items: center;
-  .title {
-    margin-left: 8px;
-  }
 `;
 
 const SearchField = styled.div`
