@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
 import FavoriteList from "components/building/FavoriteList";
+import NoDataPage from "components/favorite/NoDataPage";
 
 export default function favorites() {
   const [data, setData] = useState([]);
@@ -23,7 +24,7 @@ export default function favorites() {
   return (
     <AppLayout pageTitle={"찜한 자취방"}>
       <Container>
-        {data.length > 0 ? <FavoriteList data={data} /> : <div>no data</div>}
+        {data.length > 0 ? <FavoriteList data={data} /> : <NoDataPage />}
       </Container>
     </AppLayout>
   );
