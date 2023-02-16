@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import dayjs from "dayjs";
 import styled from "@emotion/styled";
 
 import { animation_fadeInUp_view } from "styles/keyframes";
@@ -8,10 +9,37 @@ import { reviewFormState } from "states/reviewAtom";
 import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
+import { Body2Bold, Body3 } from "styles/typography";
 
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   const [postCodeOpen, setPostCodeOpen] = useState(false);
+  const [yearOptions, setYearOptions] = useState([]);
+  const now = dayjs().get("year");
+
+  const test = useCallback(() => {
+    const copy = [...yearOptions];
+    for (let i = now; i >= 1990; i--) {
+      copy.push({ value: i, label: `${i}년` });
+    }
+    setYearOptions(copy);
+  }, []);
+
+  const [residenceStartYear, setResidenceStartYear] = useState({
+    value: now,
+    label: `${now}년`,
+  });
+
+  const onYearChange = (e) => {
+    setResidenceStartYear(e);
+    setFormValue({
+      ...formValue,
+      reviewResidencePeriodDto: {
+        ...formValue.reviewResidencePeriodDto,
+        residenceStartYear: e,
+      },
+    });
+  };
 
   const onHandleComplete = (data) => {
     const roadAddressArray = data.roadAddress.split(" ");
@@ -41,6 +69,10 @@ export default function ReviewForm1() {
       : `${siDo} ${siGunGu} ${roadName} ${buildingNumber}`
     : "";
 
+  useEffect(() => {
+    test();
+  }, []);
+
   return (
     <FormWrapper
       onTouchStart={() => {
@@ -63,30 +95,24 @@ export default function ReviewForm1() {
         )}
       </FormItem>
       <GridItem>
-        {/* TODO: select onblur시 옵션 숨김 */}
-        <Select
-          placeholder={"예: 2022"}
-          label={"거주 시작"}
-          unit={"부터"}
-          width={"100%"}
-          value={formValue.reviewResidencePeriodDto.residenceStartYear}
-          onChange={(e) => {
-            setFormValue({
-              ...formValue,
-              reviewResidencePeriodDto: {
-                ...formValue.reviewResidencePeriodDto,
-                residenceStartYear: e.value,
-              },
-            });
-          }}
-          items={[
-            { value: 2022, label: "2022년" },
-            { value: 2021, label: "2021년" },
-            { value: 2020, label: "2020년" },
-            { value: 2019, label: "2019년" },
-            { value: 2018, label: "2018년" },
-          ]}
-        />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <TextLabel>거주 시작</TextLabel>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Select
+              size={"lg"}
+              value={residenceStartYear}
+              onChange={onYearChange}
+              options={yearOptions}
+            />
+            <TextUnit>부터</TextUnit>
+          </div>
+        </div>
         <Text
           type={"number"}
           placeholder={"예: 20"}
@@ -213,4 +239,17 @@ const GridItem = styled.div`
 
   margin-bottom: 24px;
   position: relative;
+`;
+const TextLabel = styled.div`
+  ${Body2Bold}
+
+  margin-bottom: 4px;
+`;
+
+const TextUnit = styled.div`
+  ${Body3}
+  white-space: nowrap;
+  margin-left: 8px;
+  width: 30px;
+  min-width: 30px;
 `;

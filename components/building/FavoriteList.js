@@ -9,7 +9,7 @@ import parseFloat from "utils/parseFloat";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function BuildingList(props) {
+export default function FavoriteList(props) {
   const { data, sort } = props;
 
   const [target, setTarget] = useState(null);
@@ -26,11 +26,10 @@ export default function BuildingList(props) {
     console.log("cursorId, sort", cursorId, sort);
 
     if (!cursorId) return;
-    const buildingMarking = localStorage.getItem("buildingMarking");
 
     const filterSort = sort ? `${sort},id,DESC` : `DESC`;
     const response = await axios.get(
-      `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterSort}&cursorIds=${cursorId}`
+      `/apis/member/favorite?size=10&sort=DESC&cursorIds=${cursorId}`
     );
 
     const nextItem = response.data.content;

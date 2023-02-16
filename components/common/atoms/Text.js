@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { Body2Bold, Body3 } from "styles/typography";
+import { Body2, Body2Bold, Body3 } from "styles/typography";
 
 export default function Text({
   type = "text",
@@ -42,9 +42,12 @@ Text.propTypes = {
 };
 
 const StyledInputText = styled.input`
+  ${Body2}
   display: flex;
   align-items: center;
-  padding: 16px;
+
+  // TODO: padding size 15 -> 16
+  padding: 15px;
 
   border: 1px solid var(--gray-4);
   border-radius: 12px;

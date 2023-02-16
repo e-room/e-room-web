@@ -10,17 +10,27 @@ import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
 import Icon from "components/common/atoms/Icon";
 import Popup from "components/common/atoms/Popup";
-import CheckBox from "components/common/atoms/CheckBox";
 import { Body2Bold } from "styles/typography";
+import Select from "components/common/atoms/Select";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
+  const filterOptions = [
+    { value: "reviewCnt", label: "리뷰수 순" },
+    { value: "avgScore", label: "별점 높은 순" },
+  ];
+  const [filterValue, setFilterValue] = useState(filterOptions[0]);
+  const onFilterChange = (e) => {
+    setFilterValue(e);
+  };
 
   useEffect(() => {
     const buildingMarking = localStorage.getItem("buildingMarking");
 
     axios
-      .get(`/apis/building?buildingIds=${buildingMarking}&size=10&sort=DESC`)
+      .get(
+        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
+      )
       .then((res) => {
         setParseData(res.data.content);
       });
@@ -30,8 +40,18 @@ export default function buildings() {
   const onHideClick = () => {
     setPopupVisible(false);
   };
-
-  const [filterChecked, setFilterChecked] = useState(true);
+  const onConfirmClick = () => {
+    const buildingMarking = localStorage.getItem("buildingMarking");
+    setParseData([]);
+    axios
+      .get(
+        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
+      )
+      .then((res) => {
+        setParseData(res.data.content);
+      });
+    setPopupVisible(false);
+  };
 
   return (
     <AppLayout
@@ -50,7 +70,7 @@ export default function buildings() {
         title={
           <FilterPopupTitle>
             <Icon icon={"filter-stroke"} />
-            <div className="title">필터</div>
+            <div className="title">정렬</div>
           </FilterPopupTitle>
         }
         titleAlign={"left"}
@@ -58,12 +78,15 @@ export default function buildings() {
         cancelText="취소"
         submitText="필터 적용하기"
         onCancelClick={onHideClick}
+        onConfirmClick={onConfirmClick}
       >
         <Contents>
-          <SubText>직거래 가능한 방만 보기</SubText>
-          <CheckBox
-            onChange={() => setFilterChecked(!filterChecked)}
-            checked={filterChecked}
+          <SubText>정렬 순서</SubText>
+          <Select
+            size={"md"}
+            options={filterOptions}
+            value={filterValue}
+            onChange={onFilterChange}
           />
         </Contents>
       </Popup>
@@ -73,7 +96,7 @@ export default function buildings() {
             <img src={Banner1.src} width={"100%"} height={"100%"} />
           </Banner>
           {parseData.length > 0 ? (
-            <BuildingList data={parseData} />
+            <BuildingList data={parseData} sort={filterValue.value} />
           ) : (
             <div>no data</div>
           )}
@@ -119,9 +142,9 @@ const FilterPopupTitle = styled.div`
   }
 `;
 const Contents = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
   align-items: center;
-  justify-content: space-between;
   padding: 0 6px;
 `;
 

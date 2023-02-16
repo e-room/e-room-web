@@ -44,6 +44,7 @@ export default function Popup({
               size="md"
               width={"100%"}
               type={"primary"}
+              onClick={onConfirmClick}
             />
           </div>
         );
