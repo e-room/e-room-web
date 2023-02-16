@@ -3,8 +3,7 @@ import Link from "next/link";
 import Chip from "components/common/atoms/Chip";
 import Score from "components/common/atoms/Score";
 import { Body2Bold, Caption2, Caption2Bold } from "styles/typography";
-import Image from "next/image";
-import testImg from "assets/marker4.png";
+import Logo from "assets/img_room_default.svg";
 import parseFloat from "utils/parseFloat";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -80,12 +79,7 @@ export default function BuildingList(props) {
           <div key={value.buildingId}>
             <Link href={`/building/${value.buildingId}`}>
               <BuildingContainer>
-                <Image
-                  src={testImg}
-                  width={122}
-                  height={122}
-                  objectFit={"cover"}
-                />
+                <Logo width={122} height={122} />
                 <BuildingContent>
                   <div className="building-name">{value.name}</div>
                   <AddressArea>
