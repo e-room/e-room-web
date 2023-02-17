@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
-import BuildingBadge from "assets/illust-badge/illust-badge-building.svg";
 
-import Button from "components/common/atoms/Button";
-import Icon from "components/common/atoms/Icon";
+import TrafficBadge from "assets/illust-badge/illust-badge-traffic.svg";
+import BuildingComplexBadge from "assets/illust-badge/illust-badge-building.svg";
+import InternalBadge from "assets/illust-badge/illust-badge-inside.svg";
+import SurroundingBadge from "assets/illust-badge/illust-badge-environment.svg";
+import LivingLocationBadge from "assets/illust-badge/illust-badge-life.svg";
 import {
   Body3Bold,
   Caption1Bold,
@@ -11,20 +13,53 @@ import {
   Title1,
   Display2,
 } from "styles/typography";
-import Toast from "components/common/atoms/Toast";
 import parseFloat from "utils/parseFloat";
+
+import Button from "components/common/atoms/Button";
+import Toast from "components/common/atoms/Toast";
 import Score from "components/common/atoms/Score";
 
 export default function BuildingInfo({ building }) {
   const { buildingSummaries } = building;
-  const totalScore = buildingSummaries.RESIDENCESATISFACTION;
+  const {
+    RESIDENCESATISFACTION,
+    TRAFFIC,
+    BUILDINGCOMPLEX,
+    INTERNAL,
+    SURROUNDING,
+    LIVINGLOCATION,
+  } = buildingSummaries;
+
+  const totalScore = RESIDENCESATISFACTION;
   const DetailFields = [
-    { title: "교통", score: buildingSummaries.TRAFFIC ?? 0 },
-    { title: "건물/단지", score: buildingSummaries.BUILDINGCOMPLEX ?? 0 },
-    { title: "내부", score: buildingSummaries.INTERNAL ?? 0 },
-    { title: "주변/환경", score: buildingSummaries.SURROUNDING ?? 0 },
-    { title: "생활/입지", score: buildingSummaries.LIVINGLOCATION ?? 0 },
+    { title: "교통", score: TRAFFIC ?? 0 },
+    { title: "건물/단지", score: BUILDINGCOMPLEX ?? 0 },
+    { title: "내부", score: INTERNAL ?? 0 },
+    { title: "주변/환경", score: SURROUNDING ?? 0 },
+    { title: "생활/입지", score: LIVINGLOCATION ?? 0 },
   ];
+
+  const badge = useMemo(() => {
+    const badges = [
+      <TrafficBadge width={48} height={64} />,
+      <BuildingComplexBadge width={48} height={64} />,
+      <InternalBadge width={48} height={64} />,
+      <SurroundingBadge width={48} height={64} />,
+      <LivingLocationBadge width={48} height={64} />,
+    ];
+    const score = [
+      TRAFFIC,
+      BUILDINGCOMPLEX,
+      INTERNAL,
+      SURROUNDING,
+      LIVINGLOCATION,
+    ];
+
+    const max = Math.max(...score);
+    const index = score.indexOf(max);
+
+    return badges[index];
+  }, []);
 
   const formValue = {
     address: `${building.address.siDo} ${building.address.siGunGu} ${building.address.roadName} ${building.address.buildingNumber}`,
@@ -68,7 +103,7 @@ export default function BuildingInfo({ building }) {
             {formValue.address} &gt;
           </AddressField>
         </NameField>
-        <BuildingBadge width={48} height={64} />
+        {badge}
       </FlexBox>
 
       {/* TODO: 직거래 기능 풀리면 주석 해제 */}
