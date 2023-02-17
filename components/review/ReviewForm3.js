@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { reviewFormState } from "states/reviewAtom";
 import { KEYWORD_STATES } from "codes/codeType";
-import { Body2Bold } from "styles/typography";
+import { Body2, Body2Bold } from "styles/typography";
 import { animation_fadeInUp_view } from "styles/keyframes";
 
 import TextArea from "components/common/atoms/TextArea";
@@ -55,7 +55,10 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel style={{ marginTop: 20 }}>장점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>
+        장점 설명<Sub>(50자 이상)</Sub>
+      </TextLabel>
+
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -91,7 +94,9 @@ export default function ReviewForm3() {
           );
         })}
       </Box>
-      <TextLabel style={{ marginTop: 20 }}>단점 설명</TextLabel>
+      <TextLabel style={{ marginTop: 20 }}>
+        단점 설명<Sub>(50자 이상)</Sub>
+      </TextLabel>
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -121,6 +126,12 @@ const TextLabel = styled.div`
   ${Body2Bold}
 
   margin-bottom: 4px;
+  display: flex;
+`;
+const Sub = styled.div`
+  ${Body2}
+  color: var(--gray-2);
+  margin-left: 4px;
 `;
 const Box = styled.div`
   display: flex;
