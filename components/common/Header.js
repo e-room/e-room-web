@@ -63,6 +63,13 @@ const HeaderTitle = styled.div`
   text-align: center;
 
   color: var(--black);
+
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const LogoTitle = styled.div`

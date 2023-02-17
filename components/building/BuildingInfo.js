@@ -182,6 +182,13 @@ const NameField = styled.div`
 const Title = styled.div`
   ${Title1}
   color: var(--black);
+
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const AddressField = styled.div`
