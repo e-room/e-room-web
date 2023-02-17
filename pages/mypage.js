@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import AppLayout from "components/common/AppLayout";
 import styled from "@emotion/styled";
-import Avatar from "components/common/atoms/Avatar";
+
 import accessValid from "utils/accessValid";
 import {
   Body1Bold,
@@ -9,13 +11,17 @@ import {
   Caption1Bold,
   Caption2,
 } from "styles/typography";
+
+import AppLayout from "components/common/AppLayout";
+import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
-import Link from "next/link";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import Loading from "components/common/Loading";
+import Error from "components/common/Error";
 
 export default function mypage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [profile, setProfile] = useState({
     name: null,
     email: null,
@@ -24,14 +30,19 @@ export default function mypage() {
   const getProfile = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
     if (valid) {
-      try {
-        const response = await axios.get(`/apis/member/profile`, {
+      await axios
+        .get(`/apis/member/profile`, {
           withCredentials: true,
+        })
+        .then((response) => {
+          setProfile(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error.message);
+          setLoading(false);
+          setError(true);
         });
-        setProfile(response.data);
-      } catch (e) {
-        console.error("회원정보를 가져오지 못했습니다.", e);
-      }
     }
   };
 
@@ -62,6 +73,9 @@ export default function mypage() {
   useEffect(() => {
     getProfile();
   }, []);
+
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <AppLayout pageTitle={"내정보"}>

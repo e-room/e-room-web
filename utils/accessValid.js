@@ -6,7 +6,8 @@ const accessValid = async ({ redirect_uri }) => {
   const response = await axios.get(`/apis/token/valid`);
   if (!response.data || !response.data.isValid) {
     const pathname = Router.router.state.pathname;
-    return Router.push(`/login?redirect_uri=${redirect_uri ?? pathname}`);
+    Router.push(`/login?redirect_uri=${redirect_uri ?? pathname}`);
+    return false;
   } else {
     return true;
   }

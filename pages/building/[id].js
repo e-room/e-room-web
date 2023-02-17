@@ -26,10 +26,6 @@ export default ({ data, imgs, reviews }) => {
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
 
-  console.log("buildingReviews", buildingReviews);
-  console.log("images", buildingImages);
-  console.log("buildingInfo", building);
-
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {

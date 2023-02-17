@@ -4,17 +4,22 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 
 import Banner1 from "assets/banner/banner1.png";
+import { Body2Bold } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
 import Icon from "components/common/atoms/Icon";
 import Popup from "components/common/atoms/Popup";
-import { Body2Bold } from "styles/typography";
 import Select from "components/common/atoms/Select";
+import Loading from "components/common/Loading";
+import Error from "components/common/Error";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const filterOptions = [
     { value: "reviewCnt", label: "리뷰수 순" },
     { value: "avgScore", label: "별점 높은 순" },
@@ -24,34 +29,53 @@ export default function buildings() {
     setFilterValue(e);
   };
 
-  useEffect(() => {
-    const buildingMarking = localStorage.getItem("buildingMarking");
-
-    axios
-      .get(
-        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
-      )
-      .then((res) => {
-        setParseData(res.data.content);
-      });
-  }, []);
-
   const [popupVisible, setPopupVisible] = useState(false);
   const onHideClick = () => {
     setPopupVisible(false);
   };
-  const onConfirmClick = () => {
+  const onConfirmClick = async () => {
+    setLoading(true);
     const buildingMarking = localStorage.getItem("buildingMarking");
     setParseData([]);
-    axios
+    await axios
       .get(
         `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
       )
-      .then((res) => {
-        setParseData(res.data.content);
+      .then((response) => {
+        setParseData(response.data.content);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setLoading(false);
+        setError(true);
       });
     setPopupVisible(false);
   };
+
+  const getData = async () => {
+    const buildingMarking = localStorage.getItem("buildingMarking");
+    await axios
+      .get(
+        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
+      )
+      .then((response) => {
+        setParseData(response.data.content);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setLoading(false);
+        setError(true);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <AppLayout
