@@ -28,11 +28,12 @@ const ImgField = styled.div`
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  display: flex;
-  gap: 8px;
-
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  > span {
+    margin-right: 8px !important;
   }
 `;
 

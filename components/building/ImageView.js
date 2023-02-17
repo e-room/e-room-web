@@ -51,16 +51,15 @@ const ImgField = styled.div`
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  // TODO: 사진 가로 스크롤 기능...
-  /* display: flex; */
-  /* gap: 8px; */
-
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  > span {
+    margin-right: 8px !important;
   }
 `;
 
 const ImageBox = styled(Image)`
   border-radius: 8px;
-  margin-right: 8px !important;
 `;
