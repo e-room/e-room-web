@@ -22,6 +22,8 @@ Toggle.propTypes = {
 };
 
 const StyledToggle = styled.div`
+  height: 34px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
