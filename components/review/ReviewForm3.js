@@ -62,6 +62,9 @@ export default function ReviewForm3() {
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
+        caption={"50자 이상 입력해주세요."}
+        count={50}
+        countUnit={"자"}
         onChange={(e) => {
           setFormValue({
             ...formValue,
@@ -100,6 +103,9 @@ export default function ReviewForm3() {
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
         height={168}
+        caption={"50자 이상 입력해주세요."}
+        count={50}
+        countUnit={"자"}
         onChange={(e) => {
           setFormValue({
             ...formValue,

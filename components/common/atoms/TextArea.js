@@ -48,9 +48,9 @@ export default function TextArea(props) {
         {...props}
       />
       <CaptionField status={status}>
-        <div className="caption">{caption}</div>
+        <div className="caption">{status === "danger-1" && caption}</div>
         <div className="count">
-          {count && `${value ? value.length : 0}/${count}`}
+          {count && `${value ? value.length : 0}`}
           {countUnit}
         </div>
       </CaptionField>
