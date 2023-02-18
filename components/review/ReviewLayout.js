@@ -30,7 +30,7 @@ export default function ReviewLayout({ children }) {
   };
 
   const goNext = () => {
-    router.push(`/review/write/${Number(index) + 1}`);
+    router.push(`/review/write?index=${Number(index) + 1}`);
   };
 
   const onSubmit = async () => {
