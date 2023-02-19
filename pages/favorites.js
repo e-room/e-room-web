@@ -3,7 +3,7 @@ import AppLayout from "components/common/AppLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
-import FavoriteList from "components/building/FavoriteList";
+import FavoriteList from "components/favorite/FavoriteList";
 import NoDataPage from "components/favorite/NoDataPage";
 import Loading from "components/common/Loading";
 import Error from "components/common/Error";
