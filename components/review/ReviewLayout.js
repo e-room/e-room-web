@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -18,15 +18,97 @@ import valueCheck from "utils/valueCheck";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
+  const { index = "1" } = router.query;
 
   const reviewImageList = useRecoilValue(reviewImageListState);
-  const { index = 1 } = router.query;
+  const [successBuildingId, setSuccessBuildingId] = useState(null);
+
+  const [nextDisabled, setNextDisabled] = useState({
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+  });
 
   const [popupVisible, setPopupVisible] = useState(false);
   const formValue = useRecoilValue(reviewFormState);
 
+  // TODO: validation 로직 수정 필요!!!
+  useEffect(() => {
+    if (index === "1") {
+      let address = false;
+      let reviewBaseDto = false;
+      let reviewResidencePeriodDto = false;
+      if (
+        formValue.address["siDo"] &&
+        formValue.address["siGunGu"] &&
+        formValue.address["eupMyeon"] &&
+        formValue.address["roadName"] &&
+        formValue.address["buildingNumber"]
+      )
+        address = true;
+
+      if (
+        formValue.reviewBaseDto["deposit"] &&
+        formValue.reviewBaseDto["monthlyRent"] &&
+        formValue.reviewBaseDto["managementFee"] &&
+        formValue.reviewBaseDto["netLeasableArea"]
+      )
+        reviewBaseDto = true;
+
+      if (
+        formValue.reviewResidencePeriodDto["residenceStartYear"] &&
+        formValue.reviewResidencePeriodDto["residenceDuration"]
+      )
+        reviewResidencePeriodDto = true;
+
+      if (address && reviewBaseDto && reviewResidencePeriodDto) {
+        setNextDisabled({ ...nextDisabled, [index]: false });
+      } else {
+        setNextDisabled({ ...nextDisabled, [index]: true });
+      }
+    } else if (index === "2") {
+      let reviewScoreDto = false;
+      if (
+        formValue.reviewScoreDto["traffic"] &&
+        formValue.reviewScoreDto["buildingComplex"] &&
+        formValue.reviewScoreDto["surrounding"] &&
+        formValue.reviewScoreDto["internal"] &&
+        formValue.reviewScoreDto["livingLocation"]
+      )
+        reviewScoreDto = true;
+
+      if (reviewScoreDto) {
+        setNextDisabled({ ...nextDisabled, [index]: false });
+      } else {
+        setNextDisabled({ ...nextDisabled, [index]: true });
+      }
+    } else if (index === "3") {
+      let keyword = false;
+      let description = false;
+      if (
+        formValue.advantageKeywordList.length > 0 &&
+        formValue.disadvantageKeywordList.length > 0
+      )
+        keyword = true;
+      if (
+        formValue.advantageDescription &&
+        formValue.disadvantageDescription &&
+        formValue.advantageDescription?.length > 50 &&
+        formValue.disadvantageDescription?.length > 50
+      )
+        description = true;
+
+      if (keyword && description) {
+        setNextDisabled({ ...nextDisabled, [index]: false });
+      } else {
+        setNextDisabled({ ...nextDisabled, [index]: true });
+      }
+    }
+  }, [formValue]);
+
   const goHome = () => {
-    router.push(`/`);
+    router.push(`/building/${successBuildingId}`);
   };
 
   const goNext = () => {
@@ -53,8 +135,6 @@ export default function ReviewLayout({ children }) {
       );
       for (let i = 0; i < reviewImageList.length; i++) {
         const compress = await imgCompress(reviewImageList[i].data);
-        console.log("compress", compress);
-        console.log("data", reviewImageList[i].data);
         formData.append("reviewImageList", compress, compress.name);
       }
 
@@ -68,6 +148,7 @@ export default function ReviewLayout({ children }) {
       })
         .then((res) => {
           console.log("리뷰쓰기 성공", res);
+          setSuccessBuildingId(res.data.buildingId);
           setPopupVisible(true);
         })
         .catch((err) => {
@@ -119,6 +200,7 @@ export default function ReviewLayout({ children }) {
             label={"다음으로"}
             size="lg"
             width={"100%"}
+            disabled={nextDisabled[index]}
             onClick={goNext}
           />
         </BottomArea>
