@@ -14,11 +14,18 @@ export default function Header({ pageTitle, additionalFunction }) {
     }
   };
 
+  console.log("router", router);
   return (
     <AppBarWrapper>
-      <Box onClick={onBack}>
-        <Icon icon={"arrow-left"} size="md" />
-      </Box>
+      {router.pathname === "/mypage" ||
+      router.pathname === "/favorites" ||
+      router.pathname === "/" ? (
+        <Box></Box>
+      ) : (
+        <Box onClick={onBack}>
+          <Icon icon={"arrow-left"} size="md" />
+        </Box>
+      )}
       <Box>
         {pageTitle ? (
           <HeaderTitle>{pageTitle}</HeaderTitle>
