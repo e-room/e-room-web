@@ -103,7 +103,10 @@ export default ({ data, imgs, reviews }) => {
           <ImageView data={buildingImages.reviewImageList} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
-          <ReviewList data={buildingReviews.reviewSlicedList} buildingId={id} />
+          <ReviewList
+            reviews={buildingReviews.reviewSlicedList.content}
+            buildingId={id}
+          />
         )}
 
         <ButtonItem>
@@ -128,7 +131,7 @@ export async function getServerSideProps({ params }) {
     `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`
   );
   const res2 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review`,
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review?size=4&sort=id,DESC`,
     {
       headers: {
         mocking: 239,

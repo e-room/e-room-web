@@ -3,23 +3,20 @@ import axios from "axios";
 import Popup from "components/common/atoms/Popup";
 import { Caption1Bold } from "styles/typography";
 
-export default ({
-  reviewId,
-  showConfirmDelete,
-  setShowConfirmDelete,
-  Reviews,
-  setReviews,
-}) => {
+export default (props) => {
+  const { reviewId, showConfirmDelete, setShowConfirmDelete, data, setData } =
+    props;
+
   const onDelete = async () => {
     await axios
       .delete(`/apis/building/room/review/${reviewId}`)
       .then((res) => {
         setShowConfirmDelete(false);
-        const filters = Reviews.content.filter(
+        const filters = data.filter(
           (v) => v.baseReviewDto.reviewId !== reviewId
         );
-        setReviews({
-          ...Reviews,
+        setData({
+          ...data,
           content: filters,
         });
       })

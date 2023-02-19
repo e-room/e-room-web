@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 import styled from "@emotion/styled";
@@ -13,10 +13,11 @@ import ReviewInfo from "./reviewItems/ReviewInfo";
 import LikeField from "./reviewItems/LikeField";
 import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
+import axios from "axios";
 
-export default function ReviewList({ data, buildingId }) {
-  const [Reviews, setReviews] = useState(data);
-
+export default function ReviewList(props) {
+  const { reviews, buildingId } = props;
+  const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const setShowDetail = useSetRecoilState(imageViewState);
@@ -41,14 +42,65 @@ export default function ReviewList({ data, buildingId }) {
     }
   };
 
+  const [target, setTarget] = useState(null);
+  const [state, setState] = useState({
+    item: data,
+    isLoading: false,
+  });
+  const lastData = data[data.length - 1];
+  let cursorId = lastData.reviewBaseDto.reviewId;
+
+  const fetchItems = async () => {
+    if (!cursorId) return;
+
+    const response = await axios.get(
+      `/apis/building/${buildingId}/room/review?size=4&sort=id,DESC&cursorIds=${cursorId}`
+    );
+
+    const nextItem = response.data.reviewSlicedList.content;
+    const lastItem = nextItem[nextItem.length - 1];
+
+    cursorId = lastItem ? lastItem.reviewBaseDto.reviewId : null;
+
+    if (nextItem.length < 1) return;
+
+    setState((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
+    setState((prev) => ({
+      item: [...prev.item, ...nextItem],
+      isLoading: false,
+    }));
+  };
+  useEffect(() => {
+    let observer;
+    if (target && cursorId) {
+      observer = new IntersectionObserver(
+        async ([entry], observer) => {
+          if (entry.isIntersecting && cursorId) {
+            observer.unobserve(entry.target);
+            await fetchItems();
+            observer.observe(entry.target);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, cursorId]);
+
+  const { item, isLoading } = state;
+
   return (
     <Container>
       <Title>실제 거주 후기</Title>
       <div>
         {showConfirmDelete && (
           <DeletePopup
-            Reviews={Reviews}
-            setReviews={setReviews}
+            data={data}
+            setData={setData}
             reviewId={defaultValue.reviewBaseDto.reviewId}
             showConfirmDelete={showConfirmDelete}
             setShowConfirmDelete={setShowConfirmDelete}
@@ -61,7 +113,7 @@ export default function ReviewList({ data, buildingId }) {
             setShowTotalScore={setShowTotalScore}
           />
         )}
-        {Reviews.content.map((value) => {
+        {item.map((value) => {
           return (
             <Item key={value.reviewBaseDto.reviewId}>
               <AuthorInfo
@@ -80,6 +132,7 @@ export default function ReviewList({ data, buildingId }) {
             </Item>
           );
         })}
+        <div ref={setTarget}>{isLoading && <Loading>Loading...</Loading>}</div>
       </div>
     </Container>
   );
@@ -106,4 +159,12 @@ const Item = styled.div`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
+`;
+
+const Loading = styled.div`
+  text-align: center;
+  border: 1px solid black;
+  height: 200px;
+  font-size: 2rem;
+  background-color: aliceblue;
 `;
