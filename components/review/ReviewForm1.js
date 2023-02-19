@@ -78,6 +78,9 @@ export default function ReviewForm1() {
       onTouchStart={() => {
         if (postCodeOpen) setPostCodeOpen(false);
       }}
+      onClick={() => {
+        if (postCodeOpen) setPostCodeOpen(false);
+      }}
     >
       <FormItem>
         <Text
@@ -214,7 +217,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-bottom: 80px;
+  padding-bottom: 80px;
 
   ${animation_fadeInUp_view}
 `;
