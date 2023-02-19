@@ -36,7 +36,7 @@ export default function ReviewForm1() {
       ...formValue,
       reviewResidencePeriodDto: {
         ...formValue.reviewResidencePeriodDto,
-        residenceStartYear: e,
+        residenceStartYear: e.value,
       },
     });
   };
