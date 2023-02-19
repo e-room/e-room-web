@@ -81,7 +81,11 @@ export default function BuildingList(props) {
               <BuildingContainer>
                 <Logo width={122} height={122} />
                 <BuildingContent>
-                  <div className="building-name">{value.name}</div>
+                  <div className="building-name">
+                    {value.name === ""
+                      ? `${value.address.roadName} ${value.address.buildingNumber}`
+                      : value.name}
+                  </div>
                   <AddressArea>
                     {value.address.siDo} {value.address.siGunGu}{" "}
                     {value.address.roadName} {value.address.buildingNumber}
