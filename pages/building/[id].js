@@ -25,6 +25,7 @@ export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
+  console.log("buildineReviews", buildingReviews);
 
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
@@ -101,8 +102,8 @@ export default ({ data, imgs, reviews }) => {
         {buildingImages.reviewImageCount > 0 && (
           <ImageView data={buildingImages.reviewImageList} />
         )}
-        {buildingReviews.content.length > 0 && (
-          <ReviewList data={buildingReviews} buildingId={id} />
+        {buildingReviews.reviewSlicedList.content.length > 0 && (
+          <ReviewList data={buildingReviews.reviewSlicedList} buildingId={id} />
         )}
 
         <ButtonItem>

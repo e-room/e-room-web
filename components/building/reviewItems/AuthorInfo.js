@@ -29,7 +29,7 @@ export default ({ value, onScorePopup, onDeletePopup }) => {
         </ScoreArea>
         <UserInfo>
           {value.authorDto.name} |{" "}
-          {dayjs(value.baseReviewDto.createdAt).format("YY.MM.DD.")} |{" "}
+          {dayjs(value.reviewBaseDto.createdAt).format("YY.MM.DD.")} |{" "}
           <span onClick={() => onScorePopup(value)}>세부점수 보기</span>
         </UserInfo>
       </div>

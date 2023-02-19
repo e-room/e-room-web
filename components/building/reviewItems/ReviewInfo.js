@@ -16,7 +16,7 @@ export default ({ value }) => {
     advantageDescription,
     disadvantage,
     disadvantageDescription,
-  } = value.baseReviewDto;
+  } = value.reviewBaseDto;
 
   const m2 = parseFloat(netLeasableArea * 3.3058, 1);
   const Infos = [

@@ -20,7 +20,6 @@ export default function ReviewList({ data, buildingId }) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const setShowDetail = useSetRecoilState(imageViewState);
-  const [isLike, setIsLike] = useState(false);
 
   const onDetailView = () => setShowDetail(true);
 
@@ -50,7 +49,7 @@ export default function ReviewList({ data, buildingId }) {
           <DeletePopup
             Reviews={Reviews}
             setReviews={setReviews}
-            reviewId={defaultValue.baseReviewDto.reviewId}
+            reviewId={defaultValue.reviewBaseDto.reviewId}
             showConfirmDelete={showConfirmDelete}
             setShowConfirmDelete={setShowConfirmDelete}
           />
@@ -64,7 +63,7 @@ export default function ReviewList({ data, buildingId }) {
         )}
         {Reviews.content.map((value) => {
           return (
-            <Item key={value.baseReviewDto.reviewId}>
+            <Item key={value.reviewBaseDto.reviewId}>
               <AuthorInfo
                 value={value}
                 onScorePopup={onScorePopup}
@@ -77,7 +76,7 @@ export default function ReviewList({ data, buildingId }) {
                   onDetailView={onDetailView}
                 />
               )}
-              <LikeField value={value} isLike={isLike} setIsLike={setIsLike} />
+              <LikeField value={value} />
             </Item>
           );
         })}

@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import axios from "axios";
 import Icon from "components/common/atoms/Icon";
+import { useState } from "react";
 import { Caption1 } from "styles/typography";
 
-export default ({ value, isLike, setIsLike }) => {
-  const reviewId = value.baseReviewDto.reviewId;
+export default ({ value }) => {
+  const [isLike, setIsLike] = useState(value.isLiked);
+  const reviewId = value.reviewBaseDto.reviewId;
 
   const onLike = async () => {
     await axios
@@ -21,13 +23,7 @@ export default ({ value, isLike, setIsLike }) => {
     <LikeField favorite={isLike}>
       <div style={{ display: "flex" }} onClick={() => onLike()}>
         <Icon icon={"thumb-stroke"} size={"sm"} />
-        <div className="text">
-          추천{" "}
-          {isLike
-            ? value.baseReviewDto.reviewLikeCnt + 1
-            : value.baseReviewDto.reviewLikeCnt}
-          개
-        </div>
+        <div className="text">추천 {value.reviewBaseDto.reviewLikeCnt}개</div>
       </div>
     </LikeField>
   );
