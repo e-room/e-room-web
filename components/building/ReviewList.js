@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import axios from "axios";
 
 import styled from "@emotion/styled";
 
@@ -16,9 +15,7 @@ import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 
 export default function ReviewList({ data, buildingId }) {
-  console.log("review", data);
   const [Reviews, setReviews] = useState(data);
-  // const Reviews = data;
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -44,34 +41,6 @@ export default function ReviewList({ data, buildingId }) {
       setShowConfirmDelete(true);
     }
   };
-
-  const getReviewImages = async (reviewId) => {
-    if (!reviewId) return;
-    try {
-      const response = await axios.get(`/apis/review/${reviewId}/images`);
-      return response.data.reviewImageList;
-    } catch (e) {
-      console.log("error", e);
-    }
-  };
-
-  useEffect(() => {
-    async function callData() {
-      console.log("실행");
-      try {
-        const copy = { ...Reviews };
-        const promises = copy.content.map(async (value) => {
-          value.images = await getReviewImages(value.baseReviewDto.reviewId);
-          return value;
-        });
-        await Promise.all(promises);
-        setReviews(copy);
-      } catch (e) {
-        console.log("zzz", e);
-      }
-    }
-    callData();
-  }, []);
 
   return (
     <Container>
@@ -100,8 +69,11 @@ export default function ReviewList({ data, buildingId }) {
                 onDeletePopup={onDeletePopup}
               />
               <ReviewInfo value={value} />
-              {value.images && (
-                <ImageField images={value.images} onDetailView={onDetailView} />
+              {value.reviewImageListDto.reviewImageList && (
+                <ImageField
+                  images={value.reviewImageListDto.reviewImageList}
+                  onDetailView={onDetailView}
+                />
               )}
               <LikeField value={value} isLike={isLike} setIsLike={setIsLike} />
             </Item>
