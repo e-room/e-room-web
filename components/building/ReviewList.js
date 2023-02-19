@@ -48,6 +48,8 @@ export default function ReviewList({ data, buildingId }) {
       <div>
         {showConfirmDelete && (
           <DeletePopup
+            Reviews={Reviews}
+            setReviews={setReviews}
             reviewId={defaultValue.baseReviewDto.reviewId}
             showConfirmDelete={showConfirmDelete}
             setShowConfirmDelete={setShowConfirmDelete}

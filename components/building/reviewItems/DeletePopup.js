@@ -3,11 +3,26 @@ import axios from "axios";
 import Popup from "components/common/atoms/Popup";
 import { Caption1Bold } from "styles/typography";
 
-export default ({ reviewId, showConfirmDelete, setShowConfirmDelete }) => {
+export default ({
+  reviewId,
+  showConfirmDelete,
+  setShowConfirmDelete,
+  Reviews,
+  setReviews,
+}) => {
   const onDelete = async () => {
     await axios
       .delete(`/apis/building/room/review/${reviewId}`)
-      .then((res) => setShowConfirmDelete(false))
+      .then((res) => {
+        setShowConfirmDelete(false);
+        const filters = Reviews.content.filter(
+          (v) => v.baseReviewDto.reviewId !== reviewId
+        );
+        setReviews({
+          ...Reviews,
+          content: filters,
+        });
+      })
       .catch((err) => console.log("리뷰 삭제가 실패했습니다.", err));
   };
 
