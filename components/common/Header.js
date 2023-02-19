@@ -14,7 +14,6 @@ export default function Header({ pageTitle, additionalFunction }) {
     }
   };
 
-  console.log("router", router);
   return (
     <AppBarWrapper>
       {router.pathname === "/mypage" ||
