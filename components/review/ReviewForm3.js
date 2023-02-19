@@ -101,7 +101,7 @@ export default function ReviewForm3() {
         단점 설명<Sub>(50자 이상)</Sub>
       </TextLabel>
       <TextArea
-        placeholder="장점 키워드에 대한 설명을 적어주세요!"
+        placeholder="단점 키워드에 대한 설명을 적어주세요!"
         height={168}
         caption={"50자 이상 입력해주세요."}
         count={50}
