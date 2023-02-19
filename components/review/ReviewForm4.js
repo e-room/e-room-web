@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import { animation_fadeInUp_view } from "styles/keyframes";
-import { Body2Bold, Body3 } from "styles/typography";
+import { Body2, Body2Bold, Body3 } from "styles/typography";
 
 import Images from "components/common/atoms/Images";
 
@@ -9,7 +9,7 @@ export default function ReviewForm4() {
   return (
     <FormWrapper>
       <TextLabel>
-        자취방 사진 <span>(선택)</span>
+        자취방 사진<Sub>(선택)</Sub>
       </TextLabel>
       <Description>
         자취방이나 건물에 대한 사진을 올려주세요.
@@ -34,10 +34,13 @@ const TextLabel = styled.div`
   ${Body2Bold}
 
   margin-bottom: 4px;
+  display: flex;
+`;
 
-  span {
-    color: var(--gray-2);
-  }
+const Sub = styled.div`
+  ${Body2}
+  color: var(--gray-2);
+  margin-left: 4px;
 `;
 
 const Description = styled.div`
