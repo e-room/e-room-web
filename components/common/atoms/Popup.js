@@ -123,7 +123,7 @@ const Overlay = styled.div`
   left: 0;
   overflow: hidden;
   touch-action: none;
-  z-index: 10;
+  z-index: 11;
 
   /** var(--black) and opacity 20% **/
   background: rgba(33, 33, 33, 0.2);
