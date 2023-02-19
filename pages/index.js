@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  Fragment,
+  useCallback,
+  useMemo,
+} from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,15 +19,16 @@ import GroupButton from "components/common/atoms/GroupButton";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
+import SearchList from "components/search/SearchList";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
   const buildingMarking = JSON.parse(data);
-  console.log("buildingMarking", buildingMarking);
   const map = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
   const imsiMarkerList = [];
+  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -94,7 +102,7 @@ const MainMap = ({ data }) => {
         // setCenterPoint();
       });
     });
-  }, [mapLoaded]);
+  }, [mapLoaded, searchVisible]);
 
   const setLocalStorage = () => {
     if (map.current) {
@@ -148,18 +156,57 @@ const MainMap = ({ data }) => {
   };
 
   const [searchValue, setSearchValue] = useState("");
-  const [searchVisible, setSearchVisible] = useState(false);
+  const [searchList, setSearchList] = useState([]);
+
+  const debounce = useCallback((func) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, 500);
+    };
+  }, []);
+
+  const saveInput = async (e) => {
+    setSearchList([]);
+    const response = await axios.get(
+      `/apis/building/search?params=${e.target.value}`
+    );
+    setSearchList(response.data.content);
+  };
+
+  const onSearchValue = useMemo(() => debounce((e) => saveInput(e)), []);
+
+  const test = useCallback(() => {
+    if (!searchVisible) return;
+    if (searchList.length < 1 || !searchValue) {
+      return <div />;
+    } else {
+      return <SearchList data={searchList} searchValue={searchValue} />;
+    }
+  }, [searchList, searchVisible, searchValue, saveInput]);
 
   return (
     <Fragment>
       {searchVisible && (
         <SearchField>
-          <Icon icon={"arrow-left"} size={"md"} />
+          <div
+            onClick={() => setSearchVisible(false)}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minWidth: 24,
+              marginLeft: 4,
+            }}
+          >
+            <Icon icon={"arrow-left"} size={"md"} />
+          </div>
           <input
             placeholder="주소나 건물 이름으로 검색해보세요"
-            onChange={(e) => {
-              setSearchValue(e.target.value);
-            }}
+            onKeyUp={onSearchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
           />
           {searchValue && (
@@ -178,38 +225,42 @@ const MainMap = ({ data }) => {
           />
         }
       >
-        <Container>
-          <MapWrapper id="map" />
-          <GroupItem>
-            <GroupButton
-              items={[
-                { icon: "plus", onClick: zoomIn },
-                { icon: "minus", onClick: zoomOut },
-              ]}
-            />
-          </GroupItem>
-          <LocationItem>
-            <LocationButton onClick={setMyPosition} />
-          </LocationItem>
-          <ButtonItem>
-            <Link href={"/buildings"}>
-              <a>
-                <Button
-                  label={"이 지역 자취방 리뷰 보기"}
-                  type={"secondary"}
-                  size={"md"}
-                />
-              </a>
-            </Link>
-            <Link href={"/review/write"}>
-              <a>
-                <Button type={"primary"} size={"md"} icon={"plus"}>
-                  리뷰 쓰기
-                </Button>
-              </a>
-            </Link>
-          </ButtonItem>
-        </Container>
+        {searchVisible ? (
+          test()
+        ) : (
+          <Container>
+            <MapWrapper id="map" />
+            <GroupItem>
+              <GroupButton
+                items={[
+                  { icon: "plus", onClick: zoomIn },
+                  { icon: "minus", onClick: zoomOut },
+                ]}
+              />
+            </GroupItem>
+            <LocationItem>
+              <LocationButton onClick={setMyPosition} />
+            </LocationItem>
+            <ButtonItem>
+              <Link href={"/buildings"}>
+                <a>
+                  <Button
+                    label={"이 지역 자취방 리뷰 보기"}
+                    type={"secondary"}
+                    size={"md"}
+                  />
+                </a>
+              </Link>
+              <Link href={"/review/write"}>
+                <a>
+                  <Button type={"primary"} size={"md"} icon={"plus"}>
+                    리뷰 쓰기
+                  </Button>
+                </a>
+              </Link>
+            </ButtonItem>
+          </Container>
+        )}
       </AppLayout>
     </Fragment>
   );
@@ -305,7 +356,7 @@ const SearchField = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 48px;
+  height: 44px;
   background: var(--white);
 
   box-sizing: border-box;
