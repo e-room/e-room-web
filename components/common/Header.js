@@ -7,7 +7,11 @@ export default function Header({ pageTitle, additionalFunction }) {
   const router = useRouter();
 
   const onBack = () => {
-    router.back();
+    if (router.query?.returnType) {
+      router.push(router.query.returnType);
+    } else {
+      router.back();
+    }
   };
 
   return (

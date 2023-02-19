@@ -108,7 +108,7 @@ export default function ReviewLayout({ children }) {
   }, [formValue]);
 
   const goHome = () => {
-    router.push(`/building/${successBuildingId}`);
+    router.push(`/building/${successBuildingId}?returnType=/`);
   };
 
   const goNext = () => {
