@@ -121,20 +121,10 @@ export default ({ data, imgs, reviews }) => {
 
 export async function getServerSideProps({ params }) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`,
-    {
-      headers: {
-        mocking: 239,
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`
   );
   const res1 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`,
-    {
-      headers: {
-        mocking: 239,
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`
   );
   const res2 = await axios.get(
     `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review`,
