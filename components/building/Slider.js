@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
 import avatarImg from "assets/avatar/24.png";
+import { Body2 } from "styles/typography";
 
 export default function Slider({ data, onClose }) {
   const ref = useRef(null);
@@ -89,7 +90,7 @@ export default function Slider({ data, onClose }) {
             {currentImgIndex}/{data.length}
           </CountField>
           <XField onClick={onClose}>
-            <Icon icon={"x-icon"} size={"lg"} fill={"var(--white)"} />
+            <Icon icon={"x-icon"} size={"md"} fill={"var(--white)"} />
           </XField>
         </Top>
         <div
@@ -111,6 +112,12 @@ export default function Slider({ data, onClose }) {
           })}
         </div>
       </div>
+      <ArrowButton style={{ left: 4 }}>
+        <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
+      </ArrowButton>
+      <ArrowButton style={{ right: 4 }}>
+        <Icon icon={"arrow-right"} size={"md"} fill={"var(--white)"} />
+      </ArrowButton>
       <Profile>
         <Avatar size={"md"} img={avatarImg.src} style={{ marginRight: 6 }} />
         새침한 판다
@@ -119,37 +126,28 @@ export default function Slider({ data, onClose }) {
   );
 }
 
-const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  color: var(--white);
-  position: fixed;
-  bottom: 30px;
-  width: 100%;
-  justify-content: center;
-`;
-
+// 128 140
 const Top = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 80px;
+  min-height: 44px;
 `;
 
 const CountField = styled.div`
+  ${Body2}
   color: var(--white);
-
-  // TODO: font 맞추기
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 21px;
 `;
 const XField = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
-  right: 24px;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
 `;
 const Overlay = styled.div`
   width: 100vw;
@@ -162,18 +160,25 @@ const Overlay = styled.div`
   overflow: hidden;
 `;
 
-const ImgField = styled.div`
-  overflow-x: scroll;
-  white-space: nowrap;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const ImgCard = styled.img`
-  object-fit: contain;
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  position: fixed;
+  bottom: 30px;
   width: 100%;
+  justify-content: center;
+`;
+
+const ArrowButton = styled.div`
+  background: rgba(33, 33, 33, 0.16);
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 46%;
 `;
