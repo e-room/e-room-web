@@ -25,7 +25,7 @@ export default ({ data, imgs, reviews }) => {
   const building = JSON.parse(data);
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
-  console.log("buildineReviews", buildingReviews);
+  console.log("building", building);
 
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
@@ -52,7 +52,7 @@ export default ({ data, imgs, reviews }) => {
     }
   }, [toastVisible]);
 
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(building.isFavorite);
   const onFavoriteChange = useCallback(() => {
     const valid = accessValid({ redirect_uri: `/building/${id}` });
     if (!valid) return;
