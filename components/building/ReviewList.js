@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 
 import styled from "@emotion/styled";
 
@@ -14,15 +13,18 @@ import LikeField from "./reviewItems/LikeField";
 import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 import axios from "axios";
+import Slider from "./Slider";
 
 export default function ReviewList(props) {
   const { reviews, buildingId } = props;
   const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  const setShowDetail = useSetRecoilState(imageViewState);
+  const [showImages, setShowImages] = useState({ visible: false, uuid: null, data: [] });
 
-  const onDetailView = () => setShowDetail(true);
+  const onCloseImg = () => setShowImages({ visible: false, uuid: null, data: [] });
+  const onDetailView = (id, data) =>
+    setShowImages({ visible: true, uuid: id, data: data });
 
   const [defaultValue, setDefaultValue] = useState({});
   const [showTotalScore, setShowTotalScore] = useState(false);
@@ -97,6 +99,13 @@ export default function ReviewList(props) {
     <Container>
       <Title>실제 거주 후기</Title>
       <div>
+        {showImages.visible && (
+          <Slider
+            data={showImages.data}
+            onClose={onCloseImg}
+            defaultId={showImages.uuid}
+          />
+        )}
         {showConfirmDelete && (
           <DeletePopup
             data={data}

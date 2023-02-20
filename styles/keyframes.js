@@ -41,6 +41,23 @@ to {
 }
 `;
 
+export const fadeIn0 = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
+export const fadeOut0 = keyframes`
+from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+}
+`;
+
 export const semiFadeInUp = keyframes`
 from {
   opacity: 0;
@@ -66,6 +83,17 @@ export const fadeIn_Down = (visible) => css`
   transition: visibility 0.3s ease-in-out;
 `;
 
+export const fadeIn_Down0 = (visible) => css`
+  visibility: ${visible ? "visible" : "hidden"};
+  z-index: 15;
+  animation: ${visible ? fadeIn0 : fadeOut0} 0.3s ease-in-out;
+  transition: visibility 0.3s ease-in-out;
+`;
+
 export const animation_fadeInUp_view = css`
   animation: ${semiFadeInUp} 0.56s ease-in-out;
+`;
+
+export const animation_arrow_view = css`
+  animation: ${semiFadeInUp} 0.3s ease-in-out;
 `;

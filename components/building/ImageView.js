@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function ImageView({ data }) {
   const setShowDetail = useSetRecoilState(imageViewState);
 
-  const onDetailView = () => {
-    setShowDetail(true);
+  const onDetailView = (id) => {
+    setShowDetail({ visible: true, uuid: id });
   };
 
   return (
@@ -23,7 +23,7 @@ export default function ImageView({ data }) {
               width={117}
               height={117}
               objectFit={"cover"}
-              onClick={onDetailView}
+              onClick={() => onDetailView(value.uuid)}
             />
           );
         })}

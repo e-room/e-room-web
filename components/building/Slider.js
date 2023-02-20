@@ -1,123 +1,89 @@
-import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
 import avatarImg from "assets/avatar/24.png";
 import { Body2 } from "styles/typography";
 
-export default function Slider({ data, onClose }) {
-  const ref = useRef(null);
-  const [imageList] = useState([data[data?.length - 1], ...data, data[0]]);
-  const [currentImgIndex, setCurrentImgIndex] = useState(1);
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import { useEffect, useState } from "react";
+import { fadeIn_Down0 } from "styles/keyframes";
 
-  const [touch, setTouch] = useState({
-    start: 0,
-    end: 0,
-  });
-  const [style, setStyle] = useState({
-    transform: `translateX(-${currentImgIndex}00%)`,
-    transition: `all 0.4s ease-in-out`,
-  });
-  const nextSlide = () => {
-    setCurrentImgIndex(currentImgIndex + 1);
-    setStyle({
-      transform: `translateX(-${currentImgIndex + 1}00%)`,
-      transition: `all 0.4s ease-in-out`,
-    });
-  };
-  const prevSlide = () => {
-    setCurrentImgIndex(currentImgIndex - 1);
-    setStyle({
-      transform: `translateX(-${currentImgIndex - 1}00%)`,
-      transition: `all 0.4s ease-in-out`,
-    });
-  };
+export default function Slider({ data, onClose, defaultId }) {
+  const index = data.findIndex((item) => item.uuid === defaultId);
+  const [visible, setVisible] = useState(false);
+  // TODO : touch cancel 안됨...
   useEffect(() => {
-    if (currentImgIndex === 0) {
-      setCurrentImgIndex(imageList.length - 2);
-      setTimeout(function () {
-        setStyle({
-          transform: `translateX(-${imageList.length - 2}00%)`,
-          transition: "0ms",
-        });
-      }, 500);
+    if (visible) {
+      setTimeout(() => setVisible(false), 3000);
     }
-    if (currentImgIndex >= imageList?.length - 1) {
-      setCurrentImgIndex(1);
-      setTimeout(() => {
-        setStyle({
-          transform: `translateX(-${1}00%)`,
-          transition: "0ms",
-        });
-      }, 500);
-    }
-  }, [currentImgIndex, imageList.length]);
+  }, [visible]);
 
   return (
     <Overlay>
-      <div
-        onTouchStart={(e) => {
-          setTouch({
-            ...touch,
-            start: e.touches[0].pageX,
-          });
+      <Container
+        onClick={() => {
+          setVisible(true);
         }}
-        onTouchMove={(e) => {
-          if (ref?.current) {
-            const current = ref.current.clientWidth * currentImgIndex;
-            const result = -current + (e.targetTouches[0].pageX - touch.start);
-            setStyle({
-              transform: `translate3d(${result}px, 0px, 0px)`,
-              transition: "0ms",
-            });
-          }
+        onTouchStart={() => {
+          setVisible(true);
+        }}
+        onTouchMove={() => {
+          setVisible(true);
         }}
         onTouchEnd={(e) => {
-          const end = e.changedTouches[0].pageX;
-          if (touch.start > end) {
-            nextSlide();
-          } else {
-            prevSlide();
-          }
-          setTouch({
-            ...touch,
-            end,
-          });
+          setVisible(true);
         }}
       >
-        <Top>
-          <CountField>
-            {currentImgIndex}/{data.length}
-          </CountField>
-          <XField onClick={onClose}>
-            <Icon icon={"x-icon"} size={"md"} fill={"var(--white)"} />
-          </XField>
-        </Top>
-        <div
-          ref={ref}
-          style={{ ...style, display: "flex", height: `calc(100vh - 150px)` }}
-        >
-          {imageList?.map((el, i) => {
+        <Carousel
+          showStatus={true}
+          selectedItem={index ?? 0}
+          showIndicators={false}
+          autoFocus={true}
+          showThumbs={false}
+          infiniteLoop={true}
+          swipeable={true}
+          emulateTouch={true}
+          statusFormatter={(e) => {
             return (
-              <img
-                key={i}
-                src={el.url}
-                style={{
-                  objectFit: "contain",
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
+              <Top>
+                <CountField>
+                  {e}/{data.length}
+                </CountField>
+                <XField onClick={onClose}>
+                  <Icon icon={"x-icon"} size={"md"} fill={"var(--white)"} />
+                </XField>
+              </Top>
+            );
+          }}
+          renderArrowPrev={(onClickHandler, hasPrev) =>
+            hasPrev && (
+              <ArrowButton visible={visible} style={{ left: 4 }} onClick={onClickHandler}>
+                <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
+              </ArrowButton>
+            )
+          }
+          renderArrowNext={(onClickHandler, hasNext) =>
+            hasNext && (
+              <ArrowButton
+                visible={visible}
+                style={{ right: 4 }}
+                onClick={onClickHandler}
+              >
+                <Icon icon={"arrow-right"} size={"md"} fill={"var(--white)"} />
+              </ArrowButton>
+            )
+          }
+        >
+          {data.map((value) => {
+            return (
+              <div key={value.uuid}>
+                <img src={value.url} style={{ objectFit: "contain" }} />
+              </div>
             );
           })}
-        </div>
-      </div>
-      <ArrowButton style={{ left: 4 }}>
-        <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
-      </ArrowButton>
-      <ArrowButton style={{ right: 4 }}>
-        <Icon icon={"arrow-right"} size={"md"} fill={"var(--white)"} />
-      </ArrowButton>
+        </Carousel>
+      </Container>
       <Profile>
         <Avatar size={"md"} img={avatarImg.src} style={{ marginRight: 6 }} />
         새침한 판다
@@ -126,12 +92,21 @@ export default function Slider({ data, onClose }) {
   );
 }
 
-// 128 140
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`;
+
 const Top = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 `;
 
 const CountField = styled.div`
@@ -157,7 +132,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   z-index: 12;
-  overflow: hidden;
+  overflow: hidden !important;
 `;
 
 const Profile = styled.div`
@@ -178,7 +153,10 @@ const ArrowButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  z-index: 9;
   position: absolute;
-  top: 46%;
+  top: calc((50% - 30px));
+  cursor: pointer;
+
+  ${(p) => fadeIn_Down0(p.visible)}
 `;

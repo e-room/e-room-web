@@ -30,7 +30,7 @@ export default ({ data, imgs, reviews }) => {
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
-    setShowImgDetail(false);
+    setShowImgDetail({ visible: false, uuid: null });
   };
   const [toastVisible, setToastVisible] = useState(false);
   const toast = useMemo(() => {
@@ -93,32 +93,31 @@ export default ({ data, imgs, reviews }) => {
       }
     >
       {toast}
-      <Container>
-        {showImgDetail && (
-          <Slider data={buildingImages.reviewImageList} onClose={onCloseImg} />
-        )}
-        <BuildingMap building={building} />
-        <BuildingInfo building={building} />
-        {buildingImages.reviewImageCount > 0 && (
-          <ImageView data={buildingImages.reviewImageList} />
-        )}
-        {buildingReviews.reviewSlicedList.content.length > 0 && (
-          <ReviewList
-            reviews={buildingReviews.reviewSlicedList.content}
-            buildingId={id}
-          />
-        )}
+      {showImgDetail.visible && (
+        <Slider
+          data={buildingImages.reviewImageList}
+          onClose={onCloseImg}
+          defaultId={showImgDetail.uuid}
+        />
+      )}
+      <BuildingMap building={building} />
+      <BuildingInfo building={building} />
+      {buildingImages.reviewImageCount > 0 && (
+        <ImageView data={buildingImages.reviewImageList} />
+      )}
+      {buildingReviews.reviewSlicedList.content.length > 0 && (
+        <ReviewList reviews={buildingReviews.reviewSlicedList.content} buildingId={id} />
+      )}
 
-        <ButtonItem>
-          <Link href={"/review/write"}>
-            <a>
-              <Button type={"primary"} size={"md"} icon={"plus"}>
-                리뷰 쓰기
-              </Button>
-            </a>
-          </Link>
-        </ButtonItem>
-      </Container>
+      <ButtonItem>
+        <Link href={"/review/write"}>
+          <a>
+            <Button type={"primary"} size={"md"} icon={"plus"}>
+              리뷰 쓰기
+            </Button>
+          </a>
+        </Link>
+      </ButtonItem>
     </AppLayout>
   );
 };
@@ -146,10 +145,6 @@ export async function getServerSideProps({ params }) {
     props: { data, imgs, reviews },
   };
 }
-
-const Container = styled.div`
-  overflow: scroll;
-`;
 
 const ButtonItem = styled.div`
   position: fixed;

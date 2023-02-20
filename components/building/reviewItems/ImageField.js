@@ -13,7 +13,7 @@ export default ({ images, onDetailView }) => {
             width={117}
             height={117}
             objectFit={"cover"}
-            onClick={onDetailView}
+            onClick={() => onDetailView(value.uuid, images)}
           />
         );
       })}

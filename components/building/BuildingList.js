@@ -22,8 +22,6 @@ export default function BuildingList(props) {
     : lastData.buildingId;
 
   const fetchItems = async () => {
-    console.log("cursorId, sort", cursorId, sort);
-
     if (!cursorId) return;
     const buildingMarking = localStorage.getItem("buildingMarking");
 
@@ -87,8 +85,8 @@ export default function BuildingList(props) {
                       : value.name}
                   </div>
                   <AddressArea>
-                    {value.address.siDo} {value.address.siGunGu}{" "}
-                    {value.address.roadName} {value.address.buildingNumber}
+                    {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
+                    {value.address.buildingNumber}
                   </AddressArea>
                   <Chips>
                     {value.directDeal && <Chip label={"직거래가능"} />}
