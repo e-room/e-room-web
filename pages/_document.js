@@ -32,6 +32,10 @@ class MyDocument extends Document {
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
           />
           <title>e-room</title>
+          <script type="module">
+            import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate'; const el =
+            document.createElement('pwa-update'); document.body.appendChild(el);
+          </script>
         </Head>
         <body>
           <Main />
