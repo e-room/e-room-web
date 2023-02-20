@@ -11,6 +11,13 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
+
+          <link rel="manifest" href="/manifest.json" />
+          <link href="/64.png" rel="icon" type="image/png" sizes="16x16" />
+          <link href="/64.png" rel="icon" type="image/png" sizes="32x32" />
+          <link rel="apple-touch-icon" href="/64.png"></link>
+          <meta name="theme-color" content="#53ac8e" />
+
           {/* <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
@@ -24,7 +31,7 @@ class MyDocument extends Document {
             // crossorigin
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
           />
-          {/* <title>e-room</title> */}
+          <title>e-room</title>
         </Head>
         <body>
           <Main />
