@@ -5,12 +5,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import {
-  Body1Bold,
-  Body2Bold,
-  Caption1Bold,
-  Caption2,
-} from "styles/typography";
+import { Body1Bold, Body2Bold, Caption1Bold, Caption2 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
@@ -43,6 +38,9 @@ export default function mypage() {
           setLoading(false);
           setError(true);
         });
+    } else {
+      setLoading(false);
+      setError(true);
     }
   };
 
@@ -94,11 +92,7 @@ export default function mypage() {
               <a target="_blank" rel="noreferrer">
                 <MenuItem>
                   <div>공식 인스타그램</div>
-                  <Icon
-                    icon={"arrow-right"}
-                    size={"md"}
-                    fill={"var(--gray-3)"}
-                  />
+                  <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
                 </MenuItem>
               </a>
             </Link>

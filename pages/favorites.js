@@ -27,6 +27,9 @@ export default function favorites() {
           setLoading(false);
           setError(true);
         });
+    } else {
+      setLoading(false);
+      setError(true);
     }
   };
 

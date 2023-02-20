@@ -26,6 +26,7 @@ export default function reviewWrite() {
     if (valid) {
       setLoading(false);
     } else {
+      setLoading(false);
       setError(true);
     }
   };
