@@ -18,6 +18,7 @@ export default function mypage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [profile, setProfile] = useState({
+    id: null,
     name: null,
     email: null,
     profileImageUrl: null,
