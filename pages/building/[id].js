@@ -17,16 +17,22 @@ import Icon from "components/common/atoms/Icon";
 import Toast from "components/common/atoms/Toast";
 import { useRouter } from "next/router";
 import accessValid from "utils/accessValid";
+import Loading from "components/common/Loading";
+import Error from "components/common/Error";
 
-export default ({ data, imgs, reviews }) => {
+export default () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const building = JSON.parse(data);
-  const buildingImages = JSON.parse(imgs);
-  const buildingReviews = JSON.parse(reviews);
+  const [building, setBuilding] = useState({});
+  const [buildingImages, setBuildingImages] = useState({});
+  const [buildingReviews, setBuildingReviews] = useState({});
   console.log("building", building);
+  console.log("images", buildingImages);
   console.log("review", buildingReviews);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
@@ -53,7 +59,7 @@ export default ({ data, imgs, reviews }) => {
     }
   }, [toastVisible]);
 
-  const [favorite, setFavorite] = useState(building.isFavorite);
+  const [favorite, setFavorite] = useState(false);
   const onFavoriteChange = useCallback(() => {
     const valid = accessValid({ redirect_uri: `/building/${id}` });
     if (!valid) return;
@@ -61,7 +67,6 @@ export default ({ data, imgs, reviews }) => {
       axios
         .delete(`/apis/member/favorite/${id}`)
         .then((res) => {
-          console.log(res);
           setFavorite(false);
         })
         .catch((error) => {
@@ -79,6 +84,37 @@ export default ({ data, imgs, reviews }) => {
         });
     }
   }, [favorite]);
+
+  useEffect(() => {
+    if (id) {
+      const callData = async () => {
+        const callBuilding = axios.get(`/apis/building/${id}`);
+        const callImages = axios.get(`/apis/building/${id}/images`);
+        const callReviews = axios.get(
+          `/apis/building/${id}/room/review?size=4&sort=id,DESC`
+        );
+        await axios
+          .all([callBuilding, callImages, callReviews])
+          .then((response) => {
+            setBuilding(response[0].data);
+            setFavorite(response[0].data.isFavorite);
+            setBuildingImages(response[1].data);
+            setBuildingReviews(response[2].data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error(error);
+            setLoading(false);
+            setError(true);
+          });
+      };
+
+      callData();
+    }
+  }, [id]);
+
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <AppLayout
@@ -126,25 +162,6 @@ export default ({ data, imgs, reviews }) => {
     </AppLayout>
   );
 };
-
-export async function getServerSideProps({ params }) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}`
-  );
-  const res1 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`
-  );
-  const res2 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review?size=4&sort=id,DESC`
-  );
-  const data = JSON.stringify(res.data);
-  const imgs = JSON.stringify(res1.data);
-  const reviews = JSON.stringify(res2.data);
-  return {
-    // Passed to the page component as props
-    props: { data, imgs, reviews },
-  };
-}
 
 const ButtonItem = styled.div`
   position: fixed;
