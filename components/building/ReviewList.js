@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 import { Body1Bold } from "styles/typography";
+import BlurImg from "assets/user_review_card.png";
 import accessValid from "utils/accessValid";
-import { imageViewState } from "states/buidlingAtom";
 
 import DeletePopup from "./reviewItems/DeletePopup";
 import DetailScorePopup from "./reviewItems/DetailScorePopup";
@@ -14,9 +14,11 @@ import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 import axios from "axios";
 import Slider from "./Slider";
+import { useRouter } from "next/router";
 
 export default function ReviewList(props) {
-  const { reviews, buildingId } = props;
+  const { reviews, buildingId, needToBlur = true } = props;
+  const router = useRouter();
   const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -42,6 +44,9 @@ export default function ReviewList(props) {
     if (valid) {
       setShowConfirmDelete(true);
     }
+  };
+  const goLogin = () => {
+    router.push(`/login?redirect_uri=/building/${buildingId}`);
   };
 
   const [target, setTarget] = useState(null);
@@ -122,7 +127,14 @@ export default function ReviewList(props) {
             setShowTotalScore={setShowTotalScore}
           />
         )}
-        {item.map((value) => {
+        {item.map((value, index) => {
+          if (needToBlur && index > 0) {
+            return (
+              <Item key={value.reviewBaseDto.reviewId} onClick={goLogin}>
+                <img src={BlurImg.src} />
+              </Item>
+            );
+          }
           return (
             <Item key={value.reviewBaseDto.reviewId}>
               <AuthorInfo

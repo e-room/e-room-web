@@ -26,6 +26,7 @@ export default ({ data, imgs, reviews }) => {
   const buildingImages = JSON.parse(imgs);
   const buildingReviews = JSON.parse(reviews);
   console.log("building", building);
+  console.log("review", buildingReviews);
 
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
@@ -106,7 +107,11 @@ export default ({ data, imgs, reviews }) => {
         <ImageView data={buildingImages.reviewImageList} />
       )}
       {buildingReviews.reviewSlicedList.content.length > 0 && (
-        <ReviewList reviews={buildingReviews.reviewSlicedList.content} buildingId={id} />
+        <ReviewList
+          reviews={buildingReviews.reviewSlicedList.content}
+          buildingId={id}
+          needToBlur={buildingReviews.needToBlur}
+        />
       )}
 
       <ButtonItem>
@@ -130,12 +135,7 @@ export async function getServerSideProps({ params }) {
     `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/images`
   );
   const res2 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review?size=4&sort=id,DESC`,
-    {
-      headers: {
-        mocking: 239,
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/${params.id}/room/review?size=4&sort=id,DESC`
   );
   const data = JSON.stringify(res.data);
   const imgs = JSON.stringify(res1.data);
