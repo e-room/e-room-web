@@ -33,8 +33,10 @@ out
 .DS_Store
 .env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
+.env.production
 .env.production.local
 
 
@@ -46,3 +48,11 @@ yarn-error.log*
 
 # we use npm
 yarn.lock
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
