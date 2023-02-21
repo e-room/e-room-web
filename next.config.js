@@ -1,8 +1,9 @@
 const withPWA = require("next-pwa")({
   dest: "public",
+  disable: process.env.NODE_ENV === "development",
 });
 
-module.exports = withPWA({
+const config = {
   reactStrictMode: false,
   async rewrites() {
     return [
@@ -26,4 +27,5 @@ module.exports = withPWA({
   images: {
     domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
   },
-});
+};
+module.exports = process.env.NODE_ENV === "production" ? withPWA(config) : config;
