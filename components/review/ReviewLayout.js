@@ -95,8 +95,8 @@ export default function ReviewLayout({ children }) {
       if (
         formValue.advantageDescription &&
         formValue.disadvantageDescription &&
-        formValue.advantageDescription?.length > 50 &&
-        formValue.disadvantageDescription?.length > 50
+        formValue.advantageDescription?.length >= 50 &&
+        formValue.disadvantageDescription?.length >= 50
       )
         description = true;
 
