@@ -28,24 +28,14 @@ export default function BottomSheet({
       case "default":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button
-              label={"Label"}
-              size="lg"
-              width={"100%"}
-              type={"secondary"}
-            />
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
             <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
           </div>
         );
       case "warning":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button
-              label={"Label"}
-              size="lg"
-              width={"100%"}
-              type={"secondary"}
-            />
+            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
             <Button label={"Label"} size="lg" width={"100%"} type={"warning"} />
           </div>
         );
@@ -100,7 +90,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   overflow: hidden;
-  z-index: 10;
+  z-index: 11;
 
   /** var(--black) and opacity 20% **/
   background: rgba(33, 33, 33, 0.2);
