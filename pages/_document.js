@@ -29,6 +29,7 @@ class MyDocument extends Document {
             href="images/icons/icon-192x192.png"
           ></link>
           <meta name="msapplication-TileColor" content="#53ac8e"></meta>
+          <meta name="theme-color" content="#f1f9f6" />
 
           <link
             rel="apple-touch-startup-image"

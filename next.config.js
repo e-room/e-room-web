@@ -1,4 +1,8 @@
-module.exports = {
+const withPWA = require("next-pwa")({
+  dest: "public",
+});
+
+module.exports = withPWA({
   reactStrictMode: false,
   async rewrites() {
     return [
@@ -22,4 +26,4 @@ module.exports = {
   images: {
     domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
   },
-};
+});
