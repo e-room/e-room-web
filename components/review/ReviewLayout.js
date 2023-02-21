@@ -19,6 +19,7 @@ import valueCheck from "utils/valueCheck";
 export default function ReviewLayout({ children }) {
   const router = useRouter();
   const { index = "1" } = router.query;
+  const [loading, setLoading] = useState(false);
 
   const reviewImageList = useRecoilValue(reviewImageListState);
   const [successBuildingId, setSuccessBuildingId] = useState(null);
@@ -116,6 +117,7 @@ export default function ReviewLayout({ children }) {
   };
 
   const onSubmit = async () => {
+    setLoading(true);
     try {
       const totalScore = calculateByReviewScore(formValue);
       const formatFormValue = {
@@ -152,8 +154,10 @@ export default function ReviewLayout({ children }) {
           setPopupVisible(true);
         })
         .catch((err) => {
-          console.log("리뷰쓰기 실패!", err);
+          console.log("리뷰쓰기 실패!", err.response.data);
+          alert("하나의 건물에는 하나의 리뷰만 작성할 수 있습니다.");
         });
+      setLoading(false);
     } catch (e) {
       console.log("리뷰쓰기 실패", e.response.data);
     }
@@ -191,6 +195,7 @@ export default function ReviewLayout({ children }) {
             size="lg"
             width={"100%"}
             onClick={onSubmit}
+            disabled={loading}
             useSubmit={true}
           />
         </BottomArea>
