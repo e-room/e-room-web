@@ -34,7 +34,7 @@ export default function mypage() {
           setLoading(false);
         })
         .catch((error) => {
-          console.error(error.message);
+          console.error(error);
           setLoading(false);
           setError(true);
         });
