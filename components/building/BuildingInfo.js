@@ -47,13 +47,7 @@ export default function BuildingInfo({ building }) {
       <SurroundingBadge width={48} height={64} />,
       <LivingLocationBadge width={48} height={64} />,
     ];
-    const score = [
-      TRAFFIC,
-      BUILDINGCOMPLEX,
-      INTERNAL,
-      SURROUNDING,
-      LIVINGLOCATION,
-    ];
+    const score = [TRAFFIC, BUILDINGCOMPLEX, INTERNAL, SURROUNDING, LIVINGLOCATION];
 
     const max = Math.max(...score);
     const index = score.indexOf(max);
@@ -97,7 +91,11 @@ export default function BuildingInfo({ building }) {
 
       <FlexBox style={{ marginBottom: 18 }}>
         <NameField>
-          <Title>{building.name}</Title>
+          <Title>
+            {building.name === ""
+              ? `${building.address.roadName} ${building.address.buildingNumber}`
+              : building.name}
+          </Title>
           {/* &gt; = ">" */}
           <AddressField onClick={() => onCopyAddress(formValue.address)}>
             {formValue.address} &gt;
