@@ -22,11 +22,22 @@ export default function ReviewList(props) {
   const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  const [showImages, setShowImages] = useState({ visible: false, uuid: null, data: [] });
+  const [showImages, setShowImages] = useState({
+    visible: false,
+    uuid: null,
+    data: [],
+    authorName: "",
+  });
 
-  const onCloseImg = () => setShowImages({ visible: false, uuid: null, data: [] });
-  const onDetailView = (id, data) =>
-    setShowImages({ visible: true, uuid: id, data: data });
+  const onCloseImg = () =>
+    setShowImages({ visible: false, uuid: null, data: [], authorName: "" });
+  const onDetailView = (id, data, authorName) =>
+    setShowImages({
+      visible: true,
+      uuid: id,
+      data: data,
+      authorName: authorName,
+    });
 
   const [defaultValue, setDefaultValue] = useState({});
   const [showTotalScore, setShowTotalScore] = useState(false);
@@ -109,6 +120,7 @@ export default function ReviewList(props) {
             data={showImages.data}
             onClose={onCloseImg}
             defaultId={showImages.uuid}
+            authorName={showImages.authorName}
           />
         )}
         {showConfirmDelete && (
@@ -146,6 +158,7 @@ export default function ReviewList(props) {
               {value.reviewImageListDto.reviewImageList && (
                 <ImageField
                   images={value.reviewImageListDto.reviewImageList}
+                  authorName={value.authorDto.name ?? ""}
                   onDetailView={onDetailView}
                 />
               )}

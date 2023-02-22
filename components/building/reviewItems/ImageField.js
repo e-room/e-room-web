@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 
-export default ({ images, onDetailView }) => {
+export default ({ images, onDetailView, authorName }) => {
   if (!images) return;
   return (
     <ImgField>
@@ -13,7 +13,7 @@ export default ({ images, onDetailView }) => {
             width={117}
             height={117}
             objectFit={"cover"}
-            onClick={() => onDetailView(value.uuid, images)}
+            onClick={() => onDetailView(value.uuid, images, authorName)}
           />
         );
       })}
