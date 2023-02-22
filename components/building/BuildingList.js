@@ -77,7 +77,9 @@ export default function BuildingList(props) {
           <div key={value.buildingId}>
             <Link href={`/building/${value.buildingId}`}>
               <BuildingContainer>
-                <Logo width={122} height={122} />
+                <div style={{ width: 122, height: 122 }}>
+                  <Logo width={122} height={122} />
+                </div>
                 <BuildingContent>
                   <div className="building-name">
                     {value.name === ""
@@ -85,8 +87,8 @@ export default function BuildingList(props) {
                       : value.name}
                   </div>
                   <AddressArea>
-                    {value.address.siDo} {value.address.siGunGu} {value.address.roadName}{" "}
-                    {value.address.buildingNumber}
+                    {value.address.siDo} {value.address.siGunGu}{" "}
+                    {value.address.roadName} {value.address.buildingNumber}
                   </AddressArea>
                   <Chips>
                     {value.directDeal && <Chip label={"직거래가능"} />}
