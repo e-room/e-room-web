@@ -17,7 +17,7 @@ import Slider from "./Slider";
 import { useRouter } from "next/router";
 
 export default function ReviewList(props) {
-  const { reviews, buildingId, needToBlur = true } = props;
+  const { reviews, buildingId, needToBlur = true, profile } = props;
   const router = useRouter();
   const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -29,15 +29,17 @@ export default function ReviewList(props) {
     authorName: "",
   });
 
-  const onCloseImg = () =>
+  const onCloseImg = () => {
     setShowImages({ visible: false, uuid: null, data: [], authorName: "" });
-  const onDetailView = (id, data, authorName) =>
+  };
+  const onDetailView = (id, data, authorName) => {
     setShowImages({
       visible: true,
       uuid: id,
       data: data,
       authorName: authorName,
     });
+  };
 
   const [defaultValue, setDefaultValue] = useState({});
   const [showTotalScore, setShowTotalScore] = useState(false);
@@ -153,6 +155,7 @@ export default function ReviewList(props) {
                 value={value}
                 onScorePopup={onScorePopup}
                 onDeletePopup={onDeletePopup}
+                profile={profile}
               />
               <ReviewInfo value={value} />
               {value.reviewImageListDto.reviewImageList && (

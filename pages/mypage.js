@@ -5,12 +5,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import {
-  Body1Bold,
-  Body2Bold,
-  Caption1Bold,
-  Caption2,
-} from "styles/typography";
+import { Body1Bold, Body2Bold, Caption1Bold, Caption2 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
@@ -18,8 +13,6 @@ import Icon from "components/common/atoms/Icon";
 import Loading from "components/common/Loading";
 import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
-import { useRecoilState } from "recoil";
-import { profileState } from "states/authAtom";
 
 export default function mypage() {
   const router = useRouter();
@@ -33,7 +26,6 @@ export default function mypage() {
   });
   let channelTalk;
 
-  const [profile, setProfile] = useRecoilState(profileState);
   const getProfile = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
     if (valid) {
@@ -88,7 +80,7 @@ export default function mypage() {
     if (profile === undefined) return;
     channelTalk = new ChannelTalk();
 
-    if(profile) {
+    if (profile) {
       channelTalk.boot({
         pluginKey: process.env.NEXT_PUBLIC_CHANNEL_IO_KEY,
         memberId: profile?.id,
@@ -128,11 +120,7 @@ export default function mypage() {
               <a target="_blank" rel="noreferrer">
                 <MenuItem>
                   <div>공식 인스타그램</div>
-                  <Icon
-                    icon={"arrow-right"}
-                    size={"md"}
-                    fill={"var(--gray-3)"}
-                  />
+                  <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
                 </MenuItem>
               </a>
             </Link>
@@ -216,7 +204,7 @@ const MenuItem = styled.div`
   justify-content: space-between;
   padding: 16px 20px;
   gap: 16px;
-  
+
   cursor: pointer;
 `;
 

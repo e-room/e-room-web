@@ -27,13 +27,14 @@ export default () => {
   const [building, setBuilding] = useState({});
   const [buildingImages, setBuildingImages] = useState({});
   const [buildingReviews, setBuildingReviews] = useState({});
-  console.log("building", building);
-  console.log("images", buildingImages);
-  console.log("review", buildingReviews);
+  // console.log("building", building);
+  // console.log("images", buildingImages);
+  // console.log("review", buildingReviews);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const [profile, setProfile] = useState({});
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
@@ -50,6 +51,26 @@ export default () => {
       />
     );
   }, [toastVisible]);
+
+  useEffect(() => {
+    try {
+      const getProfile = async () => {
+        await axios
+          .get(`/apis/member/profile`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            setProfile(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+      getProfile();
+    } catch (e) {
+      return true;
+    }
+  }, []);
 
   useEffect(() => {
     if (toastVisible) {
@@ -144,6 +165,7 @@ export default () => {
       )}
       {buildingReviews.reviewSlicedList.content.length > 0 && (
         <ReviewList
+          profile={profile}
           reviews={buildingReviews.reviewSlicedList.content}
           buildingId={id}
           needToBlur={buildingReviews.needToBlur}

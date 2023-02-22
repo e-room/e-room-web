@@ -9,15 +9,15 @@ export const loginState = atom({
   },
 });
 
-export const profileState = atom({
-  key: "profileState",
-  default: {
-    id: null,
-    name: null,
-    email: null,
-    profileImageUrl: null,
-  },
-});
+// export const profileState = atom({
+//   key: "profileState",
+//   default: {
+//     id: null,
+//     name: null,
+//     email: null,
+//     profileImageUrl: null,
+//   },
+// });
 
 // export const profileSelector = selector({
 //   key: "profileSelector",
