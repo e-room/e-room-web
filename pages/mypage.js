@@ -12,6 +12,7 @@ import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
 import Loading from "components/common/Loading";
 import Error from "components/common/Error";
+import ChannelTalk from "components/common/ChannelTalk";
 
 export default function mypage() {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function mypage() {
     email: null,
     profileImageUrl: null,
   });
+  let channelTalk;
+
   const getProfile = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
     if (valid) {
@@ -46,7 +49,7 @@ export default function mypage() {
   };
 
   const goContact = () => {
-    alert("문의하기");
+    channelTalk.showMessenger();
   };
 
   const onLogout = async () => {
@@ -72,6 +75,30 @@ export default function mypage() {
   useEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    if (profile === undefined) return;
+    channelTalk = new ChannelTalk();
+
+    if(profile) {
+      channelTalk.boot({
+        pluginKey: process.env.NEXT_PUBLIC_CHANNEL_IO_KEY,
+        memberId: profile?.id,
+        profile: {
+          name: profile?.name,
+          email: profile?.email,
+          avatarUrl: profile?.profileImageUrl,
+        },
+      });
+    } else {
+      channelTalk.boot({
+        pluginKey: process.env.NEXT_PUBLIC_CHANNEL_IO_KEY,
+      });
+    }
+    return () => {
+      channelTalk.shutdown();
+    };
+  }, [profile]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -177,6 +204,8 @@ const MenuItem = styled.div`
   justify-content: space-between;
   padding: 16px 20px;
   gap: 16px;
+  
+  cursor: pointer;
 `;
 
 const ButtonGroup = styled.div`
