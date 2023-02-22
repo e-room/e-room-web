@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
@@ -5,9 +7,11 @@ import { Body2, Title1 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import SocialButton from "components/common/atoms/SocialButton";
+import Loading from "components/common/Loading";
 
 export default function Login() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const { redirect_uri = "/" } = router.query;
 
   const onLoginClick = (type) => {
@@ -16,6 +20,26 @@ export default function Login() {
       `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=${redirect_uri}&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
     );
   };
+
+  useEffect(() => {
+    try {
+      const onValidCheck = async () => {
+        await axios.get(`/apis/token/valid`).then((response) => {
+          if (response.data.isValid) router.push(`/`);
+          else {
+            setLoading(false);
+            return true;
+          }
+        });
+      };
+      onValidCheck();
+    } catch (e) {
+      setLoading(false);
+      return true;
+    }
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <AppLayout>
