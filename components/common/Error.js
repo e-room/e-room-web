@@ -20,18 +20,13 @@ export default () => {
         <br />
         잠시 후에 다시 시도해주세요.
       </Message>
-      <Button
-        type={"secondary"}
-        label={"돌아가기"}
-        size={"md"}
-        onClick={onBack}
-      />
+      <Button type={"secondary"} label={"돌아가기"} size={"md"} onClick={onBack} />
     </Container>
   );
 };
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: var(--primary-1);
 
   display: flex;
