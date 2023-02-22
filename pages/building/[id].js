@@ -22,7 +22,7 @@ import Error from "components/common/Error";
 
 export default () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, isReview, returnType } = router.query;
 
   const [building, setBuilding] = useState({});
   const [buildingImages, setBuildingImages] = useState({});
@@ -134,6 +134,30 @@ export default () => {
     }
   }, [id]);
 
+  const [reviewToastVisible, setReviewToastVisible] = useState(false);
+  const reviewToast = useMemo(() => {
+    return (
+      <Toast
+        icon={"check-circle"}
+        iconColor={"success"}
+        text={"리뷰를 잘 등록했어요."}
+        visible={reviewToastVisible}
+      />
+    );
+  }, [reviewToastVisible]);
+  useEffect(() => {
+    if (reviewToastVisible) {
+      setTimeout(() => {
+        setReviewToastVisible(false);
+      }, 1000);
+    }
+  }, [reviewToastVisible]);
+  useEffect(() => {
+    if (!isReview) return;
+    setReviewToastVisible(true);
+    router.push(`/building/${id}?returnType=${returnType}`);
+  }, [isReview]);
+
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -151,6 +175,7 @@ export default () => {
       }
     >
       {toast}
+      {reviewToast}
       {showImgDetail.visible && (
         <Slider
           data={buildingImages.reviewImageList}

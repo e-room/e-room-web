@@ -150,8 +150,12 @@ export default function ReviewLayout({ children }) {
       })
         .then((res) => {
           console.log("리뷰쓰기 성공", res);
-          setSuccessBuildingId(res.data.buildingId);
-          setPopupVisible(true);
+          if (res.data.isFirstReview) {
+            setSuccessBuildingId(res.data.buildingId);
+            setPopupVisible(true);
+          } else {
+            router.push(`/building/${res.data.buildingId}?returnType=/&isReview=true`);
+          }
         })
         .catch((err) => {
           console.log("리뷰쓰기 실패!", err.response.data);
