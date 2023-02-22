@@ -35,6 +35,8 @@ import ThumbsUpFill from "../../../assets/icon/thumbs-up-fill.svg";
 import ThumbsUpStroke from "../../../assets/icon/thumbs-up-stroke.svg";
 import XIcon from "../../../assets/icon/x-icon.svg";
 import XIconXS from "../../../assets/icon/x-icon-xs.svg";
+import List from "../../../assets/icon/list.svg";
+import MapMarked from "../../../assets/icon/map-marked.svg";
 
 import LogoDefault from "../../../assets/logo/logo-default.svg";
 import LogoWhite from "../../../assets/logo/logo-white.svg";
@@ -131,6 +133,10 @@ export default function Icon(props) {
       return <LogoDefault {...args} />;
     case "logo-white":
       return <LogoWhite {...args} />;
+    case "list":
+      return <List {...args} />;
+    case "map-marked":
+      return <MapMarked {...args} />;
     default:
       return;
   }

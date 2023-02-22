@@ -20,6 +20,7 @@ import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import SearchList from "components/search/SearchList";
+import { fadeInUp_OutDown } from "styles/keyframes";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const MainMap = ({ data }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const imsiMarkerList = [];
   const [searchVisible, setSearchVisible] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -56,11 +58,7 @@ const MainMap = ({ data }) => {
       let imageSrc = MarkerPng.src;
       let imageSize = new kakao.maps.Size(61, 68);
       let imageOption = { offset: new kakao.maps.Point(30, 48) };
-      var markerImage = new kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
       map.current = await new kakao.maps.Map(container, options);
 
@@ -99,7 +97,8 @@ const MainMap = ({ data }) => {
       kakao.maps.event.addListener(map.current, "idle", () => {
         setCenterPoint();
         setLocalStorage();
-        // setCenterPoint();
+        // if (markers.length < 1) setButtonVisible(false);
+        // else setButtonVisible(true);
       });
     });
   }, [mapLoaded, searchVisible]);
@@ -170,9 +169,7 @@ const MainMap = ({ data }) => {
 
   const saveInput = async (e) => {
     setSearchList([]);
-    const response = await axios.get(
-      `/apis/building/search?params=${e.target.value}`
-    );
+    const response = await axios.get(`/apis/building/search?params=${e.target.value}`);
     setSearchList(response.data.content);
   };
 
@@ -218,11 +215,7 @@ const MainMap = ({ data }) => {
       )}
       <AppLayout
         additionalFunction={
-          <Icon
-            icon={"search"}
-            size={"md"}
-            onClick={() => setSearchVisible(true)}
-          />
+          <Icon icon={"search"} size={"md"} onClick={() => setSearchVisible(true)} />
         }
       >
         {searchVisible ? (
@@ -241,21 +234,15 @@ const MainMap = ({ data }) => {
             <LocationItem>
               <LocationButton onClick={setMyPosition} />
             </LocationItem>
-            <ButtonItem>
+            <ButtonItem visible={buttonVisible}>
               <Link href={"/buildings"}>
                 <a>
                   <Button
-                    label={"이 지역 자취방 리뷰 보기"}
+                    label={"이 지역을 목록으로 보기"}
+                    icon={"list"}
                     type={"secondary"}
                     size={"md"}
                   />
-                </a>
-              </Link>
-              <Link href={"/review/write"}>
-                <a>
-                  <Button type={"primary"} size={"md"} icon={"plus"}>
-                    리뷰 쓰기
-                  </Button>
                 </a>
               </Link>
             </ButtonItem>
@@ -267,9 +254,7 @@ const MainMap = ({ data }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
-  );
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building/marking`);
   const data = JSON.stringify(res.data);
 
   return {
@@ -347,7 +332,8 @@ const ButtonItem = styled.div`
   display: flex;
   justify-content: center;
   z-index: 2;
-  gap: 8px;
+
+  ${(p) => fadeInUp_OutDown(p.visible)}
 `;
 
 const SearchField = styled.div`
