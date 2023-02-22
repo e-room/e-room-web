@@ -49,7 +49,8 @@ export default function favorites() {
   );
 }
 const Container = styled.div`
-  height: calc(100vh - 112px);
+  height: calc(var(--vh, 1vh) * 100 - 112px);
+  /* height: calc(100vh - 112px); */
   background-color: #fafafa !important;
   overflow: scroll;
 `;

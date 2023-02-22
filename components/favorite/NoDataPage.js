@@ -20,12 +20,7 @@ export default () => {
         <br />
         마음에 드는 방을 찜해보세요
       </Message>
-      <Button
-        type={"primary"}
-        label={"지도에서 둘러보기"}
-        size={"md"}
-        onClick={onBack}
-      />
+      <Button type={"primary"} label={"지도에서 둘러보기"} size={"md"} onClick={onBack} />
     </Container>
   );
 };
@@ -34,6 +29,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background: var(--white);
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
