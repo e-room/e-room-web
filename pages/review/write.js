@@ -31,10 +31,8 @@ export default function reviewWrite() {
     }
   };
   useEffect(() => {
-    console.log("gg");
     getData();
     return () => {
-      console.log("zz");
       resetFormValue();
     };
   }, []);
