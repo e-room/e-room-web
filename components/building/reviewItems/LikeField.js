@@ -6,13 +6,19 @@ import { Caption1 } from "styles/typography";
 
 export default ({ value }) => {
   const [isLike, setIsLike] = useState(value.isLiked);
+  const [addLikeCnt, setAddLikeCnt] = useState(value.reviewBaseDto.reviewLikeCnt);
   const reviewId = value.reviewBaseDto.reviewId;
-
   const onLike = async () => {
     await axios
       .put(`/apis/building/room/review/like/${reviewId}`)
       .then((response) => {
-        console.log("onLike success", response.data);
+        if (response.data.reviewLikeStatus === "LIKED") {
+          setIsLike(true);
+          setAddLikeCnt(addLikeCnt + 1);
+        } else {
+          setIsLike(false);
+          setAddLikeCnt(addLikeCnt - 1);
+        }
       })
       .catch((error) => {
         console.log("onLike failed", error);
@@ -23,7 +29,7 @@ export default ({ value }) => {
     <LikeField favorite={isLike}>
       <div style={{ display: "flex" }} onClick={() => onLike()}>
         <Icon icon={"thumb-stroke"} size={"sm"} />
-        <div className="text">추천 {value.reviewBaseDto.reviewLikeCnt}개</div>
+        <div className="text">추천 {addLikeCnt}개</div>
       </div>
     </LikeField>
   );
