@@ -59,11 +59,7 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           }}
           renderArrowPrev={(onClickHandler, hasPrev) =>
             hasPrev && (
-              <ArrowButton
-                visible={visible}
-                style={{ left: 4 }}
-                onClick={onClickHandler}
-              >
+              <ArrowButton visible={visible} style={{ left: 4 }} onClick={onClickHandler}>
                 <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
               </ArrowButton>
             )
@@ -87,11 +83,7 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
                   <img src={value.url} style={{ objectFit: "contain" }} />
                 </ImageField>
                 <Profile>
-                  <Avatar
-                    size={"md"}
-                    img={avatarImg.src}
-                    style={{ marginRight: 6 }}
-                  />
+                  <Avatar size={"md"} img={avatarImg.src} style={{ marginRight: 6 }} />
                   {value?.anonymousStatus?.anonymousName ?? authorName}
                 </Profile>
               </>
@@ -137,7 +129,7 @@ const XField = styled.div`
 `;
 const Overlay = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100 - 112px);
   background: var(--black);
   position: fixed;
   top: 0;

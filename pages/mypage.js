@@ -80,7 +80,7 @@ export default function mypage() {
     if (profile === undefined) return;
     channelTalk = new ChannelTalk();
 
-    if (profile) {
+    if (profile?.id) {
       channelTalk.boot({
         pluginKey: process.env.NEXT_PUBLIC_CHANNEL_IO_KEY,
         memberId: profile?.id,
@@ -146,7 +146,7 @@ export default function mypage() {
 const Container = styled.div`
   background-color: #fafafa;
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100 - 112px);
 `;
 
 const MyInfo = styled.div`
