@@ -85,7 +85,7 @@ BottomSheet.propTypes = {
 
 const Overlay = styled.div`
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100 - 112px);
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;

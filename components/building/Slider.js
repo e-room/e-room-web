@@ -129,7 +129,7 @@ const XField = styled.div`
 `;
 const Overlay = styled.div`
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100 - 112px);
+  height: 100vh;
   background: var(--black);
   position: fixed;
   top: 0;
