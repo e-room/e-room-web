@@ -9,9 +9,10 @@ import { Carousel } from "react-responsive-carousel";
 import { useEffect, useState } from "react";
 import { fadeIn_Down0 } from "styles/keyframes";
 
-export default function Slider({ data, onClose, defaultId }) {
+export default function Slider({ data, onClose, defaultId, authorName = "" }) {
   const index = data.findIndex((item) => item.uuid === defaultId);
   const [visible, setVisible] = useState(false);
+
   // TODO : touch cancel 안됨...
   useEffect(() => {
     if (visible) {
@@ -58,7 +59,11 @@ export default function Slider({ data, onClose, defaultId }) {
           }}
           renderArrowPrev={(onClickHandler, hasPrev) =>
             hasPrev && (
-              <ArrowButton visible={visible} style={{ left: 4 }} onClick={onClickHandler}>
+              <ArrowButton
+                visible={visible}
+                style={{ left: 4 }}
+                onClick={onClickHandler}
+              >
                 <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
               </ArrowButton>
             )
@@ -77,17 +82,23 @@ export default function Slider({ data, onClose, defaultId }) {
         >
           {data.map((value) => {
             return (
-              <div key={value.uuid}>
-                <img src={value.url} style={{ objectFit: "contain" }} />
-              </div>
+              <>
+                <ImageField key={value.uuid}>
+                  <img src={value.url} style={{ objectFit: "contain" }} />
+                </ImageField>
+                <Profile>
+                  <Avatar
+                    size={"md"}
+                    img={avatarImg.src}
+                    style={{ marginRight: 6 }}
+                  />
+                  {value?.anonymousStatus?.anonymousName ?? authorName}
+                </Profile>
+              </>
             );
           })}
         </Carousel>
       </Container>
-      <Profile>
-        <Avatar size={"md"} img={avatarImg.src} style={{ marginRight: 6 }} />
-        새침한 판다
-      </Profile>
     </Overlay>
   );
 }
@@ -159,4 +170,16 @@ const ArrowButton = styled.div`
   cursor: pointer;
 
   ${(p) => fadeIn_Down0(p.visible)}
+`;
+
+const ImageField = styled.div`
+  /* height: 80vh; */
+  padding-top: 44px;
+  /* height: 100vh; */
+  height: calc(100vh - 44px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 720px;
+  margin: 0 auto;
 `;

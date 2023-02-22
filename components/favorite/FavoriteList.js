@@ -78,7 +78,9 @@ export default function FavoriteList(props) {
           <div key={value.buildingId}>
             <Link href={`/building/${value.buildingId}`}>
               <BuildingContainer>
-                <Logo width={122} height={122} />
+                <div style={{ width: 122, height: 122 }}>
+                  <Logo width={122} height={122} />
+                </div>
                 <BuildingContent>
                   <div className="building-name">
                     {value.name === ""

@@ -116,9 +116,9 @@ export default function buildings() {
       </Popup>
       <Container>
         <div style={{ paddingBottom: 150 }}>
-          <Banner>
+          {/* <Banner>
             <img src={Banner1.src} width={"100%"} height={"100%"} />
-          </Banner>
+          </Banner> */}
           {parseData.length > 0 ? (
             <BuildingList data={parseData} sort={filterValue.value} />
           ) : (

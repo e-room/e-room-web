@@ -5,8 +5,15 @@ import Avatar from "components/common/atoms/Avatar";
 import Score from "components/common/atoms/Score";
 import Avatar24 from "assets/avatar/24.png";
 import parseFloat from "utils/parseFloat";
+import { useRecoilValue } from "recoil";
+import { profileSelector, profileState } from "states/authAtom";
 
 export default ({ value, onScorePopup, onDeletePopup }) => {
+  // const profile = useRecoilValue(profileSelector);
+  // // const profile = useRecoilValue(profileState);
+  // console.log("profile", profile);
+  // const showDelete = profile?.id && profile.id === value.authorDto.id;
+  const showDelete = false;
   const { residenceSatisfaction } = value.reviewScoreDto;
   return (
     <Container>
@@ -34,7 +41,9 @@ export default ({ value, onScorePopup, onDeletePopup }) => {
         </UserInfo>
       </div>
       <div>
-        <DeleteButton onClick={() => onDeletePopup(value)}>삭제</DeleteButton>
+        {showDelete && (
+          <DeleteButton onClick={() => onDeletePopup(value)}>삭제</DeleteButton>
+        )}
       </div>
     </Container>
   );
