@@ -45,6 +45,7 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           infiniteLoop={true}
           swipeable={true}
           emulateTouch={true}
+          useKeyboardArrows={true}
           statusFormatter={(e) => {
             return (
               <Top>
