@@ -7,6 +7,7 @@ import FavoriteList from "components/favorite/FavoriteList";
 import NoDataPage from "components/favorite/NoDataPage";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
+import { Container } from "./buildings";
 
 export default function favorites() {
   const [data, setData] = useState([]);
@@ -48,9 +49,3 @@ export default function favorites() {
     </AppLayout>
   );
 }
-const Container = styled.div`
-  height: calc(var(--vh, 1vh) * 100 - 112px);
-  /* height: calc(100vh - 112px); */
-  background-color: #fafafa !important;
-  overflow: scroll;
-`;

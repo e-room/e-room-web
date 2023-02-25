@@ -140,7 +140,7 @@ export default function buildings() {
   );
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   height: calc(100vh - 100px);
   background-color: #fafafa !important;
   overflow-y: auto;

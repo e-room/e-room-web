@@ -200,6 +200,7 @@ const MainMap = ({ data }) => {
               alignItems: "center",
               minWidth: 24,
               marginLeft: 4,
+              cursor: "pointer",
             }}
           >
             <Icon icon={"arrow-left"} size={"md"} />
@@ -211,7 +212,10 @@ const MainMap = ({ data }) => {
             value={searchValue}
           />
           {searchValue && (
-            <div className={"x-icon"} onClick={() => setSearchValue("")}>
+            <div
+              className={"x-icon cursor-pointer"}
+              onClick={() => setSearchValue("")}
+            >
               <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
             </div>
           )}
@@ -227,7 +231,7 @@ const MainMap = ({ data }) => {
         }
       >
         {searchVisible ? (
-          test()
+          <ListContainer>{test()}</ListContainer>
         ) : (
           <Container>
             <MapWrapper id="map" />
@@ -400,4 +404,11 @@ const SearchField = styled.div`
   }
 `;
 
+const ListContainer = styled.div`
+  height: calc(100vh - 100px);
+  background-color: #fafafa !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 44px 0;
+`;
 export default MainMap;
