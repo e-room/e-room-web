@@ -22,11 +22,15 @@ export default function reviewWrite() {
   const resetFormValue = useResetRecoilState(reviewFormState);
 
   const getData = async () => {
-    const valid = await accessValid({ redirect_uri: `/review/write` });
-    if (valid) {
-      setLoading(false);
-    } else {
-      setLoading(false);
+    try {
+      const valid = await accessValid({ redirect_uri: `/review/write` });
+      console.log("write", valid);
+      if (valid) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    } catch (e) {
       setError(true);
     }
   };
