@@ -4,14 +4,18 @@ import Popup from "components/common/atoms/Popup";
 import { Caption1Bold } from "styles/typography";
 
 export default (props) => {
-  const { reviewId, showConfirmDelete, setShowConfirmDelete, data, setData } = props;
+  const { reviewId, showConfirmDelete, setShowConfirmDelete, data, setData } =
+    props;
   console.log("data", data);
   const onDelete = async () => {
+    document.body.style.overflow = "unset";
     await axios
       .delete(`/apis/building/room/review/${reviewId}`)
       .then((res) => {
         setShowConfirmDelete(false);
-        const filters = data.filter((v) => v.reviewBaseDto.reviewId !== reviewId);
+        const filters = data.filter(
+          (v) => v.reviewBaseDto.reviewId !== reviewId
+        );
         setData({
           ...data,
           content: filters,
@@ -27,7 +31,10 @@ export default (props) => {
       buttonType={"warning"}
       cancelText={"취소"}
       submitText={"삭제"}
-      onCancelClick={() => setShowConfirmDelete(false)}
+      onCancelClick={() => {
+        document.body.style.overflow = "unset";
+        setShowConfirmDelete(false);
+      }}
       onConfirmClick={() => onDelete()}
     >
       <PopupSubTitle>

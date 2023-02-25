@@ -21,7 +21,10 @@ export default ({ value, showTotalScore, setShowTotalScore }) => {
       visible={showTotalScore}
       buttonType={"confirm"}
       confirmText={"닫기"}
-      onConfirmClick={() => setShowTotalScore(false)}
+      onConfirmClick={() => {
+        document.body.style.overflow = "unset";
+        setShowTotalScore(false);
+      }}
     >
       <DetailScoreField>
         {DetailFields.map((val) => {

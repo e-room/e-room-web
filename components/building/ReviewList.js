@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styled from "@emotion/styled";
 
@@ -14,14 +14,14 @@ import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 import axios from "axios";
 import Slider from "./Slider";
-import { useRouter } from "next/router";
+import FirstReviewPopup from "./reviewItems/FirstReviewPopup";
 
 export default function ReviewList(props) {
   const { reviews, buildingId, needToBlur = true, profile } = props;
-  const router = useRouter();
+
+  const callCountRef = useRef(0);
   const [data, setData] = useState(reviews);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-
   const [showImages, setShowImages] = useState({
     visible: false,
     uuid: null,
@@ -49,6 +49,7 @@ export default function ReviewList(props) {
   const [showTotalScore, setShowTotalScore] = useState(false);
 
   const onScorePopup = (value) => {
+    document.body.style.overflow = "hidden";
     setDefaultValue(value);
     setShowTotalScore(true);
   };
@@ -59,11 +60,20 @@ export default function ReviewList(props) {
     });
     setDefaultValue(value);
     if (valid) {
+      document.body.style.overflow = "hidden";
       setShowConfirmDelete(true);
     }
   };
-  const goLogin = () => {
-    router.push(`/login?redirect_uri=/building/${buildingId}`);
+
+  const [showReview, setShowReview] = useState(false);
+  const onReviewVisible = (bool) => {
+    if (bool) {
+      document.body.style.overflow = "hidden";
+      setShowReview(true);
+    } else {
+      document.body.style.overflow = "unset";
+      setShowReview(false);
+    }
   };
 
   const [target, setTarget] = useState(null);
@@ -81,12 +91,17 @@ export default function ReviewList(props) {
       `/apis/building/${buildingId}/room/review?size=4&sort=id,DESC&cursorIds=${cursorId}`
     );
 
-    const nextItem = response.data.reviewSlicedList.content;
-    const lastItem = nextItem[nextItem.length - 1];
+    const responseContent = response.data.reviewSlicedList.content;
+    const nextItem = needToBlur
+      ? new Array(responseContent.length).fill({})
+      : responseContent;
+    const lastItem = responseContent[responseContent.length - 1];
 
     cursorId = lastItem ? lastItem.reviewBaseDto.reviewId : null;
+    if (callCountRef.current === 0 && needToBlur) onReviewVisible(true);
 
     if (nextItem.length < 1) return;
+    callCountRef.current += 1;
 
     setState((prev) => ({
       ...prev,
@@ -145,10 +160,24 @@ export default function ReviewList(props) {
             setShowTotalScore={setShowTotalScore}
           />
         )}
+        {showReview && (
+          <FirstReviewPopup
+            onClose={() => {
+              onReviewVisible(false);
+              callCountRef.current += 1;
+            }}
+            buildingId={buildingId}
+            visible={showReview}
+          />
+        )}
         {item.map((value, index) => {
           if (needToBlur && index > 0) {
             return (
-              <Item key={value.reviewBaseDto.reviewId} onClick={goLogin}>
+              <Item
+                key={index}
+                onClick={() => onReviewVisible(true)}
+                className="cursor-pointer"
+              >
                 <img src={BlurImg.src} />
               </Item>
             );
