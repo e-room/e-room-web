@@ -20,6 +20,7 @@ import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import SearchList from "components/search/SearchList";
+import Nodata from "components/search/Nodata";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -182,7 +183,7 @@ const MainMap = ({ data }) => {
   const test = useCallback(() => {
     if (!searchVisible) return;
     if (searchList.length < 1 || !searchValue) {
-      return <div />;
+      return <Nodata />;
     } else {
       return <SearchList data={searchList} searchValue={searchValue} />;
     }
