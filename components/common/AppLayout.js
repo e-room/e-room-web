@@ -37,6 +37,7 @@ const MainContent = styled.div`
   margin: ${(p) => (p.enabledNavbar ? "44px 0" : "44px 0px 0px 0px")};
   @media (min-width: 720px) {
     margin: 44px auto;
-    width: 720px;
+    max-width: 720px;
+    overflow: hidden;
   }
 `;

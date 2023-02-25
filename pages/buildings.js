@@ -140,17 +140,21 @@ export default function buildings() {
 }
 
 const Container = styled.div`
-  height: calc(100vh - 112px);
+  height: calc(100vh - 100px);
   background-color: #fafafa !important;
-  overflow: scroll;
+  /* position: relative; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* overflow: scroll; */
 `;
 
 const ButtonGroup = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
   position: fixed;
   bottom: 64px;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  justify-content: center;
 `;
 const Banner = styled.div`
   width: 100%;

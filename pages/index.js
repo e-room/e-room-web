@@ -347,7 +347,7 @@ const LocationItem = styled.div`
   z-index: 2;
 `;
 const ButtonItem = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 64px;
   width: 100%;
   display: flex;
