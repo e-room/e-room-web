@@ -45,11 +45,10 @@ export default function mypage() {
         .catch((error) => {
           console.error(error);
           setLoading(false);
-          setError(true);
         });
     } else {
       setLoading(false);
-      setError(true);
+      // setError(true);
     }
   };
 
