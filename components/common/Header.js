@@ -21,7 +21,7 @@ export default function Header({ pageTitle, additionalFunction }) {
       router.pathname === "/" ? (
         <Box></Box>
       ) : (
-        <Box onClick={onBack}>
+        <Box onClick={onBack} className="cursor-pointer">
           <Icon icon={"arrow-left"} size="md" />
         </Box>
       )}
@@ -37,7 +37,7 @@ export default function Header({ pageTitle, additionalFunction }) {
           </>
         )}
       </Box>
-      <Box>{additionalFunction ?? null}</Box>
+      <Box className="cursor-pointer">{additionalFunction ?? null}</Box>
     </AppBarWrapper>
   );
 }

@@ -142,6 +142,7 @@ const MainMap = ({ data }) => {
 
         let myPosition = new kakao.maps.LatLng(lat, lng);
         map.current.setCenter(myPosition);
+        map.current.setLevel(1);
       });
     }
   };
@@ -320,12 +321,17 @@ const MarkerClustererStyles = [
 ];
 
 const MapWrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   /* height: calc(100vh - 112px); */
 `;
 const Container = styled.div`
+  position: relative;
   overflow: hidden !important;
+
+  width: 100vw;
+  height: 100vh;
+  margin: 0 !important;
 `;
 
 const GroupItem = styled.div`
@@ -341,7 +347,7 @@ const LocationItem = styled.div`
   z-index: 2;
 `;
 const ButtonItem = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 64px;
   width: 100%;
   display: flex;

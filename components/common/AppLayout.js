@@ -3,18 +3,27 @@ import { GlobalStyle } from "../../styles/globalStyle";
 import styled from "@emotion/styled";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import { useRouter } from "next/router";
 
-export default function AppLayout({
-  pageTitle,
-  enabledNavbar = true,
-  additionalFunction,
-  children,
-}) {
+export default function AppLayout(props) {
+  const {
+    pageTitle,
+    enabledNavbar = true,
+    additionalFunction,
+    children,
+  } = props;
+
+  const router = useRouter();
+
   return (
     <>
       <GlobalStyle />
       <Header pageTitle={pageTitle} additionalFunction={additionalFunction} />
-      <MainContent enabledNavbar={enabledNavbar}>{children}</MainContent>
+      {router.asPath === "/" ? (
+        children
+      ) : (
+        <MainContent enabledNavbar={enabledNavbar}>{children}</MainContent>
+      )}
       <Footer enabled={enabledNavbar} />
     </>
   );
