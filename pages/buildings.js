@@ -14,6 +14,7 @@ import Popup from "components/common/atoms/Popup";
 import Select from "components/common/atoms/Select";
 import Loading from "components/common/Loading";
 import Error from "components/common/Error";
+import NoData from "components/common/atoms/NoData";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
@@ -122,7 +123,7 @@ export default function buildings() {
           {parseData.length > 0 ? (
             <BuildingList data={parseData} sort={filterValue.value} />
           ) : (
-            <div>no data</div>
+            <NoData />
           )}
         </div>
         <ButtonGroup>
