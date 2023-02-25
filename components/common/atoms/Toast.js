@@ -58,7 +58,7 @@ const StyledToast = styled.div`
     0px 0px 64px rgba(37, 39, 37, 0.04);
   border-radius: 12px;
 
-  position: absolute;
+  position: fixed;
   bottom: 64px;
   left: 20px;
   right: 20px;
