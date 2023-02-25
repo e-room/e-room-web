@@ -12,7 +12,7 @@ import BuildingList from "components/building/BuildingList";
 import Icon from "components/common/atoms/Icon";
 import Popup from "components/common/atoms/Popup";
 import Select from "components/common/atoms/Select";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import NoData from "components/common/atoms/NoData";
 

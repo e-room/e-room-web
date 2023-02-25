@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
 import FavoriteList from "components/favorite/FavoriteList";
 import NoDataPage from "components/favorite/NoDataPage";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 
 export default function favorites() {

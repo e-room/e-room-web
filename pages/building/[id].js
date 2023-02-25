@@ -17,7 +17,7 @@ import Icon from "components/common/atoms/Icon";
 import Toast from "components/common/atoms/Toast";
 import { useRouter } from "next/router";
 import accessValid from "utils/accessValid";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 
 export default () => {

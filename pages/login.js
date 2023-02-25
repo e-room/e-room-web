@@ -7,7 +7,7 @@ import { Body2, Title1 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import SocialButton from "components/common/atoms/SocialButton";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 
 export default function Login() {
   const router = useRouter();

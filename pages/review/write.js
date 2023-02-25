@@ -6,7 +6,7 @@ import ReviewForm1 from "components/review/ReviewForm1";
 import ReviewForm2 from "components/review/ReviewForm2";
 import ReviewForm3 from "components/review/ReviewForm3";
 import ReviewForm4 from "components/review/ReviewForm4";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import { useResetRecoilState } from "recoil";
 import { reviewFormState } from "states/reviewAtom";
