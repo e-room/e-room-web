@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { Caption1Bold } from "styles/typography";
-import IllustFemale from "assets/illust/illust-female_evaluation.svg";
+import Congraturation from "components/common/lottie/Congraturation";
 
 import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 
@@ -154,7 +154,9 @@ export default function ReviewLayout({ children }) {
             setSuccessBuildingId(res.data.buildingId);
             setPopupVisible(true);
           } else {
-            router.push(`/building/${res.data.buildingId}?returnType=/&isReview=true`);
+            router.push(
+              `/building/${res.data.buildingId}?returnType=/&isReview=true`
+            );
           }
         })
         .catch((err) => {
@@ -184,7 +186,7 @@ export default function ReviewLayout({ children }) {
         visible={popupVisible}
         submitLabel={"확인"}
       >
-        <IllustFemale />
+        <Congraturation />
         <Description>
           첫 리뷰를 잘 등록했어요.
           <br />
