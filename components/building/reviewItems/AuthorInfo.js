@@ -79,4 +79,5 @@ const DeleteButton = styled.div`
 
   color: var(--danger-1);
   width: 25px;
+  cursor: pointer;
 `;
