@@ -11,7 +11,7 @@ const globalStyle = css`
   }
 
   .cursor-pointer {
-    cursor: pointer;
+    cursor: pointer !important;
   }
 `;
 export const GlobalStyle = () => {

@@ -30,9 +30,13 @@ export default function ReviewList(props) {
   });
 
   const onCloseImg = () => {
+    document.body.style.overflow = "unset";
+
     setShowImages({ visible: false, uuid: null, data: [], authorName: "" });
   };
   const onDetailView = (id, data, authorName) => {
+    document.body.style.overflow = "hidden";
+
     setShowImages({
       visible: true,
       uuid: id,
@@ -165,7 +169,7 @@ export default function ReviewList(props) {
                   onDetailView={onDetailView}
                 />
               )}
-              <LikeField value={value} />
+              <LikeField value={value} buildingId={buildingId} />
             </Item>
           );
         })}

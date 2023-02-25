@@ -39,4 +39,5 @@ const ImgField = styled.div`
 
 const ImageBox = styled(Image)`
   border-radius: 8px;
+  cursor: pointer;
 `;

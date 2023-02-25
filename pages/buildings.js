@@ -142,10 +142,8 @@ export default function buildings() {
 const Container = styled.div`
   height: calc(100vh - 100px);
   background-color: #fafafa !important;
-  /* position: relative; */
   overflow-y: auto;
   overflow-x: hidden;
-  /* overflow: scroll; */
 `;
 
 const ButtonGroup = styled.div`

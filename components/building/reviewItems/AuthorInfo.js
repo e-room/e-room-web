@@ -70,6 +70,7 @@ const UserInfo = styled.div`
 
   span {
     border-bottom: 1px solid var(--gray-1);
+    cursor: pointer;
   }
 `;
 

@@ -38,6 +38,8 @@ export default () => {
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
+    document.body.style.overflow = "unset";
+
     setShowImgDetail({ visible: false, uuid: null });
   };
   const [toastVisible, setToastVisible] = useState(false);
@@ -214,6 +216,7 @@ const ButtonItem = styled.div`
   position: fixed;
   bottom: 8px;
   width: 100%;
+  max-width: 720px;
   display: flex;
   justify-content: center;
   z-index: 2;

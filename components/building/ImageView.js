@@ -8,6 +8,7 @@ export default function ImageView({ data }) {
   const setShowDetail = useSetRecoilState(imageViewState);
 
   const onDetailView = (id) => {
+    document.body.style.overflow = "hidden";
     setShowDetail({ visible: true, uuid: id });
   };
 
@@ -62,4 +63,5 @@ const ImgField = styled.div`
 
 const ImageBox = styled(Image)`
   border-radius: 8px;
+  cursor: pointer;
 `;
