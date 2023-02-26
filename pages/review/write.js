@@ -24,10 +24,7 @@ export default function reviewWrite() {
   const getData = async () => {
     try {
       const valid = await accessValid({ redirect_uri: `/review/write` });
-      console.log("write", valid);
       if (valid) {
-        setLoading(false);
-      } else {
         setLoading(false);
       }
     } catch (e) {
