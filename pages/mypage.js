@@ -18,6 +18,7 @@ import Icon from "components/common/atoms/Icon";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
+import Popup from "components/common/atoms/Popup";
 
 export default function mypage() {
   const router = useRouter();
@@ -65,12 +66,22 @@ export default function mypage() {
     }
   };
 
+  const [showWithdrawal, setShowWithdrawal] = useState(false);
+  const onWithdrawalVisible = (bool) => {
+    if (bool) {
+      document.body.style.overflow = "hidden";
+      setShowWithdrawal(true);
+    } else {
+      document.body.style.overflow = "unset";
+      setShowWithdrawal(false);
+    }
+  };
   const onWithdrawal = async () => {
     const response = await axios.delete(`/apis/member/exit`, {
       withCredentials: true,
     });
     if (response.status === 200) {
-      router.push("/");
+      router.push(`/login?redirect_uri=/mypage`);
     } else {
       alert("탈퇴하기가 실패했습니다.");
     }
@@ -109,6 +120,22 @@ export default function mypage() {
 
   return (
     <AppLayout pageTitle={"내정보"}>
+      {showWithdrawal && (
+        <Popup
+          title={"정말 탈퇴하시겠어요?"}
+          visible={showWithdrawal}
+          buttonType={"warning"}
+          cancelText={"취소"}
+          submitText={"탈퇴하기"}
+          onCancelClick={() => onWithdrawalVisible(false)}
+          onConfirmClick={onWithdrawal}
+        >
+          <PopupSubTitle>
+            회원님의 모든 리뷰가 사라져요. <br />
+            다른 사람들이 쓴 리뷰를 모두 볼 수 없어요.
+          </PopupSubTitle>
+        </Popup>
+      )}
       <Container>
         <MyInfo>
           <Avatar size={"lg"} img={profile.profileImageUrl} />
@@ -141,7 +168,10 @@ export default function mypage() {
             <Button className="logout" onClick={onLogout}>
               로그아웃
             </Button>
-            <Button className="withdrawal" onClick={onWithdrawal}>
+            <Button
+              className="withdrawal"
+              onClick={() => onWithdrawalVisible(true)}
+            >
               탈퇴하기
             </Button>
           </ButtonGroup>
@@ -232,4 +262,8 @@ const ButtonGroup = styled.div`
 
 const Button = styled.div`
   cursor: pointer;
+`;
+const PopupSubTitle = styled.div`
+  ${Caption1Bold}
+  text-align: center;
 `;
