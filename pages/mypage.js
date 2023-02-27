@@ -5,12 +5,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import {
-  Body1Bold,
-  Body2Bold,
-  Caption1Bold,
-  Caption2,
-} from "styles/typography";
+import { Body1Bold, Body2Bold, Caption1Bold, Caption2 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
@@ -128,7 +123,7 @@ export default function mypage() {
           cancelText={"취소"}
           submitText={"탈퇴하기"}
           onCancelClick={() => onWithdrawalVisible(false)}
-          onConfirmClick={onWithdrawal}
+          onConfirmClick={() => onWithdrawal()}
         >
           <PopupSubTitle>
             회원님의 모든 리뷰가 사라져요. <br />
@@ -151,11 +146,7 @@ export default function mypage() {
               <a target="_blank" rel="noreferrer">
                 <MenuItem>
                   <div>공식 인스타그램</div>
-                  <Icon
-                    icon={"arrow-right"}
-                    size={"md"}
-                    fill={"var(--gray-3)"}
-                  />
+                  <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
                 </MenuItem>
               </a>
             </Link>
@@ -168,10 +159,7 @@ export default function mypage() {
             <Button className="logout" onClick={onLogout}>
               로그아웃
             </Button>
-            <Button
-              className="withdrawal"
-              onClick={() => onWithdrawalVisible(true)}
-            >
+            <Button className="withdrawal" onClick={() => onWithdrawalVisible(true)}>
               탈퇴하기
             </Button>
           </ButtonGroup>
