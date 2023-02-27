@@ -8,14 +8,19 @@ import NoDataPage from "components/favorite/NoDataPage";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import { Container } from "./buildings";
+import NeedLogin from "components/common/NeedLogin";
 
 export default function favorites() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const [need, setNeed] = useState(false);
   const getData = async () => {
     const valid = await accessValid({ redirect_uri: `/favorites` });
+    if (!valid) {
+      return setNeed(true);
+    }
     if (valid) {
       await axios
         .get(`/apis/member/favorite`)
@@ -37,6 +42,9 @@ export default function favorites() {
   useEffect(() => {
     getData();
   }, []);
+
+  if (need)
+    return <NeedLogin visible={need} setVisible={setNeed} useBack={true} />;
 
   if (loading) return <Loading />;
   if (error) return <Error />;
