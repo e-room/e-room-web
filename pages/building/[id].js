@@ -20,6 +20,7 @@ import Error from "components/common/Error";
 import NoReview from "components/building/reviewItems/NoReview";
 import Info from "components/building/Info";
 import Score from "components/building/Score";
+import NeedLogin from "components/common/NeedLogin";
 
 export default () => {
   const router = useRouter();
@@ -84,30 +85,33 @@ export default () => {
   }, [toastVisible]);
 
   const [favorite, setFavorite] = useState(false);
-  const onFavoriteChange = useCallback(() => {
-    const valid = accessValid({ redirect_uri: `/building/${id}` });
-    if (!valid) return;
-    if (favorite) {
-      axios
-        .delete(`/apis/member/favorite/${id}`)
-        .then((res) => {
-          setFavorite(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      axios
-        .post(`/apis/member/favorite/${id}`)
-        .then(() => {
-          setToastVisible(true);
-          setFavorite(true);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const [need, setNeed] = useState(false);
+  const onFavoriteChange = useCallback(async () => {
+    const valid = await accessValid({ redirect_uri: `/building/${id}` });
+    if (!valid) return setNeed(true);
+    if (valid) {
+      if (favorite) {
+        axios
+          .delete(`/apis/member/favorite/${id}`)
+          .then((res) => {
+            setFavorite(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        axios
+          .post(`/apis/member/favorite/${id}`)
+          .then(() => {
+            setToastVisible(true);
+            setFavorite(true);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }
-  }, [favorite]);
+  }, [favorite, need]);
 
   useEffect(() => {
     if (id) {
@@ -184,6 +188,7 @@ export default () => {
         />
       }
     >
+      {need && <NeedLogin visible={need} setVisible={setNeed} />}
       {toast}
       {reviewToast}
       <Container>
