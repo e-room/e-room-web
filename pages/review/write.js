@@ -11,6 +11,7 @@ import Error from "components/common/Error";
 import { useResetRecoilState } from "recoil";
 import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 import { useRouter } from "next/router";
+import NeedLogin from "components/common/NeedLogin";
 
 export default function reviewWrite() {
   const router = useRouter();
@@ -18,13 +19,16 @@ export default function reviewWrite() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
+  const [need, setNeed] = useState(false);
   const resetFormValue = useResetRecoilState(reviewFormState);
   const resetImageValues = useResetRecoilState(reviewImageListState);
 
   const getData = async () => {
     try {
       const valid = await accessValid({ redirect_uri: `/review/write` });
+      if (!valid) {
+        return setNeed(true);
+      }
       if (valid) {
         setLoading(false);
       }
@@ -54,6 +58,9 @@ export default function reviewWrite() {
         return <Step1 />;
     }
   };
+
+  if (need)
+    return <NeedLogin visible={need} setVisible={setNeed} useBack={true} />;
 
   if (loading) return <Loading />;
   if (error) return <Error />;
