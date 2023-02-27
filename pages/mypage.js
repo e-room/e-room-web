@@ -19,6 +19,7 @@ import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
 import Popup from "components/common/atoms/Popup";
+import NeedLogin from "components/common/NeedLogin";
 
 export default function mypage() {
   const router = useRouter();
@@ -32,8 +33,12 @@ export default function mypage() {
   });
   let channelTalk;
 
+  const [need, setNeed] = useState(false);
   const getProfile = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
+    if (!valid) {
+      return setNeed(true);
+    }
     if (valid) {
       await axios
         .get(`/apis/member/profile`, {
@@ -113,6 +118,8 @@ export default function mypage() {
     };
   }, [profile]);
 
+  if (need)
+    return <NeedLogin visible={need} setVisible={setNeed} useBack={true} />;
   if (loading) return <Loading />;
   if (error) return <Error />;
 

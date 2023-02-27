@@ -4,7 +4,7 @@ import Popup from "components/common/atoms/Popup";
 import { Caption1Bold } from "styles/typography";
 
 export default (props) => {
-  const { visible, setVisible } = props;
+  const { visible, setVisible, useBack = false } = props;
   console.log("needlogin ", Router.router.asPath);
 
   return (
@@ -16,6 +16,7 @@ export default (props) => {
       submitText={"로그인하기"}
       onCancelClick={() => {
         setVisible(false);
+        if (useBack) Router.back();
       }}
       onConfirmClick={() => {
         Router.push(`/login?redirect_uri=${Router.router.asPath}`);
