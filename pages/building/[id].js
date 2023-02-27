@@ -7,8 +7,7 @@ import styled from "@emotion/styled";
 import { imageViewState } from "states/buidlingAtom";
 
 import AppLayout from "components/common/AppLayout";
-import BuildingInfo from "components/building/BuildingInfo";
-import ImageView from "components/building/ImageView";
+import ImageView from "components/building/ImageList";
 import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
@@ -19,6 +18,9 @@ import { useRouter } from "next/router";
 import accessValid from "utils/accessValid";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
+import NoReview from "components/building/reviewItems/NoReview";
+import Info from "components/building/Info";
+import Score from "components/building/Score";
 
 export default () => {
   const router = useRouter();
@@ -29,7 +31,7 @@ export default () => {
   const [buildingReviews, setBuildingReviews] = useState({});
   // console.log("building", building);
   // console.log("images", buildingImages);
-  // console.log("review", buildingReviews);
+  console.log("review", buildingReviews);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -178,39 +180,52 @@ export default () => {
     >
       {toast}
       {reviewToast}
-      {showImgDetail.visible && (
-        <Slider
-          data={buildingImages.reviewImageList}
-          onClose={onCloseImg}
-          defaultId={showImgDetail.uuid}
-        />
-      )}
-      <BuildingMap building={building} />
-      <BuildingInfo building={building} />
-      {buildingImages.reviewImageCount > 0 && (
-        <ImageView data={buildingImages.reviewImageList} />
-      )}
-      {buildingReviews.reviewSlicedList.content.length > 0 && (
-        <ReviewList
-          profile={profile}
-          reviews={buildingReviews.reviewSlicedList.content}
-          buildingId={id}
-          needToBlur={buildingReviews.needToBlur}
-        />
-      )}
-
-      <ButtonItem>
-        <Link href={"/review/write"}>
-          <a>
-            <Button type={"primary"} size={"md"} icon={"plus"}>
-              리뷰 쓰기
-            </Button>
-          </a>
-        </Link>
-      </ButtonItem>
+      <Container>
+        {showImgDetail.visible && (
+          <Slider
+            data={buildingImages.reviewImageList}
+            onClose={onCloseImg}
+            defaultId={showImgDetail.uuid}
+          />
+        )}
+        <BuildingMap building={building} />
+        <Info building={building} />
+        {buildingReviews.reviewSlicedList.content.length > 0 && (
+          <Score building={building} />
+        )}
+        {buildingImages.reviewImageCount > 0 && (
+          <ImageView data={buildingImages.reviewImageList} />
+        )}
+        {buildingReviews.reviewSlicedList.content.length > 0 ? (
+          <ReviewList
+            profile={profile}
+            reviews={buildingReviews.reviewSlicedList.content}
+            buildingId={id}
+            needToBlur={buildingReviews.needToBlur}
+          />
+        ) : (
+          <NoReview />
+        )}
+        {buildingReviews.reviewSlicedList.content.length > 0 && (
+          <ButtonItem>
+            <Link href={"/review/write"}>
+              <a>
+                <Button type={"primary"} size={"md"} icon={"plus"}>
+                  이 자취방 리뷰 쓰기
+                </Button>
+              </a>
+            </Link>
+          </ButtonItem>
+        )}
+      </Container>
     </AppLayout>
   );
 };
+
+const Container = styled.div`
+  height: calc(100vh - 44px);
+  background-color: #fafafa;
+`;
 
 const ButtonItem = styled.div`
   position: fixed;
