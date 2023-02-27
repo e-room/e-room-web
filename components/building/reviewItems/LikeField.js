@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import axios from "axios";
 import Icon from "components/common/atoms/Icon";
+import NeedLogin from "components/common/NeedLogin";
 import { useState } from "react";
 import { Caption1 } from "styles/typography";
 import accessValid from "utils/accessValid";
@@ -11,10 +12,14 @@ export default ({ value, buildingId }) => {
     value.reviewBaseDto.reviewLikeCnt
   );
   const reviewId = value.reviewBaseDto.reviewId;
+  const [need, setNeed] = useState(false);
   const onLike = async () => {
     const valid = await accessValid({
       redirect_uri: `/building/${buildingId}`,
     });
+    if (!valid) {
+      return setNeed(true);
+    }
     if (valid) {
       await axios
         .put(`/apis/building/room/review/like/${reviewId}`)
@@ -35,6 +40,7 @@ export default ({ value, buildingId }) => {
 
   return (
     <LikeField favorite={isLike}>
+      {need && <NeedLogin visible={need} setVisible={setNeed} />}
       <div
         style={{ display: "flex" }}
         onClick={() => onLike()}
