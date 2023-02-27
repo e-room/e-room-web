@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import axios from "axios";
-import Link from "next/link";
 import styled from "@emotion/styled";
 
 import { imageViewState } from "states/buidlingAtom";
@@ -31,7 +30,7 @@ export default () => {
   const [buildingReviews, setBuildingReviews] = useState({});
   // console.log("building", building);
   // console.log("images", buildingImages);
-  console.log("review", buildingReviews);
+  // console.log("review", buildingReviews);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -162,6 +161,13 @@ export default () => {
     router.push(`/building/${id}?returnType=${returnType}`);
   }, [isReview]);
 
+  const goReviewWrite = () => {
+    const address = encodeURI(JSON.stringify(building.address));
+    const name = encodeURI(building.name);
+
+    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
+  };
+
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -204,17 +210,18 @@ export default () => {
             needToBlur={buildingReviews.needToBlur}
           />
         ) : (
-          <NoReview />
+          <NoReview building={building} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
           <ButtonItem>
-            <Link href={"/review/write"}>
-              <a>
-                <Button type={"primary"} size={"md"} icon={"plus"}>
-                  이 자취방 리뷰 쓰기
-                </Button>
-              </a>
-            </Link>
+            <Button
+              type={"primary"}
+              size={"md"}
+              icon={"plus"}
+              onClick={goReviewWrite}
+            >
+              이 자취방 리뷰 쓰기
+            </Button>
           </ButtonItem>
         )}
       </Container>

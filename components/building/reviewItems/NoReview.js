@@ -3,10 +3,14 @@ import styled from "@emotion/styled";
 import Button from "components/common/atoms/Button";
 import { useRouter } from "next/router";
 
-export default () => {
+export default ({ building }) => {
   const router = useRouter();
+
   const goReviewWrite = () => {
-    router.push(`/review/write`);
+    const address = encodeURI(JSON.stringify(building.address));
+    const name = encodeURI(building.name);
+
+    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
   };
   return (
     <NoReview.container>

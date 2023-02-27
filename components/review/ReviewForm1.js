@@ -10,9 +10,28 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
 import { Body2Bold, Body3 } from "styles/typography";
+import { useRouter } from "next/router";
 
 export default function ReviewForm1() {
+  const router = useRouter();
+  const { addressQuery, nameQuery } = router.query;
+
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
+  useEffect(() => {
+    if (!addressQuery) return;
+    setFormValue({
+      ...formValue,
+      address: {
+        ...formValue.address,
+        ...JSON.parse(decodeURI(addressQuery)),
+      },
+      buildingOptionalDto: {
+        ...formValue.buildingOptionalDto,
+        buildingName: decodeURI(nameQuery) ?? "",
+      },
+    });
+  }, [addressQuery, nameQuery]);
+
   const [postCodeOpen, setPostCodeOpen] = useState(false);
   const [yearOptions, setYearOptions] = useState([]);
   const now = dayjs().get("year");
