@@ -16,8 +16,9 @@ export default function ReviewForm1() {
   const [postCodeOpen, setPostCodeOpen] = useState(false);
   const [yearOptions, setYearOptions] = useState([]);
   const now = dayjs().get("year");
+  const regex = new RegExp(/^[0-9]+$/);
 
-  const test = useCallback(() => {
+  const newYear = useCallback(() => {
     const copy = [...yearOptions];
     for (let i = now; i >= 1990; i--) {
       copy.push({ value: i, label: `${i}년` });
@@ -70,8 +71,10 @@ export default function ReviewForm1() {
     : "";
 
   useEffect(() => {
-    test();
+    newYear();
   }, []);
+
+  console.log("plx,,,", formValue.reviewBaseDto.netLeasableArea);
 
   return (
     <FormWrapper
@@ -192,17 +195,21 @@ export default function ReviewForm1() {
       </FormItem>
       <FormItem>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 6"}
           label={"집 크기"}
           unit={"평"}
           width={"100%"}
           onChange={(e) => {
+            console.log("wlq zmrl", e.target.value, regex.test(e.target.value));
+            // if (!regex.test(e.target.value)) return false;
             setFormValue({
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                netLeasableArea: Number(e.target.value),
+                netLeasableArea: regex.test(e.target.value)
+                  ? e.target.value
+                  : "",
               },
             });
           }}
