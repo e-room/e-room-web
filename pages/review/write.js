@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
 
 import ReviewLayout from "components/review/ReviewLayout";
-import ReviewForm1 from "components/review/ReviewForm1";
-import ReviewForm2 from "components/review/ReviewForm2";
-import ReviewForm3 from "components/review/ReviewForm3";
-import ReviewForm4 from "components/review/ReviewForm4";
+import Step1 from "components/review/Step1";
+import Step2 from "components/review/Step2";
+import Step3 from "components/review/Step3";
+import Step4 from "components/review/Step4";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import { useResetRecoilState } from "recoil";
-import { reviewFormState } from "states/reviewAtom";
+import { reviewFormState, reviewImageListState } from "states/reviewAtom";
 import { useRouter } from "next/router";
 
 export default function reviewWrite() {
@@ -20,6 +20,7 @@ export default function reviewWrite() {
   const [error, setError] = useState(false);
 
   const resetFormValue = useResetRecoilState(reviewFormState);
+  const resetImageValues = useResetRecoilState(reviewImageListState);
 
   const getData = async () => {
     try {
@@ -35,21 +36,22 @@ export default function reviewWrite() {
     getData();
     return () => {
       resetFormValue();
+      resetImageValues();
     };
   }, []);
 
   const Form = () => {
     switch (index) {
       case "1":
-        return <ReviewForm1 />;
+        return <Step1 />;
       case "2":
-        return <ReviewForm2 />;
+        return <Step2 />;
       case "3":
-        return <ReviewForm3 />;
+        return <Step3 />;
       case "4":
-        return <ReviewForm4 />;
+        return <Step4 />;
       default:
-        return <ReviewForm1 />;
+        return <Step1 />;
     }
   };
 
