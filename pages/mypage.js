@@ -5,7 +5,12 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import { Body1Bold, Body2Bold, Caption1Bold, Caption2 } from "styles/typography";
+import {
+  Body1Bold,
+  Body2Bold,
+  Caption1Bold,
+  Caption2,
+} from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
@@ -64,10 +69,8 @@ export default function mypage() {
   const [showWithdrawal, setShowWithdrawal] = useState(false);
   const onWithdrawalVisible = (bool) => {
     if (bool) {
-      document.body.style.overflow = "hidden";
       setShowWithdrawal(true);
     } else {
-      document.body.style.overflow = "unset";
       setShowWithdrawal(false);
     }
   };
@@ -76,7 +79,7 @@ export default function mypage() {
       withCredentials: true,
     });
     if (response.status === 200) {
-      router.push(`/login?redirect_uri=/mypage`);
+      router.push(`/login?redirect_uri=/mypage&isWithdrawal=true`);
     } else {
       alert("탈퇴하기가 실패했습니다.");
     }
@@ -146,7 +149,11 @@ export default function mypage() {
               <a target="_blank" rel="noreferrer">
                 <MenuItem>
                   <div>공식 인스타그램</div>
-                  <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
+                  <Icon
+                    icon={"arrow-right"}
+                    size={"md"}
+                    fill={"var(--gray-3)"}
+                  />
                 </MenuItem>
               </a>
             </Link>
@@ -159,7 +166,10 @@ export default function mypage() {
             <Button className="logout" onClick={onLogout}>
               로그아웃
             </Button>
-            <Button className="withdrawal" onClick={() => onWithdrawalVisible(true)}>
+            <Button
+              className="withdrawal"
+              onClick={() => onWithdrawalVisible(true)}
+            >
               탈퇴하기
             </Button>
           </ButtonGroup>
