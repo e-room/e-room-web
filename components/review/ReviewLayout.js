@@ -118,7 +118,6 @@ export default function ReviewLayout({ children }) {
 
   const onSubmit = async () => {
     setLoading(true);
-    console.log("create review ==> ", formatFormValue);
     try {
       const totalScore = calculateByReviewScore(formValue);
       const formatFormValue = {
@@ -128,6 +127,7 @@ export default function ReviewLayout({ children }) {
           residenceSatisfaction: totalScore,
         },
       };
+      console.log("create review ==> ", formatFormValue);
 
       const formData = new FormData();
       formData.append(
