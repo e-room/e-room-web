@@ -168,8 +168,10 @@ export default () => {
   const goReviewWrite = () => {
     const address = encodeURI(JSON.stringify(building.address));
     const name = encodeURI(building.name);
+    const query = { address, name };
+    localStorage.setItem("buildingQuery", JSON.stringify(query));
 
-    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
+    router.push(`/review/write`);
   };
 
   if (loading) return <Loading />;
@@ -215,7 +217,7 @@ export default () => {
             needToBlur={buildingReviews.needToBlur}
           />
         ) : (
-          <NoReview building={building} />
+          <NoReview building={building} goReviewWrite={goReviewWrite} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
           <ButtonItem>

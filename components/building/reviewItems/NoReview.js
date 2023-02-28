@@ -1,17 +1,8 @@
 import { Caption1Bold, SubTitle1 } from "styles/typography";
 import styled from "@emotion/styled";
 import Button from "components/common/atoms/Button";
-import { useRouter } from "next/router";
 
-export default ({ building }) => {
-  const router = useRouter();
-
-  const goReviewWrite = () => {
-    const address = encodeURI(JSON.stringify(building.address));
-    const name = encodeURI(building.name);
-
-    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
-  };
+export default ({ goReviewWrite }) => {
   return (
     <NoReview.container>
       <NoReview.title>아직 리뷰가 없어요</NoReview.title>
