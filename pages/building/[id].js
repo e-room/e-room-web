@@ -156,7 +156,7 @@ export default () => {
     if (reviewToastVisible) {
       setTimeout(() => {
         setReviewToastVisible(false);
-      }, 1000);
+      }, 3000);
     }
   }, [reviewToastVisible]);
   useEffect(() => {
