@@ -134,7 +134,7 @@ export default function ReviewForm1() {
           </div>
         </div>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 20"}
           label={"거주 기간"}
           unit={"개월"}
@@ -144,7 +144,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewResidencePeriodDto: {
                 ...formValue.reviewResidencePeriodDto,
-                residenceDuration: Number(e.target.value),
+                residenceDuration: regex.test(e.target.value)
+                  ? e.target.value
+                  : "",
               },
             });
           }}
@@ -154,7 +156,7 @@ export default function ReviewForm1() {
       </GridItem>
       <GridItem>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 50"}
           label={"월세"}
           unit={"만원"}
@@ -164,14 +166,14 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                monthlyRent: Number(e.target.value),
+                monthlyRent: regex.test(e.target.value) ? e.target.value : "",
               },
             });
           }}
           value={formValue.reviewBaseDto.monthlyRent}
         />
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 20"}
           label={"관리비"}
           unit={"만원"}
@@ -181,7 +183,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                managementFee: Number(e.target.value),
+                managementFee: regex.test(e.target.value) ? e.target.value : "",
               },
             });
           }}
@@ -190,7 +192,7 @@ export default function ReviewForm1() {
       </GridItem>
       <FormItem>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 500"}
           label={"보증금"}
           unit={"만원"}
@@ -200,7 +202,7 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                deposit: Number(e.target.value),
+                deposit: regex.test(e.target.value) ? e.target.value : "",
               },
             });
           }}
@@ -215,8 +217,6 @@ export default function ReviewForm1() {
           unit={"평"}
           width={"100%"}
           onChange={(e) => {
-            console.log("wlq zmrl", e.target.value, regex.test(e.target.value));
-            // if (!regex.test(e.target.value)) return false;
             setFormValue({
               ...formValue,
               reviewBaseDto: {
