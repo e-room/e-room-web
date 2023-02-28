@@ -65,7 +65,7 @@ export default (props) => {
     <div>
       {item.map((value) => {
         return (
-          <div key={value.buildingId}>
+          <div key={value.buildingId} className="cursor-pointer">
             <Link href={`/building/${value.buildingId}`}>
               <BuildingContainer>
                 <div style={{ width: 122, height: 122 }}>

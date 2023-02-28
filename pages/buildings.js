@@ -12,8 +12,9 @@ import BuildingList from "components/building/BuildingList";
 import Icon from "components/common/atoms/Icon";
 import Popup from "components/common/atoms/Popup";
 import Select from "components/common/atoms/Select";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
+import NoData from "components/common/atoms/NoData";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
@@ -122,7 +123,7 @@ export default function buildings() {
           {parseData.length > 0 ? (
             <BuildingList data={parseData} sort={filterValue.value} />
           ) : (
-            <div>no data</div>
+            <NoData />
           )}
         </div>
         <ButtonGroup>
@@ -139,18 +140,20 @@ export default function buildings() {
   );
 }
 
-const Container = styled.div`
-  height: calc(100vh - 112px);
+export const Container = styled.div`
+  height: calc(100vh - 100px);
   background-color: #fafafa !important;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const ButtonGroup = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
   position: fixed;
   bottom: 64px;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  justify-content: center;
 `;
 const Banner = styled.div`
   width: 100%;

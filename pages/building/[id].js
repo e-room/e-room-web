@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import axios from "axios";
-import Link from "next/link";
 import styled from "@emotion/styled";
 
 import { imageViewState } from "states/buidlingAtom";
 
 import AppLayout from "components/common/AppLayout";
-import BuildingInfo from "components/building/BuildingInfo";
-import ImageView from "components/building/ImageView";
+import ImageView from "components/building/ImageList";
 import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
@@ -17,8 +15,12 @@ import Icon from "components/common/atoms/Icon";
 import Toast from "components/common/atoms/Toast";
 import { useRouter } from "next/router";
 import accessValid from "utils/accessValid";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
+import NoReview from "components/building/reviewItems/NoReview";
+import Info from "components/building/Info";
+import Score from "components/building/Score";
+import NeedLogin from "components/common/NeedLogin";
 
 export default () => {
   const router = useRouter();
@@ -38,6 +40,8 @@ export default () => {
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
 
   const onCloseImg = () => {
+    document.body.style.overflow = "unset";
+
     setShowImgDetail({ visible: false, uuid: null });
   };
   const [toastVisible, setToastVisible] = useState(false);
@@ -81,30 +85,33 @@ export default () => {
   }, [toastVisible]);
 
   const [favorite, setFavorite] = useState(false);
-  const onFavoriteChange = useCallback(() => {
-    const valid = accessValid({ redirect_uri: `/building/${id}` });
-    if (!valid) return;
-    if (favorite) {
-      axios
-        .delete(`/apis/member/favorite/${id}`)
-        .then((res) => {
-          setFavorite(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      axios
-        .post(`/apis/member/favorite/${id}`)
-        .then(() => {
-          setToastVisible(true);
-          setFavorite(true);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const [need, setNeed] = useState(false);
+  const onFavoriteChange = useCallback(async () => {
+    const valid = await accessValid({ redirect_uri: `/building/${id}` });
+    if (!valid) return setNeed(true);
+    if (valid) {
+      if (favorite) {
+        axios
+          .delete(`/apis/member/favorite/${id}`)
+          .then((res) => {
+            setFavorite(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        axios
+          .post(`/apis/member/favorite/${id}`)
+          .then(() => {
+            setToastVisible(true);
+            setFavorite(true);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }
-  }, [favorite]);
+  }, [favorite, need]);
 
   useEffect(() => {
     if (id) {
@@ -158,6 +165,13 @@ export default () => {
     router.push(`/building/${id}?returnType=${returnType}`);
   }, [isReview]);
 
+  const goReviewWrite = () => {
+    const address = encodeURI(JSON.stringify(building.address));
+    const name = encodeURI(building.name);
+
+    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
+  };
+
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -174,46 +188,62 @@ export default () => {
         />
       }
     >
+      {need && <NeedLogin visible={need} setVisible={setNeed} />}
       {toast}
       {reviewToast}
-      {showImgDetail.visible && (
-        <Slider
-          data={buildingImages.reviewImageList}
-          onClose={onCloseImg}
-          defaultId={showImgDetail.uuid}
-        />
-      )}
-      <BuildingMap building={building} />
-      <BuildingInfo building={building} />
-      {buildingImages.reviewImageCount > 0 && (
-        <ImageView data={buildingImages.reviewImageList} />
-      )}
-      {buildingReviews.reviewSlicedList.content.length > 0 && (
-        <ReviewList
-          profile={profile}
-          reviews={buildingReviews.reviewSlicedList.content}
-          buildingId={id}
-          needToBlur={buildingReviews.needToBlur}
-        />
-      )}
-
-      <ButtonItem>
-        <Link href={"/review/write"}>
-          <a>
-            <Button type={"primary"} size={"md"} icon={"plus"}>
-              리뷰 쓰기
+      <Container>
+        {showImgDetail.visible && (
+          <Slider
+            data={buildingImages.reviewImageList}
+            onClose={onCloseImg}
+            defaultId={showImgDetail.uuid}
+          />
+        )}
+        <BuildingMap building={building} />
+        <Info building={building} />
+        {buildingReviews.reviewSlicedList.content.length > 0 && (
+          <Score building={building} />
+        )}
+        {buildingImages.reviewImageCount > 0 && (
+          <ImageView data={buildingImages.reviewImageList} />
+        )}
+        {buildingReviews.reviewSlicedList.content.length > 0 ? (
+          <ReviewList
+            profile={profile}
+            reviews={buildingReviews.reviewSlicedList.content}
+            buildingId={id}
+            needToBlur={buildingReviews.needToBlur}
+          />
+        ) : (
+          <NoReview building={building} />
+        )}
+        {buildingReviews.reviewSlicedList.content.length > 0 && (
+          <ButtonItem>
+            <Button
+              type={"primary"}
+              size={"md"}
+              icon={"plus"}
+              onClick={goReviewWrite}
+            >
+              이 자취방 리뷰 쓰기
             </Button>
-          </a>
-        </Link>
-      </ButtonItem>
+          </ButtonItem>
+        )}
+      </Container>
     </AppLayout>
   );
 };
+
+const Container = styled.div`
+  height: calc(100vh - 44px);
+  background-color: #fafafa;
+`;
 
 const ButtonItem = styled.div`
   position: fixed;
   bottom: 8px;
   width: 100%;
+  max-width: 720px;
   display: flex;
   justify-content: center;
   z-index: 2;

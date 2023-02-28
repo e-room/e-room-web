@@ -4,10 +4,11 @@ import { imageViewState } from "states/buidlingAtom";
 import { Body1Bold } from "styles/typography";
 import Image from "next/image";
 
-export default function ImageView({ data }) {
+export default ({ data }) => {
   const setShowDetail = useSetRecoilState(imageViewState);
 
   const onDetailView = (id) => {
+    document.body.style.overflow = "hidden";
     setShowDetail({ visible: true, uuid: id });
   };
 
@@ -30,11 +31,10 @@ export default function ImageView({ data }) {
       </ImgField>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   padding: 12px 0px 12px 20px;
-  background: #fafafa;
 `;
 
 const Title = styled.div`
@@ -62,4 +62,5 @@ const ImgField = styled.div`
 
 const ImageBox = styled(Image)`
   border-radius: 8px;
+  cursor: pointer;
 `;

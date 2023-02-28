@@ -16,7 +16,6 @@ export default function Images() {
 
   const [toastParam, setToastParam] = useState({ visible: false, type: null });
   const toast = useMemo(() => {
-    if (!toastParam.visible) return;
     const toastOptions = {
       max: {
         icon: "check-circle",
@@ -113,7 +112,7 @@ export default function Images() {
   useEffect(() => {
     if (toastParam.visible) {
       setTimeout(() => {
-        setToastParam({ visible: false, type: null });
+        setToastParam({ ...toastParam, visible: false });
       }, 3000);
     }
   }, [toastParam.visible]);

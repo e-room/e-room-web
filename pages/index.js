@@ -20,6 +20,7 @@ import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import SearchList from "components/search/SearchList";
+import Nodata from "components/search/Nodata";
 import { fadeInUp_OutDown } from "styles/keyframes";
 
 const MainMap = ({ data }) => {
@@ -58,7 +59,11 @@ const MainMap = ({ data }) => {
       let imageSrc = MarkerPng.src;
       let imageSize = new kakao.maps.Size(61, 68);
       let imageOption = { offset: new kakao.maps.Point(30, 48) };
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
 
       map.current = await new kakao.maps.Map(container, options);
 
@@ -141,6 +146,7 @@ const MainMap = ({ data }) => {
 
         let myPosition = new kakao.maps.LatLng(lat, lng);
         map.current.setCenter(myPosition);
+        map.current.setLevel(1);
       });
     }
   };
@@ -169,7 +175,9 @@ const MainMap = ({ data }) => {
 
   const saveInput = async (e) => {
     setSearchList([]);
-    const response = await axios.get(`/apis/building/search?params=${e.target.value}`);
+    const response = await axios.get(
+      `/apis/building/search?params=${e.target.value}`
+    );
     setSearchList(response.data.content);
   };
 
@@ -178,7 +186,7 @@ const MainMap = ({ data }) => {
   const test = useCallback(() => {
     if (!searchVisible) return;
     if (searchList.length < 1 || !searchValue) {
-      return <div />;
+      return <Nodata />;
     } else {
       return <SearchList data={searchList} searchValue={searchValue} />;
     }
@@ -196,6 +204,7 @@ const MainMap = ({ data }) => {
               alignItems: "center",
               minWidth: 24,
               marginLeft: 4,
+              cursor: "pointer",
             }}
           >
             <Icon icon={"arrow-left"} size={"md"} />
@@ -207,7 +216,10 @@ const MainMap = ({ data }) => {
             value={searchValue}
           />
           {searchValue && (
-            <div className={"x-icon"} onClick={() => setSearchValue("")}>
+            <div
+              className={"x-icon cursor-pointer"}
+              onClick={() => setSearchValue("")}
+            >
               <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
             </div>
           )}
@@ -215,11 +227,15 @@ const MainMap = ({ data }) => {
       )}
       <AppLayout
         additionalFunction={
-          <Icon icon={"search"} size={"md"} onClick={() => setSearchVisible(true)} />
+          <Icon
+            icon={"search"}
+            size={"md"}
+            onClick={() => setSearchVisible(true)}
+          />
         }
       >
         {searchVisible ? (
-          test()
+          <ListContainer>{test()}</ListContainer>
         ) : (
           <Container>
             <MapWrapper id="map" />
@@ -254,7 +270,9 @@ const MainMap = ({ data }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/building/marking`);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
+  );
   const data = JSON.stringify(res.data);
 
   return {
@@ -305,12 +323,17 @@ const MarkerClustererStyles = [
 ];
 
 const MapWrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   /* height: calc(100vh - 112px); */
 `;
 const Container = styled.div`
+  position: relative;
   overflow: hidden !important;
+
+  width: 100vw;
+  height: 100vh;
+  margin: 0 !important;
 `;
 
 const GroupItem = styled.div`
@@ -380,4 +403,11 @@ const SearchField = styled.div`
   }
 `;
 
+const ListContainer = styled.div`
+  height: calc(100vh - 100px);
+  background-color: #fafafa !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 44px 0;
+`;
 export default MainMap;

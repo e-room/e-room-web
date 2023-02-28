@@ -70,6 +70,7 @@ const UserInfo = styled.div`
 
   span {
     border-bottom: 1px solid var(--gray-1);
+    cursor: pointer;
   }
 `;
 
@@ -78,4 +79,5 @@ const DeleteButton = styled.div`
 
   color: var(--danger-1);
   width: 25px;
+  cursor: pointer;
 `;

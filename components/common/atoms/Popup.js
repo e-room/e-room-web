@@ -76,12 +76,15 @@ export default function Popup({
   useEffect(() => {
     let timeoutId;
     if (visible) {
+      document.body.style.overflow = "hidden";
       setIsOpen(true);
     } else {
       timeoutId = setTimeout(() => setIsOpen(false), 300);
     }
 
     return () => {
+      document.body.style.overflow = "unset";
+
       if (timeoutId !== undefined) {
         clearTimeout(timeoutId);
       }

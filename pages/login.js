@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
@@ -7,12 +7,13 @@ import { Body2, Title1 } from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import SocialButton from "components/common/atoms/SocialButton";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
+import Toast from "components/common/atoms/Toast";
 
 export default function Login() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const { redirect_uri = "/" } = router.query;
+  const { redirect_uri = "/", isWithdrawal } = router.query;
 
   const onLoginClick = (type) => {
     if (!type) return;
@@ -39,10 +40,35 @@ export default function Login() {
     }
   }, []);
 
+  const [toastVisible, setToastVisible] = useState(false);
+  const toast = useMemo(() => {
+    return (
+      <Toast
+        icon={"check-circle"}
+        iconColor={"success"}
+        text={"탈퇴가 완료되었어요."}
+        visible={toastVisible}
+      />
+    );
+  }, [toastVisible]);
+
+  useEffect(() => {
+    if (toastVisible) {
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 1000);
+    }
+  }, [toastVisible]);
+  useEffect(() => {
+    if (!isWithdrawal) return;
+    setToastVisible(true);
+  }, [isWithdrawal]);
+
   if (loading) return <Loading />;
 
   return (
     <AppLayout>
+      {toast}
       <LoginWrapper>
         <LoginIntro>
           <Title>

@@ -5,14 +5,21 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import { Body1Bold, Body2Bold, Caption1Bold, Caption2 } from "styles/typography";
+import {
+  Body1Bold,
+  Body2Bold,
+  Caption1Bold,
+  Caption2,
+} from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
-import Loading from "components/common/Loading";
+import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
+import Popup from "components/common/atoms/Popup";
+import NeedLogin from "components/common/NeedLogin";
 
 export default function mypage() {
   const router = useRouter();
@@ -26,8 +33,12 @@ export default function mypage() {
   });
   let channelTalk;
 
+  const [need, setNeed] = useState(false);
   const getProfile = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
+    if (!valid) {
+      return setNeed(true);
+    }
     if (valid) {
       await axios
         .get(`/apis/member/profile`, {
@@ -40,11 +51,10 @@ export default function mypage() {
         .catch((error) => {
           console.error(error);
           setLoading(false);
-          setError(true);
         });
     } else {
       setLoading(false);
-      setError(true);
+      // setError(true);
     }
   };
 
@@ -61,12 +71,20 @@ export default function mypage() {
     }
   };
 
+  const [showWithdrawal, setShowWithdrawal] = useState(false);
+  const onWithdrawalVisible = (bool) => {
+    if (bool) {
+      setShowWithdrawal(true);
+    } else {
+      setShowWithdrawal(false);
+    }
+  };
   const onWithdrawal = async () => {
     const response = await axios.delete(`/apis/member/exit`, {
       withCredentials: true,
     });
     if (response.status === 200) {
-      router.push("/");
+      router.push(`/login?redirect_uri=/mypage&isWithdrawal=true`);
     } else {
       alert("탈퇴하기가 실패했습니다.");
     }
@@ -100,11 +118,29 @@ export default function mypage() {
     };
   }, [profile]);
 
+  if (need)
+    return <NeedLogin visible={need} setVisible={setNeed} useBack={true} />;
   if (loading) return <Loading />;
   if (error) return <Error />;
 
   return (
     <AppLayout pageTitle={"내정보"}>
+      {showWithdrawal && (
+        <Popup
+          title={"정말 탈퇴하시겠어요?"}
+          visible={showWithdrawal}
+          buttonType={"warning"}
+          cancelText={"취소"}
+          submitText={"탈퇴하기"}
+          onCancelClick={() => onWithdrawalVisible(false)}
+          onConfirmClick={() => onWithdrawal()}
+        >
+          <PopupSubTitle>
+            회원님의 모든 리뷰가 사라져요. <br />
+            다른 사람들이 쓴 리뷰를 모두 볼 수 없어요.
+          </PopupSubTitle>
+        </Popup>
+      )}
       <Container>
         <MyInfo>
           <Avatar size={"lg"} img={profile.profileImageUrl} />
@@ -120,7 +156,11 @@ export default function mypage() {
               <a target="_blank" rel="noreferrer">
                 <MenuItem>
                   <div>공식 인스타그램</div>
-                  <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
+                  <Icon
+                    icon={"arrow-right"}
+                    size={"md"}
+                    fill={"var(--gray-3)"}
+                  />
                 </MenuItem>
               </a>
             </Link>
@@ -133,7 +173,10 @@ export default function mypage() {
             <Button className="logout" onClick={onLogout}>
               로그아웃
             </Button>
-            <Button className="withdrawal" onClick={onWithdrawal}>
+            <Button
+              className="withdrawal"
+              onClick={() => onWithdrawalVisible(true)}
+            >
               탈퇴하기
             </Button>
           </ButtonGroup>
@@ -224,4 +267,8 @@ const ButtonGroup = styled.div`
 
 const Button = styled.div`
   cursor: pointer;
+`;
+const PopupSubTitle = styled.div`
+  ${Caption1Bold}
+  text-align: center;
 `;

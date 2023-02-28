@@ -124,8 +124,6 @@ const FormWrapper = styled.div`
   padding: 20px;
   margin-bottom: 100px;
 
-  overflow: scroll;
-
   ${animation_fadeInUp_view}
 `;
 const TextLabel = styled.div`

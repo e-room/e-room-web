@@ -45,13 +45,14 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           infiniteLoop={true}
           swipeable={true}
           emulateTouch={true}
+          useKeyboardArrows={true}
           statusFormatter={(e) => {
             return (
               <Top>
                 <CountField>
                   {e}/{data.length}
                 </CountField>
-                <XField onClick={onClose}>
+                <XField onClick={onClose} className="cursor-pointer">
                   <Icon icon={"x-icon"} size={"md"} fill={"var(--white)"} />
                 </XField>
               </Top>
@@ -59,7 +60,11 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           }}
           renderArrowPrev={(onClickHandler, hasPrev) =>
             hasPrev && (
-              <ArrowButton visible={visible} style={{ left: 4 }} onClick={onClickHandler}>
+              <ArrowButton
+                visible={visible}
+                style={{ left: 4 }}
+                onClick={onClickHandler}
+              >
                 <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
               </ArrowButton>
             )
@@ -83,7 +88,11 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
                   <img src={value.url} style={{ objectFit: "contain" }} />
                 </ImageField>
                 <Profile>
-                  <Avatar size={"md"} img={avatarImg.src} style={{ marginRight: 6 }} />
+                  <Avatar
+                    size={"md"}
+                    img={avatarImg.src}
+                    style={{ marginRight: 6 }}
+                  />
                   {value?.anonymousStatus?.anonymousName ?? authorName}
                 </Profile>
               </>
@@ -98,6 +107,7 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
 const Container = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100%;
 `;
 
@@ -136,6 +146,7 @@ const Overlay = styled.div`
   left: 0;
   z-index: 12;
   overflow: hidden !important;
+  touch-action: none;
 `;
 
 const Profile = styled.div`
