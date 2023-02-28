@@ -145,7 +145,7 @@ export default function ReviewForm1() {
               reviewResidencePeriodDto: {
                 ...formValue.reviewResidencePeriodDto,
                 residenceDuration: regex.test(e.target.value)
-                  ? e.target.value
+                  ? Number(e.target.value)
                   : "",
               },
             });
@@ -166,7 +166,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                monthlyRent: regex.test(e.target.value) ? e.target.value : "",
+                monthlyRent: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -183,7 +185,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                managementFee: regex.test(e.target.value) ? e.target.value : "",
+                managementFee: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -202,7 +206,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                deposit: regex.test(e.target.value) ? e.target.value : "",
+                deposit: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -222,7 +228,7 @@ export default function ReviewForm1() {
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
                 netLeasableArea: regex.test(e.target.value)
-                  ? e.target.value
+                  ? Number(e.target.value)
                   : "",
               },
             });
