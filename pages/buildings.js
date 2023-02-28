@@ -127,10 +127,10 @@ export default function buildings() {
           )}
         </div>
         <ButtonGroup>
-          <Link href={"/review/write"}>
+          <Link href={"/"}>
             <a>
-              <Button type={"primary"} size={"md"} icon={"plus"}>
-                리뷰 쓰기
+              <Button type={"secondary"} size={"md"} icon={"map-marked"}>
+                지도로 돌아가기
               </Button>
             </a>
           </Link>

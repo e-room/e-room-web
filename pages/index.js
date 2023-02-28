@@ -12,7 +12,8 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
-import { Body2 } from "styles/typography";
+import { Body2, Body2Bold, Caption2, Caption2Bold } from "styles/typography";
+import Img from "assets/img.png";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
@@ -22,6 +23,8 @@ import AppLayout from "components/common/AppLayout";
 import SearchList from "components/search/SearchList";
 import Nodata from "components/search/Nodata";
 import { fadeInUp_OutDown } from "styles/keyframes";
+import Score from "components/common/atoms/Score";
+import parseFloat from "utils/parseFloat";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -32,6 +35,7 @@ const MainMap = ({ data }) => {
   const imsiMarkerList = [];
   const [searchVisible, setSearchVisible] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [infoVisible, setInfoVisible] = useState(false);
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -89,7 +93,8 @@ const MainMap = ({ data }) => {
         });
         marker.setMap(map.current);
         kakao.maps.event.addListener(marker, "click", function () {
-          router.push(`/building/${value.buildingId}`);
+          // router.push(`/building/${value.buildingId}`);
+          setInfoVisible((value) => !value);
         });
         markers.push(marker);
         imsiMarkerList.push({ marker, id: value.buildingId });
@@ -102,11 +107,21 @@ const MainMap = ({ data }) => {
       kakao.maps.event.addListener(map.current, "idle", () => {
         setCenterPoint();
         setLocalStorage();
-        // if (markers.length < 1) setButtonVisible(false);
-        // else setButtonVisible(true);
+        onShowListButton();
       });
     });
   }, [mapLoaded, searchVisible]);
+
+  const onShowListButton = () => {
+    const bounds = map.current.getBounds();
+    const inBounds = imsiMarkerList.filter((overlay) => {
+      if (bounds.contain(overlay.marker.getPosition())) {
+        return overlay.id;
+      }
+    });
+    if (inBounds.length < 1) setButtonVisible(false);
+    else setButtonVisible(true);
+  };
 
   const setLocalStorage = () => {
     if (map.current) {
@@ -183,7 +198,7 @@ const MainMap = ({ data }) => {
 
   const onSearchValue = useMemo(() => debounce((e) => saveInput(e)), []);
 
-  const test = useCallback(() => {
+  const searchView = useCallback(() => {
     if (!searchVisible) return;
     if (searchList.length < 1 || !searchValue) {
       return <Nodata />;
@@ -235,7 +250,7 @@ const MainMap = ({ data }) => {
         }
       >
         {searchVisible ? (
-          <ListContainer>{test()}</ListContainer>
+          <ListContainer>{searchView()}</ListContainer>
         ) : (
           <Container>
             <MapWrapper id="map" />
@@ -250,7 +265,7 @@ const MainMap = ({ data }) => {
             <LocationItem>
               <LocationButton onClick={setMyPosition} />
             </LocationItem>
-            <ButtonItem visible={buttonVisible}>
+            <ButtonItem visible={buttonVisible} infoVisible={infoVisible}>
               <Link href={"/buildings"}>
                 <a>
                   <Button
@@ -261,6 +276,41 @@ const MainMap = ({ data }) => {
                   />
                 </a>
               </Link>
+              <div className="building-info-view">
+                <img
+                  src={Img.src}
+                  width={72}
+                  height={72}
+                  style={{ borderRadius: 8 }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 4,
+                    justifyContent: "center",
+                  }}
+                >
+                  <div className="building-name">건물 이름</div>
+                  <ReviewArea>
+                    <div
+                      className="review-count"
+                      style={{ opacity: 0.5, marginRight: 8 }}
+                    >
+                      리뷰 0개
+                    </div>
+                    <StarArea>{parseFloat(3, 1)}</StarArea>
+                    <div style={{ marginTop: 3 }}>
+                      <Score
+                        size="sm"
+                        readOnly={true}
+                        value={3}
+                        allowFraction={true}
+                      />
+                    </div>
+                  </ReviewArea>
+                </div>
+              </div>
             </ButtonItem>
           </Container>
         )}
@@ -354,9 +404,45 @@ const ButtonItem = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   z-index: 2;
 
+  gap: 8px;
+
   ${(p) => fadeInUp_OutDown(p.visible)}
+
+  .building-info-view {
+    width: calc(100vw - 40px);
+    background-color: white;
+    max-width: 320px;
+    max-height: 88px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    padding: 8px;
+
+    gap: 12px;
+    display: flex;
+
+    ${(p) => p.visible && fadeInUp_OutDown(p.infoVisible)}
+
+    .building-name {
+      ${Body2Bold}
+      color: var(--black);
+    }
+  }
+`;
+const ReviewArea = styled.div`
+  display: flex;
+  align-items: center;
+  max-height: 16px;
+  .review-count {
+    ${Caption2}
+  }
+`;
+const StarArea = styled.div`
+  ${Caption2Bold}
+  color: var(--primary-1);
 `;
 
 const SearchField = styled.div`
