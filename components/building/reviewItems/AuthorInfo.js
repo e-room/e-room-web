@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { Caption1Bold, Caption2, Caption2Bold } from "styles/typography";
 import Avatar from "components/common/atoms/Avatar";
 import Score from "components/common/atoms/Score";
-import Avatar24 from "assets/avatar/24.png";
 import parseFloat from "utils/parseFloat";
 
 export default ({ value, onScorePopup, onDeletePopup, profile }) => {
