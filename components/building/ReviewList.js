@@ -30,13 +30,9 @@ export default function ReviewList(props) {
   });
 
   const onCloseImg = () => {
-    document.body.style.overflow = "unset";
-
     setShowImages({ visible: false, uuid: null, data: [], authorName: "" });
   };
   const onDetailView = (id, data, authorName) => {
-    document.body.style.overflow = "hidden";
-
     setShowImages({
       visible: true,
       uuid: id,
@@ -49,7 +45,6 @@ export default function ReviewList(props) {
   const [showTotalScore, setShowTotalScore] = useState(false);
 
   const onScorePopup = (value) => {
-    document.body.style.overflow = "hidden";
     setDefaultValue(value);
     setShowTotalScore(true);
   };
@@ -60,7 +55,6 @@ export default function ReviewList(props) {
     });
     setDefaultValue(value);
     if (valid) {
-      document.body.style.overflow = "hidden";
       setShowConfirmDelete(true);
     }
   };
@@ -68,10 +62,8 @@ export default function ReviewList(props) {
   const [showReview, setShowReview] = useState(false);
   const onReviewVisible = (bool) => {
     if (bool) {
-      document.body.style.overflow = "hidden";
       setShowReview(true);
     } else {
-      document.body.style.overflow = "unset";
       setShowReview(false);
     }
   };
@@ -98,7 +90,8 @@ export default function ReviewList(props) {
     const lastItem = responseContent[responseContent.length - 1];
 
     cursorId = lastItem ? lastItem.reviewBaseDto.reviewId : null;
-    if (callCountRef.current === 0 && needToBlur) onReviewVisible(true);
+    if (callCountRef.current === 0 && needToBlur && responseContent.length > 0)
+      onReviewVisible(true);
 
     if (nextItem.length < 1) return;
     callCountRef.current += 1;
