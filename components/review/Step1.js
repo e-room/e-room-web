@@ -58,6 +58,15 @@ export default function ReviewForm1() {
     });
   };
 
+  useEffect(() => {
+    if (formValue.reviewResidencePeriodDto.residenceStartYear) {
+      setResidenceStartYear({
+        value: formValue.reviewResidencePeriodDto.residenceStartYear,
+        label: `${formValue.reviewResidencePeriodDto.residenceStartYear}년`,
+      });
+    }
+  }, [formValue.reviewResidencePeriodDto.residenceStartYear]);
+
   const onHandleComplete = (data) => {
     const roadAddressArray = data.roadAddress.split(" ");
     const buildingNumber = roadAddressArray[roadAddressArray.length - 1];

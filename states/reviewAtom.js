@@ -30,7 +30,7 @@ export const reviewFormState = atom({
       residenceSatisfaction: 0,
     },
     reviewResidencePeriodDto: {
-      residenceStartYear: 2022, // 거주시작
+      residenceStartYear: null, // 거주시작
       residenceDuration: null, // 거주기간 // number
     },
     advantageKeywordList: [],
