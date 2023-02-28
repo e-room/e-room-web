@@ -11,7 +11,11 @@ export default ({ value, onScorePopup, onDeletePopup, profile }) => {
   const { residenceSatisfaction } = value.reviewScoreDto;
   return (
     <Container>
-      <Avatar img={Avatar24.src} style={{ marginRight: 6 }} />
+      <Avatar
+        size={"md"}
+        img={value.authorDto.picture}
+        style={{ marginRight: 6 }}
+      />
       <div
         style={{
           display: "flex",
