@@ -105,8 +105,6 @@ const AddressArea = styled.div`
   ${Caption2}
   opacity: 0.5;
 
-  width: calc(100vw - 162px);
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
