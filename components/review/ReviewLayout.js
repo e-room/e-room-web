@@ -42,7 +42,7 @@ export default function ReviewLayout({ children }) {
       let reviewResidencePeriodDto = false;
       if (
         formValue.address["siDo"] &&
-        formValue.address["siGunGu"] &&
+        // formValue.address["siGunGu"] &&
         formValue.address["eupMyeon"] &&
         formValue.address["roadName"] &&
         formValue.address["buildingNumber"]
