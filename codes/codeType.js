@@ -20,3 +20,11 @@ export const KEYWORD_STATES = {
   STORE: "🏫 상가",
   SCHOOL_ACADEMY: "🎓 학교/학원",
 };
+
+export const SCORE_CHIP = {
+  TRAFFIC: "교통 편리",
+  BUILDINGCOMPLEX: "건물 좋음",
+  SURROUNDING: "환경 좋음",
+  INTERNAL: "내부 좋음",
+  LIVINGLOCATION: "생활 좋음",
+};
