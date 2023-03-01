@@ -1,4 +1,6 @@
 import { atom } from "recoil";
+import dayjs from "dayjs";
+const now = dayjs().get("year");
 
 export const reviewFormState = atom({
   key: "reviewFormState",
@@ -30,7 +32,7 @@ export const reviewFormState = atom({
       residenceSatisfaction: 0,
     },
     reviewResidencePeriodDto: {
-      residenceStartYear: null, // 거주시작
+      residenceStartYear: now, // 거주시작
       residenceDuration: null, // 거주기간 // number
     },
     advantageKeywordList: [],

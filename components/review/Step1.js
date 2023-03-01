@@ -29,26 +29,20 @@ export default function ReviewForm1() {
     });
   }, []);
 
+  const regex = new RegExp(/^[0-9]+$/);
+  const now = dayjs().get("year");
+
   const [postCodeOpen, setPostCodeOpen] = useState(false);
   const [yearOptions, setYearOptions] = useState([]);
-  const now = dayjs().get("year");
-  const regex = new RegExp(/^[0-9]+$/);
-
   const newYear = useCallback(() => {
     const copy = [...yearOptions];
     for (let i = now; i >= 1990; i--) {
-      copy.push({ value: i, label: `${i}년` });
+      copy.push({ value: i });
     }
     setYearOptions(copy);
   }, []);
 
-  const [residenceStartYear, setResidenceStartYear] = useState({
-    value: now,
-    label: `${now}년`,
-  });
-
   const onYearChange = (e) => {
-    setResidenceStartYear(e);
     setFormValue({
       ...formValue,
       reviewResidencePeriodDto: {
@@ -59,15 +53,11 @@ export default function ReviewForm1() {
   };
 
   useEffect(() => {
-    if (formValue.reviewResidencePeriodDto.residenceStartYear) {
-      setResidenceStartYear({
-        value: formValue.reviewResidencePeriodDto.residenceStartYear,
-        label: `${formValue.reviewResidencePeriodDto.residenceStartYear}년`,
-      });
-    }
-  }, [formValue.reviewResidencePeriodDto.residenceStartYear]);
+    newYear();
+  }, []);
 
   const onHandleComplete = (data) => {
+    console.log("postcode ==> ", data);
     const roadAddressArray = data.roadAddress.split(" ");
     const buildingNumber = roadAddressArray[roadAddressArray.length - 1];
     setFormValue({
@@ -94,10 +84,6 @@ export default function ReviewForm1() {
       ? `${siDo} ${siGunGu} ${roadName} ${buildingNumber} (${buildingName})`
       : `${siDo} ${siGunGu} ${roadName} ${buildingNumber}`
     : "";
-
-  useEffect(() => {
-    newYear();
-  }, []);
 
   return (
     <FormWrapper
@@ -135,7 +121,7 @@ export default function ReviewForm1() {
           >
             <Select
               size={"lg"}
-              value={residenceStartYear}
+              value={formValue.reviewResidencePeriodDto.residenceStartYear}
               onChange={onYearChange}
               options={yearOptions}
             />
