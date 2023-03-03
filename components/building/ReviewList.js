@@ -139,8 +139,8 @@ export default function ReviewList(props) {
         )}
         {showConfirmDelete && (
           <DeletePopup
-            data={data}
-            setData={setData}
+            state={state}
+            setState={setState}
             reviewId={defaultValue.reviewBaseDto.reviewId}
             showConfirmDelete={showConfirmDelete}
             setShowConfirmDelete={setShowConfirmDelete}
