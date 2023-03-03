@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import styled from "@emotion/styled";
 
@@ -21,6 +21,7 @@ import NoReview from "components/building/reviewItems/NoReview";
 import Info from "components/building/Info";
 import Score from "components/building/Score";
 import NeedLogin from "components/common/NeedLogin";
+import { reviewSuccessToastState } from "states/reviewAtom";
 
 export default () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ export default () => {
 
   const [profile, setProfile] = useState({});
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
+  const reviewSucess = useRecoilValue(reviewSuccessToastState);
 
   const onCloseImg = () => {
     document.body.style.overflow = "unset";
@@ -160,10 +162,9 @@ export default () => {
     }
   }, [reviewToastVisible]);
   useEffect(() => {
-    if (!isReview) return;
+    if (!reviewSucess) return;
     setReviewToastVisible(true);
-    router.push(`/building/${id}?returnType=${returnType}`);
-  }, [isReview]);
+  }, [reviewSucess]);
 
   const goReviewWrite = () => {
     const address = encodeURI(JSON.stringify(building.address));

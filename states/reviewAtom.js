@@ -51,3 +51,8 @@ export const reviewStepState = atom({
   key: "reviewStepState",
   default: 1,
 });
+
+export const reviewSuccessToastState = atom({
+  key: "reviewSuccessToastState",
+  default: false,
+});

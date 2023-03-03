@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
@@ -7,7 +7,11 @@ import styled from "@emotion/styled";
 import { Caption1Bold } from "styles/typography";
 import Congraturation from "components/common/lottie/Congraturation";
 
-import { reviewFormState, reviewImageListState } from "states/reviewAtom";
+import {
+  reviewFormState,
+  reviewImageListState,
+  reviewSuccessToastState,
+} from "states/reviewAtom";
 
 import AppLayout from "components/common/AppLayout";
 import BottomSheet from "components/common/atoms/BottomSheet";
@@ -22,6 +26,7 @@ export default function ReviewLayout({ children }) {
   const [loading, setLoading] = useState(false);
 
   const reviewImageList = useRecoilValue(reviewImageListState);
+  const setReviewSuccess = useSetRecoilState(reviewSuccessToastState);
   const [successBuildingId, setSuccessBuildingId] = useState(null);
 
   const [nextDisabled, setNextDisabled] = useState({
@@ -150,26 +155,20 @@ export default function ReviewLayout({ children }) {
         },
       })
         .then((res) => {
-          console.log("리뷰쓰기 성공", res);
           if (res.data.isFirstReview) {
             setSuccessBuildingId(res.data.buildingId);
             setPopupVisible(true);
           } else {
-            router.push(
-              `/building/${res.data.buildingId}?returnType=/&isReview=true`
-            );
+            setReviewSuccess(true);
+            router.push(`/building/${res.data.buildingId}?returnType=/`);
           }
         })
         .catch((err) => {
-          console.log("리뷰쓰기 실패!", err.response.data);
           alert("하나의 건물에는 하나의 리뷰만 작성할 수 있습니다.");
         });
       setLoading(false);
-    } catch (e) {
-      console.log("리뷰쓰기 실패", e.response.data);
-    }
+    } catch (e) {}
   };
-
   return (
     <>
       <AppLayout pageTitle={"리뷰 쓰기"} enabledNavbar={false}>
