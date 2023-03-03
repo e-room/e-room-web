@@ -41,8 +41,8 @@ export default function reviewWrite() {
     return () => {
       resetFormValue();
       resetImageValues();
-      if (localStorage.getItem("buildingQuery")) {
-        localStorage.removeItem("buildingQuery");
+      if (sessionStorage.getItem("buildingQuery")) {
+        sessionStorage.removeItem("buildingQuery");
       }
     };
   }, []);

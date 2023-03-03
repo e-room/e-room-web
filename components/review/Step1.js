@@ -14,7 +14,7 @@ import { Body2Bold, Body3 } from "styles/typography";
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   useEffect(() => {
-    const address = JSON.parse(localStorage.getItem("buildingQuery"));
+    const address = JSON.parse(sessionStorage.getItem("buildingQuery"));
     if (!address) return;
     setFormValue({
       ...formValue,
