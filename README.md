@@ -9,7 +9,6 @@
 - 주소검색: react-daum-postcode
 - 환경설정: env-cmd .env
 - 폰트: [pretendard](https://github.com/orioncactus/pretendard)
--
 
 ## 실행
 
