@@ -5,7 +5,6 @@ import { Caption1Bold } from "styles/typography";
 
 export default (props) => {
   const { visible, setVisible, useBack = false } = props;
-  console.log("needlogin ", Router.router.asPath);
 
   return (
     <Popup

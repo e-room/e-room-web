@@ -17,8 +17,6 @@ export default function FavoriteList(props) {
     : lastData.buildingId;
 
   const fetchItems = async () => {
-    console.log("cursorId, sort", cursorId, sort);
-
     if (!cursorId) return;
 
     const filterSort = sort ? `${sort},id,DESC` : `DESC`;

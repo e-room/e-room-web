@@ -57,7 +57,6 @@ export default function ReviewForm1() {
   }, []);
 
   const onHandleComplete = (data) => {
-    console.log("postcode ==> ", data);
     const roadAddressArray = data.roadAddress.split(" ");
     const buildingNumber = roadAddressArray[roadAddressArray.length - 1];
     setFormValue({

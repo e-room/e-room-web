@@ -132,7 +132,6 @@ export default function ReviewLayout({ children }) {
           residenceSatisfaction: totalScore,
         },
       };
-      console.log("create review ==> ", formatFormValue);
 
       const formData = new FormData();
       formData.append(

@@ -31,9 +31,6 @@ export default ({ value, buildingId }) => {
             setIsLike(false);
             setAddLikeCnt(addLikeCnt - 1);
           }
-        })
-        .catch((error) => {
-          console.log("onLike failed", error);
         });
     }
   };

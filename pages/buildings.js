@@ -20,7 +20,6 @@ export default function buildings() {
   const [parseData, setParseData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  console.log("buidlings", parseData);
 
   const filterOptions = [
     { value: "reviewCnt", label: "리뷰수 순" },

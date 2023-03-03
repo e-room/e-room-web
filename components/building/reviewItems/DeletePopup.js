@@ -7,19 +7,16 @@ export default (props) => {
   const { reviewId, showConfirmDelete, setShowConfirmDelete, state, setState } =
     props;
   const onDelete = async () => {
-    await axios
-      .delete(`/apis/building/room/review/${reviewId}`)
-      .then((res) => {
-        setShowConfirmDelete(false);
-        const filters = state.item.filter(
-          (v) => v.reviewBaseDto.reviewId !== reviewId
-        );
-        setState({
-          ...state,
-          item: [...filters],
-        });
-      })
-      .catch((err) => console.log("리뷰 삭제가 실패했습니다.", err));
+    await axios.delete(`/apis/building/room/review/${reviewId}`).then((res) => {
+      setShowConfirmDelete(false);
+      const filters = state.item.filter(
+        (v) => v.reviewBaseDto.reviewId !== reviewId
+      );
+      setState({
+        ...state,
+        item: [...filters],
+      });
+    });
   };
 
   return (

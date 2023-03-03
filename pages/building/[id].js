@@ -30,9 +30,6 @@ export default () => {
   const [building, setBuilding] = useState({});
   const [buildingImages, setBuildingImages] = useState({});
   const [buildingReviews, setBuildingReviews] = useState({});
-  // console.log("building", building);
-  // console.log("images", buildingImages);
-  // console.log("review", buildingReviews);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
