@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -19,6 +19,7 @@ import Button from "components/common/atoms/Button";
 import imgCompress from "utils/imgCompress";
 import calculateByReviewScore from "utils/calculateByReviewScore";
 import valueCheck from "utils/valueCheck";
+import Toast from "components/common/atoms/Toast";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -163,13 +164,34 @@ export default function ReviewLayout({ children }) {
           }
         })
         .catch((err) => {
-          alert("하나의 건물에는 하나의 리뷰만 작성할 수 있습니다.");
+          setErrorToastVisible(true);
         });
       setLoading(false);
     } catch (e) {}
   };
+
+  const [errorToastVisible, setErrorToastVisible] = useState(false);
+  const errorToast = useMemo(() => {
+    return (
+      <Toast
+        icon={"exclamation-circle"}
+        iconColor={"danger-1"}
+        text={"하나의 건물에는 하나의 리뷰만 작성할 수 있어요."}
+        visible={errorToastVisible}
+      />
+    );
+  }, [errorToastVisible]);
+  useEffect(() => {
+    if (errorToastVisible) {
+      setTimeout(() => {
+        setErrorToastVisible(false);
+      }, 3000);
+    }
+  }, [errorToastVisible]);
+
   return (
     <>
+      {errorToast}
       <AppLayout pageTitle={"리뷰 쓰기"} enabledNavbar={false}>
         <StepBar>
           <CurrentStep width={(index / 5) * 100} />
