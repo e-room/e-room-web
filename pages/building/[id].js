@@ -111,7 +111,7 @@ export default () => {
           });
       }
     }
-  }, [favorite, need]);
+  }, [favorite, need, id]);
 
   useEffect(() => {
     if (id) {
