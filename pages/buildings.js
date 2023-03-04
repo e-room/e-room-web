@@ -109,9 +109,10 @@ export default function buildings() {
           <SubText>정렬 순서</SubText>
           <Select
             size={"md"}
-            options={filterOptions}
             value={filterValue}
             onChange={onFilterChange}
+            options={filterOptions}
+            label={"label"}
           />
         </Contents>
       </Popup>
