@@ -30,10 +30,12 @@ export default (props) => {
               </AddressArea>
               <Chips>
                 {value.directDeal && <Chip label={"직거래가능"} />}
-                <Chip
-                  label={SCORE_CHIP[value.bestCategory]}
-                  type={"secondary"}
-                />
+                {value.bestCategory && (
+                  <Chip
+                    label={SCORE_CHIP[value.bestCategory]}
+                    type={"secondary"}
+                  />
+                )}
               </Chips>
               <ReviewArea>
                 <div
