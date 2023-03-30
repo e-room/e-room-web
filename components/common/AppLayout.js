@@ -38,6 +38,5 @@ const MainContent = styled.div`
   @media (min-width: 720px) {
     margin: 44px auto;
     max-width: 720px;
-    overflow: hidden;
   }
 `;

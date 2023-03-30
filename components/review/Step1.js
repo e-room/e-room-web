@@ -10,48 +10,39 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
 import { Body2Bold, Body3 } from "styles/typography";
-import { useRouter } from "next/router";
 
 export default function ReviewForm1() {
-  const router = useRouter();
-  const { addressQuery, nameQuery } = router.query;
-
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
   useEffect(() => {
-    if (!addressQuery) return;
+    const address = JSON.parse(sessionStorage.getItem("buildingQuery"));
+    if (!address) return;
     setFormValue({
       ...formValue,
       address: {
         ...formValue.address,
-        ...JSON.parse(decodeURI(addressQuery)),
+        ...JSON.parse(decodeURI(address.address)),
       },
       buildingOptionalDto: {
         ...formValue.buildingOptionalDto,
-        buildingName: decodeURI(nameQuery) ?? "",
+        buildingName: decodeURI(address.name) ?? "",
       },
     });
-  }, [addressQuery, nameQuery]);
+  }, []);
+
+  const regex = new RegExp(/^[0-9]+$/);
+  const now = dayjs().get("year");
 
   const [postCodeOpen, setPostCodeOpen] = useState(false);
   const [yearOptions, setYearOptions] = useState([]);
-  const now = dayjs().get("year");
-  const regex = new RegExp(/^[0-9]+$/);
-
   const newYear = useCallback(() => {
     const copy = [...yearOptions];
     for (let i = now; i >= 1990; i--) {
-      copy.push({ value: i, label: `${i}년` });
+      copy.push({ value: i });
     }
     setYearOptions(copy);
   }, []);
 
-  const [residenceStartYear, setResidenceStartYear] = useState({
-    value: now,
-    label: `${now}년`,
-  });
-
   const onYearChange = (e) => {
-    setResidenceStartYear(e);
     setFormValue({
       ...formValue,
       reviewResidencePeriodDto: {
@@ -60,6 +51,10 @@ export default function ReviewForm1() {
       },
     });
   };
+
+  useEffect(() => {
+    newYear();
+  }, []);
 
   const onHandleComplete = (data) => {
     const roadAddressArray = data.roadAddress.split(" ");
@@ -88,12 +83,6 @@ export default function ReviewForm1() {
       ? `${siDo} ${siGunGu} ${roadName} ${buildingNumber} (${buildingName})`
       : `${siDo} ${siGunGu} ${roadName} ${buildingNumber}`
     : "";
-
-  useEffect(() => {
-    newYear();
-  }, []);
-
-  console.log("plx,,,", formValue.reviewBaseDto.netLeasableArea);
 
   return (
     <FormWrapper
@@ -131,7 +120,7 @@ export default function ReviewForm1() {
           >
             <Select
               size={"lg"}
-              value={residenceStartYear}
+              value={formValue.reviewResidencePeriodDto.residenceStartYear}
               onChange={onYearChange}
               options={yearOptions}
             />
@@ -139,7 +128,7 @@ export default function ReviewForm1() {
           </div>
         </div>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 20"}
           label={"거주 기간"}
           unit={"개월"}
@@ -149,7 +138,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewResidencePeriodDto: {
                 ...formValue.reviewResidencePeriodDto,
-                residenceDuration: Number(e.target.value),
+                residenceDuration: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -159,7 +150,7 @@ export default function ReviewForm1() {
       </GridItem>
       <GridItem>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 50"}
           label={"월세"}
           unit={"만원"}
@@ -169,14 +160,16 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                monthlyRent: Number(e.target.value),
+                monthlyRent: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
           value={formValue.reviewBaseDto.monthlyRent}
         />
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 20"}
           label={"관리비"}
           unit={"만원"}
@@ -186,7 +179,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                managementFee: Number(e.target.value),
+                managementFee: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -195,7 +190,7 @@ export default function ReviewForm1() {
       </GridItem>
       <FormItem>
         <Text
-          type={"number"}
+          type={"text"}
           placeholder={"예: 500"}
           label={"보증금"}
           unit={"만원"}
@@ -205,7 +200,9 @@ export default function ReviewForm1() {
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
-                deposit: Number(e.target.value),
+                deposit: regex.test(e.target.value)
+                  ? Number(e.target.value)
+                  : "",
               },
             });
           }}
@@ -220,14 +217,12 @@ export default function ReviewForm1() {
           unit={"평"}
           width={"100%"}
           onChange={(e) => {
-            console.log("wlq zmrl", e.target.value, regex.test(e.target.value));
-            // if (!regex.test(e.target.value)) return false;
             setFormValue({
               ...formValue,
               reviewBaseDto: {
                 ...formValue.reviewBaseDto,
                 netLeasableArea: regex.test(e.target.value)
-                  ? e.target.value
+                  ? Number(e.target.value)
                   : "",
               },
             });

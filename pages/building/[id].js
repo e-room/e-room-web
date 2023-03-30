@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import styled from "@emotion/styled";
 
@@ -21,6 +21,7 @@ import NoReview from "components/building/reviewItems/NoReview";
 import Info from "components/building/Info";
 import Score from "components/building/Score";
 import NeedLogin from "components/common/NeedLogin";
+import { reviewSuccessToastState } from "states/reviewAtom";
 
 export default () => {
   const router = useRouter();
@@ -29,15 +30,13 @@ export default () => {
   const [building, setBuilding] = useState({});
   const [buildingImages, setBuildingImages] = useState({});
   const [buildingReviews, setBuildingReviews] = useState({});
-  // console.log("building", building);
-  // console.log("images", buildingImages);
-  // console.log("review", buildingReviews);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const [profile, setProfile] = useState({});
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
+  const reviewSucess = useRecoilValue(reviewSuccessToastState);
 
   const onCloseImg = () => {
     document.body.style.overflow = "unset";
@@ -111,7 +110,7 @@ export default () => {
           });
       }
     }
-  }, [favorite, need]);
+  }, [favorite, need, id]);
 
   useEffect(() => {
     if (id) {
@@ -156,20 +155,21 @@ export default () => {
     if (reviewToastVisible) {
       setTimeout(() => {
         setReviewToastVisible(false);
-      }, 1000);
+      }, 3000);
     }
   }, [reviewToastVisible]);
   useEffect(() => {
-    if (!isReview) return;
+    if (!reviewSucess) return;
     setReviewToastVisible(true);
-    router.push(`/building/${id}?returnType=${returnType}`);
-  }, [isReview]);
+  }, [reviewSucess]);
 
   const goReviewWrite = () => {
     const address = encodeURI(JSON.stringify(building.address));
     const name = encodeURI(building.name);
+    const query = { address, name };
+    sessionStorage.setItem("buildingQuery", JSON.stringify(query));
 
-    router.push(`/review/write?addressQuery=${address}&nameQuery=${name}`);
+    router.push(`/review/write`);
   };
 
   if (loading) return <Loading />;
@@ -215,7 +215,7 @@ export default () => {
             needToBlur={buildingReviews.needToBlur}
           />
         ) : (
-          <NoReview building={building} />
+          <NoReview building={building} goReviewWrite={goReviewWrite} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
           <ButtonItem>

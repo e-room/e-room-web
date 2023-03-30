@@ -109,9 +109,10 @@ export default function buildings() {
           <SubText>정렬 순서</SubText>
           <Select
             size={"md"}
-            options={filterOptions}
             value={filterValue}
             onChange={onFilterChange}
+            options={filterOptions}
+            label={"label"}
           />
         </Contents>
       </Popup>
@@ -141,10 +142,8 @@ export default function buildings() {
 }
 
 export const Container = styled.div`
-  height: calc(100vh - 100px);
   background-color: #fafafa !important;
-  overflow-y: auto;
-  overflow-x: hidden;
+  height: calc(100vh - 100px);
 `;
 
 const ButtonGroup = styled.div`

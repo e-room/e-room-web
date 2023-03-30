@@ -8,8 +8,10 @@ export default function CustomSelect({
   size = "lg",
   options,
   value,
+  label,
   onChange,
 }) {
+  const formatValue = label ? value : { value };
   // TODO: padding size 15 -> 16
   const colorStyles = {
     container: (base) => {
@@ -112,7 +114,6 @@ export default function CustomSelect({
       </components.DropdownIndicator>
     );
   };
-
   return (
     <Select
       styles={colorStyles}
@@ -120,12 +121,16 @@ export default function CustomSelect({
         DropdownIndicator,
         IndicatorSeparator: null,
       }}
-      value={value}
+      value={formatValue}
       onChange={onChange}
       options={options}
       placeholder={"필드를 선택해주세요."}
       isSearchable={false}
-      selected={value}
+      selected={formatValue}
+      getOptionLabel={(option) => {
+        return label ? `${option[label]}` : `${option.value}년`;
+      }}
+      getOptionValue={(option) => option.value}
     />
   );
 }

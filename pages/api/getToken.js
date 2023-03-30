@@ -3,7 +3,6 @@ import { setCookie } from "cookies-next";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const { accessToken, refreshToken, redirectPath } = req.query;
-    console.log(req.headers);
 
     setCookie("accessToken", accessToken, {
       req,
