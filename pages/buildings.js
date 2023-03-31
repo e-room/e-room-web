@@ -94,7 +94,7 @@ export default function buildings() {
         visible={popupVisible}
         title={
           <FilterPopupTitle>
-            <Icon icon={"filter-stroke"} />
+            <Icon icon={"filter-stroke"} size={"md"} />
             <div className="title">정렬</div>
           </FilterPopupTitle>
         }
