@@ -88,6 +88,13 @@ const MainMap = ({ data }) => {
         marker.setMap(map.current);
         kakao.maps.event.addListener(marker, "click", function () {
           // router.push(`/building/${value.buildingId}`);
+
+          let clickPosition = new kakao.maps.LatLng(
+            value.coordinateDto.latitude,
+            value.coordinateDto.longitude
+          );
+          map.current.panTo(clickPosition);
+
           setInfoVisible({ visible: true, id: value.buildingId });
         });
         markers.push(marker);
