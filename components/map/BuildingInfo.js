@@ -5,18 +5,49 @@ import Img from "assets/img.png";
 
 import Score from "components/common/atoms/Score";
 import parseFloat from "utils/parseFloat";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default () => {
+export default ({ id }) => {
+  console.log("id", id);
+  const [building, setBuilding] = useState({
+    name: "",
+    score: 0,
+    reviewCnt: 0,
+  });
+  const getBuilding = async () => {
+    return await axios.get(`/apis/building/${id}`).then((response) => {
+      const value = response.data;
+      const name =
+        value.name === ""
+          ? `${value.address.roadName} ${value.address.buildingNumber}`
+          : value.name;
+      const score = value.buildingSummaries.RESIDENCESATISFACTION;
+
+      setBuilding({ ...building, name, score });
+    });
+  };
+
+  useEffect(() => {
+    getBuilding();
+  }, [id]);
+  console.log("buildig, ", building);
+
   return (
     <Container>
       <img src={Img.src} width={72} height={72} style={{ borderRadius: 8 }} />
       <div className="wrapper">
-        <div className="building-name">건물 이름</div>
+        <div className="building-name">{building.name}</div>
         <ReviewArea>
           <div className="review-count">리뷰 0개</div>
-          <StarArea>{parseFloat(3, 1)}</StarArea>
+          <StarArea>{parseFloat(building.score, 1)}</StarArea>
           <div style={{ marginTop: 3 }}>
-            <Score size="sm" readOnly={true} value={3} allowFraction={true} />
+            <Score
+              size="sm"
+              readOnly={true}
+              value={building.score}
+              allowFraction={true}
+            />
           </div>
         </ReviewArea>
       </div>
@@ -33,6 +64,8 @@ const Container = styled.div`
   border-radius: 12px;
   padding: 8px;
 
+  margin-top: 8px;
+
   gap: 12px;
   display: flex;
 
@@ -46,6 +79,7 @@ const Container = styled.div`
   .building-name {
     ${Body2Bold}
     color: var(--black);
+    min-height: 24px;
   }
 `;
 
@@ -57,7 +91,7 @@ const ReviewArea = styled.div`
     ${Caption2}
 
     opacity: 0.5;
-    margin-right: 8;
+    margin-right: 8px;
   }
 `;
 const StarArea = styled.div`

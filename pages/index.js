@@ -4,6 +4,7 @@ import React, {
   useRef,
   Fragment,
   useCallback,
+  useMemo,
 } from "react";
 import axios from "axios";
 import Link from "next/link";
@@ -28,7 +29,7 @@ const MainMap = ({ data }) => {
   const imsiMarkerList = [];
   const [searchVisible, setSearchVisible] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
-  const [infoVisible, setInfoVisible] = useState(false);
+  const [infoVisible, setInfoVisible] = useState({ visible: false, id: null });
 
   useEffect(() => {
     const $script = document.createElement("script");
@@ -87,7 +88,7 @@ const MainMap = ({ data }) => {
         marker.setMap(map.current);
         kakao.maps.event.addListener(marker, "click", function () {
           // router.push(`/building/${value.buildingId}`);
-          setInfoVisible((value) => !value);
+          setInfoVisible({ visible: true, id: value.buildingId });
         });
         markers.push(marker);
         imsiMarkerList.push({ marker, id: value.buildingId });
@@ -116,7 +117,7 @@ const MainMap = ({ data }) => {
       setButtonVisible(true);
     } else {
       setButtonVisible(false);
-      setInfoVisible(false);
+      setInfoVisible({ visible: false, id: null });
     }
   };
 
@@ -180,6 +181,10 @@ const MainMap = ({ data }) => {
       />
     );
 
+  const buildingView = useMemo(() => {
+    return <BuildingInfo id={infoVisible.id} />;
+  }, [infoVisible]);
+
   return (
     <Fragment>
       <AppLayout
@@ -204,7 +209,7 @@ const MainMap = ({ data }) => {
           <LocationItem>
             <LocationButton onClick={setMyPosition} />
           </LocationItem>
-          <ButtonItem visible={buttonVisible} infoVisible={infoVisible}>
+          <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
             <Link href={"/buildings"}>
               <a>
                 <Button
@@ -215,7 +220,9 @@ const MainMap = ({ data }) => {
                 />
               </a>
             </Link>
-            <Test visible={infoVisible}>{infoVisible && <BuildingInfo />}</Test>
+            <Test visible={infoVisible.visible}>
+              {infoVisible.visible && buildingView}
+            </Test>
           </ButtonItem>
         </Container>
       </AppLayout>
@@ -311,8 +318,6 @@ const ButtonItem = styled.div`
   align-items: center;
   flex-direction: column;
   z-index: 2;
-
-  gap: 8px;
 
   ${(p) => fadeInUp_OutDown(p.visible)}
 `;
