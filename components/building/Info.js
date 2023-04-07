@@ -7,6 +7,7 @@ import InternalBadge from "assets/illust-badge/illust-badge-inside.svg";
 import SurroundingBadge from "assets/illust-badge/illust-badge-environment.svg";
 import LivingLocationBadge from "assets/illust-badge/illust-badge-life.svg";
 import { Caption1Bold, Title1 } from "styles/typography";
+import amplitude from "amplitude-js";
 
 import Toast from "components/common/atoms/Toast";
 
@@ -43,6 +44,8 @@ export default ({ building }) => {
 
   const [toastVisible, setToastVisible] = useState(false);
   const onCopyAddress = (copyText) => {
+    const event = "copy address";
+    amplitude.getInstance().logEvent(event);
     navigator.clipboard.writeText(copyText).then(() => {
       setToastVisible(true);
     });

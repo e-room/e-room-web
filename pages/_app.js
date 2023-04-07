@@ -4,8 +4,13 @@ import "styles/palette.css";
 
 import { RecoilRoot } from "recoil";
 import { useEffect } from "react";
+import amplitude from "amplitude-js";
 
 const App = ({ Component, pageProps }) => {
+  var instance = amplitude
+    .getInstance()
+    .init(process.env.NEXT_PUBLIC_AMPLITUDE_WEB_API_KEY);
+
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);

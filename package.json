@@ -20,6 +20,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "amplitude-js": "^8.21.8",
     "axios": "^1.2.1",
     "browser-image-compression": "^2.0.0",
     "cookies-next": "^2.1.1",
