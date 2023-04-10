@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import amplitude from "amplitude-js";
 import axios from "axios";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
@@ -10,6 +9,7 @@ import AppLayout from "components/common/AppLayout";
 import SocialButton from "components/common/atoms/SocialButton";
 import Loading from "components/common/lottie/Loading";
 import Toast from "components/common/atoms/Toast";
+import logEvent from "amplitude/logEvent";
 
 export default function Login() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function Login() {
 
   const onLoginClick = (type) => {
     if (!type) return;
-    amplitude.getInstance().logEvent("click-login-login");
+    logEvent({ name: "click-login-login" });
     router.push(
       `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=${redirect_uri}&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
     );

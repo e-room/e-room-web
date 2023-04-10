@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import amplitude from "amplitude-js";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
@@ -21,6 +20,7 @@ import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
 import Popup from "components/common/atoms/Popup";
 import NeedLogin from "components/common/NeedLogin";
+import logEvent from "amplitude/logEvent";
 
 export default function mypage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function mypage() {
   };
 
   const onLogout = async () => {
-    amplitude.getInstance().logEvent("click-mypage-logout");
+    logEvent({ name: "click-mypage-logout" });
     const response = await axios.get(`/apis/logout`, { withCredentials: true });
     if (response.status === 200) {
       router.push("/");
@@ -82,7 +82,7 @@ export default function mypage() {
     }
   };
   const onWithdrawal = async () => {
-    amplitude.getInstance().logEvent("click-mypage-delete_account");
+    logEvent({ name: "click-mypage-delete_account" });
     const response = await axios.delete(`/apis/member/exit`, {
       withCredentials: true,
     });

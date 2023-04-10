@@ -1,8 +1,8 @@
-import amplitude from "amplitude-js";
 import styled from "@emotion/styled";
 import Router from "next/router";
 import Popup from "components/common/atoms/Popup";
 import { Caption1Bold } from "styles/typography";
+import logEvent from "amplitude/logEvent";
 
 export default (props) => {
   const { visible, setVisible, useBack = false } = props;
@@ -15,12 +15,12 @@ export default (props) => {
       cancelText={"돌아가기"}
       submitText={"로그인하기"}
       onCancelClick={() => {
-        amplitude.getInstance().logEvent("click-login_popup-deny");
+        logEvent({ name: "click-login_popup-deny" });
         setVisible(false);
         if (useBack) Router.back();
       }}
       onConfirmClick={() => {
-        amplitude.getInstance().logEvent("click-login_popup-login");
+        logEvent({ name: "click-login_popup-login" });
         Router.push(`/login?redirect_uri=${Router.router.asPath}`);
       }}
     >
