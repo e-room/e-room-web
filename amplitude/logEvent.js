@@ -1,5 +1,5 @@
 import amplitude from "amplitude-js";
 
-export default ({ name }) => {
-  amplitude.getInstance().logEvent(name);
+export default ({ name = "", property = {} }) => {
+  amplitude.getInstance().logEvent(name, property);
 };

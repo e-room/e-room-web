@@ -7,6 +7,7 @@ import logEvent from "amplitude/logEvent";
 export default (props) => {
   const { visible, setVisible, useBack = false } = props;
 
+  logEvent({ name: "view-login_popup" });
   return (
     <Popup
       title={"로그인이 필요해요"}

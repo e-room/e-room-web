@@ -21,6 +21,7 @@ import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
 import SearchList from "components/search/SearchList";
 import Nodata from "components/search/Nodata";
+import logEvent from "amplitude/logEvent";
 
 const MainMap = ({ data }) => {
   const router = useRouter();
@@ -30,8 +31,16 @@ const MainMap = ({ data }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const imsiMarkerList = [];
   const [searchVisible, setSearchVisible] = useState(false);
-
+  const goReviewPage = () => {
+    logEvent({ name: "click-map-write" });
+    router.push("/review/write");
+  };
+  const goBuildingListPage = () => {
+    logEvent({ name: "click-map-list_view" });
+    router.push("/buildings");
+  };
   useEffect(() => {
+    logEvent({ name: "view-map" });
     const $script = document.createElement("script");
     $script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&autoload=false&libraries=clusterer`;
     $script.addEventListener("load", () => setMapLoaded(true));
@@ -87,6 +96,10 @@ const MainMap = ({ data }) => {
         });
         marker.setMap(map.current);
         kakao.maps.event.addListener(marker, "click", function () {
+          logEvent({
+            name: "click-map-pin",
+            property: { buildingID: value.buildingId },
+          });
           router.push(`/building/${value.buildingId}`);
         });
         markers.push(marker);
@@ -227,7 +240,10 @@ const MainMap = ({ data }) => {
           <Icon
             icon={"search"}
             size={"md"}
-            onClick={() => setSearchVisible(true)}
+            onClick={() => {
+              logEvent({ name: "click-map-search" });
+              setSearchVisible(true);
+            }}
           />
         }
       >
@@ -248,22 +264,19 @@ const MainMap = ({ data }) => {
               <LocationButton onClick={setMyPosition} />
             </LocationItem>
             <ButtonItem>
-              <Link href={"/buildings"}>
-                <a>
-                  <Button
-                    label={"이 지역 자취방 리뷰 보기"}
-                    type={"secondary"}
-                    size={"md"}
-                  />
-                </a>
-              </Link>
-              <Link href={"/review/write"}>
-                <a>
-                  <Button type={"primary"} size={"md"} icon={"plus"}>
-                    리뷰 쓰기
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                label={"이 지역 자취방 리뷰 보기"}
+                type={"secondary"}
+                size={"md"}
+                onClick={goBuildingListPage}
+              />
+              <Button
+                label={"리뷰 쓰기"}
+                type={"primary"}
+                size={"md"}
+                icon={"plus"}
+                onClick={goReviewPage}
+              />
             </ButtonItem>
           </Container>
         )}

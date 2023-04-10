@@ -15,6 +15,7 @@ import Select from "components/common/atoms/Select";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import NoData from "components/common/atoms/NoData";
+import logEvent from "amplitude/logEvent";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
@@ -72,6 +73,7 @@ export default function buildings() {
   };
 
   useEffect(() => {
+    logEvent({ name: "view-buildings" });
     getData();
   }, []);
 

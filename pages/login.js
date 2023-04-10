@@ -18,13 +18,15 @@ export default function Login() {
 
   const onLoginClick = (type) => {
     if (!type) return;
-    logEvent({ name: "click-login-login" });
+    logEvent({ name: "click-login-login", property: { login_type: type } });
     router.push(
       `${process.env.NEXT_PUBLIC_API_HOST}/oauth2/authorization/${type}?redirect_uri=${redirect_uri}&is_local=${process.env.NEXT_PUBLIC_IS_LOCAL}`
     );
   };
 
   useEffect(() => {
+    logEvent({ name: "view-login" });
+
     try {
       const onValidCheck = async () => {
         await axios.get(`/apis/token/valid`).then((response) => {

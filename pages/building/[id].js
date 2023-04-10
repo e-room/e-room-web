@@ -22,6 +22,7 @@ import Info from "components/building/Info";
 import Score from "components/building/Score";
 import NeedLogin from "components/common/NeedLogin";
 import { reviewSuccessToastState } from "states/reviewAtom";
+import logEvent from "amplitude/logEvent";
 
 export default () => {
   const router = useRouter();
@@ -114,6 +115,8 @@ export default () => {
 
   useEffect(() => {
     if (id) {
+      logEvent({ name: "view-building", property: { buildingID: id } });
+
       const callData = async () => {
         const callBuilding = axios.get(`/apis/building/${id}`);
         const callImages = axios.get(`/apis/building/${id}/images`);
@@ -169,6 +172,7 @@ export default () => {
     const query = { address, name };
     sessionStorage.setItem("buildingQuery", JSON.stringify(query));
 
+    logEvent({ name: "click-building-write", property: { buildingID: id } });
     router.push(`/review/write`);
   };
 

@@ -94,6 +94,7 @@ export default function mypage() {
   };
 
   useEffect(() => {
+    logEvent({ name: "view-mypage" });
     getProfile();
   }, []);
 

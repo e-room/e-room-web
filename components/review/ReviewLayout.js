@@ -20,6 +20,7 @@ import imgCompress from "utils/imgCompress";
 import calculateByReviewScore from "utils/calculateByReviewScore";
 import valueCheck from "utils/valueCheck";
 import Toast from "components/common/atoms/Toast";
+import logEvent from "amplitude/logEvent";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -119,12 +120,14 @@ export default function ReviewLayout({ children }) {
   };
 
   const goNext = () => {
+    logEvent({ name: "click-write-next", property: { index: index } });
     router.push(`/review/write?index=${Number(index) + 1}`);
   };
 
   const onSubmit = async () => {
     setLoading(true);
     try {
+      logEvent({ name: "click-write-upload_review" });
       const totalScore = calculateByReviewScore(formValue);
       const formatFormValue = {
         ...formValue,

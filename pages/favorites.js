@@ -9,6 +9,7 @@ import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import { Container } from "./buildings";
 import NeedLogin from "components/common/NeedLogin";
+import logEvent from "amplitude/logEvent";
 
 export default function favorites() {
   const [data, setData] = useState([]);
@@ -40,6 +41,7 @@ export default function favorites() {
   };
 
   useEffect(() => {
+    logEvent({ name: "view-favorites" });
     getData();
   }, []);
 

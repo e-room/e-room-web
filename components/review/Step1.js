@@ -10,6 +10,7 @@ import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
 import { Body2Bold, Body3 } from "styles/typography";
+import logEvent from "amplitude/logEvent";
 
 export default function ReviewForm1() {
   const [formValue, setFormValue] = useRecoilState(reviewFormState);
@@ -53,6 +54,7 @@ export default function ReviewForm1() {
   };
 
   useEffect(() => {
+    logEvent({ name: "view-review_write" });
     newYear();
   }, []);
 
