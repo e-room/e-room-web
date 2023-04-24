@@ -7,7 +7,6 @@ import FavoriteList from "components/favorite/FavoriteList";
 import NoDataPage from "components/favorite/NoDataPage";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
-import { Container } from "./buildings";
 import NeedLogin from "components/common/NeedLogin";
 import logEvent from "amplitude/logEvent";
 
@@ -53,9 +52,12 @@ export default function favorites() {
 
   return (
     <AppLayout pageTitle={"찜한 자취방"}>
-      <Container>
+      <FavoriteListPage>
         {data.length > 0 ? <FavoriteList data={data} /> : <NoDataPage />}
-      </Container>
+      </FavoriteListPage>
     </AppLayout>
   );
 }
+export const FavoriteListPage = styled.div`
+  height: calc(100vh - 100px);
+`;
