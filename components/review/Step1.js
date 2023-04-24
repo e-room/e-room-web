@@ -241,6 +241,7 @@ const FormWrapper = styled.div`
   flex-direction: column;
   padding: 20px;
   padding-bottom: 80px;
+  background-color: var(--white);
 
   ${animation_fadeInUp_view}
 `;

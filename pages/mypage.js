@@ -191,7 +191,6 @@ export default function mypage() {
 }
 
 const Container = styled.div`
-  background-color: #fafafa;
   height: calc(var(--vh, 1vh) * 100 - 112px);
 `;
 

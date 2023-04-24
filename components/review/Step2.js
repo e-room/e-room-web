@@ -89,7 +89,8 @@ const FormWrapper = styled.div`
   flex-direction: column;
   padding: 20px;
   text-align: center;
-  margin-bottom: 80px;
+  padding-bottom: 100px;
+  background-color: var(--white);
 
   ${animation_fadeInUp_view}
 `;

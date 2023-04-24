@@ -200,7 +200,14 @@ export default function ReviewLayout({ children }) {
           <CurrentStep width={(index / 5) * 100} />
           <RemainingStep width={100 - (index / 5) * 100} />
         </StepBar>
-        <div>{children}</div>
+        <div
+          style={{
+            backgroundColor: `var(--white)`,
+            height: "calc(100vh - 44px)",
+          }}
+        >
+          {children}
+        </div>
       </AppLayout>
       {/* AppLayout 바깥으로 뺀 이유는 z-index를 주기 위해 부모-자식 관계를 벗어나야 함 */}
       <BottomSheet

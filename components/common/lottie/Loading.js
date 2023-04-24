@@ -23,10 +23,11 @@ export default () => {
 
 const Container = styled.div`
   width: 100vw;
-  height: 95vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--white);
 `;
 
 const Item = styled.div`

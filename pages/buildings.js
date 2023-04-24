@@ -144,7 +144,6 @@ export default function buildings() {
 }
 
 export const Container = styled.div`
-  background-color: #fafafa !important;
   height: calc(100vh - 100px);
 `;
 

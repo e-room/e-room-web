@@ -122,8 +122,8 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-bottom: 100px;
-
+  background-color: var(--white);
+  padding-bottom: 144px;
   ${animation_fadeInUp_view}
 `;
 const TextLabel = styled.div`

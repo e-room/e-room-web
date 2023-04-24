@@ -27,6 +27,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--white);
 
   ${animation_fadeInUp_view}
 `;
