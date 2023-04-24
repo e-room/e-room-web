@@ -9,29 +9,32 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default ({ id }) => {
-  console.log("id", id);
   const [building, setBuilding] = useState({
     name: "",
-    score: 0,
+    avgScore: 0,
     reviewCnt: 0,
   });
   const getBuilding = async () => {
-    return await axios.get(`/apis/building/${id}`).then((response) => {
-      const value = response.data;
-      const name =
-        value.name === ""
-          ? `${value.address.roadName} ${value.address.buildingNumber}`
-          : value.name;
-      const score = value.buildingSummaries.RESIDENCESATISFACTION;
+    return await axios
+      .get(`/apis/building/marking/detail/${id}`)
+      .then((response) => {
+        const value = response.data;
+        // const name =
+        //   value.name === ""
+        //     ? `${value.address.roadName} ${value.address.buildingNumber}`
+        //     : value.name;
 
-      setBuilding({ ...building, name, score });
-    });
+        setBuilding({
+          name: value.name,
+          avgScore: value.avgScore,
+          reviewCnt: value.reviewCnt,
+        });
+      });
   };
 
   useEffect(() => {
     getBuilding();
   }, [id]);
-  console.log("buildig, ", building);
 
   return (
     <Container>
@@ -39,13 +42,13 @@ export default ({ id }) => {
       <div className="wrapper">
         <div className="building-name">{building.name}</div>
         <ReviewArea>
-          <div className="review-count">리뷰 0개</div>
-          <StarArea>{parseFloat(building.score, 1)}</StarArea>
+          <div className="review-count">리뷰 {building.reviewCnt}개</div>
+          <StarArea>{parseFloat(building.avgScore, 1)}</StarArea>
           <div style={{ marginTop: 3 }}>
             <Score
               size="sm"
               readOnly={true}
-              value={building.score}
+              value={building.avgScore}
               allowFraction={true}
             />
           </div>
