@@ -19,13 +19,13 @@ export default ({ id }) => {
       .get(`/apis/building/marking/detail/${id}`)
       .then((response) => {
         const value = response.data;
-        // const name =
-        //   value.name === ""
-        //     ? `${value.address.roadName} ${value.address.buildingNumber}`
-        //     : value.name;
+        const name =
+          value.name === ""
+            ? `${value.address.roadName} ${value.address.buildingNumber}`
+            : value.name;
 
         setBuilding({
-          name: value.name,
+          name,
           avgScore: value.avgScore,
           reviewCnt: value.reviewCnt,
         });
