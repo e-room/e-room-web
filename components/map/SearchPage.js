@@ -119,9 +119,9 @@ const Container = styled.div`
 `;
 
 const ListContainer = styled.div`
-  height: calc(100vh - 100px);
+  height: calc(100vh - 44px);
   background-color: #fafafa !important;
   overflow-y: auto;
   overflow-x: hidden;
-  margin: 44px 0;
+  margin-top: 44px;
 `;

@@ -196,18 +196,18 @@ const MainMap = ({ data }) => {
     map.current.setLevel(map.current.getLevel() + 1);
   };
 
-  if (searchVisible)
+  const buildingView = useMemo(() => {
+    return <BuildingInfo id={infoVisible.id} />;
+  }, [infoVisible]);
+
+  if (searchVisible) {
     return (
       <SearchPage
         searchVisible={searchVisible}
         setSearchVisible={setSearchVisible}
       />
     );
-
-  const buildingView = useMemo(() => {
-    return <BuildingInfo id={infoVisible.id} />;
-  }, [infoVisible]);
-
+  }
   return (
     <Fragment>
       <AppLayout
@@ -222,55 +222,35 @@ const MainMap = ({ data }) => {
           />
         }
       >
-        {searchVisible ? (
-          <ListContainer>{test()}</ListContainer>
-        ) : (
-          <Container>
-            <MapWrapper id="map" />
-            <GroupItem>
-              <GroupButton
-                items={[
-                  { icon: "plus", onClick: zoomIn },
-                  { icon: "minus", onClick: zoomOut },
-                ]}
-              />
-            </GroupItem>
-            <LocationItem>
-              <LocationButton onClick={setMyPosition} />
-            </LocationItem>
-            <ButtonItem>
-              <Button
-                label={"이 지역 자취방 리뷰 보기"}
-                type={"secondary"}
-                size={"md"}
-                onClick={goBuildingListPage}
-              />
-              <Button
-                label={"리뷰 쓰기"}
-                type={"primary"}
-                size={"md"}
-                icon={"plus"}
-                onClick={goReviewPage}
-              />
-              <Link href={"/buildings"}>
-                <a>
-                  <Button
-                    label={"이 지역 자취방 리뷰 보기"}
-                    type={"secondary"}
-                    size={"md"}
-                  />
-                </a>
-              </Link>
-              <Link href={"/review/write"}>
-                <a>
-                  <Button type={"primary"} size={"md"} icon={"plus"}>
-                    리뷰 쓰기
-                  </Button>
-                </a>
-              </Link>
-            </ButtonItem>
-          </Container>
-        )}
+        <Container>
+          <MapWrapper id="map" />
+          <GroupItem>
+            <GroupButton
+              items={[
+                { icon: "plus", onClick: zoomIn },
+                { icon: "minus", onClick: zoomOut },
+              ]}
+            />
+          </GroupItem>
+          <LocationItem>
+            <LocationButton onClick={setMyPosition} />
+          </LocationItem>
+          <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
+            <Link href={"/buildings"}>
+              <a>
+                <Button
+                  label={"이 지역을 목록으로 보기"}
+                  icon={"list"}
+                  type={"secondary"}
+                  size={"md"}
+                />
+              </a>
+            </Link>
+            <Test visible={infoVisible.visible}>
+              {infoVisible.visible && buildingView}
+            </Test>
+          </ButtonItem>
+        </Container>
       </AppLayout>
     </Fragment>
   );
