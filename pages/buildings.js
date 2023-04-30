@@ -96,7 +96,7 @@ export default function buildings() {
         visible={popupVisible}
         title={
           <FilterPopupTitle>
-            <Icon icon={"filter-stroke"} />
+            <Icon icon={"filter-stroke"} size={"md"} />
             <div className="title">정렬</div>
           </FilterPopupTitle>
         }
@@ -130,10 +130,10 @@ export default function buildings() {
           )}
         </div>
         <ButtonGroup>
-          <Link href={"/review/write"}>
+          <Link href={"/"}>
             <a>
-              <Button type={"primary"} size={"md"} icon={"plus"}>
-                리뷰 쓰기
+              <Button type={"secondary"} size={"md"} icon={"map-marked"}>
+                지도로 돌아가기
               </Button>
             </a>
           </Link>
