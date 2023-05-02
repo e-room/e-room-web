@@ -7,8 +7,13 @@ import Score from "components/common/atoms/Score";
 import parseFloat from "utils/parseFloat";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default ({ id }) => {
+  const router = useRouter();
+  const goBuildingDetailView = () => {
+    router.push(`/building/${id}`);
+  };
   const [building, setBuilding] = useState({
     name: "",
     avgScore: 0,
@@ -37,7 +42,7 @@ export default ({ id }) => {
   }, [id]);
 
   return (
-    <Container>
+    <Container onClick={goBuildingDetailView}>
       <img src={Img.src} width={72} height={72} style={{ borderRadius: 8 }} />
       <div className="wrapper">
         <div className="building-name">{building.name}</div>

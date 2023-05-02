@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  Fragment,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useEffect, useState, useRef, Fragment, useMemo } from "react";
 import axios from "axios";
 import Link from "next/link";
 import styled from "@emotion/styled";
@@ -17,8 +10,6 @@ import GroupButton from "components/common/atoms/GroupButton";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
-import SearchList from "components/search/SearchList";
-import Nodata from "components/search/Nodata";
 import logEvent from "amplitude/logEvent";
 import { fadeInUp_OutDown } from "styles/keyframes";
 import BuildingInfo from "components/map/BuildingInfo";
@@ -34,14 +25,6 @@ const MainMap = ({ data }) => {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [infoVisible, setInfoVisible] = useState({ visible: false, id: null });
 
-  const goReviewPage = () => {
-    logEvent({ name: "click-map-write" });
-    router.push("/review/write");
-  };
-  const goBuildingListPage = () => {
-    logEvent({ name: "click-map-list_view" });
-    router.push("/buildings");
-  };
   useEffect(() => {
     logEvent({ name: "view-map" });
     const $script = document.createElement("script");
@@ -103,7 +86,6 @@ const MainMap = ({ data }) => {
             name: "click-map-pin",
             property: { buildingID: value.buildingId },
           });
-          // router.push(`/building/${value.buildingId}`);
 
           let clickPosition = new kakao.maps.LatLng(
             value.coordinateDto.latitude,
