@@ -39,7 +39,7 @@ export default ({ value, buildingId }) => {
     <LikeField favorite={isLike}>
       {need && <NeedLogin visible={need} setVisible={setNeed} />}
       <div
-        style={{ display: "flex" }}
+        style={{ display: "flex", alignItems: "center" }}
         onClick={() => onLike()}
         className="cursor-pointer"
       >
