@@ -50,7 +50,10 @@ export default function Footer({ enabled }) {
             <Link href={value.path} key={index}>
               <a>
                 <NavBarContent active={active}>
-                  <Icon icon={active ? value.activeIcon : value.defaultIcon} size="md" />
+                  <Icon
+                    icon={active ? value.activeIcon : value.defaultIcon}
+                    size="md"
+                  />
                   <div>{value.title}</div>
                 </NavBarContent>
               </a>
@@ -63,7 +66,7 @@ export default function Footer({ enabled }) {
 }
 
 const NavBarWrapper = styled.footer`
-  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px -1px 0px rgba(33, 33, 33, 0.02);
   border-radius: 16px 16px 0px 0px;
   width: 100%;
   height: 56px;
