@@ -105,10 +105,12 @@ const NavBarWrapper = styled.footer`
 
 const NavBarContainer = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  padding: 0 16px;
+  gap: 4px;
 `;
 
 const NavBarContent = styled.div`
