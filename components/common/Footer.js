@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 import Link from "next/link";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
 import { Caption2, Caption2Bold } from "styles/typography";
 
-const navItems = [
+const navItems1 = [
   {
     path: "/",
     activePaths: ["/", "/buildings", "/login"],
@@ -35,6 +34,32 @@ const navItems = [
     title: "내정보",
   },
 ];
+const navItems = [
+  {
+    path: "/home",
+    activePaths: ["/home", "/buildings", "/login"],
+    icon: "home",
+    title: "홈",
+  },
+  {
+    path: "/map",
+    activePaths: ["/map"],
+    icon: "map-marked",
+    title: "지도",
+  },
+  {
+    path: "/review/write",
+    activePaths: ["/review/write", "/review/write/[index]"],
+    icon: "pencil",
+    title: "리뷰쓰기",
+  },
+  {
+    path: "/mypage",
+    activePaths: ["/mypage"],
+    icon: "mypage",
+    title: "내정보",
+  },
+];
 
 export default function Footer({ enabled }) {
   const router = useRouter();
@@ -51,7 +76,8 @@ export default function Footer({ enabled }) {
               <a>
                 <NavBarContent active={active}>
                   <Icon
-                    icon={active ? value.activeIcon : value.defaultIcon}
+                    icon={value.icon}
+                    fill={active ? "var(primary-1)" : "black"}
                     size="md"
                   />
                   <div>{value.title}</div>

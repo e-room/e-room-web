@@ -14,12 +14,14 @@ import HeartFill from "assets/icon/heart-fill.svg";
 import HeartStroke from "assets/icon/heart-stroke.svg";
 import HomeFill from "assets/icon/home-fill.svg";
 import HomeStroke from "assets/icon/home-stroke.svg";
+import Home from "assets/icon/home.svg";
 import Kakao from "assets/icon/kakao.svg";
 import Location from "assets/icon/location.svg";
 import Minus from "assets/icon/minus.svg";
 import Mypage from "assets/icon/mypage.svg";
 import Naver from "assets/icon/naver.svg";
 import PencilFill from "assets/icon/pencil-fill.svg";
+import Pencil from "assets/icon/pencil.svg";
 import Plus from "assets/icon/plus.svg";
 import QuestionCircle from "assets/icon/question-circle.svg";
 import Search from "assets/icon/search.svg";
@@ -87,6 +89,8 @@ export default function Icon(props) {
       return <HomeFill {...args} />;
     case "home-stroke":
       return <HomeStroke {...args} />;
+    case "home":
+      return <Home {...args} />;
     case "kakao":
       return <Kakao {...args} />;
     case "location":
@@ -99,6 +103,8 @@ export default function Icon(props) {
       return <Naver {...args} />;
     case "pencil-fill":
       return <PencilFill {...args} />;
+    case "pencil":
+      return <Pencil {...args} />;
     case "plus":
       return <Plus {...args} />;
     case "question-circle":
