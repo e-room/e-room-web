@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import Icon from "../atoms/Icon";
+import Icon from "./Icon";
 
-const StyledLocationButton = styled.button`
+const StyledIconButton = styled.button`
   box-sizing: border-box;
   cursor: pointer;
 
@@ -27,15 +27,15 @@ const StyledLocationButton = styled.button`
   }
 `;
 
-export default function LocationButton({ fill, onClick }) {
+export default function IconButton({ onClick, icon }) {
   return (
-    <StyledLocationButton onClick={onClick}>
-      <Icon icon={"location"} size="md" />
-    </StyledLocationButton>
+    <StyledIconButton onClick={onClick}>
+      <Icon icon={icon} size="md" />
+    </StyledIconButton>
   );
 }
 
-LocationButton.propTypes = {
+IconButton.propTypes = {
   fill: PropTypes.bool,
   onClick: PropTypes.func,
 };
