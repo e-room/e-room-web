@@ -5,11 +5,11 @@ import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
 
-import LocationButton from "components/common/atoms/LocationButton";
+import IconButton from "components/common/atoms/IconButton";
 import GroupButton from "components/common/atoms/GroupButton";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
-import AppLayout from "components/common/AppLayout";
+import Footer from "components/common/Footer";
 import logEvent from "amplitude/logEvent";
 import { fadeInUp_OutDown } from "styles/keyframes";
 import BuildingInfo from "components/map/BuildingInfo";
@@ -192,48 +192,45 @@ const MainMap = ({ data }) => {
   }
   return (
     <Fragment>
-      <AppLayout
-        additionalFunction={
-          <Icon
-            icon={"search"}
-            size={"md"}
+      <Container>
+        <MapWrapper id="map" />
+        <SearchIcon>
+          <IconButton
+            icon="search"
             onClick={() => {
               logEvent({ name: "click-map-search" });
               setSearchVisible(true);
             }}
           />
-        }
-      >
-        <Container>
-          <MapWrapper id="map" />
-          <GroupItem>
-            <GroupButton
-              items={[
-                { icon: "plus", onClick: zoomIn },
-                { icon: "minus", onClick: zoomOut },
-              ]}
-            />
-          </GroupItem>
-          <LocationItem>
-            <LocationButton onClick={setMyPosition} />
-          </LocationItem>
-          <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
-            <Link href={"/buildings"}>
-              <a>
-                <Button
-                  label={"이 지역을 목록으로 보기"}
-                  icon={"list"}
-                  type={"secondary"}
-                  size={"md"}
-                />
-              </a>
-            </Link>
-            <Test visible={infoVisible.visible}>
-              {infoVisible.visible && buildingView}
-            </Test>
-          </ButtonItem>
-        </Container>
-      </AppLayout>
+        </SearchIcon>
+        <GroupItem>
+          <GroupButton
+            items={[
+              { icon: "plus", onClick: zoomIn },
+              { icon: "minus", onClick: zoomOut },
+            ]}
+          />
+        </GroupItem>
+        <LocationItem>
+          <IconButton onClick={setMyPosition} icon="location" />
+        </LocationItem>
+        <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
+          <Link href={"/buildings"}>
+            <a>
+              <Button
+                label={"이 지역을 목록으로 보기"}
+                icon={"list"}
+                type={"secondary"}
+                size={"md"}
+              />
+            </a>
+          </Link>
+          <Test visible={infoVisible.visible}>
+            {infoVisible.visible && buildingView}
+          </Test>
+        </ButtonItem>
+      </Container>
+      <Footer enabled={true} />
     </Fragment>
   );
 };
@@ -305,6 +302,12 @@ const Container = styled.div`
   margin: 0 !important;
 `;
 
+const SearchIcon = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  z-index: 2;
+`;
 const GroupItem = styled.div`
   position: absolute;
   right: 20px;
