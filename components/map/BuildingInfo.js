@@ -71,8 +71,9 @@ const Container = styled.div`
   box-sizing: border-box;
   border-radius: 12px;
   padding: 8px;
-
   margin-top: 8px;
+
+  cursor: pointer;
 
   gap: 12px;
   display: flex;

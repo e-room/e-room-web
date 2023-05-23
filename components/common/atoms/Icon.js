@@ -1,45 +1,47 @@
 import PropTypes from "prop-types";
 
-import ArrowDown from "../../../assets/icon/arrow-down.svg";
-import ArrowLeft from "../../../assets/icon/arrow-left.svg";
-import ArrowRight from "../../../assets/icon/arrow-right.svg";
-import ArrowUp from "../../../assets/icon/arrow-up.svg";
-import CheckCircle from "../../../assets/icon/check-circle.svg";
-import Check from "../../../assets/icon/check.svg";
-import ExclamationCircle from "../../../assets/icon/exclamation-circle.svg";
-import FilterFill from "../../../assets/icon/filter-fill.svg";
-import FilterStroke from "../../../assets/icon/filter-stroke.svg";
-import Google from "../../../assets/icon/google.svg";
-import HeartFill from "../../../assets/icon/heart-fill.svg";
-import HeartStroke from "../../../assets/icon/heart-stroke.svg";
-import HomeFill from "../../../assets/icon/home-fill.svg";
-import HomeStroke from "../../../assets/icon/home-stroke.svg";
-import Kakao from "../../../assets/icon/kakao.svg";
-import Location from "../../../assets/icon/location.svg";
-import Minus from "../../../assets/icon/minus.svg";
-import Mypage from "../../../assets/icon/mypage.svg";
-import Naver from "../../../assets/icon/naver.svg";
-import PencilFill from "../../../assets/icon/pencil-fill.svg";
-import Plus from "../../../assets/icon/plus.svg";
-import QuestionCircle from "../../../assets/icon/question-circle.svg";
-import Search from "../../../assets/icon/search.svg";
-import SendFill from "../../../assets/icon/send-fill.svg";
-import SendStroke from "../../../assets/icon/send-stroke.svg";
-import StarDefault from "../../../assets/icon/star-default.svg";
-import StarFilled from "../../../assets/icon/star-filled.svg";
-import StarHalf from "../../../assets/icon/star-half.svg";
-import ThreeDot from "../../../assets/icon/three-dot.svg";
-import ThumbFill from "../../../assets/icon/thumb-fill.svg";
-import ThumbStroke from "../../../assets/icon/thumb-stroke.svg";
-import ThumbsUpFill from "../../../assets/icon/thumbs-up-fill.svg";
-import ThumbsUpStroke from "../../../assets/icon/thumbs-up-stroke.svg";
-import XIcon from "../../../assets/icon/x-icon.svg";
-import XIconXS from "../../../assets/icon/x-icon-xs.svg";
-import List from "../../../assets/icon/list.svg";
-import MapMarked from "../../../assets/icon/map-marked.svg";
+import ArrowDown from "assets/icon/arrow-down.svg";
+import ArrowLeft from "assets/icon/arrow-left.svg";
+import ArrowRight from "assets/icon/arrow-right.svg";
+import ArrowUp from "assets/icon/arrow-up.svg";
+import CheckCircle from "assets/icon/check-circle.svg";
+import Check from "assets/icon/check.svg";
+import ExclamationCircle from "assets/icon/exclamation-circle.svg";
+import FilterFill from "assets/icon/filter-fill.svg";
+import FilterStroke from "assets/icon/filter-stroke.svg";
+import Google from "assets/icon/google.svg";
+import HeartFill from "assets/icon/heart-fill.svg";
+import HeartStroke from "assets/icon/heart-stroke.svg";
+import HomeFill from "assets/icon/home-fill.svg";
+import HomeStroke from "assets/icon/home-stroke.svg";
+import Home from "assets/icon/home.svg";
+import Kakao from "assets/icon/kakao.svg";
+import Location from "assets/icon/location.svg";
+import Minus from "assets/icon/minus.svg";
+import Mypage from "assets/icon/mypage.svg";
+import Naver from "assets/icon/naver.svg";
+import PencilFill from "assets/icon/pencil-fill.svg";
+import Pencil from "assets/icon/pencil.svg";
+import Plus from "assets/icon/plus.svg";
+import QuestionCircle from "assets/icon/question-circle.svg";
+import Search from "assets/icon/search.svg";
+import SendFill from "assets/icon/send-fill.svg";
+import SendStroke from "assets/icon/send-stroke.svg";
+import StarDefault from "assets/icon/star-default.svg";
+import StarFilled from "assets/icon/star-filled.svg";
+import StarHalf from "assets/icon/star-half.svg";
+import ThreeDot from "assets/icon/three-dot.svg";
+import ThumbFill from "assets/icon/thumb-fill.svg";
+import ThumbStroke from "assets/icon/thumb-stroke.svg";
+import ThumbsUpFill from "assets/icon/thumbs-up-fill.svg";
+import ThumbsUpStroke from "assets/icon/thumbs-up-stroke.svg";
+import XIcon from "assets/icon/x-icon.svg";
+import XIconXS from "assets/icon/x-icon-xs.svg";
+import List from "assets/icon/list.svg";
+import MapMarked from "assets/icon/map-marked.svg";
 
-import LogoDefault from "../../../assets/logo/logo-default.svg";
-import LogoWhite from "../../../assets/logo/logo-white.svg";
+import LogoDefault from "assets/logo/logo-default.svg";
+import LogoWhite from "assets/logo/logo-white.svg";
 
 export default function Icon(props) {
   const { icon, size = "md", fill } = props;
@@ -87,6 +89,8 @@ export default function Icon(props) {
       return <HomeFill {...args} />;
     case "home-stroke":
       return <HomeStroke {...args} />;
+    case "home":
+      return <Home {...args} />;
     case "kakao":
       return <Kakao {...args} />;
     case "location":
@@ -99,6 +103,8 @@ export default function Icon(props) {
       return <Naver {...args} />;
     case "pencil-fill":
       return <PencilFill {...args} />;
+    case "pencil":
+      return <Pencil {...args} />;
     case "plus":
       return <Plus {...args} />;
     case "question-circle":

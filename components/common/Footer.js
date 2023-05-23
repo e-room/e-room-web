@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 import Link from "next/link";
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
 import { Caption2, Caption2Bold } from "styles/typography";
 
-const navItems = [
+const navItems1 = [
   {
     path: "/",
     activePaths: ["/", "/buildings", "/login"],
@@ -35,6 +34,32 @@ const navItems = [
     title: "내정보",
   },
 ];
+const navItems = [
+  {
+    path: "/home",
+    activePaths: ["/home", "/buildings", "/login"],
+    icon: "home",
+    title: "홈",
+  },
+  {
+    path: "/map",
+    activePaths: ["/map"],
+    icon: "map-marked",
+    title: "지도",
+  },
+  {
+    path: "/review/write",
+    activePaths: ["/review/write", "/review/write/[index]"],
+    icon: "pencil",
+    title: "리뷰쓰기",
+  },
+  {
+    path: "/mypage",
+    activePaths: ["/mypage"],
+    icon: "mypage",
+    title: "내정보",
+  },
+];
 
 export default function Footer({ enabled }) {
   const router = useRouter();
@@ -50,7 +75,11 @@ export default function Footer({ enabled }) {
             <Link href={value.path} key={index}>
               <a>
                 <NavBarContent active={active}>
-                  <Icon icon={active ? value.activeIcon : value.defaultIcon} size="md" />
+                  <Icon
+                    icon={value.icon}
+                    fill={active ? "var(primary-1)" : "black"}
+                    size="md"
+                  />
                   <div>{value.title}</div>
                 </NavBarContent>
               </a>
@@ -63,7 +92,7 @@ export default function Footer({ enabled }) {
 }
 
 const NavBarWrapper = styled.footer`
-  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px -1px 0px rgba(33, 33, 33, 0.02);
   border-radius: 16px 16px 0px 0px;
   width: 100%;
   height: 56px;
@@ -76,10 +105,12 @@ const NavBarWrapper = styled.footer`
 
 const NavBarContainer = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  padding: 0 16px;
+  gap: 4px;
 `;
 
 const NavBarContent = styled.div`
