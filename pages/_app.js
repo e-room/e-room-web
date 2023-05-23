@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import "styles/reset.css";
 import "styles/palette.css";
+import "tailwindcss/tailwind.css";
+
+import "../styles/globals.css";
 
 import { RecoilRoot } from "recoil";
 import { useEffect } from "react";
