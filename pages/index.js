@@ -1,44 +1,30 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  Fragment,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useEffect, useState, useRef, Fragment, useMemo } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import MarkerPng from "assets/marker4.png";
-import { Body2 } from "styles/typography";
 
 import LocationButton from "components/common/atoms/LocationButton";
 import GroupButton from "components/common/atoms/GroupButton";
 import Button from "components/common/atoms/Button";
 import Icon from "components/common/atoms/Icon";
 import AppLayout from "components/common/AppLayout";
-import SearchList from "components/search/SearchList";
-import Nodata from "components/search/Nodata";
 import logEvent from "amplitude/logEvent";
+import { fadeInUp_OutDown } from "styles/keyframes";
+import BuildingInfo from "components/map/BuildingInfo";
+import SearchPage from "components/map/SearchPage";
 
 const MainMap = ({ data }) => {
-  const router = useRouter();
   const buildingMarking = JSON.parse(data);
   const map = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
   const imsiMarkerList = [];
   const [searchVisible, setSearchVisible] = useState(false);
-  const goReviewPage = () => {
-    logEvent({ name: "click-map-write" });
-    router.push("/review/write");
-  };
-  const goBuildingListPage = () => {
-    logEvent({ name: "click-map-list_view" });
-    router.push("/buildings");
-  };
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [infoVisible, setInfoVisible] = useState({ visible: false, id: null });
+
   useEffect(() => {
     logEvent({ name: "view-map" });
     const $script = document.createElement("script");
@@ -100,7 +86,14 @@ const MainMap = ({ data }) => {
             name: "click-map-pin",
             property: { buildingID: value.buildingId },
           });
-          router.push(`/building/${value.buildingId}`);
+
+          let clickPosition = new kakao.maps.LatLng(
+            value.coordinateDto.latitude,
+            value.coordinateDto.longitude
+          );
+          map.current.panTo(clickPosition);
+
+          setInfoVisible({ visible: true, id: value.buildingId });
         });
         markers.push(marker);
         imsiMarkerList.push({ marker, id: value.buildingId });
@@ -113,10 +106,25 @@ const MainMap = ({ data }) => {
       kakao.maps.event.addListener(map.current, "idle", () => {
         setCenterPoint();
         setLocalStorage();
-        // setCenterPoint();
+        onShowListButton();
       });
     });
   }, [mapLoaded, searchVisible]);
+
+  const onShowListButton = () => {
+    const bounds = map.current.getBounds();
+    const inBounds = imsiMarkerList.filter((overlay) => {
+      if (bounds.contain(overlay.marker.getPosition())) {
+        return overlay.id;
+      }
+    });
+    if (inBounds.length > 0) {
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+      setInfoVisible({ visible: false, id: null });
+    }
+  };
 
   const setLocalStorage = () => {
     if (map.current) {
@@ -170,71 +178,20 @@ const MainMap = ({ data }) => {
     map.current.setLevel(map.current.getLevel() + 1);
   };
 
-  const [searchValue, setSearchValue] = useState("");
-  const [searchList, setSearchList] = useState([]);
+  const buildingView = useMemo(() => {
+    return <BuildingInfo id={infoVisible.id} />;
+  }, [infoVisible]);
 
-  const debounce = useCallback((func) => {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func.apply(this, args);
-      }, 500);
-    };
-  }, []);
-
-  const saveInput = async (e) => {
-    setSearchList([]);
-    const response = await axios.get(
-      `/apis/building/search?params=${e.target.value}`
+  if (searchVisible) {
+    return (
+      <SearchPage
+        searchVisible={searchVisible}
+        setSearchVisible={setSearchVisible}
+      />
     );
-    setSearchList(response.data.content);
-  };
-
-  const onSearchValue = useMemo(() => debounce((e) => saveInput(e)), []);
-
-  const test = useCallback(() => {
-    if (!searchVisible) return;
-    if (searchList.length < 1 || !searchValue) {
-      return <Nodata />;
-    } else {
-      return <SearchList data={searchList} searchValue={searchValue} />;
-    }
-  }, [searchList, searchVisible, searchValue, saveInput]);
-
+  }
   return (
     <Fragment>
-      {searchVisible && (
-        <SearchField>
-          <div
-            onClick={() => setSearchVisible(false)}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minWidth: 24,
-              marginLeft: 4,
-              cursor: "pointer",
-            }}
-          >
-            <Icon icon={"arrow-left"} size={"md"} />
-          </div>
-          <input
-            placeholder="주소나 건물 이름으로 검색해보세요"
-            onKeyUp={onSearchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            value={searchValue}
-          />
-          {searchValue && (
-            <div
-              className={"x-icon cursor-pointer"}
-              onClick={() => setSearchValue("")}
-            >
-              <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
-            </div>
-          )}
-        </SearchField>
-      )}
       <AppLayout
         additionalFunction={
           <Icon
@@ -247,39 +204,35 @@ const MainMap = ({ data }) => {
           />
         }
       >
-        {searchVisible ? (
-          <ListContainer>{test()}</ListContainer>
-        ) : (
-          <Container>
-            <MapWrapper id="map" />
-            <GroupItem>
-              <GroupButton
-                items={[
-                  { icon: "plus", onClick: zoomIn },
-                  { icon: "minus", onClick: zoomOut },
-                ]}
-              />
-            </GroupItem>
-            <LocationItem>
-              <LocationButton onClick={setMyPosition} />
-            </LocationItem>
-            <ButtonItem>
-              <Button
-                label={"이 지역 자취방 리뷰 보기"}
-                type={"secondary"}
-                size={"md"}
-                onClick={goBuildingListPage}
-              />
-              <Button
-                label={"리뷰 쓰기"}
-                type={"primary"}
-                size={"md"}
-                icon={"plus"}
-                onClick={goReviewPage}
-              />
-            </ButtonItem>
-          </Container>
-        )}
+        <Container>
+          <MapWrapper id="map" />
+          <GroupItem>
+            <GroupButton
+              items={[
+                { icon: "plus", onClick: zoomIn },
+                { icon: "minus", onClick: zoomOut },
+              ]}
+            />
+          </GroupItem>
+          <LocationItem>
+            <LocationButton onClick={setMyPosition} />
+          </LocationItem>
+          <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
+            <Link href={"/buildings"}>
+              <a>
+                <Button
+                  label={"이 지역을 목록으로 보기"}
+                  icon={"list"}
+                  type={"secondary"}
+                  size={"md"}
+                />
+              </a>
+            </Link>
+            <Test visible={infoVisible.visible}>
+              {infoVisible.visible && buildingView}
+            </Test>
+          </ButtonItem>
+        </Container>
       </AppLayout>
     </Fragment>
   );
@@ -370,59 +323,15 @@ const ButtonItem = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  z-index: 2;
-  gap: 8px;
-`;
-
-const SearchField = styled.div`
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 44px;
-  background: var(--white);
-
-  box-sizing: border-box;
-  padding: 12px;
-  gap: 16px;
-
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  z-index: 2;
 
-  input {
-    width: 100%;
-    height: 24px;
-    border: none;
-
-    ::placeholder {
-      ${Body2}
-
-      color: var(--gray-3);
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .x-icon {
-    border-radius: 100%;
-    background: var(--gray-3);
-    min-width: 16px;
-    min-height: 16px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  ${(p) => fadeInUp_OutDown(p.visible)}
 `;
 
-const ListContainer = styled.div`
-  height: calc(100vh - 100px);
-  background-color: #fafafa !important;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 44px 0;
+const Test = styled.div`
+  ${(p) => fadeInUp_OutDown(p.visible)}
 `;
+
 export default MainMap;
