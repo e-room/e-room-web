@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { GlobalStyle } from "../../styles/globalStyle";
 import styled from "@emotion/styled";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
@@ -17,7 +16,6 @@ export default function AppLayout(props) {
 
   return (
     <>
-      <GlobalStyle />
       <Header pageTitle={pageTitle} additionalFunction={additionalFunction} />
       {router.asPath === "/" ? (
         children
