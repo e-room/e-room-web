@@ -176,6 +176,7 @@ module.exports = {
       },
       boxShadow: {
         header: "0px -4px 16px rgba(0, 0, 0, 0.04)",
+        footer: "0px -1px 0px rgba(33, 33, 33, 0.02)",
       },
     },
   },
