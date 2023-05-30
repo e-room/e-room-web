@@ -56,7 +56,7 @@ export default function Icon(props) {
   const args = {
     width: SIZES[size],
     height: SIZES[size],
-    fill,
+    className: fill,
     ...props,
   };
 
