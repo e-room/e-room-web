@@ -1,26 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
-import {
-  Body1Bold,
-  Body2Bold,
-  Caption1Bold,
-  Caption2,
-} from "styles/typography";
 
 import AppLayout from "components/common/AppLayout";
 import Avatar from "components/common/atoms/Avatar";
-import Icon from "components/common/atoms/Icon";
 import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import ChannelTalk from "components/common/ChannelTalk";
 import Popup from "components/common/atoms/Popup";
 import NeedLogin from "components/common/NeedLogin";
 import logEvent from "amplitude/logEvent";
+import MenuItem from "components/mypage/MenuItem";
+import MenuList from "components/mypage/MenuList";
 
 export default function mypage() {
   const router = useRouter();
@@ -57,6 +51,14 @@ export default function mypage() {
       setLoading(false);
       // setError(true);
     }
+  };
+
+  const goFavoriteFoom = () => {
+    router.push(`/favorites`);
+  };
+
+  const goInstagram = () => {
+    window.open(process.env.NEXT_PUBLIC_INSTAGRAM_LINK, "_blank", "noreferrer");
   };
 
   const goContact = () => {
@@ -139,52 +141,49 @@ export default function mypage() {
           onCancelClick={() => onWithdrawalVisible(false)}
           onConfirmClick={() => onWithdrawal()}
         >
-          <PopupSubTitle>
+          <div className="text-caption-bold-1 text-center">
             회원님의 모든 리뷰가 사라져요. <br />
             다른 사람들이 쓴 리뷰를 모두 볼 수 없어요.
-          </PopupSubTitle>
+          </div>
         </Popup>
       )}
       <Container>
-        <MyInfo>
+        <div className="flex items-center justify-between bg-white gap-[16px] p-[20px]">
           <Avatar size={"lg"} img={profile.profileImageUrl} />
-          <Box>
-            <div className="nickname">{profile.name}</div>
-            <div className="email">{profile.email}</div>
-          </Box>
-        </MyInfo>
-        <ServiceInfo>
-          <AreaTitle>서비스 정보</AreaTitle>
+          <div className="flex flex-col gap-[4px] w-full">
+            <div className="text-black text-body-bold-1">{profile.name}</div>
+            <div className="text-black/[0.5] text-caption-2">
+              {profile.email}
+            </div>
+          </div>
+        </div>
+        <div className="mt-[20px]">
+          <MenuItem
+            titleIcon="heart-fill"
+            title="찜한 자취방"
+            onClick={goFavoriteFoom}
+          />
+        </div>
+        <div className="flex flex-col">
+          <div className="text-caption-2 text-gray-1 pt-[20px] pb-[12px] pl-[20px]">
+            서비스 정보
+          </div>
           <MenuList>
-            <Link href={`${process.env.NEXT_PUBLIC_INSTAGRAM_LINK}`}>
-              <a target="_blank" rel="noreferrer">
-                <MenuItem>
-                  <div>공식 인스타그램</div>
-                  <Icon
-                    icon={"arrow-right"}
-                    size={"md"}
-                    fill={"var(--gray-3)"}
-                  />
-                </MenuItem>
-              </a>
-            </Link>
-            <MenuItem onClick={goContact}>
-              <div>문의하기</div>
-              <Icon icon={"arrow-right"} size={"md"} fill={"var(--gray-3)"} />
-            </MenuItem>
+            <MenuItem title="공식 인스타그램" onClick={goInstagram} />
+            <MenuItem title="문의하기" onClick={goContact} />
           </MenuList>
-          <ButtonGroup>
-            <Button className="logout" onClick={onLogout}>
+          <div className="text-caption-bold-1 flex flex-col p-[20px] gap-[20px]">
+            <div className="text-black cursor-pointer" onClick={onLogout}>
               로그아웃
-            </Button>
-            <Button
-              className="withdrawal"
+            </div>
+            <div
+              className="text-black/[0.5] cursor-pointer"
               onClick={() => onWithdrawalVisible(true)}
             >
               탈퇴하기
-            </Button>
-          </ButtonGroup>
-        </ServiceInfo>
+            </div>
+          </div>
+        </div>
       </Container>
     </AppLayout>
   );
@@ -192,85 +191,5 @@ export default function mypage() {
 
 const Container = styled.div`
   height: calc(var(--vh, 1vh) * 100 - 112px);
-`;
-
-const MyInfo = styled.div`
-  height: 104px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background-color: var(--white);
-
-  gap: 16px;
-  padding: 20px;
-
-  .nickname {
-    ${Body1Bold}
-    color: var(--black);
-  }
-
-  .email {
-    ${Caption2}
-    color: var(--black);
-    opacity: 0.5;
-  }
-`;
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-`;
-
-const ServiceInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const AreaTitle = styled.div`
-  ${Caption2}
-  color: var(--gray-1);
-
-  padding: 20px 0 12px 20px;
-`;
-
-const MenuList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-`;
-const MenuItem = styled.div`
-  ${Body2Bold}
-  color: var(--black);
-  background: var(--white);
-
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 20px;
-  gap: 16px;
-
-  cursor: pointer;
-`;
-
-const ButtonGroup = styled.div`
-  ${Caption1Bold}
-
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 20px;
-
-  color: var(--black);
-  .withdrawal {
-    opacity: 0.5;
-  }
-`;
-
-const Button = styled.div`
-  cursor: pointer;
-`;
-const PopupSubTitle = styled.div`
-  ${Caption1Bold}
-  text-align: center;
+  background: #f9f9f9;
 `;

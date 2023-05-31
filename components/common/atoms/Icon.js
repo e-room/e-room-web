@@ -57,7 +57,6 @@ export default function Icon(props) {
     width: SIZES[size],
     height: SIZES[size],
     className: fill,
-    ...props,
   };
 
   switch (icon) {
