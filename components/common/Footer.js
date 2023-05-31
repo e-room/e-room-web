@@ -41,11 +41,13 @@ export default function Footer({ enabled }) {
 
           const stylesByActive = {
             true: {
-              color: "primary-1",
+              textColor: "text-primary-1",
+              iconFill: "fill-primary-1",
               text: "text-caption-bold-2",
             },
             false: {
-              color: "gray-3",
+              textColor: "text-gray-3",
+              iconFill: "fill-gray-3",
               text: "text-caption-2",
             },
           };
@@ -56,11 +58,11 @@ export default function Footer({ enabled }) {
                 <div className="flex flex-col items-center gap-[4px] max-h-[56px] px-[24px] pt-[8px] pb-[4px]">
                   <Icon
                     icon={value.icon}
-                    fill={"fill-" + stylesByActive[active].color}
+                    fill={stylesByActive[active].iconFill}
                     size="md"
                   />
                   <div
-                    className={`${stylesByActive[active].text} text-${stylesByActive[active].color}`}
+                    className={`${stylesByActive[active].text} ${stylesByActive[active].textColor}`}
                   >
                     {value.title}
                   </div>
