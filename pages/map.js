@@ -8,7 +8,6 @@ import MarkerPng from "assets/marker4.png";
 import IconButton from "components/common/atoms/IconButton";
 import GroupButton from "components/common/atoms/GroupButton";
 import Button from "components/common/atoms/Button";
-import Icon from "components/common/atoms/Icon";
 import Footer from "components/common/Footer";
 import logEvent from "amplitude/logEvent";
 import { fadeInUp_OutDown } from "styles/keyframes";
@@ -192,9 +191,9 @@ const MainMap = ({ data }) => {
   }
   return (
     <Fragment>
-      <Container>
-        <MapWrapper id="map" />
-        <SearchIcon>
+      <div className="relative overflow-hidden w-screen h-screen m-0">
+        <div className="w-screen h-screen" id="map" />
+        <div className="absolute right-[20px] top-[25px] z-[2]">
           <IconButton
             icon="search"
             onClick={() => {
@@ -202,18 +201,18 @@ const MainMap = ({ data }) => {
               setSearchVisible(true);
             }}
           />
-        </SearchIcon>
-        <GroupItem>
+        </div>
+        <div className="absolute right-[20px] top-[232px] z-[2]">
           <GroupButton
             items={[
               { icon: "plus", onClick: zoomIn },
               { icon: "minus", onClick: zoomOut },
             ]}
           />
-        </GroupItem>
-        <LocationItem>
+        </div>
+        <div className="absolute right-[20px] top-[328px] z-[2]">
           <IconButton onClick={setMyPosition} icon="location" />
-        </LocationItem>
+        </div>
         <ButtonItem visible={buttonVisible} infoVisible={infoVisible.visible}>
           <Link href={"/buildings"}>
             <a>
@@ -229,7 +228,7 @@ const MainMap = ({ data }) => {
             {infoVisible.visible && buildingView}
           </Test>
         </ButtonItem>
-      </Container>
+      </div>
       <Footer enabled={true} />
     </Fragment>
   );
@@ -254,7 +253,7 @@ const MarkerClustererStyles = [
     backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--white)",
+    color: "white",
     textAlign: "center",
     fontWeight: "700",
     lineHeight: "120px",
@@ -267,7 +266,7 @@ const MarkerClustererStyles = [
     backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--white)",
+    color: "white",
     textAlign: "center",
     fontWeight: "700",
     lineHeight: "120px",
@@ -280,7 +279,7 @@ const MarkerClustererStyles = [
     backgroundSize: "120px 120px",
     backgroundRepeat: "no-repeat",
     borderRadius: "8px",
-    color: "var(--white)",
+    color: "white",
     textAlign: "center",
     fontWeight: "700",
     lineHeight: "120px",
@@ -288,38 +287,6 @@ const MarkerClustererStyles = [
   },
 ];
 
-const MapWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  /* height: calc(100vh - 112px); */
-`;
-const Container = styled.div`
-  position: relative;
-  overflow: hidden !important;
-
-  width: 100vw;
-  height: 100vh;
-  margin: 0 !important;
-`;
-
-const SearchIcon = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 25px;
-  z-index: 2;
-`;
-const GroupItem = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 232px;
-  z-index: 2;
-`;
-const LocationItem = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 328px;
-  z-index: 2;
-`;
 const ButtonItem = styled.div`
   position: fixed;
   bottom: 64px;
