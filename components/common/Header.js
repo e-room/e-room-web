@@ -21,7 +21,7 @@ export default function Header({ pageTitle, additionalFunction }) {
       router.pathname === "/" ? (
         <div className={styleByBox}></div>
       ) : (
-        <div className={styleByBox + "cursor-pointer"} onClick={onBack}>
+        <div className={`${styleByBox} cursor-pointer`} onClick={onBack}>
           <Icon icon={"arrow-left"} size="md" />
         </div>
       )}
@@ -39,7 +39,7 @@ export default function Header({ pageTitle, additionalFunction }) {
           </>
         )}
       </div>
-      <div className={styleByBox + "cursor-pointer"}>
+      <div className={`${styleByBox} cursor-pointer`}>
         {additionalFunction ?? null}
       </div>
     </header>
