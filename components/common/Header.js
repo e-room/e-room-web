@@ -16,9 +16,7 @@ export default function Header({ pageTitle, additionalFunction }) {
 
   return (
     <header className="w-full h-[44px] fixed top-0 left-0 pr-[20px] pl-[16px] box-border bg-white z-10 flex justify-between items-center shadow-header backdrop-blur-[12px]">
-      {router.pathname === "/mypage" ||
-      router.pathname === "/favorites" ||
-      router.pathname === "/" ? (
+      {router.pathname === "/mypage" || router.pathname === "/" ? (
         <div className={styleByBox}></div>
       ) : (
         <div className={`${styleByBox} cursor-pointer`} onClick={onBack}>
