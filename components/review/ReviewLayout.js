@@ -4,7 +4,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
-import { Caption1Bold } from "styles/typography";
 import Congraturation from "components/common/lottie/Congraturation";
 
 import {
@@ -18,7 +17,6 @@ import BottomSheet from "components/common/atoms/BottomSheet";
 import Button from "components/common/atoms/Button";
 import imgCompress from "utils/imgCompress";
 import calculateByReviewScore from "utils/calculateByReviewScore";
-import valueCheck from "utils/valueCheck";
 import Toast from "components/common/atoms/Toast";
 import logEvent from "amplitude/logEvent";
 
@@ -37,6 +35,13 @@ export default function ReviewLayout({ children }) {
     3: true,
     4: true,
   });
+
+  const stylesByWidth = {
+    1: { active: "w-1/5", inactive: "w-4/5" },
+    2: { active: "w-2/5", inactive: "w-3/5" },
+    3: { active: "w-3/5", inactive: "w-2/5" },
+    4: { active: "w-4/5", inactive: "w-1/5" },
+  };
 
   const [popupVisible, setPopupVisible] = useState(false);
   const formValue = useRecoilValue(reviewFormState);
@@ -196,10 +201,14 @@ export default function ReviewLayout({ children }) {
     <>
       {errorToast}
       <AppLayout pageTitle={"리뷰 쓰기"} enabledNavbar={false}>
-        <StepBar>
-          <CurrentStep width={(index / 5) * 100} />
-          <RemainingStep width={100 - (index / 5) * 100} />
-        </StepBar>
+        <div className="flex fixed top-[44px] left-0 z-[11] w-full">
+          <div
+            className={`h-[4px] bg-primary-1 ${stylesByWidth[index].active}`}
+          />
+          <div
+            className={`h-[4px] bg-primary-5 ${stylesByWidth[index].inactive}`}
+          />
+        </div>
         <div
           style={{
             backgroundColor: `var(--white)`,
@@ -218,11 +227,11 @@ export default function ReviewLayout({ children }) {
         submitLabel={"확인"}
       >
         <Congraturation />
-        <Description>
+        <div className="text-caption-bold-1 text-black text-center">
           첫 리뷰를 잘 등록했어요.
           <br />
           이제 다른 사람들의 리뷰를 모두 볼 수 있어요!
-        </Description>
+        </div>
       </BottomSheet>
 
       {index === "4" ? (
@@ -251,25 +260,6 @@ export default function ReviewLayout({ children }) {
   );
 }
 
-const StepBar = styled.div`
-  display: flex;
-  position: fixed;
-  top: 44px;
-  left: 0;
-  z-index: 11;
-  width: 100%;
-`;
-const CurrentStep = styled.div`
-  height: 4px;
-  background: var(--primary-1);
-  width: ${({ width }) => `${width}%`};
-`;
-const RemainingStep = styled.div`
-  height: 4px;
-  background: var(--primary-5);
-  width: ${({ width }) => `${width}%`};
-`;
-
 const BottomArea = styled.div`
   width: 100%;
   display: flex;
@@ -280,10 +270,4 @@ const BottomArea = styled.div`
   button {
     margin: 0px 20px;
   }
-`;
-
-const Description = styled.div`
-  ${Caption1Bold}
-  color: var(--black);
-  text-align: center;
 `;
