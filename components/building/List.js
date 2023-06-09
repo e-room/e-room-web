@@ -26,22 +26,21 @@ export default (props) => {
         className="cursor-pointer"
         onClick={() => goBuildingDetail(value.buildingId)}
       >
-        {/* <Link href={`/building/${value.buildingId}`}> */}
-        <BuildingContainer>
-          <div style={{ width: 122, height: 122 }}>
+        <div className="flex border-t border-gray-4 bg-white">
+          <div className="w-[122px] h-[122px]">
             <Logo width={122} height={122} />
           </div>
-          <BuildingContent>
-            <div className="building-name">
+          <div className="px-[20px] py-[12px]">
+            <div className="text-body-bold-2 break-words overflow-ellipsis line-clamp-1">
               {value.name === ""
                 ? `${value.address.roadName} ${value.address.buildingNumber}`
                 : value.name}
             </div>
-            <AddressArea>
+            <div className="text-caption-2 text-black/[0.5] overflow-hidden whitespace-nowrap	text-ellipsis">
               {value.address.siDo} {value.address.siGunGu}{" "}
               {value.address.roadName} {value.address.buildingNumber}
-            </AddressArea>
-            <Chips>
+            </div>
+            <div className="flex gap-[4px] my-[9px]">
               {value.directDeal && <Chip label={"직거래가능"} />}
               {value.bestCategory && (
                 <Chip
@@ -49,16 +48,15 @@ export default (props) => {
                   type={"secondary"}
                 />
               )}
-            </Chips>
-            <ReviewArea>
-              <div
-                className="review-count"
-                style={{ opacity: 0.5, marginRight: 8 }}
-              >
+            </div>
+            <div className="flex items-center max-h-[16px]">
+              <div className="text-caption-2 text-black/[0.5] mr-[8px]">
                 리뷰 {value.reviewCnt}개
               </div>
-              <StarArea>{parseFloat(value.avgScore, 1)}</StarArea>
-              <div style={{ marginTop: 3 }}>
+              <div className="text-caption-bold-2 text-primary-1">
+                {parseFloat(value.avgScore, 1)}
+              </div>
+              <div className="mt-[3px]">
                 <Score
                   size="sm"
                   readOnly={true}
@@ -66,61 +64,10 @@ export default (props) => {
                   allowFraction={true}
                 />
               </div>
-            </ReviewArea>
-          </BuildingContent>
-        </BuildingContainer>
-        {/* </Link> */}
+            </div>
+          </div>
+        </div>
       </div>
     );
   });
 };
-
-const BuildingContainer = styled.div`
-  display: flex;
-  border-top: 1px solid var(--gray-4);
-
-  background: var(--white);
-  img {
-    background: var(--gray-1);
-  }
-`;
-const BuildingContent = styled.div`
-  padding: 12px 20px;
-  .building-name {
-    ${Body2Bold}
-
-    word-break: break-word;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-  }
-`;
-
-const Chips = styled.div`
-  display: flex;
-  gap: 4px;
-  margin: 9px 0;
-`;
-const ReviewArea = styled.div`
-  display: flex;
-  align-items: center;
-  max-height: 16px;
-  .review-count {
-    ${Caption2}
-  }
-`;
-const StarArea = styled.div`
-  ${Caption2Bold}
-  color: var(--primary-1);
-`;
-
-const AddressArea = styled.div`
-  ${Caption2}
-  opacity: 0.5;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
