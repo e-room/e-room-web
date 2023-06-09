@@ -3,9 +3,6 @@ import axios from "axios";
 import Link from "next/link";
 import styled from "@emotion/styled";
 
-import Banner1 from "assets/banner/banner1.png";
-import { Body2Bold } from "styles/typography";
-
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
 import BuildingList from "components/building/BuildingList";
@@ -87,7 +84,7 @@ export default function buildings() {
         <Icon
           icon={popupVisible ? "filter-fill" : "filter-stroke"}
           size={"md"}
-          fill={popupVisible ? "var(--primary-1)" : "var(--black)"}
+          fill={popupVisible ? "fill-primary-1" : "fill-black"}
           onClick={() => setPopupVisible(true)}
         />
       }
@@ -95,10 +92,10 @@ export default function buildings() {
       <Popup
         visible={popupVisible}
         title={
-          <FilterPopupTitle>
+          <div className="flex items-center">
             <Icon icon={"filter-stroke"} size={"md"} />
-            <div className="title">정렬</div>
-          </FilterPopupTitle>
+            <div className="ml-[8px]">정렬</div>
+          </div>
         }
         titleAlign={"left"}
         buttonType={"default"}
@@ -108,7 +105,7 @@ export default function buildings() {
         onConfirmClick={onConfirmClick}
       >
         <Contents>
-          <SubText>정렬 순서</SubText>
+          <div className="text-body-bold-2 text-black">정렬 순서</div>
           <Select
             size={"md"}
             value={filterValue}
@@ -119,17 +116,14 @@ export default function buildings() {
         </Contents>
       </Popup>
       <Container>
-        <div style={{ paddingBottom: 150 }}>
-          {/* <Banner>
-            <img src={Banner1.src} width={"100%"} height={"100%"} />
-          </Banner> */}
+        <div className="pb-[150px]">
           {parseData.length > 0 ? (
             <BuildingList data={parseData} sort={filterValue.value} />
           ) : (
             <NoData />
           )}
         </div>
-        <ButtonGroup>
+        <div className="fixed bottom-[64px] w-full max-w-[720px] flex justify-center">
           <Link href={"/"}>
             <a>
               <Button type={"secondary"} size={"md"} icon={"map-marked"}>
@@ -137,7 +131,7 @@ export default function buildings() {
               </Button>
             </a>
           </Link>
-        </ButtonGroup>
+        </div>
       </Container>
     </AppLayout>
   );
@@ -147,35 +141,9 @@ export const Container = styled.div`
   height: calc(100vh - 100px);
 `;
 
-const ButtonGroup = styled.div`
-  position: fixed;
-  bottom: 64px;
-  width: 100%;
-  max-width: 720px;
-  display: flex;
-  justify-content: center;
-`;
-const Banner = styled.div`
-  width: 100%;
-  height: 84px;
-  background-color: var(--primary-5);
-`;
-
-const FilterPopupTitle = styled.div`
-  display: flex;
-  align-items: center;
-  .title {
-    margin-left: 8px;
-  }
-`;
 const Contents = styled.div`
   display: grid;
   grid-template-columns: 3fr 4fr;
   align-items: center;
   padding: 0 6px;
-`;
-
-const SubText = styled.div`
-  ${Body2Bold}
-  color: var(--black);
 `;
