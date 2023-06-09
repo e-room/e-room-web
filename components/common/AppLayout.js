@@ -8,6 +8,7 @@ export default function AppLayout(props) {
   const {
     pageTitle,
     enabledNavbar = true,
+    enabledHeader = true,
     additionalFunction,
     children,
   } = props;
@@ -16,11 +17,20 @@ export default function AppLayout(props) {
 
   return (
     <>
-      <Header pageTitle={pageTitle} additionalFunction={additionalFunction} />
+      <Header
+        pageTitle={pageTitle}
+        additionalFunction={additionalFunction}
+        enabled={enabledHeader}
+      />
       {router.asPath === "/" ? (
         children
       ) : (
-        <MainContent enabledNavbar={enabledNavbar}>{children}</MainContent>
+        <MainContent
+          enabledNavbar={enabledNavbar}
+          enabledHeader={enabledHeader}
+        >
+          {children}
+        </MainContent>
       )}
       <Footer enabled={enabledNavbar} />
     </>
@@ -32,8 +42,8 @@ AppLayout.propTypes = {
 };
 
 const MainContent = styled.div`
-  margin-top: 44px;
   ${(p) => p.enabledNavbar && "margin-bottom: 44px"};
+  ${(p) => p.enabledHeader && "margin-top: 44px"};
 
   @media (min-width: 720px) {
     margin: 44px auto;

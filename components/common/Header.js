@@ -1,7 +1,7 @@
 import Icon from "../common/atoms/Icon";
 import { useRouter } from "next/router";
 
-export default function Header({ pageTitle, additionalFunction }) {
+export default function Header({ pageTitle, additionalFunction, enabled }) {
   const router = useRouter();
 
   const onBack = () => {
@@ -13,7 +13,7 @@ export default function Header({ pageTitle, additionalFunction }) {
   };
 
   const styleByBox = "flex justify-center items-center min-w-[24px]";
-
+  if (!enabled) return;
   return (
     <header className="w-full h-[44px] fixed top-0 left-0 pr-[20px] pl-[16px] box-border bg-white z-10 flex justify-between items-center shadow-header backdrop-blur-[12px]">
       {router.pathname === "/mypage" || router.pathname === "/" ? (
