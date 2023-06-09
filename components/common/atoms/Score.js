@@ -14,11 +14,9 @@ export default function Score({
       onClick={onClick}
       initialValue={value}
       readonly={readOnly}
-      fillIcon={
-        <Icon icon={`star-filled`} size={size} fill={"var(--primary-1)"} />
-      }
+      fillIcon={<Icon icon={`star-filled`} size={size} fill="fill-primary-1" />}
       emptyIcon={
-        <Icon icon={`star-default`} size={size} fill={"var(--primary-1)"} />
+        <Icon icon={`star-default`} size={size} fill="fill-primary-1" />
       }
       allowFraction={allowFraction}
     />
