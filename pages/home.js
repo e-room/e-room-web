@@ -55,13 +55,14 @@ export default function home() {
         </div>
         <div className="grid grid-cols-2 gap-[8px]"></div>
         {/* 버튼들 */}
-        <div>
+        <div className="flex flex-col gap-[8px] mt-[24px]">
           <Button
             size={"md"}
             label="리뷰 지도 둘러보기"
             type="secondary"
             icon="map-marked"
             onClick={goMap}
+            className={"w-full"}
           />
           <Button
             size={"md"}
@@ -69,6 +70,7 @@ export default function home() {
             type="primary"
             icon="pencil"
             onClick={goReviewWrite}
+            className={"w-full"}
           />
         </div>
       </div>
