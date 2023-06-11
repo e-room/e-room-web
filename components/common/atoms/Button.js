@@ -1,7 +1,4 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-import { FontFamily, FontStyle } from "../../../styles/typography";
 import Icon from "./Icon";
 
 export default function Button({
@@ -13,24 +10,50 @@ export default function Button({
   children,
   style,
   icon,
+  className,
   ...props
 }) {
-  const sizeStyle = SIZES[size];
-  const colorStyle = COLORS[type];
+  const StylesBySize = {
+    md: "text-body-bold-2",
+    lg: "text-body-bold-1",
+  };
+  const PaddingByIsIcon = () => {
+    if (icon) {
+      if (size === "md") return "py-[12px] px-[16px]";
+      else if (size === "lg") return "py-[14px] px-[16px]";
+    } else {
+      if (size === "md") return "py-[12px] px-[24px]";
+      else if (size === "lg") return "py-[14px] px-[24px]";
+    }
+  };
+
+  const StylesByType = {
+    primary:
+      "bg-primary-1 border border-primary-1 text-white disabled:bg-primary-5 disabled:text-primary-4 disabled:border-primary-5",
+    secondary:
+      "bg-white border border-gray-4 text-gray-1 disabled:bg-gray-4 disabled:text-gray-3 disabled:border-gray-4",
+    warning:
+      "bg-danger-1 border border-danger-1 text-white disabled:bg-danger-5 disabled:text-danger-4 disabled:border-danger-5",
+  };
+
+  const IconStylesByType = {
+    primary: "fill-white group-disabled:fill-primary-4",
+    secondary: "fill-gray-1 group-disabled:fill-gray-3",
+    warning: "fill-white group-disabled:fill-danger-4",
+  };
+
   return (
-    <StyledButton
-      type={type}
-      sizeStyle={sizeStyle}
-      colorStyle={colorStyle}
+    <button
+      className={`group flex justify-center items-center gap-[10px] rounded-[12px] shadow-button box-border ${
+        StylesBySize[size]
+      } ${PaddingByIsIcon()} ${StylesByType[type]} ${className}`}
       disabled={disabled}
-      style={{ width }}
-      customStyles={style}
-      isIcon={icon ? true : false}
+      style={{ width, ...style }}
       {...props}
     >
-      {icon && <Icon icon={icon} size={size} />}
+      {icon && <Icon icon={icon} size="md" fill={IconStylesByType[type]} />}
       {label ?? children}
-    </StyledButton>
+    </button>
   );
 }
 
@@ -40,79 +63,4 @@ Button.propTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-const StyledButton = styled.button`
-  ${(p) => p.sizeStyle}
-  ${(p) => p.colorStyle}
-  ${(p) => p.customStyles}
-  ${(p) => p.isIcon && `gap: 10px`};
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: ${(p) => (p.isIcon ? `12px 16px` : `12px 24px`)};
-  box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.04);
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  ${FontFamily}
-  ${FontStyle}
-
-  height: var(--button-height);
-  font-size: var(--button-font-size);
-  font-weight: 700;
-
-  background: var(--button-bg-color);
-  border: 1px solid var(--button-border-color);
-  color: var(--button-label-color);
-
-  &:disabled {
-    background: var(--button-disabled-color);
-    border: 1px solid var(--button-disabled-color);
-    color: var(--button-disabled-label-color);
-  }
-
-  svg {
-    fill: var(--button-label-color);
-  }
-`;
-
-const SIZES = {
-  md: css`
-    --button-font-size: 16px;
-    --button-height: 48px;
-  `,
-  lg: css`
-    --button-font-size: 18px;
-    --button-height: 52px;
-  `,
-};
-const COLORS = {
-  primary: css`
-    --button-bg-color: var(--primary-1);
-    --button-border-color: var(--primary-1);
-    --button-label-color: var(--white);
-
-    --button-disabled-color: var(--primary-5);
-    --button-disabled-label-color: var(--primary-4);
-  `,
-  secondary: css`
-    --button-bg-color: var(--white);
-    --button-border-color: var(--gray-4);
-    --button-label-color: var(--gray-1);
-
-    --button-disabled-color: var(--gray-4);
-    --button-disabled-label-color: var(--gray-3);
-  `,
-  warning: css`
-    --button-bg-color: var(--danger-1);
-    --button-border-color: var(--danger-1);
-    --button-label-color: var(--white);
-
-    --button-disabled-color: var(--danger-5);
-    --button-disabled-label-color: var(--danger-4);
-  `,
 };

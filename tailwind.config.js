@@ -180,6 +180,7 @@ module.exports = {
         footer: "0px -1px 0px rgba(33, 33, 33, 0.02)",
         select: "0px 0px 12px rgba(0, 0, 0, 0.08)",
         quicklink: "8px 8px 32px rgba(0, 0, 0, 0.04)",
+        button: "0px -4px 16px rgba(0, 0, 0, 0.04)",
       },
     },
   },
