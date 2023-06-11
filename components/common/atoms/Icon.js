@@ -43,6 +43,10 @@ import MapMarked from "assets/icon/map-marked.svg";
 import LogoDefault from "assets/logo/logo-default.svg";
 import LogoWhite from "assets/logo/logo-white.svg";
 
+import Kaist from "assets/quicklink/icon-quicklink-kaist.svg";
+import Khu from "assets/quicklink/icon-quicklink-khu.svg";
+import Mylocation from "assets/quicklink/icon-quicklink-mylocation.svg";
+
 export default function Icon(props) {
   const { icon, size = "md", fill } = props;
   const SIZES = {
@@ -142,6 +146,12 @@ export default function Icon(props) {
       return <List {...args} />;
     case "map-marked":
       return <MapMarked {...args} />;
+    case "kaist":
+      return <Kaist {...args} />;
+    case "khu":
+      return <Khu {...args} />;
+    case "my-location":
+      return <Mylocation {...args} />;
     default:
       return;
   }
