@@ -1,5 +1,3 @@
-import styled from "@emotion/styled";
-import { Body3Bold, Caption2Bold, Display2 } from "styles/typography";
 import parseFloat from "utils/parseFloat";
 
 import Score from "components/common/atoms/Score";
@@ -25,95 +23,40 @@ export default ({ building }) => {
   ];
 
   return (
-    <Container>
-      <FlexBox>
-        <DetailScoreField>
+    <div className="flex flex-col py-[12px] px-[20px] bg-white">
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-[12px]">
           {DetailFields.map((value) => {
             return (
-              <div className="field" key={value.title}>
-                <div className="title">{value.title}</div>
-                <ScoreField>
-                  <div className="score">{parseFloat(value.score, 1)}</div>
+              <div
+                className="flex items-center justify-between"
+                key={value.title}
+              >
+                <div className="min-w-[84px] text-body-bold-3 text-black">
+                  {value.title}
+                </div>
+                <div className="flex items-center mr-[36px]">
+                  <div className="text-caption-bold-2 text-primary-1 mr-[6px]">
+                    {parseFloat(value.score, 1)}
+                  </div>
                   <Score
                     size="sm"
                     readOnly={true}
                     value={parseFloat(value.score, 1)}
                     allowFraction={true}
                   />
-                </ScoreField>
+                </div>
               </div>
             );
           })}
-        </DetailScoreField>
-        <TotalBox>
-          <TotalTitle>총 만족도</TotalTitle>
-          <TotalScore>{parseFloat(totalScore, 1)}</TotalScore>
-        </TotalBox>
-      </FlexBox>
-    </Container>
+        </div>
+        <div className="flex flex-col justify-center items-center w-full border-l border-gray-4">
+          <div className="text-body-bold-3 text-black">총 만족도</div>
+          <div className="text-display-2 text-primary-1">
+            {parseFloat(totalScore, 1)}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
-
-const TotalBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  border-left: 1px solid #e9e9e9;
-`;
-
-const TotalTitle = styled.div`
-  ${Body3Bold}
-  color: var(--black);
-`;
-const TotalScore = styled.div`
-  ${Display2}
-  color: var(--primary-1);
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 12px 20px;
-  background-color: var(--white);
-`;
-
-const FlexBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const ScoreField = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 36px;
-
-  .score {
-    ${Caption2Bold}
-    color: var(--primary-1);
-
-    margin-right: 6px;
-  }
-  svg {
-    fill: var(--primary-1);
-  }
-`;
-
-const DetailScoreField = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .title {
-      min-width: 84px;
-      ${Body3Bold}
-      color: var(--black);
-    }
-  }
-`;

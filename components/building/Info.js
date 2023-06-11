@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import styled from "@emotion/styled";
 
 import TrafficBadge from "assets/illust-badge/illust-badge-traffic.svg";
 import BuildingComplexBadge from "assets/illust-badge/illust-badge-building.svg";
 import InternalBadge from "assets/illust-badge/illust-badge-inside.svg";
 import SurroundingBadge from "assets/illust-badge/illust-badge-environment.svg";
 import LivingLocationBadge from "assets/illust-badge/illust-badge-life.svg";
-import { Caption1Bold, Title1 } from "styles/typography";
 import amplitude from "amplitude-js";
 
 import Toast from "components/common/atoms/Toast";
@@ -71,59 +69,25 @@ export default ({ building }) => {
   }, [toastVisible]);
 
   return (
-    <Container>
+    <div className="flex flex-col py-[12px] px-[20px] bg-white">
       {toast}
-      <FlexBox>
-        <NameField>
-          <Title>
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-[8px]">
+          <div className="text-title-1 text-black truncate">
             {building.name === ""
               ? `${building.address.roadName} ${building.address.buildingNumber}`
               : building.name}
-          </Title>
+          </div>
           {/* &gt; = ">" */}
-          <AddressField
+          <div
             onClick={() => onCopyAddress(formValue.address)}
-            className="cursor-pointer"
+            className="cursor-pointer text-caption-bold-1 text-primary-1"
           >
             {formValue.address} &gt;
-          </AddressField>
-        </NameField>
+          </div>
+        </div>
         {badge}
-      </FlexBox>
-    </Container>
+      </div>
+    </div>
   );
 };
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 12px 20px;
-  background-color: var(--white);
-`;
-
-const FlexBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const NameField = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const Title = styled.div`
-  ${Title1}
-  color: var(--black);
-
-  word-break: break-word;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`;
-
-const AddressField = styled.div`
-  ${Caption1Bold}
-  color: var(--primary-1);
-`;

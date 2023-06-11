@@ -187,7 +187,7 @@ export default () => {
         <Icon
           icon={favorite ? "heart-fill" : "heart-stroke"}
           size={"md"}
-          fill={favorite ? "var(--primary-1)" : "var(--black)"}
+          fill={favorite ? "fill-primary-1" : "fill-black"}
           onClick={onFavoriteChange}
         />
       }
@@ -222,7 +222,7 @@ export default () => {
           <NoReview building={building} goReviewWrite={goReviewWrite} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
-          <ButtonItem>
+          <div className="fixed bottom-[8px] w-full max-w-[720px] flex justify-center z-[2]">
             <Button
               type={"primary"}
               size={"md"}
@@ -231,7 +231,7 @@ export default () => {
             >
               이 자취방 리뷰 쓰기
             </Button>
-          </ButtonItem>
+          </div>
         )}
       </Container>
     </AppLayout>
@@ -240,14 +240,4 @@ export default () => {
 
 const Container = styled.div`
   height: calc(100vh - 44px);
-`;
-
-const ButtonItem = styled.div`
-  position: fixed;
-  bottom: 8px;
-  width: 100%;
-  max-width: 720px;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
 `;

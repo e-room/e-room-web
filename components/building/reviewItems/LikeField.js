@@ -1,9 +1,7 @@
-import styled from "@emotion/styled";
 import axios from "axios";
 import Icon from "components/common/atoms/Icon";
 import NeedLogin from "components/common/NeedLogin";
 import { useState } from "react";
-import { Caption1 } from "styles/typography";
 import accessValid from "utils/accessValid";
 
 export default ({ value, buildingId }) => {
@@ -36,33 +34,26 @@ export default ({ value, buildingId }) => {
   };
 
   return (
-    <LikeField favorite={isLike}>
+    <div className="flex mt-[24px] justify-end items-center">
       {need && <NeedLogin visible={need} setVisible={setNeed} />}
       <div
         style={{ display: "flex", alignItems: "center" }}
         onClick={() => onLike()}
         className="cursor-pointer"
       >
-        <Icon icon={"thumb-stroke"} size={"sm"} />
-        <div className="text">추천 {addLikeCnt}개</div>
+        <Icon
+          icon={"thumb-stroke"}
+          size={"sm"}
+          fill={isLike ? "fill-primary-1" : "fill-gray-1"}
+        />
+        <div
+          className={`ml-[5px] text-caption-1 ${
+            isLike ? "text-primary-1" : "text-gray-1"
+          }`}
+        >
+          추천 {addLikeCnt}개
+        </div>
       </div>
-    </LikeField>
+    </div>
   );
 };
-
-const LikeField = styled.div`
-  display: flex;
-  margin-top: 24px;
-  justify-content: flex-end;
-  align-items: center;
-
-  ${Caption1}
-  color: ${(p) => (p.favorite ? `var(--primary-1)` : `var(--gray-1)`)};
-  svg {
-    fill: ${(p) => (p.favorite ? `var(--primary-1)` : `var(--gray-1)`)};
-  }
-
-  .text {
-    margin-left: 5px;
-  }
-`;

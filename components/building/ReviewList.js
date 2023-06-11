@@ -3,7 +3,6 @@ import Router from "next/router";
 
 import styled from "@emotion/styled";
 
-import { Body1Bold, Caption1Bold, SubTitle1 } from "styles/typography";
 import accessValid from "utils/accessValid";
 import logEvent from "amplitude/logEvent";
 
@@ -113,7 +112,9 @@ export default function ReviewList(props) {
 
   return (
     <Container>
-      <Title>실제 거주 후기</Title>
+      <div className="text-body-bold-1 text-black mb-[12px]">
+        실제 거주 후기
+      </div>
       <div>
         {showImages.visible && (
           <Slider
@@ -144,7 +145,10 @@ export default function ReviewList(props) {
           if (needToBlur && index > 1) return;
 
           return (
-            <Item key={value.reviewBaseDto.reviewId}>
+            <div
+              className="flex flex-col gap-[20px] bg-white rounded-[8px] p-[16px] mb-[12px]"
+              key={value.reviewBaseDto.reviewId}
+            >
               <AuthorInfo
                 value={value}
                 onScorePopup={onScorePopup}
@@ -160,14 +164,19 @@ export default function ReviewList(props) {
                 />
               )}
               <LikeField value={value} buildingId={buildingId} />
-            </Item>
+            </div>
           );
         })}
         {needToBlur && (
           <FirstReviewField>
-            <div className="need-login-field">
-              <div className="title">로그인이 필요해요</div>
-              <div className="sub-title">
+            <div
+              className="flex flex-col pt-[32px] px-[16px] pb-[16px] gap-[24px] isolate box-border rounded-[24px] bg-white border border-primary-6 max-w-[320px]"
+              style={{ width: "calc(100vw - 40px)" }}
+            >
+              <div className="text-subtitle-1 text-black text-center">
+                로그인이 필요해요
+              </div>
+              <div className="text-caption-bold-1 text-black text-center">
                 로그인하고 실거주자가 들려주는
                 <br />
                 자취방 이야기를 들어보세요!
@@ -185,7 +194,7 @@ export default function ReviewList(props) {
             </div>
           </FirstReviewField>
         )}
-        <div ref={setTarget}>{isLoading && <Loading>Loading...</Loading>}</div>
+        <div ref={setTarget}>{isLoading && "Loading..."}</div>
       </div>
     </Container>
   );
@@ -194,32 +203,6 @@ export default function ReviewList(props) {
 const Container = styled.div`
   padding: 12px 20px 170px 20px;
   background: #fafafa;
-`;
-
-const Title = styled.div`
-  ${Body1Bold}
-
-  color: var(--black);
-  margin-bottom: 12px;
-`;
-
-const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  background: var(--white);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-`;
-
-const Loading = styled.div`
-  text-align: center;
-  border: 1px solid black;
-  height: 200px;
-  font-size: 2rem;
-  background-color: aliceblue;
 `;
 
 const FirstReviewField = styled.div`
@@ -235,32 +218,4 @@ const FirstReviewField = styled.div`
   background-image: url("../user_review_card.png");
   background-size: cover;
   height: 679px;
-
-  .need-login-field {
-    display: flex;
-    flex-direction: column;
-    padding: 32px 16px 16px;
-    gap: 24px;
-    isolation: isolate;
-
-    width: calc(100vw - 40px);
-    max-width: 320px;
-    box-sizing: border-box;
-
-    border-radius: 24px;
-
-    background: var(--white);
-    border: 1px solid var(--primary-6);
-    .title {
-      ${SubTitle1}
-
-      color: var(--black);
-      text-align: center;
-    }
-    .sub-title {
-      ${Caption1Bold}
-      text-align: center;
-      color: var(--black);
-    }
-  }
 `;

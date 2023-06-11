@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import Popup from "components/common/atoms/Popup";
 import Score from "components/common/atoms/Score";
-import { Body3Bold, Caption2Bold } from "styles/typography";
 import parseFloat from "utils/parseFloat";
 
 export default ({ value, showTotalScore, setShowTotalScore }) => {
@@ -26,57 +24,28 @@ export default ({ value, showTotalScore, setShowTotalScore }) => {
         setShowTotalScore(false);
       }}
     >
-      <DetailScoreField>
+      <div className="flex flex-col items-center gap-[8px]">
         {DetailFields.map((val) => {
           return (
-            <div className="field" key={val.title}>
-              <div className="title">{val.title}</div>
-              <ScoreField>
-                <div className="score">{parseFloat(val.score, 1)}</div>
+            <div className="flex items-center" key={val.title}>
+              <div className="min-w-[84px] text-body-bold-3 text-black">
+                {val.title}
+              </div>
+              <div className="flex items-center">
+                <div className="text-caption-bold-2 text-primary-1 mr-[6px]">
+                  {parseFloat(val.score, 1)}
+                </div>
                 <Score
                   size="sm"
                   readOnly={true}
                   value={parseFloat(val.score, 1)}
                   allowFraction={true}
                 />
-              </ScoreField>
+              </div>
             </div>
           );
         })}
-      </DetailScoreField>
+      </div>
     </Popup>
   );
 };
-
-const DetailScoreField = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 8px;
-
-  .field {
-    display: flex;
-    align-items: center;
-
-    .title {
-      min-width: 84px;
-      ${Body3Bold}
-      color: var(--black);
-    }
-  }
-`;
-const ScoreField = styled.div`
-  display: flex;
-  align-items: center;
-
-  .score {
-    ${Caption2Bold}
-    color: var(--primary-1);
-
-    margin-right: 6px;
-  }
-  svg {
-    fill: var(--primary-1);
-  }
-`;
