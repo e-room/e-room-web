@@ -1,78 +1,36 @@
-import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import Icon from "../atoms/Icon";
-import { Body2 } from "styles/typography";
-import { useEffect, useState } from "react";
-import { fadeInUp_OutDown } from "styles/keyframes";
+import { useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import Icon from "./Icon";
 
-export default function Toast({
-  visible = false,
-  icon = "check-circle",
-  iconColor = "black",
-  text,
-  children,
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    let timeoutId;
-    if (visible) {
-      setIsOpen(true);
-    } else {
-      timeoutId = setTimeout(() => setIsOpen(false), 300);
-    }
-
-    return () => {
-      if (timeoutId !== undefined) {
-        clearTimeout(timeoutId);
+// type : success || danger
+export default ({ text, type = "success" }) => {
+  const notify = () => {
+    return toast.custom(
+      (t) => {
+        return (
+          <div
+            className={`${
+              t.visible ? "animate-toast-visible" : "animate-toast-hidden"
+            } w-full flex items-center py-[16px] px-[20px] gap-[12px] bg-white rounded-[12px] text-black text-body-2 shadow-toast`}
+          >
+            <Icon
+              icon={type === "success" ? "check-circle" : "exclamation-circle"}
+              size="md"
+              fill={type === "success" ? "fill-success" : "fill-danger-1"}
+            />
+            {text}
+          </div>
+        );
+      },
+      {
+        pauseDuration: 1000,
+        duration: 1000,
       }
-    };
-  }, [visible]);
+    );
+  };
 
-  if (!isOpen) return null;
-
-  return (
-    <StyledToast visible={visible} iconColor={iconColor}>
-      <Icon icon={icon} size="md" />
-      <div className="message">{text ?? children}</div>
-    </StyledToast>
-  );
-}
-
-Toast.propTypes = {
-  icon: PropTypes.string,
-  iconColor: PropTypes.string,
-  text: PropTypes.string,
+  useEffect(() => {
+    notify();
+  }, []);
+  return <Toaster />;
 };
-
-const StyledToast = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  padding: 16px 20px;
-  gap: 12px;
-
-  background: var(--white);
-
-  box-shadow: 28px 28px 56px rgba(37, 39, 37, 0.08),
-    0px 0px 64px rgba(37, 39, 37, 0.04);
-  border-radius: 12px;
-
-  position: fixed;
-  bottom: 64px;
-  left: 20px;
-  right: 20px;
-
-  ${(p) => fadeInUp_OutDown(p.visible)}
-
-  color: var(--black);
-  svg {
-    fill: ${(p) => p.iconColor && `var(--${p.iconColor})`};
-  }
-
-  .message {
-    width: 100%;
-
-    ${Body2}
-  }
-`;

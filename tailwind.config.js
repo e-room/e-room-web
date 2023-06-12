@@ -181,6 +181,22 @@ module.exports = {
         select: "0px 0px 12px rgba(0, 0, 0, 0.08)",
         quicklink: "8px 8px 32px rgba(0, 0, 0, 0.04)",
         button: "0px -4px 16px rgba(0, 0, 0, 0.04)",
+        toast:
+          "28px 28px 56px rgba(37, 39, 37, 0.08), 0px 0px 64px rgba(37, 39, 37, 0.04)",
+      },
+      keyframes: {
+        "fade-in-up": {
+          from: { opacity: 0, transform: "translateY(100%)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        "fade-in-down": {
+          from: { opacity: 1, transform: "translateY(0)" },
+          to: { opacity: 0, transform: "translateY(100%)" },
+        },
+      },
+      animation: {
+        "toast-visible": "fade-in-up 0.3s ease-in-out",
+        "toast-hidden": "fade-in-down 0.3s ease-in-out forwards",
       },
     },
   },
