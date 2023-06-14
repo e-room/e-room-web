@@ -3,13 +3,11 @@ import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
 
-import { animation_fadeInUp_view } from "styles/keyframes";
 import { reviewFormState } from "states/reviewAtom";
 
 import Text from "components/common/atoms/Text";
 import Select from "components/common/atoms/Select";
 import DaumPostCode from "components/common/atoms/DaumPostCode";
-import { Body2Bold, Body3 } from "styles/typography";
 import logEvent from "amplitude/logEvent";
 
 export default function ReviewForm1() {
@@ -87,7 +85,8 @@ export default function ReviewForm1() {
     : "";
 
   return (
-    <FormWrapper
+    <div
+      className="animate-page-up flex flex-col px-[20px] pt-[20px] pb-[80px] bg-white"
       onTouchStart={() => {
         if (postCodeOpen) setPostCodeOpen(false);
       }}
@@ -105,14 +104,14 @@ export default function ReviewForm1() {
           width={"100%"}
         />
         {postCodeOpen && (
-          <AddressFrame>
+          <div className="absolute z-[9] w-full top-[84px]">
             <DaumPostCode onComplete={onHandleComplete} />
-          </AddressFrame>
+          </div>
         )}
       </FormItem>
       <GridItem>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextLabel>거주 시작</TextLabel>
+          <div className="text-body-bold-2 mb-[4px]">거주 시작</div>
           <div
             style={{
               display: "flex",
@@ -126,7 +125,9 @@ export default function ReviewForm1() {
               onChange={onYearChange}
               options={yearOptions}
             />
-            <TextUnit>부터</TextUnit>
+            <div className="text-body-3 ml-[8px] w-[30px] min-w-[30px] whitespace-nowrap">
+              부터
+            </div>
           </div>
         </div>
         <Text
@@ -232,30 +233,13 @@ export default function ReviewForm1() {
           value={formValue.reviewBaseDto.netLeasableArea}
         />
       </FormItem>
-    </FormWrapper>
+    </div>
   );
 }
-
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  padding-bottom: 80px;
-  background-color: var(--white);
-
-  ${animation_fadeInUp_view}
-`;
 
 const FormItem = styled.div`
   margin-bottom: 24px;
   position: relative;
-`;
-
-const AddressFrame = styled.div`
-  position: absolute;
-  z-index: 9;
-  width: 100%;
-  top: 84px;
 `;
 
 const GridItem = styled.div`
@@ -266,17 +250,4 @@ const GridItem = styled.div`
 
   margin-bottom: 24px;
   position: relative;
-`;
-const TextLabel = styled.div`
-  ${Body2Bold}
-
-  margin-bottom: 4px;
-`;
-
-const TextUnit = styled.div`
-  ${Body3}
-  white-space: nowrap;
-  margin-left: 8px;
-  width: 30px;
-  min-width: 30px;
 `;

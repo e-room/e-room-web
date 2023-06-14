@@ -1,10 +1,7 @@
 import { useRecoilState } from "recoil";
-import styled from "@emotion/styled";
 
 import { reviewFormState } from "states/reviewAtom";
 import { KEYWORD_STATES } from "codes/codeType";
-import { Body2, Body2Bold } from "styles/typography";
-import { animation_fadeInUp_view } from "styles/keyframes";
 
 import TextArea from "components/common/atoms/TextArea";
 import Toggle from "components/common/atoms/Toggle";
@@ -30,9 +27,9 @@ export default function ReviewForm3() {
   };
 
   return (
-    <FormWrapper>
-      <TextLabel>장점 키워드</TextLabel>
-      <Box>
+    <div className="animate-page-up flex flex-col px-[20px] pt-[20px] pb-[144px] bg-white">
+      <div className="text-body-bold-2 mb-[4px] flex">장점 키워드</div>
+      <div className="flex flex-wrap">
         {Object.entries(KEYWORD_STATES).map((item) => {
           const active = formValue.advantageKeywordList.some(
             (keyword) => keyword === item[0]
@@ -54,10 +51,11 @@ export default function ReviewForm3() {
             />
           );
         })}
-      </Box>
-      <TextLabel style={{ marginTop: 20 }}>
-        장점 설명<Sub>(50자 이상)</Sub>
-      </TextLabel>
+      </div>
+      <div className="text-body-bold-2 mb-[4px] flex mt-[20px]">
+        장점 설명
+        <div className="text-body-2 text-gray-2 ml-[4px]">(50자 이상)</div>
+      </div>
 
       <TextArea
         placeholder="장점 키워드에 대한 설명을 적어주세요!"
@@ -73,8 +71,10 @@ export default function ReviewForm3() {
         }}
         value={formValue.advantageDescription}
       />
-      <TextLabel style={{ marginTop: 32 }}>단점 키워드</TextLabel>
-      <Box>
+      <div className="text-body-bold-2 mb-[4px] flex mt-[32px]">
+        단점 키워드
+      </div>
+      <div className="flex flex-wrap">
         {Object.entries(KEYWORD_STATES).map((item) => {
           const active = formValue.disadvantageKeywordList.some(
             (keyword) => keyword === item[0]
@@ -96,10 +96,11 @@ export default function ReviewForm3() {
             />
           );
         })}
-      </Box>
-      <TextLabel style={{ marginTop: 20 }}>
-        단점 설명<Sub>(50자 이상)</Sub>
-      </TextLabel>
+      </div>
+      <div className="text-body-bold-2 mb-[4px] flex mt-[20px]">
+        단점 설명
+        <div className="text-body-2 text-gray-2 ml-[4px]">(50자 이상)</div>
+      </div>
       <TextArea
         placeholder="단점 키워드에 대한 설명을 적어주세요!"
         height={168}
@@ -114,30 +115,6 @@ export default function ReviewForm3() {
         }}
         value={formValue.disadvantageDescription}
       />
-    </FormWrapper>
+    </div>
   );
 }
-
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: var(--white);
-  padding-bottom: 144px;
-  ${animation_fadeInUp_view}
-`;
-const TextLabel = styled.div`
-  ${Body2Bold}
-
-  margin-bottom: 4px;
-  display: flex;
-`;
-const Sub = styled.div`
-  ${Body2}
-  color: var(--gray-2);
-  margin-left: 4px;
-`;
-const Box = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;

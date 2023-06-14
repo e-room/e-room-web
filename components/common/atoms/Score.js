@@ -13,6 +13,8 @@ export default function Score({
     <Rating
       onClick={onClick}
       initialValue={value}
+      emptyStyle={{ display: "flex" }}
+      fillStyle={{ display: "-webkit-inline-box" }}
       readonly={readOnly}
       fillIcon={<Icon icon={`star-filled`} size={size} fill="fill-primary-1" />}
       emptyIcon={

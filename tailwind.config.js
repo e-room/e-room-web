@@ -174,6 +174,13 @@ module.exports = {
             lineHeight: "16px",
           },
         ],
+        toggle: [
+          "14px",
+          {
+            fontWeight: "700",
+            lineHeight: "18px",
+          },
+        ],
       },
       boxShadow: {
         header: "0px -4px 16px rgba(0, 0, 0, 0.04)",
@@ -193,10 +200,15 @@ module.exports = {
           from: { opacity: 1, transform: "translateY(0)" },
           to: { opacity: 0, transform: "translateY(100%)" },
         },
+        "fade-in-up-40": {
+          from: { opacity: 0, transform: "translateY(40px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
       },
       animation: {
         "toast-visible": "fade-in-up 0.3s ease-in-out",
         "toast-hidden": "fade-in-down 0.3s ease-in-out forwards",
+        "page-up": "fade-in-up-40 0.56s ease-in-out forwards",
       },
     },
   },

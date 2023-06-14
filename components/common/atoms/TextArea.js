@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import { Body2, Caption1 } from "styles/typography";
 import { useEffect, useState } from "react";
 
 export default function TextArea(props) {
@@ -15,12 +13,31 @@ export default function TextArea(props) {
     countUnit,
   } = props;
 
+  // status: danger-1 | success
   const [status, setStatus] = useState(null);
+  const StylesByStatus = () => {
+    if (status === "success") {
+      return "text-success";
+    } else if (status === "danger") {
+      return "text-danger-1";
+    } else {
+      return "text-gray-2";
+    }
+  };
+  const borderByStatus = () => {
+    if (status === "success") {
+      return "border-success";
+    } else if (status === "danger") {
+      return "border-danger-1";
+    } else {
+      return "border-gray-4 focus:border-primary-1";
+    }
+  };
 
   const onBlur = (e) => {
     if (!count) return;
     if (!value || value.length < count) {
-      setStatus("danger-1");
+      setStatus("danger");
     } else {
       setStatus("success");
     }
@@ -30,7 +47,7 @@ export default function TextArea(props) {
     if (!count || !status || !value) return;
 
     if (value.length < count) {
-      setStatus("danger-1");
+      setStatus("danger");
     } else {
       setStatus("success");
     }
@@ -38,22 +55,26 @@ export default function TextArea(props) {
 
   return (
     <>
-      <StyledInputText
+      <textarea
+        className={`text-body-2 box-border flex items-center p-[16px] border ${borderByStatus()} rounded-[12px] resize-none appearance-none	placeholder:text-gray-3 focus:outline-none`}
         placeholder={placeholder}
         onChange={onChange}
         defaultValue={value || ""}
         style={{ width, height }}
         onBlur={onBlur}
-        status={status}
         {...props}
       />
-      <CaptionField status={status}>
-        <div className="caption">{status === "danger-1" && caption}</div>
-        <div className="count">
+      <div className="flex justify-between gap-[8px] m-[4px]">
+        <div
+          className={`text-caption-1 ${StylesByStatus()} truncate break-word`}
+        >
+          {status === "danger" && caption}
+        </div>
+        <div className={`text-caption-1 ${StylesByStatus()}`}>
           {count && `${value ? value.length : 0}`}
           {countUnit}
         </div>
-      </CaptionField>
+      </div>
     </>
   );
 }
@@ -65,52 +86,3 @@ TextArea.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
-
-const StyledInputText = styled.textarea`
-  ${Body2}
-
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: 16px;
-
-  border: ${(p) =>
-    p.status ? `1px solid var(--${p.status})` : `1px solid var(--gray-4)`};
-  border-radius: 12px;
-
-  resize: none;
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  ::placeholder {
-    color: var(--gray-3);
-  }
-  &:focus {
-    outline: none;
-    border: ${(p) => !p.status && `1px solid var(--primary-1)`};
-  }
-`;
-const CaptionField = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 4px;
-
-  .caption {
-    ${Caption1}
-    color: ${(p) => (p.status ? `var(--${p.status})` : `var(--gray-2)`)};
-
-    word-break: break-word;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-  }
-  .count {
-    ${Caption1}
-    color: ${(p) => (p.status ? `var(--${p.status})` : `var(--gray-2)`)};
-  }
-`;
