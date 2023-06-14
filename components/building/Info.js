@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import TrafficBadge from "assets/illust-badge/illust-badge-traffic.svg";
 import BuildingComplexBadge from "assets/illust-badge/illust-badge-building.svg";
@@ -40,37 +40,18 @@ export default ({ building }) => {
     address: `${building.address.siDo} ${building.address.siGunGu} ${building.address.roadName} ${building.address.buildingNumber}`,
   };
 
-  const [toastVisible, setToastVisible] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
   const onCopyAddress = (copyText) => {
     const event = "copy address";
     amplitude.getInstance().logEvent(event);
     navigator.clipboard.writeText(copyText).then(() => {
-      setToastVisible(true);
+      setCopySuccess(true);
     });
   };
 
-  const toast = useMemo(() => {
-    return (
-      <Toast
-        icon={"check-circle"}
-        iconColor={"success"}
-        text={"주소를 클립보드에 복사했어요."}
-        visible={toastVisible}
-      />
-    );
-  }, [toastVisible]);
-
-  useEffect(() => {
-    if (toastVisible) {
-      setTimeout(() => {
-        setToastVisible(false);
-      }, 1000);
-    }
-  }, [toastVisible]);
-
   return (
     <div className="flex flex-col py-[12px] px-[20px] bg-white">
-      {toast}
+      {copySuccess && <Toast text="주소를 클립보드에 복사했어요." />}
       <div className="flex justify-between">
         <div className="flex flex-col gap-[8px]">
           <div className="text-title-1 text-black truncate">

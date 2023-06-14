@@ -179,27 +179,15 @@ export default function ReviewLayout({ children }) {
   };
 
   const [errorToastVisible, setErrorToastVisible] = useState(false);
-  const errorToast = useMemo(() => {
-    return (
-      <Toast
-        icon={"exclamation-circle"}
-        iconColor={"danger-1"}
-        text={"하나의 건물에는 하나의 리뷰만 작성할 수 있어요."}
-        visible={errorToastVisible}
-      />
-    );
-  }, [errorToastVisible]);
-  useEffect(() => {
-    if (errorToastVisible) {
-      setTimeout(() => {
-        setErrorToastVisible(false);
-      }, 3000);
-    }
-  }, [errorToastVisible]);
 
   return (
     <>
-      {errorToast}
+      {errorToastVisible && (
+        <Toast
+          type="danger"
+          text={"하나의 건물에는 하나의 리뷰만 작성할 수 있어요."}
+        />
+      )}
       <AppLayout pageTitle={"리뷰 쓰기"} enabledNavbar={false}>
         <div className="flex fixed top-[44px] left-0 z-[11] w-full">
           <div

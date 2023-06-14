@@ -32,5 +32,5 @@ export default ({ text, type = "success" }) => {
   useEffect(() => {
     notify();
   }, []);
-  return <Toaster />;
+  return <Toaster position="bottom-center" />;
 };

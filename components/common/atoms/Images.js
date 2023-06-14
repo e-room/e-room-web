@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import shortid from "shortid";
 import Image from "next/image";
-import styled from "@emotion/styled";
-import { Caption1Bold } from "styles/typography";
 import Icon from "./Icon";
 import XButton from "./XButton";
 import { reviewImageListState } from "states/reviewAtom";
@@ -18,24 +16,23 @@ export default function Images() {
   const toast = useMemo(() => {
     const toastOptions = {
       max: {
-        icon: "check-circle",
-        iconColor: "success",
+        type: "success",
         text: "사진을 모두 등록했어요.",
       },
       over: {
-        icon: "exclamation-circle",
-        iconColor: "caution",
+        type: "danger",
         text: "사진은 최대 5장까지 등록할 수 있어요.",
       },
     };
-    return (
-      <Toast
-        icon={toastOptions[toastParam.type]?.icon}
-        iconColor={toastOptions[toastParam.type]?.iconColor}
-        text={toastOptions[toastParam.type]?.text}
-        visible={toastParam.visible}
-      />
-    );
+    if (toastParam.visible) {
+      return (
+        <Toast
+          type={toastOptions[toastParam.type]?.type}
+          text={toastOptions[toastParam.type]?.text}
+          visible={toastParam.visible}
+        />
+      );
+    }
   }, [toastParam]);
 
   const fileInputRef = useRef(null);
@@ -94,43 +91,41 @@ export default function Images() {
     return reviewImageList.map((val) => {
       if (!val) return;
       return (
-        <Box key={val.key}>
-          <ButtonBox>
+        <div className="relative" key={val.key}>
+          <div className="absolute right-[-9px] top-[-9px] z-[2]">
             <XButton onClick={() => removeImg(val.key)} />
-          </ButtonBox>
-          <ImageBox
+          </div>
+          <Image
             src={val.view}
             width={102}
             height={102}
             objectFit={"cover"}
+            className="rounded-[4px]"
           />
-        </Box>
+        </div>
       );
     });
   }, [reviewImageList]);
 
-  useEffect(() => {
-    if (toastParam.visible) {
-      setTimeout(() => {
-        setToastParam({ ...toastParam, visible: false });
-      }, 3000);
-    }
-  }, [toastParam.visible]);
-
   return (
     <>
       {toast}
-      <StyledImageButton onClick={onClickHandler}>
-        <Icon icon="plus" size="md" fill={"var(--primary-1"} />
-        <Title>사진 추가</Title>
+      <div
+        className="flex flex-col justify-center items-center w-[102px] h-[102px] bg-white border border-primary-1 rounded-[4px]"
+        onClick={onClickHandler}
+      >
+        <Icon icon="plus" size="md" fill="fill-primary-1" />
+        <div className="text-caption-bold-1 text-primary-1 mt-[4px]">
+          사진 추가
+        </div>
         <input
           type="file"
           multiple={true}
           ref={fileInputRef}
           onChange={onChangeHandler}
-          className={"d-none"}
+          className={"hidden"}
         />
-      </StyledImageButton>
+      </div>
       {Preview()}
     </>
   );
@@ -139,44 +134,3 @@ export default function Images() {
 Images.propTypes = {
   multiple: PropTypes.bool,
 };
-
-const Box = styled.div`
-  position: relative;
-`;
-
-const ButtonBox = styled.div`
-  position: absolute;
-  right: -9px;
-  top: -9px;
-  z-index: 2;
-`;
-
-const StyledImageButton = styled.button`
-  width: 102px;
-  height: 102px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  background: var(--white);
-
-  border: 1px solid var(--primary-1);
-  border-radius: 4px;
-
-  .d-none {
-    display: none;
-  }
-`;
-
-const Title = styled.div`
-  ${Caption1Bold}
-
-  color: var(--primary-1);
-
-  margin-top: 4px;
-`;
-
-const ImageBox = styled(Image)`
-  border-radius: 4px;
-`;

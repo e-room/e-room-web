@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -41,35 +41,18 @@ export default function Login() {
     }
   }, []);
 
-  const [toastVisible, setToastVisible] = useState(false);
-  const toast = useMemo(() => {
-    return (
-      <Toast
-        icon={"check-circle"}
-        iconColor={"success"}
-        text={"탈퇴가 완료되었어요."}
-        visible={toastVisible}
-      />
-    );
-  }, [toastVisible]);
+  const [withdrawalSuccess, setWithdrawalSuccess] = useState(false);
 
   useEffect(() => {
-    if (toastVisible) {
-      setTimeout(() => {
-        setToastVisible(false);
-      }, 1000);
-    }
-  }, [toastVisible]);
-  useEffect(() => {
     if (!isWithdrawal) return;
-    setToastVisible(true);
+    setWithdrawalSuccess(true);
   }, [isWithdrawal]);
 
   if (loading) return <Loading />;
 
   return (
     <AppLayout>
-      {toast}
+      {withdrawalSuccess && <Toast text={"탈퇴가 완료되었어요."} />}
       <div className="mt-[25vh] mx-[20px]">
         <div className="text-title-1 text-black mb-[12px]">
           꿈의 자취방,

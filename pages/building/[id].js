@@ -44,17 +44,7 @@ export default () => {
 
     setShowImgDetail({ visible: false, uuid: null });
   };
-  const [toastVisible, setToastVisible] = useState(false);
-  const toast = useMemo(() => {
-    return (
-      <Toast
-        icon={"check-circle"}
-        iconColor={"success"}
-        text={"이 건물을 찜목록에 담았어요."}
-        visible={toastVisible}
-      />
-    );
-  }, [toastVisible]);
+  const [favoriteSuccess, setFavoriteSuccess] = useState(false);
 
   useEffect(() => {
     try {
@@ -76,14 +66,6 @@ export default () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (toastVisible) {
-      setTimeout(() => {
-        setToastVisible(false);
-      }, 1000);
-    }
-  }, [toastVisible]);
-
   const [favorite, setFavorite] = useState(false);
   const [need, setNeed] = useState(false);
   const onFavoriteChange = useCallback(async () => {
@@ -103,7 +85,7 @@ export default () => {
         axios
           .post(`/apis/member/favorite/${id}`)
           .then(() => {
-            setToastVisible(true);
+            setFavoriteSuccess(true);
             setFavorite(true);
           })
           .catch((error) => {
@@ -143,27 +125,11 @@ export default () => {
     }
   }, [id]);
 
-  const [reviewToastVisible, setReviewToastVisible] = useState(false);
-  const reviewToast = useMemo(() => {
-    return (
-      <Toast
-        icon={"check-circle"}
-        iconColor={"success"}
-        text={"리뷰를 잘 등록했어요."}
-        visible={reviewToastVisible}
-      />
-    );
-  }, [reviewToastVisible]);
-  useEffect(() => {
-    if (reviewToastVisible) {
-      setTimeout(() => {
-        setReviewToastVisible(false);
-      }, 3000);
-    }
-  }, [reviewToastVisible]);
+  const [goodReviewSuccess, setGoodReviewSuccess] = useState(false);
+
   useEffect(() => {
     if (!reviewSucess) return;
-    setReviewToastVisible(true);
+    setGoodReviewSuccess(true);
   }, [reviewSucess]);
 
   const goReviewWrite = () => {
@@ -193,8 +159,8 @@ export default () => {
       }
     >
       {need && <NeedLogin visible={need} setVisible={setNeed} />}
-      {toast}
-      {reviewToast}
+      {favoriteSuccess && <Toast text={"이 건물을 찜목록에 담았어요."} />}
+      {goodReviewSuccess && <Toast text={"리뷰를 잘 등록했어요."} />}
       <Container>
         {showImgDetail.visible && (
           <Slider
