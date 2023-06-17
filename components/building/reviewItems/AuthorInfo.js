@@ -14,13 +14,15 @@ export default ({ value, onScorePopup, onDeletePopup, profile }) => {
         style={{ marginRight: 6 }}
       />
       <div className="flex flex-col w-full">
-        <div className="text-caption-bold-2 text-primary-1 flex items-start">
-          <Score
-            size="sm"
-            readOnly={true}
-            value={parseFloat(residenceSatisfaction, 1)}
-            allowFraction={true}
-          />
+        <div className="text-caption-bold-2 text-primary-1 flex items-center">
+          <div className="mb-[2px]">
+            <Score
+              size="sm"
+              readOnly={true}
+              value={parseFloat(residenceSatisfaction, 1)}
+              allowFraction={true}
+            />
+          </div>
           <div className="ml-[6px]">{parseFloat(residenceSatisfaction, 1)}</div>
         </div>
         <div className="text-caption-2 text-gray-1">

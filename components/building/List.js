@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import Chip from "components/common/atoms/Chip";
 import Score from "components/common/atoms/Score";
-import { Body2Bold, Caption2, Caption2Bold } from "styles/typography";
 import Logo from "assets/img_room_default.svg";
 import parseFloat from "utils/parseFloat";
 import { SCORE_CHIP } from "codes/codeType";
@@ -56,7 +54,7 @@ export default (props) => {
               <div className="text-caption-bold-2 text-primary-1">
                 {parseFloat(value.avgScore, 1)}
               </div>
-              <div className="mt-[3px]">
+              <div className="mb-[2px]">
                 <Score
                   size="sm"
                   readOnly={true}

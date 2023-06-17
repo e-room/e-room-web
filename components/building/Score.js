@@ -39,12 +39,14 @@ export default ({ building }) => {
                   <div className="text-caption-bold-2 text-primary-1 mr-[6px]">
                     {parseFloat(value.score, 1)}
                   </div>
-                  <Score
-                    size="sm"
-                    readOnly={true}
-                    value={parseFloat(value.score, 1)}
-                    allowFraction={true}
-                  />
+                  <div className="mb-[2px]">
+                    <Score
+                      size="sm"
+                      readOnly={true}
+                      value={parseFloat(value.score, 1)}
+                      allowFraction={true}
+                    />
+                  </div>
                 </div>
               </div>
             );
