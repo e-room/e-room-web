@@ -80,6 +80,11 @@ class MyDocument extends Document {
             // crossorigin
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard.css"
           />
+          <script
+            type="text/javascript"
+            src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
+          ></script>
+          <script type="text/javascript" src="../src/cluster.js"></script>
         </Head>
         <body>
           <Main />
