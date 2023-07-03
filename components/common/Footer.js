@@ -34,7 +34,7 @@ export default function Footer({ enabled }) {
   const { pathname } = router;
   if (!enabled) return;
   return (
-    <footer className="shadow-footer rounded-t-[16px] w-full h-[56px] fixed bottom-0 bg-white z-[3] box-border">
+    <footer className="shadow-footer rounded-t-[16px] w-full h-[56px] fixed bottom-0 bg-white z-[100] box-border">
       <div className="flex justify-center items-center overflow-hidden px-[16px] gap-[4px]">
         {navItems.map((value, index) => {
           const active = value.activePaths.includes(pathname);

@@ -10,7 +10,7 @@ export default function Button({
   children,
   style,
   icon,
-  className,
+  className = "",
   ...props
 }) {
   const StylesBySize = {

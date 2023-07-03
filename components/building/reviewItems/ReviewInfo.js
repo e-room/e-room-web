@@ -65,29 +65,29 @@ export default ({ value }) => {
         {Infos.map((v) => {
           return (
             <div key={v.title}>
-              <div className="title">{v.title}</div>
-              <div className="content">{v.content}</div>
+              <div className="text-caption-bold-2 text-gray-2 mb-[4px]">
+                {v.title}
+              </div>
+              <div className="text-body-3 text-black">{v.content}</div>
             </div>
           );
         })}
       </Info>
       {advantages.map((v) => {
         return (
-          <AdvantageField key={v.title}>
-            <div className="title">{v.title}</div>
-            <div className="badge">
+          <div className="mt-[20px]" key={v.title}>
+            <div className="text-caption-bold-2 text-black">{v.title}</div>
+            <div className="flex gap-[3px] my-[12px] flex-wrap">
               {v.chips.map((v) => {
                 return (
                   <Chip label={KEYWORD_STATES[v]} key={v} type={"tertiary"} />
                 );
               })}
             </div>
-            <div className="description">{v.content}</div>
-            {/* //TODO: 더 보기 기능 */}
-            {/* <div className="more">
-              더보기 <Icon icon={"arrow-down"} size={"sm"} />
-            </div> */}
-          </AdvantageField>
+            <div className="text-body-3 text-black break-words">
+              {v.content}
+            </div>
+          </div>
         );
       })}
     </>
@@ -99,52 +99,4 @@ const Info = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(33%, auto));
 
   row-gap: 20px;
-
-  .title {
-    ${Caption2Bold}
-    color: var(--gray-2);
-    margin-bottom: 4px;
-  }
-  .content {
-    ${Body3}
-    color: var(--black);
-  }
-`;
-
-const AdvantageField = styled.div`
-  margin-top: 20px;
-  .title {
-    ${Caption2Bold}
-    color: var(--black);
-  }
-  .badge {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-    margin: 12px 0;
-  }
-  .description {
-    ${Body3}
-
-    color: var(--black);
-    word-break: break-word;
-    /* text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical; */
-  }
-
-  .more {
-    ${Body3}
-
-    margin-top: 12px;
-    color: var(--gray-1);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    svg {
-      fill: var(--gray-1);
-    }
-  }
 `;

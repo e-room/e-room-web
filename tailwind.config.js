@@ -36,6 +36,7 @@ module.exports = {
         google: "#ffffff",
         naver: "#03c75a",
         body: "#FAFAFA",
+        overlay: "rgba(33, 33, 33, 0.2)",
       },
       fontSize: {
         /** [fontSize, {
@@ -190,6 +191,7 @@ module.exports = {
         button: "0px -4px 16px rgba(0, 0, 0, 0.04)",
         toast:
           "28px 28px 56px rgba(37, 39, 37, 0.08), 0px 0px 64px rgba(37, 39, 37, 0.04)",
+        "search-bar": "8px 8px 32px rgba(0, 0, 0, 0.12)",
       },
       keyframes: {
         "fade-in-up": {
@@ -204,11 +206,29 @@ module.exports = {
           from: { opacity: 0, transform: "translateY(40px)" },
           to: { opacity: 1, transform: "translateY(0)" },
         },
+        "fade-in": {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        "fade-out": {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        "fade-in-88": {
+          from: { opacity: 0, transform: "scale(0.88)" },
+          to: { opacity: 1, transform: "scale(1)" },
+        },
+        "fade-out-88": {
+          from: { opacity: 1, transform: "scale(1)" },
+          to: { opacity: 0, transform: "scale(0.88)" },
+        },
       },
       animation: {
-        "toast-visible": "fade-in-up 0.3s ease-in-out",
+        "toast-visible": "fade-in-up 0.3s ease-in-out forwards",
         "toast-hidden": "fade-in-down 0.3s ease-in-out forwards",
         "page-up": "fade-in-up-40 0.56s ease-in-out forwards",
+        "popup-visible": "fade-in-88 0.3s ease-in-out forwards",
+        "popup-hidden": "fade-out-88 0.3s ease-in-out forwards",
       },
     },
   },

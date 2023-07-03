@@ -20,7 +20,7 @@ export default function Header({ pageTitle, additionalFunction, enabled }) {
         <div className={styleByBox}></div>
       ) : (
         <div className={`${styleByBox} cursor-pointer`} onClick={onBack}>
-          <Icon icon={"arrow-left"} size="md" />
+          <Icon icon={"arrow-left"} size="md" fill="fill-gray-2" />
         </div>
       )}
       <div className={styleByBox}>

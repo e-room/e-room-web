@@ -11,7 +11,9 @@ export default function Chip({ label, type = "primary", children }) {
     <div
       className={`flex items-center justify-center py-[2px] px-[8px] rounded-[16px] ${StylesByType[type]}`}
     >
-      <div className="text-caption-bold-2">{label ?? children}</div>
+      <div className="text-caption-bold-2 whitespace-nowrap">
+        {label ?? children}
+      </div>
     </div>
   );
 }
