@@ -3,22 +3,28 @@ import axios from "axios";
 import Link from "next/link";
 
 import logEvent from "amplitude/logEvent";
+import Img from "assets/img.png";
+import Score from "components/common/atoms/Score";
+import parseFloat from "utils/parseFloat";
 
 import Footer from "components/common/Footer";
 import Button from "components/common/atoms/Button";
 import GroupButton from "components/common/atoms/GroupButton";
 import IconButton from "components/common/atoms/IconButton";
 import BuildingInfo from "components/map/BuildingInfo";
+import { useRouter } from "next/router";
 
 const map = ({ data }) => {
+  const router = useRouter();
   const buildingMarking = JSON.parse(data);
   const boundsListRef = useRef(null);
-  const buildingInfoRef = useRef(null);
-
+  const zzz = useRef(null);
   const mapElement = useRef(null);
   const [map, setMap] = useState(null);
-  // ref로 변경
-  const [infoVisible, setInfoVisible] = useState({ visible: false, id: null });
+  const goBuildingDetailView = () => {
+    router.push(`/building/${id}`);
+  };
+
   useEffect(() => {
     const { naver } = window;
     if (!mapElement.current || !naver) return;
@@ -39,18 +45,6 @@ const map = ({ data }) => {
     };
     const initialMap = new naver.maps.Map(mapElement.current, mapOptions);
 
-    const content = `<img src="/map/current-pin.png" width="61" height="65" alt="현재 위치"/>`;
-
-    new naver.maps.Marker({
-      position: location,
-      map: initialMap,
-      icon: {
-        content,
-        size: new naver.maps.Size(61, 68),
-        origin: new naver.maps.Point(0, 0),
-      },
-    });
-
     setMap(initialMap);
   }, []);
 
@@ -61,8 +55,8 @@ const map = ({ data }) => {
     )
       return;
     setCenterPoint();
-    const content = `<img src="/map/current-pin.png" width="61" height="65" alt="현재 위치"/>`;
     const markers = [];
+    const content = `<img src="/map/current-pin.png" width="61" height="65" alt="현재 위치"/>`;
     const clusteringIcon = {
       content:
         '<div style="cursor:pointer;width:120px;height:120px;line-height:120px;font-size:16px;color:white;text-align:center;font-weight:700;background:url(/map/num-pin-one.png);background-size:contain;"></div>',
@@ -74,6 +68,7 @@ const map = ({ data }) => {
         value.coordinateDto.latitude,
         value.coordinateDto.longitude
       );
+
       let marker = new naver.maps.Marker({
         position,
         map,
@@ -90,12 +85,35 @@ const map = ({ data }) => {
           property: { buildingID: value.buildingId },
         });
         map.panTo(position);
-        if (buildingInfoRef.current) {
-          console.log("실행");
-          // buildingInfoRef.current.id = value.buildingId;
-          // buildingInfoRef.current.classList.add("animate-toast-visible");
-        }
-        // setInfoVisible({ visible: true, id: value.buildingId });
+        axios
+          .get(`/apis/building/marking/detail/${value.buildingId}`)
+          .then((response) => {
+            const value = response.data;
+            const name =
+              value.name === ""
+                ? `${value.address.roadName} ${value.address.buildingNumber}`
+                : value.name;
+
+            zzz.current.classList.remove("hidden");
+            zzz.current.classList.add("animate-toast-visible");
+            const buildingCard = document.getElementById("building-card");
+            const buildingName = document.getElementById("building-name");
+            const reviewCount = document.getElementById("review-count");
+            const avgScore = document.getElementById("avg-score");
+            const avgScoreStar = document.getElementById("avg-score-star");
+
+            if (buildingCard.click()) console.log("this??");
+
+            buildingName.innerText = name;
+            reviewCount.innerText = `리뷰 ${value.reviewCnt}개`;
+            avgScore.innerText = parseFloat(value.avgScore, 1);
+            avgScoreStar.innerHTML = `<Score
+            size="sm"
+            readOnly={true}
+            value=${value.avgScore}
+            allowFraction={true}
+          />`;
+          });
       });
 
       markers.push({ marker, buildingId: value.buildingId });
@@ -164,12 +182,8 @@ const map = ({ data }) => {
       } else {
         boundsListRef.current.classList.add("animate-toast-hidden");
         boundsListRef.current.classList.remove("animate-toast-visible");
-        if (buildingInfoRef?.current && buildingInfoRef?.current.id) {
-          // &&
-          // buildingInfoRef.current.class === "animate-toast-visible"
-          console.log("buildingInfoRef?.current", buildingInfoRef?.current.id);
-          buildingInfoRef.current.remove("animate-toast-visible");
-        }
+        zzz.current.classList.add("animate-toast-hidden");
+        zzz.current.classList.add("hidden");
       }
     }
   };
@@ -194,7 +208,6 @@ const map = ({ data }) => {
     map.setZoom(map.getZoom() - 1, true);
   };
 
-  console.log("buildingInfoRef?.current", buildingInfoRef?.current);
   return (
     <Fragment>
       <div className="relative overflow-hidden w-screen h-screen m-0">
@@ -233,12 +246,43 @@ const map = ({ data }) => {
               />
             </a>
           </Link>
-          <div ref={buildingInfoRef} id="" className="">
-            {buildingInfoRef?.current && buildingInfoRef?.current.id && (
-              <BuildingInfo id={buildingInfoRef?.current.id} />
-            )}
+          <div ref={zzz} className="hidden" id="building-card">
+            <div
+              className="flex gap-[12px] cursor-pointer bg-white max-w-[320px] max-h-[88px] box-border rounded-[12px] p-[8px] mt-[8px]"
+              style={{ width: "calc(100vw - 40px)" }}
+            >
+              <img
+                src={Img.src}
+                width={72}
+                height={72}
+                className="rounded-[8px]"
+              />
+              <div className="flex flex-col justify-center gap-[4px]">
+                <div
+                  className="text-body-bold-2 text-black min-h-[24px]"
+                  id="building-name"
+                ></div>
+                <div className="flex items-center max-h-[16px]">
+                  <div
+                    className="text-caption-2 mr-[8px] text-black/50"
+                    id="review-count"
+                  ></div>
+                  <div
+                    className="text-caption-bold-2 text-primary-1"
+                    id="avg-score"
+                  ></div>
+                  <div className="mt-[3px]" id="avg-score-star">
+                    {/* <Score
+                      size="sm"
+                      readOnly={true}
+                      // value={building.avgScore}
+                      allowFraction={true}
+                    /> */}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          {/* {infoVisible.visible && <BuildingInfo id={infoVisible.id} />} */}
         </div>
       </div>
       <Footer enabled={true} />
