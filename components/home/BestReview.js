@@ -27,10 +27,7 @@ export default function BestReview({ data }) {
   ];
 
   return (
-    <div
-      className="flex flex-col gap-[16px] rounded-[12px] bg-white shadow-quicklink p-[16px]"
-      style={{ minWidth: `calc(100vw - 56px)` }}
-    >
+    <div className="flex flex-col gap-[16px] rounded-[12px] bg-white shadow-quicklink p-[16px] min-w-[calc(100vw-56px)] md:min-w-[667px]">
       <div>
         <div className="text-body-bold-2 text-black mb-[4px]">
           {data.buildingName === ""
