@@ -16,7 +16,7 @@
 - next: npm run dev ([localhost:3000](http://localhost:3000))
 
 ## 프로젝트 구조
-
+- amplitude: amplitude 관련
 - assets: svg 등 이미지, 아이콘 관련
 - codes: 코드화 된 상태들
 
