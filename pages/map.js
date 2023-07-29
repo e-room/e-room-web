@@ -70,7 +70,6 @@ const map = ({ data }) => {
         icon: {
           content,
           size: new naver.maps.Size(61, 68),
-          origin: new naver.maps.Point(0, 0),
         },
       });
 
