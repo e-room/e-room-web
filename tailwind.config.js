@@ -4,6 +4,7 @@ module.exports = {
     "./pages/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
   ],
+  mode: "jit",
   theme: {
     extend: {
       colors: {
@@ -229,6 +230,13 @@ module.exports = {
         "page-up": "fade-in-up-40 0.56s ease-in-out forwards",
         "popup-visible": "fade-in-88 0.3s ease-in-out forwards",
         "popup-hidden": "fade-out-88 0.3s ease-in-out forwards",
+      },
+      screens: {
+        sm: "640px",
+        md: "720px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
       },
     },
   },
