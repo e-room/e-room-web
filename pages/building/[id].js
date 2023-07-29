@@ -204,6 +204,10 @@ export default () => {
   );
 };
 
+// no review의 bg에 flex-grow 적용하기 위해
+// flex, flex-column 추가함
 const Container = styled.div`
   height: calc(100vh - 44px);
+  display: flex;
+  flex-direction: column;
 `;
