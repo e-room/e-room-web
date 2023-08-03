@@ -1,9 +1,6 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
 import Button from "./Button";
-import { Caption1Bold, SubTitle1 } from "styles/typography";
 import { useEffect, useState } from "react";
-import { fadeInUp_OutDown } from "styles/keyframes";
 
 export default function BottomSheet({
   title,
@@ -28,14 +25,24 @@ export default function BottomSheet({
       case "default":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button
+              label={"Label"}
+              size="lg"
+              width={"100%"}
+              type={"secondary"}
+            />
             <Button label={"Label"} size="lg" width={"100%"} type={"primary"} />
           </div>
         );
       case "warning":
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button label={"Label"} size="lg" width={"100%"} type={"secondary"} />
+            <Button
+              label={"Label"}
+              size="lg"
+              width={"100%"}
+              type={"secondary"}
+            />
             <Button label={"Label"} size="lg" width={"100%"} type={"warning"} />
           </div>
         );
@@ -62,15 +69,21 @@ export default function BottomSheet({
 
   if (!isOpen) return null;
   return (
-    <Overlay>
-      <Container visible={visible}>
-        <StyledSheet>
-          <Title>{title}</Title>
+    <div className="bg-overlay w-screen h-screen fixed top-0 left-0 overflow-hidden z-[11]">
+      <div
+        className={`${
+          visible ? "animate-toast-visible" : "animate-toast-hidden"
+        } fixed bottom-0 w-full`}
+      >
+        <div className="flex flex-col items-center pt-[32px] px-[20px] pb-[20px] gap-[16px] isolate bg-white rounded-t-[32px]">
+          <div className="text-subtitle-1 text-black w-full text-center">
+            {title}
+          </div>
           {children}
-          <ButtonGroup>{ButtonType()}</ButtonGroup>
-        </StyledSheet>
-      </Container>
-    </Overlay>
+          <div className="w-full">{ButtonType()}</div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -82,56 +95,3 @@ BottomSheet.propTypes = {
   onHideClick: PropTypes.func,
   onSubmit: PropTypes.func,
 };
-
-const Overlay = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  z-index: 11;
-
-  /** var(--black) and opacity 20% **/
-  background: rgba(33, 33, 33, 0.2);
-`;
-
-const Container = styled.div`
-  bottom: 0;
-  position: fixed;
-  width: 100%;
-
-  ${(p) => fadeInUp_OutDown(p.visible)}
-`;
-
-const StyledSheet = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 20px 20px;
-  gap: 16px;
-  isolation: isolate;
-
-  background: var(--white);
-  border-radius: 32px 32px 0px 0px;
-`;
-
-const Title = styled.div`
-  ${SubTitle1}
-
-  color: var(--black);
-  width: 100%;
-  text-align: center;
-`;
-
-const SubTitle = styled.div`
-  ${Caption1Bold}
-
-  text-align: center;
-
-  color: var(--black);
-`;
-
-const ButtonGroup = styled.div`
-  width: 100%;
-`;

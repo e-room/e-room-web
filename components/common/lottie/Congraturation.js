@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import styled from "@emotion/styled";
 import congrat from "assets/lottie/animation-congrat.json";
 
 export default () => {
@@ -14,10 +13,5 @@ export default () => {
       animationData: congrat,
     });
   }, []);
-  return <Item ref={likecontainer} />;
+  return <div className="w-[256px] h-[256px]" ref={likecontainer} />;
 };
-
-const Item = styled.div`
-  width: 256px;
-  height: 256px;
-`;

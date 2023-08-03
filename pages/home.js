@@ -22,8 +22,6 @@ export default function home() {
     setBestReviews(response.data.reviewDtoList);
   };
 
-  console.log("bestReviews", bestReviews);
-
   const goMap = () => {
     router.push(`/map`);
   };
@@ -55,38 +53,43 @@ export default function home() {
           />
         </div>
       </div>
-      <div className="mb-[120px] bg-body rounded-t-[24px] w-full h-full py-[28px] fixed top-[124px] flex flex-col">
+      <div className=" bg-body rounded-t-[24px] w-full h-full pt-[28px] absolute top-[124px] flex flex-col max-w-[720px]">
         {/* 인기 지역 바로가기 */}
-        <div className="text-black text-subtitle-2 mb-[12px] px-[20px]">
-          인기 지역 바로가기
-        </div>
-        <div className="grid grid-cols-2 gap-[8px] px-[20px]">
-          {quickLinks.map((item) => {
-            return (
-              <div
-                className="p-[12px] rounded-[12px] bg-white flex items-center gap-[8px] justify-between shadow-quicklink cursor-pointer"
-                key={item.title}
-              >
-                <div className="flex items-center gap-[8px]">
-                  <Icon icon={item.icon} size={"lg"} fill={"fill-gray-3"} />
-                  <div className="text-body-2 text-black">{item.title}</div>
+        <div>
+          <div className="text-black text-subtitle-2 mb-[12px] px-[20px]">
+            인기 지역 바로가기
+          </div>
+          <div className="grid grid-cols-2 gap-[8px] px-[20px]">
+            {quickLinks.map((item) => {
+              return (
+                <div
+                  className="p-[12px] rounded-[12px] bg-white flex items-center gap-[8px] justify-between shadow-quicklink cursor-pointer"
+                  key={item.title}
+                >
+                  <div className="flex items-center gap-[8px]">
+                    <Icon icon={item.icon} size={"lg"} fill={"fill-gray-3"} />
+                    <div className="text-body-2 text-black">{item.title}</div>
+                  </div>
+                  <Icon icon={"arrow-right"} size={"sm"} fill={"fill-gray-4"} />
                 </div>
-                <Icon icon={"arrow-right"} size={"sm"} fill={"fill-gray-4"} />
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
         {/* 베스트 리뷰 */}
-        <div className="text-black text-subtitle-2 mt-[36px] px-[20px]">
-          베스트 리뷰
+        <div>
+          <div className="text-black text-subtitle-2 mt-[36px] px-[20px]">
+            베스트 리뷰
+          </div>
+          <div className="flex gap-[16px] overflow-x-auto no-scrollbar px-[20px] pt-[12px] pb-[24px]">
+            {bestReviews.map((item, index) => {
+              return <BestReview data={item} key={index} />;
+            })}
+          </div>
         </div>
-        <div className="flex gap-[16px] overflow-x-auto no-scrollbar px-[20px] pt-[12px] pb-[24px]">
-          {bestReviews.map((item) => {
-            return <BestReview data={item} />;
-          })}
-        </div>
+
         {/* 버튼들 */}
-        <div className="flex flex-col gap-[8px] px-[20px]">
+        <div className="flex flex-col gap-[8px] px-[20px] pb-[176px] bg-body">
           <Button
             size={"md"}
             label="리뷰 지도 둘러보기"

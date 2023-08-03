@@ -1,15 +1,5 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
 import Icon from "../atoms/Icon";
-import { Body2Bold } from "../../../styles/typography";
-
-const Button = styled.button`
-  background: ${(props) => `var(--${props.type})`};
-  border: ${(props) =>
-    props.type === "google"
-      ? `1px solid var(--gray-4)`
-      : `1px solid var(--${props.type})`};
-`;
 
 export default function SocialButton({
   type,

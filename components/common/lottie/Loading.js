@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import styled from "@emotion/styled";
 import loading from "assets/lottie/circle_loading-primary.json";
 
 export default () => {
@@ -15,22 +14,8 @@ export default () => {
     });
   }, []);
   return (
-    <Container>
-      <Item ref={likecontainer} />
-    </Container>
+    <div className="w-screen h-screen flex justify-center items-center bg-white">
+      <div className="w-[128px] h-[128px]" ref={likecontainer} />
+    </div>
   );
 };
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--white);
-`;
-
-const Item = styled.div`
-  width: 128px;
-  height: 128px;
-`;

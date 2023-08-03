@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import AppLayout from "components/common/AppLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -52,12 +51,9 @@ export default function favorites() {
 
   return (
     <AppLayout pageTitle={"찜한 자취방"}>
-      <FavoriteListPage>
+      <div className="h-[calc(100vh-100px)]">
         {data.length > 0 ? <FavoriteList data={data} /> : <NoDataPage />}
-      </FavoriteListPage>
+      </div>
     </AppLayout>
   );
 }
-export const FavoriteListPage = styled.div`
-  height: calc(100vh - 100px);
-`;

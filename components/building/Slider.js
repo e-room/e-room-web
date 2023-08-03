@@ -1,13 +1,10 @@
-import styled from "@emotion/styled";
 import Avatar from "components/common/atoms/Avatar";
 import Icon from "components/common/atoms/Icon";
 import avatarImg from "assets/avatar/24.png";
-import { Body2 } from "styles/typography";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { useEffect, useState } from "react";
-import { fadeIn_Down0 } from "styles/keyframes";
 
 export default function Slider({ data, onClose, defaultId, authorName = "" }) {
   const index = data.findIndex((item) => item.uuid === defaultId);
@@ -20,21 +17,33 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
     }
   }, [visible]);
 
+  const onVisible = () => {
+    setVisible(true);
+  };
+  const Arrowbutton = ({ direction, onClick }) => {
+    return (
+      <div
+        className={`bg-slider-button rounded-full w-[40px] h-[40px] flex items-center justify-center z-[9] absolute top-[calc(50%-30px)] cursor-pointer ${
+          visible
+            ? "animate-arrow-button-visible"
+            : "animate-arrow-button-hidden"
+        }`}
+        style={{ [direction]: 4 }}
+        onClick={onClick}
+      >
+        <Icon icon={`arrow-${direction}`} size={"md"} fill={"fill-white"} />
+      </div>
+    );
+  };
+
   return (
-    <Overlay>
-      <Container
-        onClick={() => {
-          setVisible(true);
-        }}
-        onTouchStart={() => {
-          setVisible(true);
-        }}
-        onTouchMove={() => {
-          setVisible(true);
-        }}
-        onTouchEnd={(e) => {
-          setVisible(true);
-        }}
+    <div className="w-screen h-screen bg-black fixed top-0 left-0 z-[12] overflow-hidden touch-none">
+      <div
+        className="flex items-center justify-center h-full"
+        onClick={onVisible}
+        onTouchStart={onVisible}
+        onTouchMove={onVisible}
+        onTouchEnd={onVisible}
       >
         <Carousel
           showStatus={true}
@@ -48,141 +57,50 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           useKeyboardArrows={true}
           statusFormatter={(e) => {
             return (
-              <Top>
-                <CountField>
+              <div className="flex items-center justify-center min-h-[44px] fixed top-0 left-0 w-full">
+                <div className="text-body-2 text-white">
                   {e}/{data.length}
-                </CountField>
-                <XField onClick={onClose} className="cursor-pointer">
-                  <Icon icon={"x-icon"} size={"md"} fill={"var(--white)"} />
-                </XField>
-              </Top>
+                </div>
+                <div
+                  onClick={onClose}
+                  className="flex items-center justify-center absolute top-0 right-0 w-[44px] h-[44px] cursor-pointer"
+                >
+                  <Icon icon={"x-icon"} size={"md"} fill={"fill-white"} />
+                </div>
+              </div>
             );
           }}
           renderArrowPrev={(onClickHandler, hasPrev) =>
-            hasPrev && (
-              <ArrowButton
-                visible={visible}
-                style={{ left: 4 }}
-                onClick={onClickHandler}
-              >
-                <Icon icon={"arrow-left"} size={"md"} fill={"var(--white)"} />
-              </ArrowButton>
-            )
+            hasPrev && <Arrowbutton direction="left" onClick={onClickHandler} />
           }
           renderArrowNext={(onClickHandler, hasNext) =>
             hasNext && (
-              <ArrowButton
-                visible={visible}
-                style={{ right: 4 }}
-                onClick={onClickHandler}
-              >
-                <Icon icon={"arrow-right"} size={"md"} fill={"var(--white)"} />
-              </ArrowButton>
+              <Arrowbutton direction="right" onClick={onClickHandler} />
             )
           }
         >
           {data.map((value) => {
             return (
               <>
-                <ImageField key={value.uuid}>
+                <div
+                  className="pt-[44px] h-[calc(100vw-44px)] flex items-center overflow-hidden max-w-[720px] mt-0 mx-auto"
+                  key={value.uuid}
+                >
                   <img src={value.url} style={{ objectFit: "contain" }} />
-                </ImageField>
-                <Profile>
+                </div>
+                <div className="flex items-center text-white fixed bottom-[30px] w-full justify-center">
                   <Avatar
                     size={"md"}
                     img={avatarImg.src}
                     style={{ marginRight: 6 }}
                   />
                   {value?.anonymousStatus?.anonymousName ?? authorName}
-                </Profile>
+                </div>
               </>
             );
           })}
         </Carousel>
-      </Container>
-    </Overlay>
+      </div>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
-
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-`;
-
-const CountField = styled.div`
-  ${Body2}
-  color: var(--white);
-`;
-const XField = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 44px;
-  height: 44px;
-`;
-const Overlay = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: var(--black);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 12;
-  overflow: hidden !important;
-  touch-action: none;
-`;
-
-const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  color: var(--white);
-  position: fixed;
-  bottom: 30px;
-  width: 100%;
-  justify-content: center;
-`;
-
-const ArrowButton = styled.div`
-  background: rgba(33, 33, 33, 0.16);
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9;
-  position: absolute;
-  top: calc((50% - 30px));
-  cursor: pointer;
-
-  ${(p) => fadeIn_Down0(p.visible)}
-`;
-
-const ImageField = styled.div`
-  /* height: 80vh; */
-  padding-top: 44px;
-  /* height: 100vh; */
-  height: calc(100vh - 44px);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  max-width: 720px;
-  margin: 0 auto;
-`;

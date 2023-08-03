@@ -45,6 +45,7 @@ const MainContent = styled.div`
   ${(p) => p.enabledNavbar && "margin-bottom: 44px"};
   ${(p) => p.enabledHeader && "margin-top: 44px"};
 
+  // TODO: home에 mt이 적용되어 ui 깨짐
   @media (min-width: 720px) {
     margin: 44px auto;
     max-width: 720px;

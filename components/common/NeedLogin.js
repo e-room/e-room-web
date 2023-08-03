@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import Router from "next/router";
 import Popup from "components/common/atoms/Popup";
-import { Caption1Bold } from "styles/typography";
 import logEvent from "amplitude/logEvent";
 
 export default (props) => {
@@ -25,17 +23,11 @@ export default (props) => {
         Router.push(`/login?redirect_uri=${Router.router.asPath}`);
       }}
     >
-      <PopupSubTitle>
+      <div className="text-caption-bold-1 text-center text-black">
         로그인하고 실거주자가 들려주는
         <br />
         자취방 이야기를 들어보세요!
-      </PopupSubTitle>
+      </div>
     </Popup>
   );
 };
-
-const PopupSubTitle = styled.div`
-  ${Caption1Bold}
-  text-align: center;
-  color: var(--black);
-`;

@@ -38,6 +38,8 @@ module.exports = {
         naver: "#03c75a",
         body: "#FAFAFA",
         overlay: "rgba(33, 33, 33, 0.2)",
+        "slider-button": "rgba(33, 33, 33, 0.16)",
+        "map-button": "rgba(255, 255, 255, 0.8)",
       },
       fontSize: {
         /** [fontSize, {
@@ -193,6 +195,7 @@ module.exports = {
         toast:
           "28px 28px 56px rgba(37, 39, 37, 0.08), 0px 0px 64px rgba(37, 39, 37, 0.04)",
         "search-bar": "8px 8px 32px rgba(0, 0, 0, 0.12)",
+        "map-button": "0px 0px 32px rgba(0, 0, 0, 0.08)",
       },
       keyframes: {
         "fade-in-up": {
@@ -230,6 +233,8 @@ module.exports = {
         "page-up": "fade-in-up-40 0.56s ease-in-out forwards",
         "popup-visible": "fade-in-88 0.3s ease-in-out forwards",
         "popup-hidden": "fade-out-88 0.3s ease-in-out forwards",
+        "arrow-button-visible": "fade-in 0.3s ease-in-out forwards",
+        "arrow-button-hidden": "fade-out 0.3s ease-in-out forwards",
       },
       screens: {
         sm: "640px",
@@ -237,6 +242,9 @@ module.exports = {
         lg: "1024px",
         xl: "1280px",
         "2xl": "1536px",
+      },
+      backgroundImage: {
+        user_review_card: "url('/user_reivew_card.png')",
       },
     },
   },

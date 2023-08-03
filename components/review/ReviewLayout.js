@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import axios from "axios";
 import { useRouter } from "next/router";
-import styled from "@emotion/styled";
 
 import Congraturation from "components/common/lottie/Congraturation";
 
@@ -223,7 +222,7 @@ export default function ReviewLayout({ children }) {
       </BottomSheet>
 
       {index === "4" ? (
-        <BottomArea>
+        <div className="w-full flex justify-center fixed bottom-[8px]">
           <Button
             label={"리뷰 등록하기"}
             size="lg"
@@ -231,31 +230,21 @@ export default function ReviewLayout({ children }) {
             onClick={onSubmit}
             disabled={loading}
             useSubmit={true}
+            className="my-0 mx-[20px]"
           />
-        </BottomArea>
+        </div>
       ) : (
-        <BottomArea>
+        <div className="w-full flex justify-center fixed bottom-[8px]">
           <Button
             label={"다음으로"}
             size="lg"
             width={"100%"}
             disabled={nextDisabled[index]}
             onClick={goNext}
+            className="my-0 mx-[20px]"
           />
-        </BottomArea>
+        </div>
       )}
     </>
   );
 }
-
-const BottomArea = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 8px;
-
-  button {
-    margin: 0px 20px;
-  }
-`;

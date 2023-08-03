@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import Router from "next/router";
 
-import styled from "@emotion/styled";
-
 import accessValid from "utils/accessValid";
 import logEvent from "amplitude/logEvent";
 
@@ -111,7 +109,7 @@ export default function ReviewList(props) {
   const { item, isLoading } = state;
 
   return (
-    <Container>
+    <div className="pt-[12px] pr-[20px] pb-[170px] pl-[20px] bg-body">
       <div className="text-body-bold-1 text-black mb-[12px]">
         실제 거주 후기
       </div>
@@ -168,7 +166,7 @@ export default function ReviewList(props) {
           );
         })}
         {needToBlur && (
-          <FirstReviewField>
+          <div className="flex flex-col justify-center items-center rounded-[8px] p-[16px] mb-[12px] h-[679px] bg-user_review_card bg-cover">
             <div
               className="flex flex-col pt-[32px] px-[16px] pb-[16px] gap-[24px] isolate box-border rounded-[24px] bg-white border border-primary-6 max-w-[320px]"
               style={{ width: "calc(100vw - 40px)" }}
@@ -192,30 +190,10 @@ export default function ReviewList(props) {
                 }}
               />
             </div>
-          </FirstReviewField>
+          </div>
         )}
         <div ref={setTarget}>{isLoading && "Loading..."}</div>
       </div>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  padding: 12px 20px 170px 20px;
-  background: #fafafa;
-`;
-
-const FirstReviewField = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-
-  background-image: url("../user_review_card.png");
-  background-size: cover;
-  height: 679px;
-`;

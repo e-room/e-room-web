@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import { useSetRecoilState } from "recoil";
 import { imageViewState } from "states/buidlingAtom";
-import { Body1Bold } from "styles/typography";
 import Image from "next/image";
 
 export default ({ data }) => {
@@ -12,55 +10,28 @@ export default ({ data }) => {
     setShowDetail({ visible: true, uuid: id });
   };
 
+  //
+  // > span {
+  //   margin-right: 8px !important;
+  // }
   return (
-    <Container>
-      <Title>사진 모아보기</Title>
-      <ImgField>
+    <div className="py-[12px] pr-0 pl-[20px]">
+      <div className="text-body-bold-1 text-black mb-[12px]">사진 모아보기</div>
+      <div className="overflow-x-scroll	whitespace-nowrap	no-scrollbar">
         {data.map((value) => {
           return (
-            <ImageBox
+            <Image
               src={value.url}
               key={value.uuid}
               width={117}
               height={117}
               objectFit={"cover"}
               onClick={() => onDetailView(value.uuid)}
+              className="rounded-[8px] cursor-pointer"
             />
           );
         })}
-      </ImgField>
-    </Container>
+      </div>
+    </div>
   );
 };
-
-const Container = styled.div`
-  padding: 12px 0px 12px 20px;
-`;
-
-const Title = styled.div`
-  ${Body1Bold}
-
-  color: var(--black);
-  margin-bottom: 12px;
-`;
-
-const ImgField = styled.div`
-  overflow-x: scroll;
-  white-space: nowrap;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  > span {
-    margin-right: 8px !important;
-  }
-`;
-
-const ImageBox = styled(Image)`
-  border-radius: 8px;
-  cursor: pointer;
-`;

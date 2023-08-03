@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import axios from "axios";
 import Popup from "components/common/atoms/Popup";
-import { Caption1Bold } from "styles/typography";
 
 export default (props) => {
   const { reviewId, showConfirmDelete, setShowConfirmDelete, state, setState } =
@@ -32,16 +30,11 @@ export default (props) => {
       }}
       onConfirmClick={() => onDelete()}
     >
-      <PopupSubTitle>
+      <div className="text-caption-bold-1 text-center">
         삭제하면 되돌릴 수 없습니다.
         <br />
         신중하게 결정해주세요.
-      </PopupSubTitle>
+      </div>
     </Popup>
   );
 };
-
-const PopupSubTitle = styled.div`
-  ${Caption1Bold}
-  text-align: center;
-`;

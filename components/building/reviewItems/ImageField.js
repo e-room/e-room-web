@@ -1,43 +1,26 @@
-import styled from "@emotion/styled";
 import Image from "next/image";
 
 export default ({ images, onDetailView, authorName }) => {
   if (!images) return;
+  //
+  // > span {
+  //   margin-right: 8px !important;
+  // }
   return (
-    <ImgField>
+    <div className="overflow-x-scroll whitespace-nowrap no-scrollbar gap-[8px]">
       {images.map((value) => {
         return (
-          <ImageBox
+          <Image
             src={value.url}
             key={value.uuid}
             width={117}
             height={117}
+            className="rounded-[8px] cursor-pointer"
             objectFit={"cover"}
             onClick={() => onDetailView(value.uuid, images, authorName)}
           />
         );
       })}
-    </ImgField>
+    </div>
   );
 };
-
-const ImgField = styled.div`
-  overflow-x: scroll;
-  white-space: nowrap;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  > span {
-    margin-right: 8px !important;
-  }
-`;
-
-const ImageBox = styled(Image)`
-  border-radius: 8px;
-  cursor: pointer;
-`;

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
-import styled from "@emotion/styled";
 
 import { imageViewState } from "states/buidlingAtom";
 
@@ -69,6 +68,7 @@ export default () => {
   const [favorite, setFavorite] = useState(false);
   const [need, setNeed] = useState(false);
   const onFavoriteChange = useCallback(async () => {
+    console.log("onClick");
     const valid = await accessValid({ redirect_uri: `/building/${id}` });
     if (!valid) return setNeed(true);
     if (valid) {
@@ -161,7 +161,9 @@ export default () => {
       {need && <NeedLogin visible={need} setVisible={setNeed} />}
       {favoriteSuccess && <Toast text={"이 건물을 찜목록에 담았어요."} />}
       {goodReviewSuccess && <Toast text={"리뷰를 잘 등록했어요."} />}
-      <Container>
+
+      {/* no review의 bg에 flex-grow 적용하기 위해 flex, flex-column 추가함 */}
+      <div className="h-[calc(100vh-44px)] flex flex-col">
         {showImgDetail.visible && (
           <Slider
             data={buildingImages.reviewImageList}
@@ -199,15 +201,7 @@ export default () => {
             </Button>
           </div>
         )}
-      </Container>
+      </div>
     </AppLayout>
   );
 };
-
-// no review의 bg에 flex-grow 적용하기 위해
-// flex, flex-column 추가함
-const Container = styled.div`
-  height: calc(100vh - 44px);
-  display: flex;
-  flex-direction: column;
-`;
