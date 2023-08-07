@@ -1,56 +1,21 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import Icon from "../atoms/Icon";
-
-const StyledGroupButton = styled.button`
-  box-sizing: border-box;
-  cursor: pointer;
-
-  width: 44px;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: rgba(255, 255, 255, 0.8);
-
-  border: none;
-  border-top: 1px solid var(--gray-4);
-
-  box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(24px);
-
-  svg {
-    fill: var(--black);
-  }
-`;
-
-const GroupWrapper = styled.div`
-  button:first-of-type {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-  button:last-of-type {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-  }
-`;
+import Icon from "components/common/atoms/Icon";
 
 export default function GroupButton({ items }) {
-  // items = [
-  //   { icon: "plus", onClick: zoomIn },
-  //   { icon: "minus", onClick: zoomOut },
-  // ]
   return (
-    <GroupWrapper>
+    <div className="first-of-type:rounded-t-[12px] last-of-type:rounded-b-[12px]">
       {items.map((value) => {
         return (
-          <StyledGroupButton onClick={value.onClick} key={value.icon}>
-            <Icon icon={value.icon} size="md" />
-          </StyledGroupButton>
+          <button
+            className="cursor-pointer box-border w-[44px] h-[44px] flex justify-center items-center bg-map-button border-t-[1px] border-t-gray-4 shadow-map-button rounded-[12px]"
+            onClick={value.onClick}
+            key={value.icon}
+          >
+            <Icon icon={value.icon} size="md" fill="fill-black" />
+          </button>
         );
       })}
-    </GroupWrapper>
+    </div>
   );
 }
 

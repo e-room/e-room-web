@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import styled from "@emotion/styled";
 
 import accessValid from "utils/accessValid";
 
@@ -147,7 +146,7 @@ export default function mypage() {
           </div>
         </Popup>
       )}
-      <Container>
+      <div className="h-[calc(100vh-112px)] bg-mypage-body">
         <div className="flex items-center justify-between bg-white gap-[16px] p-[20px]">
           <Avatar size={"lg"} img={profile.profileImageUrl} />
           <div className="flex flex-col gap-[4px] w-full">
@@ -184,12 +183,7 @@ export default function mypage() {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </AppLayout>
   );
 }
-
-const Container = styled.div`
-  height: calc(var(--vh, 1vh) * 100 - 112px);
-  background: #f9f9f9;
-`;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import List from "./List";
+import { BOUNDS_POSITIONS } from "constants/localStorageType";
 
 export default function BuildingList(props) {
   const { data, sort } = props;
@@ -17,7 +18,7 @@ export default function BuildingList(props) {
 
   const fetchItems = async () => {
     if (!cursorId) return;
-    const buildingMarking = localStorage.getItem("buildingMarking");
+    const buildingMarking = localStorage.getItem(BOUNDS_POSITIONS);
 
     const filterSort = sort ? `${sort},id,DESC` : `DESC`;
     const response = await axios.get(

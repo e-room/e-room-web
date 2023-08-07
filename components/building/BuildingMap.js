@@ -9,7 +9,7 @@ const BuildingMap = ({ building }) => {
   const mapElement = useRef(null);
   useEffect(() => {
     const { naver } = window;
-    if (!mapElement.current || !naver) return;
+    // if (!mapElement.current || !naver) return;
 
     const position = new naver.maps.LatLng(initial.lat, initial.lng);
 
@@ -37,7 +37,7 @@ const BuildingMap = ({ building }) => {
     });
   }, []);
 
-  return <div className="w-full h-[240px]" ref={mapElement} />;
+  return <div className="w-full min-h-[240px]" ref={mapElement} />;
 };
 
 export default BuildingMap;

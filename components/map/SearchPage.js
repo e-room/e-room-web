@@ -1,6 +1,4 @@
-import styled from "@emotion/styled";
 import { useCallback, useMemo, useState } from "react";
-import { Body2 } from "styles/typography";
 import Icon from "components/common/atoms/Icon";
 import axios from "axios";
 import SearchList from "components/search/SearchList";
@@ -41,87 +39,32 @@ export default ({ searchVisible, setSearchVisible }) => {
 
   return (
     <>
-      <Container>
-        <div onClick={() => setSearchVisible(false)} className={"left-icon"}>
-          <Icon icon={"arrow-left"} size={"md"} />
+      <div className="fixed z-10 top-0 left-0 w-full h-[44px] bg-white box-border p-[12px] gap-[16px] flex items-center justify-between">
+        <div
+          onClick={() => setSearchVisible(false)}
+          className="flex justify-center items-center min-w-[24px] ml-[4px] cursor-pointer"
+        >
+          <Icon icon={"arrow-left"} size={"md"} fill="fill-black" />
         </div>
         <input
           placeholder="주소나 건물 이름으로 검색해보세요"
           onKeyUp={onSearchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
+          className="w-full h-[24px] border-none placeholder:text-body-2 placeholder:text-gray-3 focus:outline-0"
         />
         {searchValue && (
           <div
-            className={"x-icon cursor-pointer"}
+            className="rounded-full bg-gray-3 min-w-[16px] min-h-[16px] flex justify-center items-center cursor-pointer"
             onClick={() => setSearchValue("")}
           >
-            <Icon icon={"x-icon-xs"} size={"xs"} fill={"var(--white)"} />
+            <Icon icon={"x-icon-xs"} size={"xs"} fill="fill-white" />
           </div>
         )}
-      </Container>
-      <ListContainer>{searchView()}</ListContainer>
+      </div>
+      <div className="h-[calc(100vh-44px)] bg-body overflow-y-auto overflow-x-hidden mt-[44px]">
+        {searchView()}
+      </div>
     </>
   );
 };
-
-const Container = styled.div`
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 44px;
-  background: var(--white);
-
-  box-sizing: border-box;
-  padding: 12px;
-  gap: 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  input {
-    width: 100%;
-    height: 24px;
-    border: none;
-
-    ::placeholder {
-      ${Body2}
-
-      color: var(--gray-3);
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .left-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 24px;
-    margin-left: 4px;
-    cursor: pointer;
-  }
-
-  .x-icon {
-    border-radius: 100%;
-    background: var(--gray-3);
-    min-width: 16px;
-    min-height: 16px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const ListContainer = styled.div`
-  height: calc(100vh - 44px);
-  background-color: #fafafa !important;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-top: 44px;
-`;

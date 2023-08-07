@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import List from "components/building/List";
@@ -67,15 +66,7 @@ export default function FavoriteList(props) {
   return (
     <div>
       <List item={item} />
-      <div ref={setTarget}>{isLoading && <Loading>Loading...</Loading>}</div>
+      <div ref={setTarget}>{isLoading && <div>Loading...</div>}</div>
     </div>
   );
 }
-
-const Loading = styled.div`
-  text-align: center;
-  border: 1px solid black;
-  height: 200px;
-  font-size: 2rem;
-  background-color: aliceblue;
-`;

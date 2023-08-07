@@ -10,6 +10,7 @@ import GroupButton from "components/common/atoms/GroupButton";
 import IconButton from "components/common/atoms/IconButton";
 import BuildingInfo from "components/map/BuildingInfo";
 import { BOUNDS_POSITIONS, INITIAL_POSITION } from "constants/localStorageType";
+import SearchPage from "components/map/SearchPage";
 
 const map = ({ data }) => {
   const buildingMarking = JSON.parse(data);
@@ -19,6 +20,7 @@ const map = ({ data }) => {
 
   const [test, setTest] = useState(null);
   const testRef = useRef(null);
+  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     const { naver } = window;
@@ -179,6 +181,15 @@ const map = ({ data }) => {
     map.setZoom(map.getZoom() - 1, true);
   };
 
+  if (searchVisible) {
+    return (
+      <SearchPage
+        searchVisible={searchVisible}
+        setSearchVisible={setSearchVisible}
+      />
+    );
+  }
+
   return (
     <Fragment>
       <div className="relative overflow-hidden w-screen h-screen m-0">
@@ -186,10 +197,10 @@ const map = ({ data }) => {
         <div className="absolute right-[20px] top-[25px] z-[2]">
           <IconButton
             icon="search"
-            // onClick={() => {
-            //   logEvent({ name: "click-map-search" });
-            //   setSearchVisible(true);
-            // }}
+            onClick={() => {
+              logEvent({ name: "click-map-search" });
+              setSearchVisible(true);
+            }}
           />
         </div>
         <div className="absolute right-[20px] top-[232px] z-[2]">

@@ -85,6 +85,8 @@ export default function Popup({
     };
   }, [visible]);
 
+  if (!visible) return null;
+
   return (
     <div className="w-full h-full fixed top-0 left-0 overflow-hidden touch-none z-20 bg-overlay">
       <div

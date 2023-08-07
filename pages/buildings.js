@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import styled from "@emotion/styled";
 
 import AppLayout from "components/common/AppLayout";
 import Button from "components/common/atoms/Button";
@@ -75,6 +74,10 @@ export default function buildings() {
     getData();
   }, []);
 
+  const onVisibleFilterPopup = () => {
+    setPopupVisible(true);
+  };
+
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -86,37 +89,40 @@ export default function buildings() {
           icon={popupVisible ? "filter-fill" : "filter-stroke"}
           size={"md"}
           fill={popupVisible ? "fill-primary-1" : "fill-black"}
-          onClick={() => setPopupVisible(true)}
+          onClick={onVisibleFilterPopup}
         />
       }
     >
-      <Popup
-        visible={popupVisible}
-        title={
-          <div className="flex items-center">
-            <Icon icon={"filter-stroke"} size={"md"} />
-            <div className="ml-[8px]">정렬</div>
+      {popupVisible && (
+        <Popup
+          visible={popupVisible}
+          title={
+            <div className="flex items-center">
+              <Icon icon={"filter-stroke"} size={"md"} fill="fill-gray-2" />
+              <div className="ml-[8px]">정렬</div>
+            </div>
+          }
+          titleAlign={"left"}
+          buttonType={"default"}
+          cancelText="취소"
+          submitText="필터 적용하기"
+          onCancelClick={onHideClick}
+          onConfirmClick={onConfirmClick}
+        >
+          <div className="grid grid-cols-2 items-center px-[6px]">
+            <div className="text-body-bold-2 text-black">정렬 순서</div>
+            <Select
+              size={"md"}
+              value={filterValue}
+              onChange={onFilterChange}
+              options={filterOptions}
+              label={"label"}
+            />
           </div>
-        }
-        titleAlign={"left"}
-        buttonType={"default"}
-        cancelText="취소"
-        submitText="필터 적용하기"
-        onCancelClick={onHideClick}
-        onConfirmClick={onConfirmClick}
-      >
-        <Contents>
-          <div className="text-body-bold-2 text-black">정렬 순서</div>
-          <Select
-            size={"md"}
-            value={filterValue}
-            onChange={onFilterChange}
-            options={filterOptions}
-            label={"label"}
-          />
-        </Contents>
-      </Popup>
-      <Container>
+        </Popup>
+      )}
+
+      <div className="h-[calc(100vh-100px)]">
         <div className="pb-[150px]">
           {parseData.length > 0 ? (
             <BuildingList data={parseData} sort={filterValue.value} />
@@ -133,18 +139,7 @@ export default function buildings() {
             </a>
           </Link>
         </div>
-      </Container>
+      </div>
     </AppLayout>
   );
 }
-
-export const Container = styled.div`
-  height: calc(100vh - 100px);
-`;
-
-const Contents = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 4fr;
-  align-items: center;
-  padding: 0 6px;
-`;

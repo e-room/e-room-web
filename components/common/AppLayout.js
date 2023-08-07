@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import Header from "../common/Header";
-import Footer from "../common/Footer";
+import Header from "components/common/Header";
+import Footer from "components/common/Footer";
 import { useRouter } from "next/router";
 
 export default function AppLayout(props) {
@@ -25,12 +24,15 @@ export default function AppLayout(props) {
       {router.asPath === "/" ? (
         children
       ) : (
-        <MainContent
+        <div
+          className={`${enabledNavbar && "mb-[44px]"} ${
+            enabledHeader && "mt-[44px]"
+          } md:mt-[44px] md:mx-auto md:max-w-[720px]`}
           enabledNavbar={enabledNavbar}
           enabledHeader={enabledHeader}
         >
           {children}
-        </MainContent>
+        </div>
       )}
       <Footer enabled={enabledNavbar} />
     </>
@@ -40,14 +42,3 @@ export default function AppLayout(props) {
 AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-const MainContent = styled.div`
-  ${(p) => p.enabledNavbar && "margin-bottom: 44px"};
-  ${(p) => p.enabledHeader && "margin-top: 44px"};
-
-  // TODO: home에 mt이 적용되어 ui 깨짐
-  @media (min-width: 720px) {
-    margin: 44px auto;
-    max-width: 720px;
-  }
-`;

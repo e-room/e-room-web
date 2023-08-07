@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { SubTitle1 } from "styles/typography";
-import Button from "./Button";
+import Button from "components/common/atoms/Button";
 
 export default () => {
   const router = useRouter();
@@ -11,28 +9,14 @@ export default () => {
   };
 
   return (
-    <Container>
-      <Title>이 지역에 건물이 없어요</Title>
+    <div className="flex justify-center items-center flex-col gap-[16px] h-[calc(100vh-250px)]">
+      <div className="text-subtitle-1 text-gray-1">이 지역에 건물이 없어요</div>
       <Button
         type={"secondary"}
         size={"md"}
         label={"돌아가기"}
         onClick={goBack}
       />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 16px;
-  height: calc(100vh - 250px);
-`;
-
-const Title = styled.div`
-  ${SubTitle1}
-  color: var(--gray-1);
-`;

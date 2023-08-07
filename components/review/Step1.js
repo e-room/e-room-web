@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
-import styled from "@emotion/styled";
 
 import { reviewFormState } from "states/reviewAtom";
 
@@ -84,6 +83,10 @@ export default function ReviewForm1() {
       : `${siDo} ${siGunGu} ${roadName} ${buildingNumber}`
     : "";
 
+  const formItemClassName = "mb-[24px] relative";
+  const gridItemClassName =
+    "grid grid-cols-2 gap-x-[16px] items-end mb-[24px] relative";
+
   return (
     <div
       className="animate-page-up flex flex-col px-[20px] pt-[20px] pb-[80px] bg-white"
@@ -94,7 +97,7 @@ export default function ReviewForm1() {
         if (postCodeOpen) setPostCodeOpen(false);
       }}
     >
-      <FormItem>
+      <div className={formItemClassName}>
         <Text
           placeholder="도로명 주소로 입력해주세요"
           label={"주소"}
@@ -108,8 +111,8 @@ export default function ReviewForm1() {
             <DaumPostCode onComplete={onHandleComplete} />
           </div>
         )}
-      </FormItem>
-      <GridItem>
+      </div>
+      <div className={gridItemClassName}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div className="text-body-bold-2 mb-[4px]">거주 시작</div>
           <div
@@ -150,8 +153,8 @@ export default function ReviewForm1() {
           value={formValue.reviewResidencePeriodDto.residenceDuration}
           name={"residenceDuration"}
         />
-      </GridItem>
-      <GridItem>
+      </div>
+      <div className={gridItemClassName}>
         <Text
           type={"text"}
           placeholder={"예: 50"}
@@ -190,8 +193,8 @@ export default function ReviewForm1() {
           }}
           value={formValue.reviewBaseDto.managementFee}
         />
-      </GridItem>
-      <FormItem>
+      </div>
+      <div className={formItemClassName}>
         <Text
           type={"text"}
           placeholder={"예: 500"}
@@ -211,8 +214,8 @@ export default function ReviewForm1() {
           }}
           value={formValue.reviewBaseDto.deposit}
         />
-      </FormItem>
-      <FormItem>
+      </div>
+      <div className={formItemClassName}>
         <Text
           type={"text"}
           placeholder={"예: 6"}
@@ -232,22 +235,7 @@ export default function ReviewForm1() {
           }}
           value={formValue.reviewBaseDto.netLeasableArea}
         />
-      </FormItem>
+      </div>
     </div>
   );
 }
-
-const FormItem = styled.div`
-  margin-bottom: 24px;
-  position: relative;
-`;
-
-const GridItem = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 16px;
-  align-items: end;
-
-  margin-bottom: 24px;
-  position: relative;
-`;

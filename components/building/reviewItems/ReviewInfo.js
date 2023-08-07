@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import { KEYWORD_STATES } from "constants/codeType";
 import Chip from "components/common/atoms/Chip";
-import { Body3, Caption2Bold } from "styles/typography";
 import parseFloat from "utils/parseFloat";
 
 export default ({ value }) => {
@@ -61,7 +59,7 @@ export default ({ value }) => {
 
   return (
     <>
-      <Info>
+      <div className="grid grid-cols-3 gap-y-[20px]">
         {Infos.map((v) => {
           return (
             <div key={v.title}>
@@ -72,7 +70,7 @@ export default ({ value }) => {
             </div>
           );
         })}
-      </Info>
+      </div>
       {advantages.map((v) => {
         return (
           <div className="mt-[20px]" key={v.title}>
@@ -93,10 +91,3 @@ export default ({ value }) => {
     </>
   );
 };
-
-const Info = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(33%, auto));
-
-  row-gap: 20px;
-`;

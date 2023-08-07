@@ -40,6 +40,7 @@ module.exports = {
         overlay: "rgba(33, 33, 33, 0.2)",
         "slider-button": "rgba(33, 33, 33, 0.16)",
         "map-button": "rgba(255, 255, 255, 0.8)",
+        "mypage-body": "#f9f9f9",
       },
       fontSize: {
         /** [fontSize, {

@@ -3,7 +3,7 @@
 ## 개발환경
 
 - 코어: react, next.js
-- 스타일: storybook, emotion
+- 스타일: storybook, tailwindcss
 - 타입관리: prop-types
 - 상태관리: recoil, react-query
 - 주소검색: react-daum-postcode
@@ -16,6 +16,7 @@
 - next: npm run dev ([localhost:3000](http://localhost:3000))
 
 ## 프로젝트 구조
+
 - amplitude: amplitude 관련
 - assets: svg 등 이미지, 아이콘 관련
 - codes: 코드화 된 상태들

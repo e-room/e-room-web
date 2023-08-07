@@ -1,4 +1,4 @@
-import Icon from "../common/atoms/Icon";
+import Icon from "components/common/atoms/Icon";
 import { useRouter } from "next/router";
 
 export default function Header({ pageTitle, additionalFunction, enabled }) {
