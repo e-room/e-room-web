@@ -2,7 +2,7 @@ import Chip from "components/common/atoms/Chip";
 import Score from "components/common/atoms/Score";
 import Logo from "assets/img_room_default.svg";
 import parseFloat from "utils/parseFloat";
-import { SCORE_CHIP } from "codes/codeType";
+import { SCORE_CHIP } from "constants/codeType";
 import { useRouter } from "next/router";
 import logEvent from "amplitude/logEvent";
 

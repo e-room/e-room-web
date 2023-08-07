@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 
 import { reviewFormState } from "states/reviewAtom";
-import { KEYWORD_STATES } from "codes/codeType";
+import { KEYWORD_STATES } from "constants/codeType";
 
 import TextArea from "components/common/atoms/TextArea";
 import Toggle from "components/common/atoms/Toggle";

@@ -1,4 +1,4 @@
-import { KEYWORD_STATES } from "codes/codeType";
+import { KEYWORD_STATES } from "constants/codeType";
 import Avatar from "components/common/atoms/Avatar";
 import Chip from "components/common/atoms/Chip";
 import Icon from "components/common/atoms/Icon";

@@ -9,6 +9,7 @@ import Button from "components/common/atoms/Button";
 import GroupButton from "components/common/atoms/GroupButton";
 import IconButton from "components/common/atoms/IconButton";
 import BuildingInfo from "components/map/BuildingInfo";
+import { BOUNDS_POSITIONS, INITIAL_POSITION } from "constants/localStorageType";
 
 const map = ({ data }) => {
   const buildingMarking = JSON.parse(data);
@@ -23,9 +24,7 @@ const map = ({ data }) => {
     const { naver } = window;
     if (!mapElement.current || !naver) return;
 
-    const initialPosition = JSON.parse(
-      localStorage.getItem("e-room_initial_position")
-    );
+    const initialPosition = JSON.parse(localStorage.getItem(INITIAL_POSITION));
 
     const initialCenter = {
       lat: initialPosition?.centerPoint?._lat ?? 37.2429616,
@@ -121,7 +120,7 @@ const map = ({ data }) => {
       const zoomLevel = map.getZoom();
 
       localStorage.setItem(
-        "e-room_initial_position",
+        INITIAL_POSITION,
         JSON.stringify({
           centerPoint: centerPoint,
           zoom: zoomLevel,
@@ -144,6 +143,8 @@ const map = ({ data }) => {
           ids.push(markers[i].buildingId);
         }
       }
+
+      localStorage.setItem(BOUNDS_POSITIONS, ids);
 
       if (ids.length > 0) {
         boundsListRef.current.classList.add("animate-toast-visible");

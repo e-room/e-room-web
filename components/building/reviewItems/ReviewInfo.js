@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { KEYWORD_STATES } from "codes/codeType";
+import { KEYWORD_STATES } from "constants/codeType";
 import Chip from "components/common/atoms/Chip";
 import { Body3, Caption2Bold } from "styles/typography";
 import parseFloat from "utils/parseFloat";
