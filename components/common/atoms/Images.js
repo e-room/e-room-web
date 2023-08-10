@@ -111,7 +111,7 @@ export default function Images() {
     <>
       {toast}
       <div
-        className="flex flex-col justify-center items-center w-[102px] h-[102px] bg-white border border-primary-1 rounded-[4px]"
+        className="flex flex-col justify-center items-center w-[102px] h-[102px] bg-white border border-primary-1 rounded-[4px] cursor-pointer"
         onClick={onClickHandler}
       >
         <Icon icon="plus" size="md" fill="fill-primary-1" />

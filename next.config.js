@@ -4,6 +4,21 @@ const withPWA = require("next-pwa")({
 });
 
 const config = {
+  // images: {
+  //   domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
+  //   path: "/_next/image",
+  //   loader: "default",
+  //   disableStaticImages: false,
+  // },
+  images: {
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: process.env.NEXT_PUBLIC_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN,
+      },
+    ],
+  },
   reactStrictMode: false,
   async rewrites() {
     return [
@@ -24,8 +39,6 @@ const config = {
   env: {
     NEXT_PUBLIC_KAKAO_APP_KEY: process.env.NEXT_PUBLIC_KAKAO_APP_KEY,
   },
-  images: {
-    domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
-  },
 };
-module.exports = process.env.NODE_ENV === "production" ? withPWA(config) : config;
+module.exports =
+  process.env.NODE_ENV === "production" ? withPWA(config) : config;
