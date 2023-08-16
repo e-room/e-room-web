@@ -45,5 +45,9 @@
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
     }
+
+    .bg-review_card {
+      background-image: url("/user_review_card.png");
+    }
   }
 }

@@ -244,9 +244,6 @@ module.exports = {
         xl: "1280px",
         "2xl": "1536px",
       },
-      backgroundImage: {
-        user_review_card: "url('/user_reivew_card.png')",
-      },
     },
   },
   plugins: [],
