@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import Router from "next/router";
 
 import accessValid from "utils/accessValid";
-import logEvent from "amplitude/logEvent";
 
 import DeletePopup from "./reviewItems/DeletePopup";
 import DetailScorePopup from "./reviewItems/DetailScorePopup";
@@ -17,7 +15,7 @@ import Button from "components/common/atoms/Button";
 export default function ReviewList(props) {
   const { reviews, buildingId, needToBlur = true, profile } = props;
 
-  const [data, setData] = useState(reviews);
+  const data = reviews;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showImages, setShowImages] = useState({
     visible: false,
@@ -62,7 +60,7 @@ export default function ReviewList(props) {
     isLoading: false,
   });
   const lastData = data[data.length - 1];
-  let cursorId = lastData.reviewBaseDto.reviewId;
+  let cursorId = lastData?.reviewBaseDto?.reviewId ?? null;
 
   const fetchItems = async () => {
     if (!cursorId) return;
@@ -165,33 +163,7 @@ export default function ReviewList(props) {
             </div>
           );
         })}
-        {needToBlur && (
-          <div className="flex flex-col justify-center items-center rounded-[8px] p-[16px] mb-[12px] h-[679px] bg-user_review_card bg-cover">
-            <div
-              className="flex flex-col pt-[32px] px-[16px] pb-[16px] gap-[24px] isolate box-border rounded-[24px] bg-white border border-primary-6 max-w-[320px]"
-              style={{ width: "calc(100vw - 40px)" }}
-            >
-              <div className="text-subtitle-1 text-black text-center">
-                로그인이 필요해요
-              </div>
-              <div className="text-caption-bold-1 text-black text-center">
-                로그인하고 실거주자가 들려주는
-                <br />
-                자취방 이야기를 들어보세요!
-              </div>
-              <Button
-                label={"로그인하기"}
-                size="md"
-                width={"100%"}
-                type={"primary"}
-                onClick={() => {
-                  logEvent({ name: "click-login_popup-login" });
-                  Router.push(`/login?redirect_uri=${Router.router.asPath}`);
-                }}
-              />
-            </div>
-          </div>
-        )}
+        {needToBlur && <PleaseLogin />}
         <div ref={setTarget}>{isLoading && "Loading..."}</div>
       </div>
     </div>

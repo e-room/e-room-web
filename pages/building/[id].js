@@ -179,7 +179,8 @@ export default () => {
         {buildingImages.reviewImageCount > 0 && (
           <ImageView data={buildingImages.reviewImageList} />
         )}
-        {buildingReviews.reviewSlicedList.content.length > 0 ? (
+        {buildingReviews.reviewSlicedList.content.length > 0 ||
+        buildingReviews.needToBlur ? (
           <ReviewList
             profile={profile}
             reviews={buildingReviews.reviewSlicedList.content}
