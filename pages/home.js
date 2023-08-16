@@ -31,6 +31,12 @@ export default function home() {
   const goSearch = () => {
     router.push(`/search`);
   };
+  const goMapByPosition = (lat, lng) => {
+    router.push(`/map?lat=${lat}&lng=${lng}`);
+  };
+  const goMapByMyLocation = () => {
+    router.push(`/map?type=myLocation`);
+  };
 
   useEffect(() => {
     getBestReviews();
@@ -65,6 +71,11 @@ export default function home() {
                 <div
                   className="p-[12px] rounded-[12px] bg-white flex items-center gap-[8px] justify-between shadow-quicklink cursor-pointer"
                   key={item.title}
+                  onClick={() => {
+                    if (item.lat && item.lng)
+                      goMapByPosition(item.lat, item.lng);
+                    else goMapByMyLocation();
+                  }}
                 >
                   <div className="flex items-center gap-[8px]">
                     <Icon icon={item.icon} size={"lg"} fill={"fill-gray-3"} />

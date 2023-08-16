@@ -11,8 +11,12 @@ import IconButton from "components/common/atoms/IconButton";
 import BuildingInfo from "components/map/BuildingInfo";
 import { BOUNDS_POSITIONS, INITIAL_POSITION } from "constants/localStorageType";
 import SearchPage from "components/map/SearchPage";
+import { useRouter } from "next/router";
 
 const map = ({ data }) => {
+  const router = useRouter();
+  const { lat, lng, type } = router.query;
+
   const buildingMarking = JSON.parse(data);
   const boundsListRef = useRef(null);
   const mapElement = useRef(null);
@@ -28,11 +32,19 @@ const map = ({ data }) => {
 
     const initialPosition = JSON.parse(localStorage.getItem(INITIAL_POSITION));
 
-    const initialCenter = {
+    let initialCenter = {
       lat: initialPosition?.centerPoint?._lat ?? 37.2429616,
       lng: initialPosition?.centerPoint?._lng ?? 127.0800525,
     };
-    const initialZoom = initialPosition?.zoom ?? 12;
+    let initialZoom = initialPosition?.zoom ?? 12;
+
+    if (lat && lng) {
+      initialCenter = {
+        lat: lat,
+        lng: lng,
+      };
+      initialZoom = 16;
+    }
 
     const mapOptions = {
       center: new naver.maps.LatLng(initialCenter.lat, initialCenter.lng),
@@ -41,7 +53,11 @@ const map = ({ data }) => {
     const initialMap = new naver.maps.Map(mapElement.current, mapOptions);
 
     setMap(initialMap);
-  }, []);
+  }, [lat, lng]);
+
+  useEffect(() => {
+    if (type === "myLocation" && map) setMyPosition();
+  }, [type, map]);
 
   useEffect(() => {
     if (
