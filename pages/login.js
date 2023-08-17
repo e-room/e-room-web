@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 
 import AppLayout from "components/common/AppLayout";
@@ -7,6 +6,7 @@ import SocialButton from "components/common/atoms/SocialButton";
 import Loading from "components/common/lottie/Loading";
 import Toast from "components/common/atoms/Toast";
 import logEvent from "amplitude/logEvent";
+import { getIsValid } from "services/auth.service";
 
 export default function Login() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       const onValidCheck = async () => {
-        await axios.get(`/apis/token/valid`).then((response) => {
+        await getIsValid().then((response) => {
           if (response.data.isValid) router.push(`/`);
           else {
             setLoading(false);

@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 
 import logEvent from "amplitude/logEvent";
@@ -12,6 +11,7 @@ import BuildingInfo from "components/map/BuildingInfo";
 import { BOUNDS_POSITIONS, INITIAL_POSITION } from "constants/localStorageType";
 import SearchPage from "components/map/SearchPage";
 import { useRouter } from "next/router";
+import { getBuildingMarkerList } from "services/building.service";
 
 const map = ({ data }) => {
   const router = useRouter();
@@ -253,9 +253,7 @@ const map = ({ data }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_HOST}/building/marking`
-  );
+  const res = await getBuildingMarkerList();
   const data = JSON.stringify(res.data);
 
   return {

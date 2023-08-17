@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 
 import accessValid from "utils/accessValid";
@@ -14,6 +13,8 @@ import NeedLogin from "components/common/NeedLogin";
 import logEvent from "amplitude/logEvent";
 import MenuItem from "components/mypage/MenuItem";
 import MenuList from "components/mypage/MenuList";
+import { deleteMember, getProfile } from "services/member.service";
+import { logout } from "services/auth.service";
 
 export default function mypage() {
   const router = useRouter();
@@ -28,16 +29,13 @@ export default function mypage() {
   let channelTalk;
 
   const [need, setNeed] = useState(false);
-  const getProfile = async () => {
+  const getProfileFunc = async () => {
     const valid = await accessValid({ redirect_uri: `/mypage` });
     if (!valid) {
       return setNeed(true);
     }
     if (valid) {
-      await axios
-        .get(`/apis/member/profile`, {
-          withCredentials: true,
-        })
+      await getProfile()
         .then((response) => {
           setProfile(response.data);
           setLoading(false);
@@ -66,7 +64,7 @@ export default function mypage() {
 
   const onLogout = async () => {
     logEvent({ name: "click-mypage-logout" });
-    const response = await axios.get(`/apis/logout`, { withCredentials: true });
+    const response = await logout();
     if (response.status === 200) {
       router.push("/");
     } else {
@@ -84,9 +82,7 @@ export default function mypage() {
   };
   const onWithdrawal = async () => {
     logEvent({ name: "click-mypage-delete_account" });
-    const response = await axios.delete(`/apis/member/exit`, {
-      withCredentials: true,
-    });
+    const response = await deleteMember();
     if (response.status === 200) {
       router.push(`/login?redirect_uri=/mypage&isWithdrawal=true`);
     } else {
@@ -96,7 +92,7 @@ export default function mypage() {
 
   useEffect(() => {
     logEvent({ name: "view-mypage" });
-    getProfile();
+    getProfileFunc();
   }, []);
 
   useEffect(() => {

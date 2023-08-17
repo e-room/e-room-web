@@ -1,9 +1,9 @@
 import Logo from "assets/pic.png";
 import Score from "components/common/atoms/Score";
 import parseFloat from "utils/parseFloat";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { getMarkingDetailDataByBuildingId } from "services/building.service";
 
 export default ({ id }) => {
   const router = useRouter();
@@ -16,21 +16,19 @@ export default ({ id }) => {
     reviewCnt: 0,
   });
   const getBuilding = async () => {
-    return await axios
-      .get(`/apis/building/marking/detail/${id}`)
-      .then((response) => {
-        const value = response.data;
-        const name =
-          value.name === ""
-            ? `${value.address.roadName} ${value.address.buildingNumber}`
-            : value.name;
+    return await getMarkingDetailDataByBuildingId(id).then((response) => {
+      const value = response.data;
+      const name =
+        value.name === ""
+          ? `${value.address.roadName} ${value.address.buildingNumber}`
+          : value.name;
 
-        setBuilding({
-          name,
-          avgScore: value.avgScore,
-          reviewCnt: value.reviewCnt,
-        });
+      setBuilding({
+        name,
+        avgScore: value.avgScore,
+        reviewCnt: value.reviewCnt,
       });
+    });
   };
 
   useEffect(() => {

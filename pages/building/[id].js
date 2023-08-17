@@ -22,6 +22,16 @@ import Score from "components/building/Score";
 import NeedLogin from "components/common/NeedLogin";
 import { reviewSuccessToastState } from "states/reviewAtom";
 import logEvent from "amplitude/logEvent";
+import {
+  getBuildingById,
+  getBuildingImagesById,
+  getBuildingReviewById,
+} from "services/building.service";
+import {
+  addFavoriteByBuildingId,
+  cancelFavoriteByBuildingId,
+  getProfile,
+} from "services/member.service";
 
 export default () => {
   const router = useRouter();
@@ -47,11 +57,8 @@ export default () => {
 
   useEffect(() => {
     try {
-      const getProfile = async () => {
-        await axios
-          .get(`/apis/member/profile`, {
-            withCredentials: true,
-          })
+      const getProfileFunc = async () => {
+        await getProfile()
           .then((response) => {
             setProfile(response.data);
           })
@@ -59,7 +66,7 @@ export default () => {
             console.error(error);
           });
       };
-      getProfile();
+      getProfileFunc();
     } catch (e) {
       return true;
     }
@@ -68,22 +75,19 @@ export default () => {
   const [favorite, setFavorite] = useState(false);
   const [need, setNeed] = useState(false);
   const onFavoriteChange = useCallback(async () => {
-    console.log("onClick");
     const valid = await accessValid({ redirect_uri: `/building/${id}` });
     if (!valid) return setNeed(true);
     if (valid) {
       if (favorite) {
-        axios
-          .delete(`/apis/member/favorite/${id}`)
-          .then((res) => {
+        cancelFavoriteByBuildingId(id)
+          .then(() => {
             setFavorite(false);
           })
           .catch((error) => {
             console.error(error);
           });
       } else {
-        axios
-          .post(`/apis/member/favorite/${id}`)
+        addFavoriteByBuildingId(id)
           .then(() => {
             setFavoriteSuccess(true);
             setFavorite(true);
@@ -100,11 +104,13 @@ export default () => {
       logEvent({ name: "view-building", property: { buildingID: id } });
 
       const callData = async () => {
-        const callBuilding = axios.get(`/apis/building/${id}`);
-        const callImages = axios.get(`/apis/building/${id}/images`);
-        const callReviews = axios.get(
-          `/apis/building/${id}/room/review?size=4&sort=id,DESC`
-        );
+        const callBuilding = getBuildingById(id);
+        const callImages = getBuildingImagesById(id);
+        const callReviews = getBuildingReviewById(id, {
+          size: 4,
+          sort: "id,DESC",
+        });
+
         await axios
           .all([callBuilding, callImages, callReviews])
           .then((response) => {

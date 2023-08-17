@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import Icon from "components/common/atoms/Icon";
-import axios from "axios";
 import SearchList from "components/search/SearchList";
 import Nodata from "components/search/Nodata";
+import { getSearch } from "services/building.service";
 
 export default ({ searchVisible, setSearchVisible }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,9 +20,7 @@ export default ({ searchVisible, setSearchVisible }) => {
 
   const saveInput = async (e) => {
     setSearchList([]);
-    const response = await axios.get(
-      `/apis/building/search?params=${e.target.value}`
-    );
+    const response = await getSearch({ params: e.target.value });
     setSearchList(response.data.content);
   };
 

@@ -8,9 +8,8 @@ import ReviewInfo from "./reviewItems/ReviewInfo";
 import LikeField from "./reviewItems/LikeField";
 import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
-import axios from "axios";
 import Slider from "./Slider";
-import Button from "components/common/atoms/Button";
+import { getBuildingReviewById } from "services/building.service";
 
 export default function ReviewList(props) {
   const { reviews, buildingId, needToBlur = true, profile } = props;
@@ -65,9 +64,11 @@ export default function ReviewList(props) {
   const fetchItems = async () => {
     if (!cursorId) return;
 
-    const response = await axios.get(
-      `/apis/building/${buildingId}/room/review?size=4&sort=id,DESC&cursorIds=${cursorId}`
-    );
+    const response = await getBuildingReviewById(buildingId, {
+      size: 4,
+      sort: "id,DESC",
+      cursorIds: cursorId,
+    });
 
     const responseContent = response.data.reviewSlicedList.content;
     const nextItem = needToBlur ? null : responseContent;

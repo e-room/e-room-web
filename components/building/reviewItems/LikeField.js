@@ -1,7 +1,7 @@
-import axios from "axios";
+import { useState } from "react";
 import Icon from "components/common/atoms/Icon";
 import NeedLogin from "components/common/NeedLogin";
-import { useState } from "react";
+import { modifyLikeByReviewId } from "services/building.service";
 import accessValid from "utils/accessValid";
 
 export default ({ value, buildingId }) => {
@@ -19,17 +19,15 @@ export default ({ value, buildingId }) => {
       return setNeed(true);
     }
     if (valid) {
-      await axios
-        .put(`/apis/building/room/review/like/${reviewId}`)
-        .then((response) => {
-          if (response.data.reviewLikeStatus === "LIKED") {
-            setIsLike(true);
-            setAddLikeCnt(addLikeCnt + 1);
-          } else {
-            setIsLike(false);
-            setAddLikeCnt(addLikeCnt - 1);
-          }
-        });
+      await modifyLikeByReviewId(reviewId).then((response) => {
+        if (response.data.reviewLikeStatus === "LIKED") {
+          setIsLike(true);
+          setAddLikeCnt(addLikeCnt + 1);
+        } else {
+          setIsLike(false);
+          setAddLikeCnt(addLikeCnt - 1);
+        }
+      });
     }
   };
 

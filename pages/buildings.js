@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 
 import AppLayout from "components/common/AppLayout";
@@ -13,6 +12,7 @@ import Error from "components/common/Error";
 import NoData from "components/common/atoms/NoData";
 import logEvent from "amplitude/logEvent";
 import { BOUNDS_POSITIONS } from "constants/localStorageType";
+import { getBuildings } from "services/building.service";
 
 export default function buildings() {
   const [parseData, setParseData] = useState([]);
@@ -34,12 +34,13 @@ export default function buildings() {
   };
   const onConfirmClick = async () => {
     setLoading(true);
-    const buildingMarking = localStorage.getItem(BOUNDS_POSITIONS);
+    const buildingIds = localStorage.getItem(BOUNDS_POSITIONS);
     setParseData([]);
-    await axios
-      .get(
-        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
-      )
+    await getBuildings({
+      buildingIds: buildingIds,
+      size: 10,
+      sort: `${filterValue.value},id,DESC`,
+    })
       .then((response) => {
         setParseData(response.data.content);
         setLoading(false);
@@ -53,11 +54,12 @@ export default function buildings() {
   };
 
   const getData = async () => {
-    const buildingMarking = localStorage.getItem(BOUNDS_POSITIONS);
-    await axios
-      .get(
-        `/apis/building?buildingIds=${buildingMarking}&size=10&sort=${filterValue.value},id,DESC`
-      )
+    const buildingIds = localStorage.getItem(BOUNDS_POSITIONS);
+    await getBuildings({
+      buildingIds: buildingIds,
+      size: 10,
+      sort: `${filterValue.value},id,DESC`,
+    })
       .then((response) => {
         setParseData(response.data.content);
         setLoading(false);

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import axios from "axios";
 import { useRouter } from "next/router";
 
 import Congraturation from "components/common/lottie/Congraturation";
@@ -18,6 +17,7 @@ import imgCompress from "utils/imgCompress";
 import calculateByReviewScore from "utils/calculateByReviewScore";
 import Toast from "components/common/atoms/Toast";
 import logEvent from "amplitude/logEvent";
+import { addReview } from "services/building.service";
 
 export default function ReviewLayout({ children }) {
   const router = useRouter();
@@ -153,14 +153,7 @@ export default function ReviewLayout({ children }) {
         formData.append("reviewImageList", compress, compress.name);
       }
 
-      await axios({
-        method: "post",
-        url: `/apis/building/room/review`,
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      await addReview(formData)
         .then((res) => {
           if (res.data.isFirstReview) {
             setSuccessBuildingId(res.data.buildingId);

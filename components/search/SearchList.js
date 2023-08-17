@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import List from "components/building/List";
+import { getSearch } from "services/building.service";
 
 export default (props) => {
   const { data, searchValue } = props;
@@ -15,10 +15,12 @@ export default (props) => {
   const fetchItems = async () => {
     if (!cursorId) return;
 
-    const response = await axios.get(
-      `/apis/building/search?params=${searchValue}&size=10&sort=id,DESC&cursorIds=${cursorId}`
-    );
-
+    const response = await getSearch({
+      params: searchValue,
+      size: 10,
+      sort: "id,DESC",
+      cursorIds: cursorId,
+    });
     const nextItem = response.data.content;
     const lastItem = nextItem[nextItem.length - 1];
 

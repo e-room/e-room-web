@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import List from "components/building/List";
+import { getFavorites } from "services/member.service";
 
 export default function FavoriteList(props) {
   const { data, sort } = props;
@@ -18,10 +18,11 @@ export default function FavoriteList(props) {
   const fetchItems = async () => {
     if (!cursorId) return;
 
-    const filterSort = sort ? `${sort},id,DESC` : `DESC`;
-    const response = await axios.get(
-      `/apis/member/favorite?size=10&sort=DESC&cursorIds=${cursorId}`
-    );
+    const response = await getFavorites({
+      size: 10,
+      sort: "DESC",
+      cursorIds: cursorId,
+    });
 
     const nextItem = response.data.content;
     const lastItem = nextItem[nextItem.length - 1];

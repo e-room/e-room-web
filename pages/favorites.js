@@ -1,5 +1,4 @@
 import AppLayout from "components/common/AppLayout";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import accessValid from "utils/accessValid";
 import FavoriteList from "components/favorite/FavoriteList";
@@ -8,6 +7,7 @@ import Loading from "components/common/lottie/Loading";
 import Error from "components/common/Error";
 import NeedLogin from "components/common/NeedLogin";
 import logEvent from "amplitude/logEvent";
+import { getFavoriteData } from "services/member.service";
 
 export default function favorites() {
   const [data, setData] = useState([]);
@@ -21,8 +21,7 @@ export default function favorites() {
       return setNeed(true);
     }
     if (valid) {
-      await axios
-        .get(`/apis/member/favorite`)
+      await getFavoriteData()
         .then((response) => {
           setData(response.data.content);
           setLoading(false);

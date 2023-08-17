@@ -3,9 +3,9 @@ import Icon from "components/common/atoms/Icon";
 import LogoHWhite from "assets/logo/logo-horizontal-white.svg";
 import Button from "components/common/atoms/Button";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import BestReview from "components/home/BestReview";
+import { getBestReviews } from "services/building.service";
 
 export default function home() {
   const router = useRouter();
@@ -17,8 +17,8 @@ export default function home() {
   ];
 
   const [bestReviews, setBestReviews] = useState([]);
-  const getBestReviews = async () => {
-    const response = await axios.get(`/apis/building/room/review/bests`);
+  const getBestReviewsFunc = async () => {
+    const response = await getBestReviews();
     setBestReviews(response.data.reviewDtoList);
   };
 
@@ -39,7 +39,7 @@ export default function home() {
   };
 
   useEffect(() => {
-    getBestReviews();
+    getBestReviewsFunc();
   }, []);
 
   return (

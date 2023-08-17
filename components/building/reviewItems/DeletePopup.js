@@ -1,11 +1,11 @@
-import axios from "axios";
 import Popup from "components/common/atoms/Popup";
+import { removeReviewByReviewId } from "services/building.service";
 
 export default (props) => {
   const { reviewId, showConfirmDelete, setShowConfirmDelete, state, setState } =
     props;
   const onDelete = async () => {
-    await axios.delete(`/apis/building/room/review/${reviewId}`).then((res) => {
+    await removeReviewByReviewId(reviewId).then((res) => {
       setShowConfirmDelete(false);
       const filters = state.item.filter(
         (v) => v.reviewBaseDto.reviewId !== reviewId
