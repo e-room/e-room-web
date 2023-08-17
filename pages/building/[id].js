@@ -150,12 +150,13 @@ export default () => {
       pageTitle={`${building.name ?? ""} 리뷰`}
       enabledNavbar={false}
       additionalFunction={
-        <Icon
-          icon={favorite ? "heart-fill" : "heart-stroke"}
-          size={"md"}
-          fill={favorite ? "fill-primary-1" : "fill-black"}
-          onClick={onFavoriteChange}
-        />
+        <div onClick={onFavoriteChange}>
+          <Icon
+            icon={favorite ? "heart-fill" : "heart-stroke"}
+            size={"md"}
+            fill={favorite ? "fill-primary-1" : "fill-black"}
+          />
+        </div>
       }
     >
       {need && <NeedLogin visible={need} setVisible={setNeed} />}

@@ -85,12 +85,13 @@ export default function buildings() {
     <AppLayout
       pageTitle={"이 지역 자취방"}
       additionalFunction={
-        <Icon
-          icon={popupVisible ? "filter-fill" : "filter-stroke"}
-          size={"md"}
-          fill={popupVisible ? "fill-primary-1" : "fill-black"}
-          onClick={onVisibleFilterPopup}
-        />
+        <div onClick={onVisibleFilterPopup}>
+          <Icon
+            icon={popupVisible ? "filter-fill" : "filter-stroke"}
+            size={"md"}
+            fill={popupVisible ? "fill-primary-1" : "fill-black"}
+          />
+        </div>
       }
     >
       {popupVisible && (
