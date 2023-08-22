@@ -10,6 +10,7 @@ import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 import Slider from "./Slider";
 import { getBuildingReviewById } from "services/building.service";
+import PleaseLogin from "./reviewItems/PleaseLogin";
 
 export default function ReviewList(props) {
   const { reviews, buildingId, needToBlur = true, profile } = props;
