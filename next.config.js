@@ -4,12 +4,6 @@ const withPWA = require("next-pwa")({
 });
 
 const config = {
-  // images: {
-  //   domains: [process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN],
-  //   path: "/_next/image",
-  //   loader: "default",
-  //   disableStaticImages: false,
-  // },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
