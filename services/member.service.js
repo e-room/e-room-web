@@ -1,7 +1,7 @@
 import axiosRequest from "utils/axiosRequest";
 import { queryString } from "utils/queryString";
 
-const host = "/apis/member";
+const host = process.env.NEXT_PUBLIC_API_HOST + "/member";
 
 export const cancelFavoriteByBuildingId = (buildingId) => {
   const url = `${host}/favorite/${buildingId}`;

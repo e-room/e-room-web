@@ -1,7 +1,7 @@
 import axiosRequest from "utils/axiosRequest";
 
 export const getIsValid = () => {
-  const url = `/apis/token/valid`;
+  const url = `${process.env.NEXT_PUBLIC_API_HOST}/token/valid`;
   return axiosRequest({
     method: "GET",
     url,
@@ -9,7 +9,7 @@ export const getIsValid = () => {
 };
 
 export const logout = () => {
-  const url = `/apis/logout`;
+  const url = `${process.env.NEXT_PUBLIC_API_HOST}/logout`;
   return axiosRequest({
     method: "GET",
     url,
