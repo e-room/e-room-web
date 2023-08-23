@@ -16,7 +16,7 @@ export default ({ data }) => {
       <div className="overflow-x-scroll	whitespace-nowrap	no-scrollbar flex">
         {data.map((value) => {
           return (
-            <div className="mr-[8px]">
+            <div className="mr-[8px]" key={value.uuid}>
               <Image
                 src={`${process.env.NEXT_PUBLIC_PROTOCOL}://` + value.url}
                 key={value.uuid}
