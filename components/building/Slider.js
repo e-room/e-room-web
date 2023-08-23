@@ -52,8 +52,7 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
     );
   };
   return (
-    <div className="w-screen h-screen bg-black/70 fixed top-0 left-0 z-[12] overflow-hidden touch-none">
-      {/* <div className="w-screen h-screen bg-black fixed top-0 left-0 z-[12] overflow-hidden touch-none"> */}
+    <div className="w-screen h-screen bg-black fixed top-0 left-0 z-[12] overflow-hidden touch-none">
       <div
         className="flex items-center justify-center h-full"
         onClick={onVisible}
@@ -84,27 +83,19 @@ export default function Slider({ data, onClose, defaultId, authorName = "" }) {
           {data.map((value) => {
             return (
               <div
-                className="h-[150px] w-[150px] bg-blue-100 relative border border-danger-1 "
-                // className="pt-[44px] h-[calc(100vw-44px)] flex items-center overflow-hidden max-w-[720px] mx-auto bg-blue-100 relative"
+                className="pt-[44px] h-[calc(100vw-44px)] flex items-center overflow-hidden max-w-[720px] mx-auto relative"
                 key={value.uuid}
               >
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_PROTOCOL}://` + value.url}
-                  objectFit="contain"
-                  // height={500}
-                  // width={300}
-                  layout="fill"
-                  className="p-[70px] bg-lime-400 w-[150px]"
-                  // className="absolute left-0 top-0 w-[100px] h-[100px]"
-                />
-                {/* <div className="flex items-center text-white fixed bottom-[30px] w-full justify-center">
+                <img src={value.url} />
+
+                <div className="flex items-center text-white fixed bottom-[30px] w-full justify-center">
                   <Avatar
                     size={"md"}
                     img={avatarImg.src}
                     style={{ marginRight: 6 }}
                   />
                   {value?.anonymousStatus?.anonymousName ?? authorName}
-                </div> */}
+                </div>
               </div>
             );
           })}
