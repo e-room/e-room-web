@@ -10,7 +10,7 @@ import AuthorInfo from "./reviewItems/AuthorInfo";
 import ImageField from "./reviewItems/ImageField";
 import Slider from "./Slider";
 import { getBuildingReviewById } from "services/building.service";
-import PleaseLogin from "./reviewItems/PleaseLogin";
+import PleaseReviewWrite from "./reviewItems/PleaseReviewWrite";
 
 export default function ReviewList(props) {
   const { reviews, buildingId, needToBlur = true, profile } = props;
@@ -165,7 +165,7 @@ export default function ReviewList(props) {
             </div>
           );
         })}
-        {needToBlur && <PleaseLogin />}
+        {needToBlur && <PleaseReviewWrite />}
         <div ref={setTarget}>{isLoading && "Loading..."}</div>
       </div>
     </div>
