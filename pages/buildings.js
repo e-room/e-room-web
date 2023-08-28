@@ -134,7 +134,7 @@ export default function buildings() {
           )}
         </div>
         <div className="fixed bottom-[64px] w-full max-w-[720px] flex justify-center">
-          <Link href={"/"}>
+          <Link href={"/map"}>
             <a>
               <Button type={"secondary"} size={"md"} icon={"map-marked"}>
                 지도로 돌아가기
