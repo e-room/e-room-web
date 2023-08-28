@@ -5,6 +5,7 @@ export const getIsValid = () => {
   return axiosRequest({
     method: "GET",
     url,
+    headers: { withCredentials: true },
   });
 };
 
