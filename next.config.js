@@ -14,14 +14,6 @@ const config = {
     ],
   },
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: "/apis/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_HOST}/:path*`,
-      },
-    ];
-  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
