@@ -39,6 +39,7 @@ import XIcon from "assets/icon/x-icon.svg";
 import XIconXS from "assets/icon/x-icon-xs.svg";
 import List from "assets/icon/list.svg";
 import MapMarked from "assets/icon/map-marked.svg";
+import Document from "assets/icon/document.svg";
 
 import LogoDefault from "assets/logo/logo-default.svg";
 import LogoWhite from "assets/logo/logo-white.svg";
@@ -152,6 +153,8 @@ export default function Icon(props) {
       return <Khu {...args} />;
     case "my-location":
       return <Mylocation {...args} />;
+    case "document":
+      return <Document {...args} />;
     default:
       return;
   }

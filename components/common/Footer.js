@@ -22,6 +22,12 @@ const navItems = [
     title: "리뷰쓰기",
   },
   {
+    path: "/checklist",
+    activePaths: ["/checklist"],
+    icon: "document",
+    title: "발품기록",
+  },
+  {
     path: "/mypage",
     activePaths: ["/mypage"],
     icon: "mypage",
