@@ -1,7 +1,9 @@
 import axiosRequest from "utils/axiosRequest";
 import { queryString } from "utils/queryString";
+import { isBrowser } from "utils/environment";
 
-const host = process.env.NEXT_PUBLIC_API_HOST + "/building";
+const host =
+  (isBrowser() ? "/api" : process.env.NEXT_PUBLIC_API_HOST) + "/building";
 
 export const getBuildingById = (buildingId) => {
   const url = `${host}/${buildingId}`;
