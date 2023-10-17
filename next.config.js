@@ -13,6 +13,14 @@ const config = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: process.env.NEXT_PUBLIC_API_HOST + "/:path*",
+      },
+    ];
+  },
   reactStrictMode: false,
   webpack: (config) => {
     config.module.rules.push({
