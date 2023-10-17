@@ -20,6 +20,7 @@ const sizeValueStyles = {
   medium: "ml-1",
 };
 
+// TODO: 전환 애니메이션 추가
 const baseStyle =
   "cursor-pointer border-b-2 inline-flex justify-center items-center flex-1";
 

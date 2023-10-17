@@ -1,6 +1,11 @@
-import { useState, useCallback } from "react";
 import TabOption from "./atoms/TabOption";
 
+//TODO: 옵션 여러개일 때 스크롤 + 그림자 생기도록 만들기
+/**
+ * style = "primary" 또는 "secondary"
+ *
+ * size = "large" 또는 "medium"
+ */
 export default function Tab({
   options,
   index = 0,
