@@ -5,8 +5,6 @@ import axios from "axios";
 import { imageViewState } from "states/buidlingAtom";
 
 import AppLayout from "components/common/AppLayout";
-import ImageView from "components/building/ImageList";
-import ReviewList from "components/building/ReviewList";
 import BuildingMap from "components/building/BuildingMap";
 import Slider from "components/building/Slider";
 import Button from "components/common/atoms/Button";
@@ -33,17 +31,8 @@ import {
   getProfile,
 } from "services/member.service";
 import Tab from "components/common/Tab";
-
-const tabOptions = [
-  {
-    label: "실거주 후기",
-    value: "1",
-  },
-  {
-    label: "발품 기록",
-    value: "2",
-  },
-];
+import ChecklistSection from "components/building/sections/checklistSection";
+import ReviewSection from "components/building/sections/reviewSection";
 
 export default () => {
   const router = useRouter();
@@ -174,6 +163,18 @@ export default () => {
   if (loading) return <Loading />;
   if (error) return <Error />;
 
+  // TODO: 후기, 발품 기록 갯수 수정해야 함.
+  const tabOptions = [
+    {
+      label: "실거주 후기",
+      value: buildingReviews.reviewSlicedList.numberOfElements,
+    },
+    {
+      label: "발품 기록",
+      value: "2",
+    },
+  ];
+
   return (
     <AppLayout
       pageTitle={`${building.name ?? ""} 리뷰`}
@@ -213,19 +214,16 @@ export default () => {
           style="primary"
           onIndexChange={onTabIndexChange}
         />
-        {buildingImages.reviewImageCount > 0 && (
-          <ImageView data={buildingImages.reviewImageList} />
-        )}
-        {buildingReviews.reviewSlicedList.content.length > 0 ||
-        buildingReviews.needToBlur ? (
-          <ReviewList
-            profile={profile}
-            reviews={buildingReviews.reviewSlicedList.content}
-            buildingId={id}
-            needToBlur={buildingReviews.needToBlur}
+        {tabIndex === 0 ? (
+          <ReviewSection
+            building={building}
+            buildingImages={buildingImages}
+            buildingReviews={buildingReviews}
+            id={id}
+            goReviewWrite={goReviewWrite}
           />
         ) : (
-          <NoReview building={building} goReviewWrite={goReviewWrite} />
+          <ChecklistSection />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
           <div className="fixed bottom-[8px] w-full max-w-[720px] flex justify-center z-[2] gap-2">
