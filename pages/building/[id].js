@@ -32,6 +32,18 @@ import {
   cancelFavoriteByBuildingId,
   getProfile,
 } from "services/member.service";
+import Tab from "components/common/Tab";
+
+const tabOptions = [
+  {
+    label: "실거주 후기",
+    value: "1",
+  },
+  {
+    label: "발품 기록",
+    value: "2",
+  },
+];
 
 export default () => {
   const router = useRouter();
@@ -47,6 +59,8 @@ export default () => {
   const [profile, setProfile] = useState({});
   const [showImgDetail, setShowImgDetail] = useRecoilState(imageViewState);
   const reviewSucess = useRecoilValue(reviewSuccessToastState);
+
+  const [tabIndex, setTabIndex] = useState(0);
 
   const onCloseImg = () => {
     document.body.style.overflow = "unset";
@@ -99,6 +113,10 @@ export default () => {
     }
   }, [favorite, need, id]);
 
+  const onTabIndexChange = useCallback((index) => {
+    setTabIndex(index);
+  }, []);
+
   useEffect(() => {
     if (id) {
       logEvent({ name: "view-building", property: { buildingID: id } });
@@ -149,6 +167,7 @@ export default () => {
   };
 
   const goChecklist = () => {
+    // TODO: 발품 기록 페이지 이동 로직 구현
     router.push("/checklist");
   };
 
@@ -174,7 +193,7 @@ export default () => {
       {goodReviewSuccess && <Toast text={"리뷰를 잘 등록했어요."} />}
 
       {/* no review의 bg에 flex-grow 적용하기 위해 flex, flex-column 추가함 */}
-      <div className="h-[calc(100vh-44px)] flex flex-col">
+      <div className="flex flex-col">
         {showImgDetail.visible && (
           <Slider
             data={buildingImages.reviewImageList}
@@ -187,6 +206,13 @@ export default () => {
         {buildingReviews.reviewSlicedList.content.length > 0 && (
           <Score building={building} />
         )}
+        <Tab
+          options={tabOptions}
+          index={tabIndex}
+          size="large"
+          style="primary"
+          onIndexChange={onTabIndexChange}
+        />
         {buildingImages.reviewImageCount > 0 && (
           <ImageView data={buildingImages.reviewImageList} />
         )}
