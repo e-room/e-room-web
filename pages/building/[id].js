@@ -148,6 +148,10 @@ export default () => {
     router.push(`/review/write`);
   };
 
+  const goChecklist = () => {
+    router.push("/checklist");
+  };
+
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -198,7 +202,15 @@ export default () => {
           <NoReview building={building} goReviewWrite={goReviewWrite} />
         )}
         {buildingReviews.reviewSlicedList.content.length > 0 && (
-          <div className="fixed bottom-[8px] w-full max-w-[720px] flex justify-center z-[2]">
+          <div className="fixed bottom-[8px] w-full max-w-[720px] flex justify-center z-[2] gap-2">
+            <Button
+              type={"secondary"}
+              size={"md"}
+              icon={"document"}
+              onClick={goChecklist}
+            >
+              발품 기록하기
+            </Button>
             <Button
               type={"primary"}
               size={"md"}
